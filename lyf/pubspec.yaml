@@ -36,6 +36,18 @@ dependencies:
   cupertino_icons: ^1.0.2
   font_awesome_flutter:
   google_fonts:
+  rxdart:
+  http:
+  svg_path_parser:
+  flutter_svg:
+  shared_preferences:
+  sqflite:
+  share_plus:
+  path_provider:
+  file_picker:
+  image_picker:
+  # permission_handler:
+  # webview_flutter:
 
 dev_dependencies:
   flutter_test:

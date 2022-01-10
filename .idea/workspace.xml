@@ -3,6 +3,9 @@
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -23,72 +26,95 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="48f562fa-f39f-47df-8acd-a3ecb916c081" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/Lyf.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/assets/images/diary.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/assets/images/todo.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/100.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/1024.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/114.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/120.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/128.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/144.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/152.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/16.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/167.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/172.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/180.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/196.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/20.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/216.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/256.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/29.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/32.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/40.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/48.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/50.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/512.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/55.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/57.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/58.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/60.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/64.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/72.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/76.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/80.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/87.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/88.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/lib/src/app.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/lib/src/routes/routing.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/diary/diary.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/drawer.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/home.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/home_page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/todo/todo.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/todo/view_todo.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/lib/src/themes/lyf.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyf/lib/src/themes/monochrome.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyfRest/lyf_REST/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyfRest/lyf_REST/asgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyfRest/lyf_REST/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyfRest/lyf_REST/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyfRest/lyf_REST/wsgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyfRest/manage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/android-release.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/assets/images/InCognoS_labs.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/assets/images/lyf.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/global/globals.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/models/diary_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/models/settings/account_settings.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/models/settings/billing_settings.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/models/settings/data_settings.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/models/settings/language_settings.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/models/settings/notification_settings.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/models/settings/theme_settings.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/models/settings_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/models/todo_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/models/user_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/permissions/permission_handler.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/auth/login.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/auth/signup.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/auth/welcome.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/diary/add_entry.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/diary/view_entry.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/home/drawer.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/home/home_page.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/home/schedule.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/home/view_pfp.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/settings/data.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/settings/invite.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/settings/notifications.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/settings/settings.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/settings/view_account.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/settings/view_themes.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/screens/todo/add_todo.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/services/http.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/shared/clock.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/shared/greet.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/shared/lyf.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyf/lib/src/themes/themes.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/User/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/User/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/User/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/User/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/User/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/User/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/User/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/User/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/diary/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/diary/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/diary/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/diary/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/diary/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/diary/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/diary/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/diary/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/media/788f904b-36a0-4703-b906-32bf21dcc6ac/pfp/aloyprof.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/todo/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/todo/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/todo/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/todo/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/todo/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/todo/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/todo/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyfRest/todo/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyf/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/lyf/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyf/android/app/src/main/res/drawable/launch_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lyf/android/app/src/main/res/drawable/launch_background.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyf/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lyf/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyf/lib/src/app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lyf/lib/src/app.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyf/lib/src/routes/routing.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lyf/lib/src/routes/routing.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyf/lib/src/screens/diary/diary.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lyf/lib/src/screens/diary/diary.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyf/lib/src/screens/drawer.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyf/lib/src/screens/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lyf/lib/src/screens/home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyf/lib/src/screens/home_page.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyf/lib/src/screens/todo/todo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lyf/lib/src/screens/todo/todo.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyf/lib/src/screens/todo/view_todo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lyf/lib/src/screens/todo/view_todo.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyf/lib/src/themes/lyf.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyf/lib/src/themes/monochrome.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyf/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/lyf/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyfRest/lyf_REST/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/lyfRest/lyf_REST/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyfRest/lyf_REST/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/lyfRest/lyf_REST/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/home/aryan/.android/avd/Pixel_4_XL_API_30.avd]" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -99,7 +125,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="21CQSwQPbiZ4Q3y7ui4uAvVVuHM" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -109,8 +144,11 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lyf/ios/Runner/Assets.xcassets" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.28637627" />
+    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
@@ -136,6 +174,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -160,51 +199,5 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="527" y="197" key="#Notifications" timestamp="1637442615348">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="527" y="197" key="#Notifications/0.0.1280.720@0.0.1280.720" timestamp="1637442615348" />
-    <state x="95" y="15" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1637443100323">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="95" y="15" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.720@0.0.1280.720" timestamp="1637443100323" />
-    <state x="100" y="100" width="1080" height="520" key="AVDManager" timestamp="1637925183466">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="100" y="100" width="1080" height="520" key="AVDManager/0.0.1280.720@0.0.1280.720" timestamp="1637925183466" />
-    <state width="1236" height="186" key="GridCell.Tab.0.bottom" timestamp="1638163455136">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state width="1236" height="186" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1638163455136" />
-    <state width="1236" height="186" key="GridCell.Tab.0.center" timestamp="1638163455136">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state width="1236" height="186" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1638163455136" />
-    <state width="1236" height="186" key="GridCell.Tab.0.left" timestamp="1638163455136">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state width="1236" height="186" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1638163455136" />
-    <state width="1236" height="186" key="GridCell.Tab.0.right" timestamp="1638163455136">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state width="1236" height="186" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1638163455136" />
-    <state x="221" y="103" key="IDE.errors.dialog" timestamp="1637443010294">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="221" y="103" key="IDE.errors.dialog/0.0.1280.720@0.0.1280.720" timestamp="1637443010294" />
-    <state x="142" y="5" key="SettingsEditor" timestamp="1638188477404">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="142" y="5" key="SettingsEditor/0.0.1280.720@0.0.1280.720" timestamp="1638188477404" />
-    <state x="298" y="161" key="run.anything.popup" timestamp="1637446673506">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="298" y="161" key="run.anything.popup/0.0.1280.720@0.0.1280.720" timestamp="1637446673506" />
-    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1638188475264">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1280.720@0.0.1280.720" timestamp="1638188475264" />
   </component>
 </project>

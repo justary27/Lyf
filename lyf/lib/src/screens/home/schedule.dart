@@ -2,22 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/routes/routing.dart';
 
-class SideDrawer extends StatefulWidget {
-  const SideDrawer({Key? key}) : super(key: key);
+class ScheduleSideDrawer extends StatefulWidget {
+  const ScheduleSideDrawer({Key? key}) : super(key: key);
 
   @override
-  _SideDrawerState createState() => _SideDrawerState();
+  _ScheduleSideDrawerState createState() => _ScheduleSideDrawerState();
 }
 
-class _SideDrawerState extends State<SideDrawer> {
+class _ScheduleSideDrawerState extends State<ScheduleSideDrawer> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onHorizontalDragEnd: (dragDetails) {
-        if (dragDetails.primaryVelocity! < 0) {
-          RouteManager.navigateToHome(context);
-        }
+        if (dragDetails.primaryVelocity! < 0) {}
       },
       child: Material(
         color: Colors.transparent,
@@ -35,7 +33,7 @@ class _SideDrawerState extends State<SideDrawer> {
             ],
           )),
           child: CustomPaint(
-            painter: SidePainter(),
+            painter: ScheduleSidePainter(),
             child: Column(
               children: [
                 Container(
@@ -53,7 +51,9 @@ class _SideDrawerState extends State<SideDrawer> {
                         ),
                         IconButton(
                           splashColor: Colors.white.withOpacity(0.2),
-                          onPressed: () {},
+                          onPressed: () {
+                            RouteManager.navigateToSettings(context);
+                          },
                           icon: const Icon(
                             Icons.settings,
                             color: Colors.white,
@@ -76,7 +76,7 @@ class _SideDrawerState extends State<SideDrawer> {
                           focusColor: Colors.white.withOpacity(0.15),
                           hoverColor: Colors.white.withOpacity(0.15),
                           title: Text(
-                            "TODO",
+                            "TODOs",
                             style: GoogleFonts.ubuntu(
                               textStyle: const TextStyle(color: Colors.white),
                             ),
@@ -85,22 +85,26 @@ class _SideDrawerState extends State<SideDrawer> {
                             Icons.note_add,
                             color: Colors.white,
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            RouteManager.navigateToTodo(context);
+                          },
                         ),
                         ListTile(
                           focusColor: Colors.white.withOpacity(0.15),
                           hoverColor: Colors.white.withOpacity(0.15),
                           leading: const Icon(
-                            Icons.note_add,
+                            Icons.note,
                             color: Colors.white,
                           ),
                           title: Text(
-                            "TODO",
+                            "Diary Entries",
                             style: GoogleFonts.ubuntu(
                               textStyle: const TextStyle(color: Colors.white),
                             ),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            RouteManager.navigateToDiary(context);
+                          },
                         ),
                         ListTile(
                           // focusColor: Colors.black.withOpacity(0.5),
@@ -146,7 +150,7 @@ class _SideDrawerState extends State<SideDrawer> {
   }
 }
 
-class SidePainter extends CustomPainter {
+class ScheduleSidePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Path path = Path();
@@ -155,10 +159,10 @@ class SidePainter extends CustomPainter {
       ..strokeWidth = 5
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
-    path.moveTo(0.7 * size.width, 0);
-    path.lineTo(size.width, 0);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0.4 * size.width, size.height);
+    path.moveTo(0.3 * size.width, 0);
+    path.lineTo(0, 0);
+    path.lineTo(0, size.height);
+    path.lineTo(0.6 * size.width, size.height);
     canvas.drawPath(path, paint);
   }
 
