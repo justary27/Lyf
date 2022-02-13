@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from django.conf.global_settings import AUTH_USER_MODEL
+import django_heroku
 
 load_dotenv()
 
@@ -162,3 +163,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
 EMAIL_PORT = 587
+
+django_heroku.settings(locals())
