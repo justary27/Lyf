@@ -1,11 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:lyf/src/global/globals.dart';
-import 'package:lyf/src/services/http.dart';
 import 'home/drawer.dart';
 import 'home/home_page.dart';
-import 'package:http/http.dart' as http;
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);

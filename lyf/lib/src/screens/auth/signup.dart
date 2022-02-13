@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/global/globals.dart';
 import 'package:lyf/src/models/user_model.dart';
 import 'package:lyf/src/routes/routing.dart';
-import 'package:lyf/src/services/http.dart';
 import 'package:lyf/src/shared/lyf.dart';
 import 'package:http/http.dart' as http;
 
@@ -161,56 +158,17 @@ class _LoginFormState extends State<LoginForm> {
     SnackBar snackBar1 = const SnackBar(
       content: Text("Invalid credentials, try again with correct ones!"),
     );
-
     // ScaffoldMessenger.of(widget.parentContext).showSnackBar(snackBar);
     http.Response response;
     try {
-      response = await signUpClient.post(Uri.parse(ApiEndpoints.signUp), body: {
+      Map<String, String> signUpCreds = {
         'email': email,
         'username': username,
         'password': password,
-      });
-      if (response.statusCode == 400) {
-        print(response.body);
-        setState(() {
-          loginState = false;
-        });
-        try {
-          if (json.decode(response.body) == ApiEndpoints.signUpEmailError) {
-            SnackBar snackBare = const SnackBar(
-              content: Text("Email already taken, try a different one!"),
-            );
-            ScaffoldMessenger.of(widget.parentContext).showSnackBar(snackBare);
-          } else if (response.body == ApiEndpoints.signUpUsernameError) {
-            print(response.body);
-            SnackBar snackBaru = const SnackBar(
-              content: Text("Username already taken, try a different one!"),
-            );
-            ScaffoldMessenger.of(widget.parentContext).showSnackBar(snackBaru);
-          }
-        } catch (e) {
-          print(e);
-        }
-      } else if (response.statusCode == 200) {
-        setState(() {
-          loginState = true;
-          currentUser = LyfUser();
-          currentUser.email = email;
-          currentUser.password = password;
-          Map body = json.decode(response.body);
-          print(body);
-          try {
-            currentUser.userId = body['userId'];
-            currentUser.token = body['token'];
-            if (body['isActive'] == 'True') {
-              currentUser.isActive = true;
-            } else {
-              currentUser.isActive = false;
-            }
-          } catch (e) {
-            print(e);
-          }
-        });
+      };
+      int statusCode = await LyfUser.signUp(signUpClient, signUpCreds);
+      if (statusCode == 400) {
+      } else if (statusCode == 200) {
         if (loginState == true) {
           RouteManager.navigateToHome(context);
         } else {
@@ -218,9 +176,6 @@ class _LoginFormState extends State<LoginForm> {
         }
       }
     } catch (e) {
-      setState(() {
-        loginState = false;
-      });
       ScaffoldMessenger.of(widget.parentContext).showSnackBar(snackBar1);
     }
   }

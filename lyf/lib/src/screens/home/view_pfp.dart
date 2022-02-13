@@ -20,7 +20,9 @@ class _ViewProfilePicturePageState extends State<ViewProfilePicturePage> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
             icon: Icon(
               Icons.arrow_back_ios_rounded,
             ),

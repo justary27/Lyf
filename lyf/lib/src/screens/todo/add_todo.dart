@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/global/globals.dart';
+import 'package:lyf/src/models/todo_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/services/http.dart';
 import 'package:http/http.dart' as http;
@@ -25,26 +26,23 @@ class _AddTodoPageState extends State<AddTodoPage> {
     super.initState();
   }
 
-  void createTodo(http.Client createTodoClient, String title,
-      String description, DateTime datetime) async {
-    http.Response response;
+  void createTodo(http.Client createTodoClient, Todo todo) async {
+    int statusCode;
     try {
-      response = await createTodoClient.post(
-        Uri.parse(ApiEndpoints.createTodo(currentUser.userID)),
-        body: {
-          '_userId': currentUser.userID,
-          '_title': title,
-          '_description': description,
-          '_created_on': datetime.toIso8601String(),
-        },
-        headers: currentUser.authHeader(),
+      statusCode = await Todo.createTodo(
+        createTodoClient: createTodoClient,
+        todo: todo,
       );
-      if (response.statusCode == 200) {
+
+      if (statusCode == 200) {
         SnackBar snackBar = const SnackBar(
           content: Text("Entry created successfully!"),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        RouteManager.navigateToTodo(context);
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          RouteManager.todoPage,
+          ModalRoute.withName(RouteManager.todoPage),
+        );
       } else {
         SnackBar snackBar = const SnackBar(
           content: Text("Something went wrong"),
@@ -123,8 +121,15 @@ class _AddTodoPageState extends State<AddTodoPage> {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      createTodo(createTodoClient, _titleController.text,
-                          _descriptionController.text, DateTime.now());
+                      Todo todo = Todo(
+                          null,
+                          _titleController.text,
+                          _descriptionController.text,
+                          DateTime.now(),
+                          false,
+                          null);
+
+                      createTodo(createTodoClient, todo);
                     },
                     icon: Icon(
                       Icons.check_box_rounded,

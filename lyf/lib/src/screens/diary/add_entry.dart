@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lyf/src/global/globals.dart';
+import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:http/http.dart' as http;
-import 'package:lyf/src/services/http.dart';
 
 class AddDiaryEntryPage extends StatefulWidget {
   const AddDiaryEntryPage({Key? key}) : super(key: key);
@@ -24,28 +23,25 @@ class _AddDiaryEntryPageState extends State<AddDiaryEntryPage> {
     super.initState();
   }
 
-  void createEntry(http.Client createEntryClient, String title,
-      String description, DateTime datetime) async {
-    http.Response response;
+  void createEntry(http.Client createEntryClient, DiaryEntry entry) async {
+    late int statusCode;
     try {
-      response = await createEntryClient.post(
-        Uri.parse(ApiEndpoints.createEntry(currentUser.userID)),
-        body: {
-          '_userId': currentUser.userID,
-          '_title': title,
-          '_description': description,
-          '_created_on': datetime.toIso8601String(),
-        },
-        headers: currentUser.authHeader(),
-      );
-      if (response.statusCode == 200) {
+      statusCode = await DiaryEntry.createEntry(
+          createEntryClient: createEntryClient, entry: entry);
+      if (statusCode == 200) {
         SnackBar snackBar = const SnackBar(
           content: Text("Entry created successfully!"),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        RouteManager.navigateToDiary(context);
+        FocusManager.instance.primaryFocus?.unfocus();
+        // Navigator.of(context)
+        //     .popUntil(ModalRoute.withName(RouteManager.diaryPage));
+        // Navigator.of(context).pushNamed(RouteManager.diaryPage);
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          RouteManager.diaryPage,
+          ModalRoute.withName(RouteManager.diaryPage),
+        );
       } else {
-        print(response.body);
         SnackBar snackBar = const SnackBar(
           content: Text("Something went wrong"),
         );
@@ -217,8 +213,13 @@ class _AddDiaryEntryPageState extends State<AddDiaryEntryPage> {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      createEntry(createEntryClient, _titleController.text,
-                          _descriptionController.text, DateTime.now());
+                      DiaryEntry entry = DiaryEntry(
+                        null,
+                        _titleController.text,
+                        _descriptionController.text,
+                        DateTime.now(),
+                      );
+                      createEntry(createEntryClient, entry);
                     },
                     icon: Icon(
                       Icons.check_box_rounded,

@@ -40,14 +40,19 @@ dependencies:
   http:
   svg_path_parser:
   flutter_svg:
-  shared_preferences:
-  sqflite:
   share_plus:
   path_provider:
   file_picker:
-  image_picker:
-  # permission_handler:
-  # webview_flutter:
+  permission_handler:
+  url_launcher:
+  webview_flutter:
+  flutter_secure_storage:
+  introduction_screen:
+  contacts_service:
+  firebase_core:
+  firebase_auth:
+  googleapis_auth:
+  googleapis:
 
 dev_dependencies:
   flutter_test:

@@ -6,6 +6,7 @@ import 'package:lyf/src/global/globals.dart';
 import 'package:lyf/src/models/user_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/services/http.dart';
+import 'package:lyf/src/services/user.dart';
 import 'package:lyf/src/shared/lyf.dart';
 import 'package:http/http.dart' as http;
 
@@ -160,6 +161,7 @@ class _LoginFormState extends State<LoginForm> {
       var dataValues = json.decode(data.body);
       print(dataValues);
       currentUser.username = dataValues['username'];
+      UserCredentials.setUsername(currentUser.username);
     } catch (e) {
       print(e);
     }
@@ -169,55 +171,26 @@ class _LoginFormState extends State<LoginForm> {
     SnackBar snackBar = const SnackBar(
       content: Text("Logging in ..."),
     );
+    SnackBar eSnackBar = const SnackBar(
+      content: Text("Invalid credentials, try again with correct ones!"),
+    );
+
     ScaffoldMessenger.of(widget.parentContext).showSnackBar(snackBar);
-    http.Response response;
     try {
-      response = await logInClient.post(Uri.parse(ApiEndpoints.logIn), body: {
-        'username': email,
+      creds = {
+        'email': email,
         'password': password,
-      });
-      if (response.statusCode == 401) {
-        setState(() {
-          loginState = false;
-        });
-        SnackBar snackBar = const SnackBar(
-          content: Text("Invalid credentials, try again with correct ones!"),
-        );
-        ScaffoldMessenger.of(widget.parentContext).showSnackBar(snackBar);
-      } else if (response.statusCode == 200) {
-        setState(() {
-          loginState = true;
-          currentUser = LyfUser();
-          currentUser.email = email;
-          currentUser.password = password;
-          Map body = json.decode(response.body);
-          currentUser.userId = body['userId'];
-          currentUser.token = body['token'];
-          if (body['isActive'] == 'True') {
-            currentUser.isActive = true;
-            getProfileData();
-          } else {
-            currentUser.isActive = false;
-          }
-        });
-        if (loginState == true) {
-          RouteManager.navigateToHome(context);
-        } else {
-          SnackBar snackBar = const SnackBar(
-            content: Text("Invalid credentials, try again with correct ones!"),
-          );
-          ScaffoldMessenger.of(widget.parentContext).showSnackBar(snackBar);
-        }
+      };
+      await LyfUser.logIn(logInClient, creds);
+      print(loginState);
+      if (loginState == false) {
+        ScaffoldMessenger.of(widget.parentContext).showSnackBar(eSnackBar);
+      } else {
+        RouteManager.navigateToHome(context);
       }
     } catch (e) {
-      print(e);
-      setState(() {
-        loginState = false;
-      });
-      SnackBar snackBar = const SnackBar(
-        content: Text("Invalid credentials, try again with correct ones!"),
-      );
-      ScaffoldMessenger.of(widget.parentContext).showSnackBar(snackBar);
+      loginState = false;
+      ScaffoldMessenger.of(widget.parentContext).showSnackBar(eSnackBar);
     }
   }
 

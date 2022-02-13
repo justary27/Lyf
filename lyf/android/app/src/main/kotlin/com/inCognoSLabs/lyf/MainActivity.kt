@@ -1,4 +1,4 @@
-package com.example.lyf
+package com.inCognoSLabs.lyf
 
 import io.flutter.embedding.android.FlutterActivity
 

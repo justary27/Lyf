@@ -309,8 +309,11 @@ class RouteManager {
       case viewDiaryEntryPage:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            if (arguments is DiaryEntry) {
-              return ViewDiaryEntryPage(entry: arguments);
+            if (arguments is List && arguments[0] is DiaryEntry) {
+              return ViewDiaryEntryPage(
+                entry: arguments[0],
+                size: arguments[1],
+              );
             }
             return Home();
           },
@@ -373,7 +376,8 @@ class RouteManager {
 
       default:
         return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => const Home(),
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const WelcomePage(),
         );
     }
   }
@@ -416,9 +420,10 @@ class RouteManager {
     RouteManager.currentRoute = RouteManager.viewTodoPage;
   }
 
-  static void navigateToViewDiaryEntry(BuildContext context, DiaryEntry entry) {
+  static void navigateToViewDiaryEntry(
+      BuildContext context, List entryObjects) {
     Navigator.of(context)
-        .pushNamed(RouteManager.viewDiaryEntryPage, arguments: entry);
+        .pushNamed(RouteManager.viewDiaryEntryPage, arguments: entryObjects);
     RouteManager.currentRoute = RouteManager.viewDiaryEntryPage;
   }
 

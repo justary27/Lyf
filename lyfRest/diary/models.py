@@ -37,6 +37,8 @@ class DiaryEntry(models.Model):
 
     _created_on = models.DateTimeField(default=timezone.now,)
 
+    # _audioAttachment = models.FileField(_("Audio Attachment"),upload_to=)
+
     objects = DiaryEntryManger()
     @property
     def entryId(self) -> str:
@@ -63,6 +65,8 @@ class DiaryEntry(models.Model):
             "_createdAt":self.CreatedAt,
         }
 
+    # def user_directory_path(userInstance,  filename):
+    #     return '{0}/pfp/{1}'.format(userInstance._id, filename)
 
     def __str__(self) -> str:
         return str(self.entryTitle+self.entryId)

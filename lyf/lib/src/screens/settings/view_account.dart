@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/global/globals.dart';
 import 'package:lyf/src/models/user_model.dart';
 import 'package:lyf/src/routes/routing.dart';
+import 'package:lyf/src/services/user.dart';
 
 class AccountSettingsPage extends StatefulWidget {
   const AccountSettingsPage({Key? key}) : super(key: key);
@@ -19,15 +20,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
     final Size size = MediaQuery.of(context).size;
     double _sigmaX = 0;
     double _sigmaY = 0;
-    return WillPopScope(
-      onWillPop: () async {
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        await Future.delayed(
-          const Duration(seconds: 1),
-        );
-        return true;
-      },
-      child: Stack(
+    return Stack(
         children: [
           Container(
             height: size.height,
@@ -132,7 +125,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                               style: Theme.of(context).textTheme.headline4,
                             ),
                             subtitle: Text(
-                              "${currentUser.userName}",
+                              currentUser.userName,
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                           ),
@@ -373,7 +366,9 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                                       onPressed: () {
                                         RouteManager.navigateToLogin(context);
                                         loginState = false;
-                                        currentUser = LyfUser();
+                                        currentUser = guestUser;
+                                        UserCredentials.deleteCredentials();
+                                        creds = null;
                                       },
                                       child: Text(
                                         "Log out",
@@ -474,7 +469,29 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                                                       return "You must fill the password";
                                                     }
                                                   },
-                                                  onFieldSubmitted: (value) {},
+                                                  onFieldSubmitted:
+                                                      (value) async {
+                                                    if (_passwordController
+                                                            .text ==
+                                                        currentUser.password) {
+                                                      int statusCode;
+                                                      statusCode = await LyfUser
+                                                          .deactivateAccount();
+                                                      if (statusCode == 200) {
+                                                        RouteManager
+                                                            .navigateToWelcome(
+                                                                context);
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .clearSnackBars();
+                                                        loginState = false;
+                                                        currentUser = guestUser;
+                                                        UserCredentials
+                                                            .deleteCredentials();
+                                                        creds = null;
+                                                      }
+                                                    }
+                                                  },
                                                   controller:
                                                       _passwordController,
                                                   obscureText: true,
@@ -949,7 +966,6 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
             ),
           ),
         ],
-      ),
     );
   }
 }

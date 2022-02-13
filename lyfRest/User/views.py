@@ -33,6 +33,7 @@ def createAccount(request):
         token = Token.objects.get(user = user)
         return Response(
             {
+                'username':user.username,
                 'userId': user._id,
                 'token':str(token),
                 'isActive':str(user.is_active),
@@ -74,6 +75,7 @@ class loginToAccount(ObtainAuthToken):
             user = serializer.validated_data['user']
             token = Token.objects.get(user=user)
             return Response({
+                    'username':user.username,
                     'userId': user._id,
                     'token':str(token),
                     'isActive':str(user.is_active),
@@ -100,9 +102,9 @@ def updateAccount(request, userId):
 @permission_classes([IsAuthenticated])
 def deactivateAccount(request,userId):
     user = LyfUser.objects.get_user_by_id(userId)    
-    
+    user.is_active = False
     try:
-        user.delete()
+        user.save(update_fields = ['is_active'])
         return Response("Account deactivated successfully!")
 
     except Exception as e:

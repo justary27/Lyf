@@ -1,6 +1,11 @@
+import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/routes/routing.dart';
+import 'package:lyf/src/shared/contact_viewer.dart';
+import 'package:share_plus/share_plus.dart';
+
+import '../../permissions/permission_handler.dart';
 
 class InviteSettingsPage extends StatefulWidget {
   const InviteSettingsPage({Key? key}) : super(key: key);
@@ -10,10 +15,15 @@ class InviteSettingsPage extends StatefulWidget {
 }
 
 class _InviteSettingsPageState extends State<InviteSettingsPage> {
+  Widget? contactView;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
     return Stack(
       children: [
         Container(
@@ -48,150 +58,68 @@ class _InviteSettingsPageState extends State<InviteSettingsPage> {
             ),
             backgroundColor: Colors.transparent,
             body: ListView(
+              physics: const BouncingScrollPhysics(),
               children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
+                ListTile(
+                  contentPadding: EdgeInsets.symmetric(
                     horizontal: 0.05 * size.width,
+                    vertical: 0.020 * size.height,
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 0.05 * size.width,
-                          vertical: 0.025 * size.height,
-                        ),
-                        leading: Icon(
-                          Icons.info_outline_rounded,
-                          color: Colors.white,
-                          size: 35,
-                        ),
-                        title: Text(
-                          "Account info",
-                          style: GoogleFonts.ubuntu(
-                            textStyle: TextStyle(
-                              fontSize: 25,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        subtitle: Text(
-                          "Basic account related settings.",
-                          style: GoogleFonts.aBeeZee(
-                              textStyle: TextStyle(
-                                  color: Colors.white.withOpacity(0.35))),
-                        ),
-                      ),
-                      ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 0.05 * size.width,
-                          vertical: 0.025 * size.height,
-                        ),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(12),
-                            topRight: Radius.circular(12),
-                          ),
-                        ),
-                        tileColor: Colors.white.withOpacity(0.15),
-                        title: Text(
-                          "Username",
-                          style: GoogleFonts.ubuntu(
-                            textStyle: TextStyle(
-                              fontSize: 17.5,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        subtitle: Text(
-                          "justary27",
-                          style: GoogleFonts.aBeeZee(
-                              textStyle: TextStyle(
-                                  color: Colors.white.withOpacity(0.35))),
-                        ),
-                      ),
-                      ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 0.05 * size.width,
-                        ),
-                        tileColor: Colors.white.withOpacity(0.15),
-                        onTap: () {},
-                        title: Text(
-                          "Change Email",
-                          style: GoogleFonts.ubuntu(
-                            textStyle: TextStyle(
-                              fontSize: 17.5,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        subtitle: Text(
-                          "Change the email linked with your account.",
-                          style: GoogleFonts.aBeeZee(
-                              textStyle: TextStyle(
-                                  color: Colors.white.withOpacity(0.35))),
-                        ),
-                      ),
-                      ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 0.05 * size.width,
-                        ),
-                        tileColor: Colors.white.withOpacity(0.15),
-                        onTap: () {},
-                        title: Text(
-                          "Change Password",
-                          style: GoogleFonts.ubuntu(
-                            textStyle: TextStyle(
-                              fontSize: 17.5,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        subtitle: Text(
-                          "Change your current password.",
-                          style: GoogleFonts.aBeeZee(
-                              textStyle: TextStyle(
-                                  color: Colors.white.withOpacity(0.35))),
-                        ),
-                      ),
-                      ListTile(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(12),
-                            bottomRight: Radius.circular(12),
-                          ),
-                        ),
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 0.05 * size.width,
-                          vertical: 0.0125 * size.height,
-                        ),
-                        tileColor: Colors.white.withOpacity(0.15),
-                        title: Text(
-                          "Usage",
-                          style: GoogleFonts.ubuntu(
-                            textStyle: TextStyle(
-                              fontSize: 17.5,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        isThreeLine: true,
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "A visual representation of your daily usage.",
-                              style: GoogleFonts.aBeeZee(
-                                  textStyle: TextStyle(
-                                      color: Colors.white.withOpacity(0.35))),
-                            ),
-                            Card(),
-                          ],
-                        ),
-                      ),
-                    ],
+                  leading: Icon(
+                    Icons.share_rounded,
+                    color: Colors.white,
+                    size: 35,
                   ),
+                  title: Text(
+                    "Share link!",
+                    style: GoogleFonts.ubuntu(
+                      textStyle: TextStyle(
+                        fontSize: 25,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  subtitle: Text(
+                    "Basic account related settings.",
+                    style: GoogleFonts.aBeeZee(
+                      textStyle: TextStyle(
+                        color: Colors.white.withOpacity(0.35),
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    Share.share("text");
+                  },
                 ),
+                FutureBuilder<List<Contact>?>(
+                    future: contactViewerLauncher(
+                      requestContactAccess:
+                          PermissionManager.requestContactAccess,
+                      size: size,
+                    ),
+                    builder: ((context, snapshot) {
+                      print(snapshot.data);
+                      if (!snapshot.hasData) {
+                        return SizedBox(
+                          width: size.width,
+                          height: size.height,
+                          child: const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          ),
+                        );
+                      } else {
+                        return SizedBox(
+                          width: size.width,
+                          height: size.height,
+                          child: ContactViewer(
+                            size: size,
+                            contacts: snapshot.data!,
+                          ),
+                        );
+                      }
+                    }))
               ],
             ),
           ),

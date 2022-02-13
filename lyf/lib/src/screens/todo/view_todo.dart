@@ -20,30 +20,24 @@ class _ViewTodoPageState extends State<ViewTodoPage> {
   late http.Client updateTodoClient;
   late http.Client deleteTodoClient;
   late ValueNotifier<bool> isChanged;
-  void updateTodo(http.Client updateEntryClient, String title,
-      String description, DateTime datetime) async {
+  void updateTodo(http.Client updateTodoClient, Todo todo) async {
     http.Response response;
+    late int statusCode;
     try {
-      response = await updateEntryClient.put(
-        Uri.parse(
-          ApiEndpoints.updateTodo(currentUser.userID, widget.todo.entryId),
-        ),
-        body: {
-          '_userId': currentUser.userID,
-          '_title': title,
-          '_description': description,
-          '_created_on': datetime.toIso8601String(),
-        },
-        headers: currentUser.authHeader(),
+      statusCode = await Todo.updateTodo(
+        updateTodoClient: updateTodoClient,
+        todo: todo,
       );
-      if (response.statusCode == 200) {
+      if (statusCode == 200) {
         SnackBar snackBar = const SnackBar(
-          content: Text("Entry updated successfully!"),
+          content: Text("Todo updated successfully!"),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        RouteManager.navigateToDiary(context);
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          RouteManager.todoPage,
+          ModalRoute.withName(RouteManager.todoPage),
+        );
       } else {
-        print(response.body);
         SnackBar snackBar = const SnackBar(
           content: Text("Something went wrong"),
         );
@@ -54,17 +48,14 @@ class _ViewTodoPageState extends State<ViewTodoPage> {
     }
   }
 
-  void deleteTodo(http.Client deleteEntryClient, String entryId) async {
-    http.Response response;
+  void deleteTodo(http.Client deleteTodoClient, Todo todo) async {
+    late int statusCode;
     try {
-      response = await http.delete(
-        Uri.parse(ApiEndpoints.deleteTodo(currentUser.userID, entryId)),
-        headers: currentUser.authHeader(),
-      );
-      if (response.statusCode == 200) {
+      statusCode =
+          await Todo.deleteTodo(deleteTodoClient: deleteTodoClient, todo: todo);
+      if (statusCode == 200) {
         RouteManager.navigateToTodo(context);
       } else {
-        print(response.body);
         SnackBar snackBar = const SnackBar(
           content: Text("Something went wrong"),
         );
@@ -170,12 +161,14 @@ class _ViewTodoPageState extends State<ViewTodoPage> {
                                 onPressed: () {
                                   print(_titleController.text);
                                   if (isChanged.value == true) {
-                                    // updateTodo(
-                                    //   updateTodoClient,
-                                    //   _titleController.text,
-                                    //   _descriptionController.text,
-                                    //   dateController,
-                                    // );
+                                    Todo updatedTodo = Todo(
+                                        widget.todo.id,
+                                        _titleController.text,
+                                        _descriptionController.text,
+                                        widget.todo.createdAt,
+                                        false,
+                                        null);
+                                    updateTodo(updateTodoClient, updatedTodo);
                                   }
                                 },
                                 icon: const Icon(
@@ -420,8 +413,7 @@ class _ViewTodoPageState extends State<ViewTodoPage> {
                                                                       deleteTodo(
                                                                           deleteTodoClient,
                                                                           widget
-                                                                              .todo
-                                                                              .entryId);
+                                                                              .todo);
                                                                     },
                                                                     child: Text(
                                                                       "Yes",

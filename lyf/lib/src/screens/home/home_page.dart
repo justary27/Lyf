@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:lyf/src/global/globals.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/screens/home/drawer.dart';
+import 'package:lyf/src/services/user.dart';
 import 'package:lyf/src/shared/clock.dart';
 import 'package:lyf/src/shared/greet.dart';
 import 'dart:async';
@@ -118,7 +121,8 @@ class _HomePageState extends State<HomePage>
                                 width: size.width,
                                 child: SizedBox(
                                   width: 0.725 * size.width,
-                                  child: const Greetings(username: "Aryan"),
+                                  child:
+                                      Greetings(username: currentUser.username),
                                 ),
                               ),
                               Container(
@@ -136,8 +140,10 @@ class _HomePageState extends State<HomePage>
                                       clipBehavior: Clip.antiAlias,
                                       color: Colors.white.withOpacity(0.15),
                                       shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12))),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(12),
+                                        ),
+                                      ),
                                       child: InkWell(
                                         onTap: () {
                                           RouteManager.navigateToTodo(context);
@@ -148,21 +154,13 @@ class _HomePageState extends State<HomePage>
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            const Padding(
-                                              padding: EdgeInsets.all(12.0),
-                                              child: Icon(
-                                                Icons.note_add_outlined,
-                                                size: 40,
-                                                color: Colors.white,
-                                              ),
+                                            Padding(
+                                              padding: EdgeInsets.all(20.0),
+                                              child: SvgPicture.asset(
+                                                  "assets/images/todo.svg"),
                                             ),
                                             Text(
-                                              "TODOs",
-                                              // style: GoogleFonts.ubuntu(
-                                              //   textStyle: const TextStyle(
-                                              //     color: Colors.white,
-                                              //   ),
-                                              // ),
+                                              "Todo",
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .headline5,
@@ -175,8 +173,10 @@ class _HomePageState extends State<HomePage>
                                       clipBehavior: Clip.antiAlias,
                                       color: Colors.white.withOpacity(0.15),
                                       shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12))),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(12),
+                                        ),
+                                      ),
                                       child: InkWell(
                                         onTap: () {
                                           RouteManager.navigateToDiary(context);
@@ -187,16 +187,13 @@ class _HomePageState extends State<HomePage>
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            const Padding(
-                                              padding: EdgeInsets.all(12.0),
-                                              child: Icon(
-                                                Icons.note,
-                                                size: 40,
-                                                color: Colors.white,
-                                              ),
+                                            Padding(
+                                              padding: EdgeInsets.all(20.0),
+                                              child: SvgPicture.asset(
+                                                  "assets/images/diary.svg"),
                                             ),
                                             Text(
-                                              "Diary Entries",
+                                              "Diary",
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .headline5,
@@ -207,20 +204,43 @@ class _HomePageState extends State<HomePage>
                                     ),
                                     Card(
                                       clipBehavior: Clip.antiAlias,
-                                      color: Colors.white.withOpacity(0.5),
+                                      color: Colors.white.withOpacity(0.4),
                                       shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12))),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(12),
+                                        ),
+                                      ),
                                       child: InkWell(
                                         onTap: () {},
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.all(20.0),
+                                              child: SvgPicture.asset(
+                                                  "assets/images/statHealth.svg"),
+                                            ),
+                                            Text(
+                                              "StatHealth",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline5,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                     Card(
                                       clipBehavior: Clip.antiAlias,
                                       color: Colors.white.withOpacity(0.15),
                                       shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12))),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(12),
+                                        ),
+                                      ),
                                       child: InkWell(
                                         onTap: () {},
                                       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lyf/src/routes/routing.dart';
 
 class SideDrawer extends StatefulWidget {
@@ -45,21 +46,37 @@ class _SideDrawerState extends State<SideDrawer> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Material(
-                          shape: CircleBorder(),
-                          clipBehavior: Clip.hardEdge,
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () {
-                              RouteManager.navigateToProfilePicture(context);
-                            },
-                            child: CircleAvatar(
-                              radius: 50,
-                              backgroundColor: Colors.white.withOpacity(0.15),
-                              backgroundImage:
-                                  AssetImage("assets/images/diary.jpg"),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Padding(
+                            //   padding: EdgeInsets.all(8.0),
+                            //   child: Text(
+                            //     "Aryan",
+                            //     style: Theme.of(context).textTheme.headline4,
+                            //   ),
+                            // ),
+                            Material(
+                              shape: CircleBorder(),
+                              clipBehavior: Clip.hardEdge,
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () {
+                                  RouteManager.navigateToProfilePicture(
+                                      context);
+                                },
+                                child: CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor:
+                                      Colors.white.withOpacity(0.15),
+                                  backgroundImage:
+                                      AssetImage("assets/images/diary.jpg"),
+                                ),
+                                // child: Ink.image(image: AssetImage("assets/images/diary.jpg"),),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
                         IconButton(
                           splashColor: Colors.white.withOpacity(0.2),
@@ -92,9 +109,9 @@ class _SideDrawerState extends State<SideDrawer> {
                             "TODOs",
                             style: Theme.of(context).textTheme.headline4,
                           ),
-                          leading: const Icon(
-                            Icons.note_add,
-                            color: Colors.white,
+                          leading: SvgPicture.asset(
+                            "assets/images/todo.svg",
+                            height: 25,
                           ),
                           onTap: () {
                             RouteManager.navigateToTodo(context);
@@ -103,9 +120,9 @@ class _SideDrawerState extends State<SideDrawer> {
                         ListTile(
                           focusColor: Colors.white.withOpacity(0.15),
                           hoverColor: Colors.white.withOpacity(0.15),
-                          leading: const Icon(
-                            Icons.note,
-                            color: Colors.white,
+                          leading: SvgPicture.asset(
+                            "assets/images/diary.svg",
+                            height: 25,
                           ),
                           title: Text(
                             "Diary Entries",
@@ -119,12 +136,12 @@ class _SideDrawerState extends State<SideDrawer> {
                           // focusColor: Colors.black.withOpacity(0.5),
                           // hoverColor: Colors.black.withOpacity(0.5),
                           // tileColor: Colors.white.withOpacity(0.15),
-                          leading: const Icon(
-                            Icons.note_add,
-                            color: Colors.white,
+                          leading: SvgPicture.asset(
+                            "assets/images/statHealth.svg",
+                            height: 25,
                           ),
                           title: Text(
-                            "TODO",
+                            "StatHealth",
                             style: Theme.of(context).textTheme.headline4,
                           ),
                           onTap: () {},

@@ -1,14 +1,22 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lyf/src/global/globals.dart';
 import 'package:lyf/src/models/diary_model.dart';
+import 'package:lyf/src/permissions/permission_handler.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:http/http.dart' as http;
-import 'package:lyf/src/services/http.dart';
+import 'package:lyf/src/shared/audio_viewer.dart';
+import 'package:lyf/src/shared/entry_card.dart';
+import 'package:lyf/src/shared/image_viewer.dart';
 
 class ViewDiaryEntryPage extends StatefulWidget {
   final DiaryEntry entry;
-  const ViewDiaryEntryPage({Key? key, required this.entry}) : super(key: key);
+  final Size size;
+  const ViewDiaryEntryPage({
+    Key? key,
+    required this.entry,
+    required this.size,
+  }) : super(key: key);
 
   @override
   _ViewDiaryEntryPageState createState() => _ViewDiaryEntryPageState();
@@ -21,6 +29,119 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
   late http.Client deleteEntryClient;
   late DateTime dateController;
   late ValueNotifier<bool> isChanged;
+  late List<Widget> utilWidgets;
+  PlatformFile? audioAttachment;
+  List<PlatformFile?>? imageAttachments;
+
+  void updateEntry(http.Client updateEntryClient, DiaryEntry entry) async {
+    late int statusCode;
+    try {
+      statusCode = await DiaryEntry.updateEntry(
+          updateEntryClient: updateEntryClient, entry: entry);
+      if (statusCode == 200) {
+        SnackBar snackBar = const SnackBar(
+          content: Text("Entry updated successfully!"),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        FocusManager.instance.primaryFocus?.unfocus();
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          RouteManager.diaryPage,
+          ModalRoute.withName(RouteManager.diaryPage),
+        );
+      } else {
+        SnackBar snackBar = const SnackBar(
+          content: Text("Something went wrong"),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void deleteEntry(http.Client deleteEntryClient, DiaryEntry entry) async {
+    late int statusCode;
+    try {
+      statusCode = await DiaryEntry.deleteEntry(
+          deleteEntryClient: deleteEntryClient, entry: entry);
+      if (statusCode == 200) {
+        RouteManager.navigateToDiary(context);
+      } else {
+        SnackBar snackBar = const SnackBar(
+          content: Text("Something went wrong"),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void changeFlag(bool flag) {
+    setState(() {
+      // isChanged.value = flag;
+      if (flag) {
+        isChanged.value = flag;
+      } else {
+        if (utilWidgets.length > 2) {
+          isChanged.value = !flag;
+        } else {
+          if (widget.entry.entryTitle != _titleController.text ||
+              widget.entry.description != _descriptionController.text ||
+              widget.entry.createdAt != dateController) {
+          } else {
+            print(utilWidgets.length);
+            isChanged.value = flag;
+          }
+        }
+      }
+    });
+  }
+
+  void changeDescription(String newDescription) {
+    setState(() {
+      _descriptionController.text = newDescription;
+    });
+  }
+
+  void changeDate(DateTime newDate) {
+    setState(() {
+      dateController = newDate;
+    });
+  }
+
+  void addAttachment(Widget attachment) {
+    setState(() {
+      utilWidgets.add(attachment);
+    });
+  }
+
+  void removeAttachment(Key key) {
+    Widget? attachment;
+    for (Widget widget in utilWidgets) {
+      if (widget.key == key) {
+        attachment = widget;
+        break;
+      }
+    }
+    setState(() {
+      if (attachment != null) {
+        utilWidgets.remove(attachment);
+      }
+    });
+  }
+
+  void assignAudioAttachment(PlatformFile? audioFile) {
+    setState(() {
+      audioAttachment = audioFile;
+    });
+  }
+
+  void assignImageAttachment(List<PlatformFile?>? imageFiles) {
+    setState(() {
+      imageAttachments = imageFiles;
+    });
+  }
 
   @override
   void initState() {
@@ -28,66 +149,22 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
     _descriptionController = TextEditingController();
     isChanged = ValueNotifier(false);
     updateEntryClient = http.Client();
+    deleteEntryClient = http.Client();
     _titleController.text = widget.entry.entryTitle;
     _descriptionController.text = widget.entry.description;
-    deleteEntryClient = http.Client();
     dateController = widget.entry.entryCreatedAt;
+    utilWidgets = [
+      EntryCard(
+        size: widget.size,
+        parentContext: context,
+        entry: widget.entry,
+        notifyflagChange: changeFlag,
+        notifyDescriptionChange: changeDescription,
+        notifyDateChange: changeDate,
+        pageCode: 0,
+      )
+    ];
     super.initState();
-  }
-
-  void updateEntry(http.Client updateEntryClient, String title,
-      String description, DateTime datetime) async {
-    http.Response response;
-    try {
-      response = await updateEntryClient.put(
-        Uri.parse(
-          ApiEndpoints.updateEntry(currentUser.userID, widget.entry.entryId),
-        ),
-        body: {
-          '_userId': currentUser.userID,
-          '_title': title,
-          '_description': description,
-          '_created_on': datetime.toIso8601String(),
-        },
-        headers: currentUser.authHeader(),
-      );
-      if (response.statusCode == 200) {
-        SnackBar snackBar = const SnackBar(
-          content: Text("Entry updated successfully!"),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        RouteManager.navigateToDiary(context);
-      } else {
-        print(response.body);
-        SnackBar snackBar = const SnackBar(
-          content: Text("Something went wrong"),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void deleteEntry(http.Client deleteEntryClient, String entryId) async {
-    http.Response response;
-    try {
-      response = await http.delete(
-        Uri.parse(ApiEndpoints.deleteEntry(currentUser.userID, entryId)),
-        headers: currentUser.authHeader(),
-      );
-      if (response.statusCode == 200) {
-        RouteManager.navigateToDiary(context);
-      } else {
-        print(response.body);
-        SnackBar snackBar = const SnackBar(
-          content: Text("Something went wrong"),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      }
-    } catch (e) {
-      print(e);
-    }
   }
 
   @override
@@ -213,6 +290,7 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
           );
           return false;
         } else {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
           return true;
         }
       },
@@ -259,7 +337,9 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
                         Column(
                           children: [
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                PermissionManager.requestLocationAccess();
+                              },
                               icon: Icon(
                                 Icons.location_on_outlined,
                                 color: Colors.white,
@@ -273,7 +353,19 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
                         Column(
                           children: [
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                Widget? response = await imagePickerLauncher(
+                                    requestStorageAccess:
+                                        PermissionManager.requestStorageAccess,
+                                    size: size,
+                                    removeMethod: removeAttachment,
+                                    notifyflagChange: changeFlag,
+                                    fileServer: assignImageAttachment);
+                                if (response != null) {
+                                  addAttachment(response);
+                                }
+                                Navigator.of(context).pop();
+                              },
                               icon: Icon(
                                 Icons.image,
                                 color: Colors.white,
@@ -285,7 +377,20 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
                         Column(
                           children: [
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                Widget? response = await audioPickerLauncher(
+                                  requestStorageAccess:
+                                      PermissionManager.requestStorageAccess,
+                                  size: size,
+                                  removeMethod: removeAttachment,
+                                  notifyflagChange: changeFlag,
+                                  fileServer: assignAudioAttachment,
+                                );
+                                if (response != null) {
+                                  addAttachment(response);
+                                }
+                                Navigator.of(context).pop();
+                              },
                               icon: Icon(
                                 Icons.audiotrack_outlined,
                                 color: Colors.white,
@@ -338,8 +443,136 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
                       pinned: true,
                       backgroundColor: Colors.transparent,
                       leading: IconButton(
-                        onPressed: () {
-                          RouteManager.navigateToDiary(context);
+                        onPressed: () async {
+                          if (isChanged.value == true) {
+                            SnackBar snackBar = SnackBar(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                ),
+                              ),
+                              duration: const Duration(seconds: 5),
+                              backgroundColor: Colors.grey.shade700,
+                              content: Container(
+                                alignment: Alignment.center,
+                                height: 0.170 * size.height,
+                                padding: EdgeInsets.fromLTRB(
+                                  0,
+                                  0.0125 * size.height,
+                                  0,
+                                  0,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                        0,
+                                        0,
+                                        0,
+                                        0.0175 * size.height,
+                                      ),
+                                      child: Text(
+                                        "Do you want to go back without updating entry?",
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.ubuntu(
+                                          textStyle: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: ButtonBar(
+                                        alignment: MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            width: size.width * 0.40,
+                                            child: TextButton(
+                                              style: ButtonStyle(
+                                                shape:
+                                                    MaterialStateProperty.all<
+                                                        RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            6.0),
+                                                    side: const BorderSide(
+                                                      color: Colors.red,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                ScaffoldMessenger.of(context)
+                                                  ..hideCurrentSnackBar();
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text(
+                                                "Yes",
+                                                style: GoogleFonts.aBeeZee(
+                                                  textStyle: const TextStyle(
+                                                    color: Colors.red,
+                                                    fontSize: 20,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: size.width * 0.40,
+                                            child: TextButton(
+                                              style: ButtonStyle(
+                                                shape:
+                                                    MaterialStateProperty.all<
+                                                        RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                      6.0,
+                                                    ),
+                                                    side: BorderSide(
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                ScaffoldMessenger.of(context)
+                                                    .hideCurrentSnackBar();
+                                              },
+                                              child: Text(
+                                                "No",
+                                                style: GoogleFonts.aBeeZee(
+                                                  textStyle: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 20),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                            await Future.delayed(
+                              const Duration(seconds: 1),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+                            Navigator.of(context).pop();
+                            return;
+                          }
                         },
                         icon: const Icon(Icons.arrow_back_ios),
                       ),
@@ -388,12 +621,13 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
                                   onPressed: () {
                                     print(_titleController.text);
                                     if (isChanged.value == true) {
+                                      DiaryEntry _updatedEntry = DiaryEntry(
+                                          widget.entry.id,
+                                          _titleController.text,
+                                          _descriptionController.text,
+                                          dateController);
                                       updateEntry(
-                                        updateEntryClient,
-                                        _titleController.text,
-                                        _descriptionController.text,
-                                        dateController,
-                                      );
+                                          updateEntryClient, _updatedEntry);
                                     }
                                   },
                                   icon: const Icon(
@@ -414,328 +648,9 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
                     ),
                     SliverFillRemaining(
                       child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
                         child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 0.05 * size.width,
-                                  vertical: 0.015 * size.height),
-                              child: Card(
-                                clipBehavior: Clip.antiAlias,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12)),
-                                color: Colors.white.withOpacity(0.15),
-                                child: SizedBox(
-                                  width: 0.9 * size.width,
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 0.05 * size.width,
-                                        vertical: 0.01 * size.height),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.fromLTRB(
-                                            0,
-                                            0.025 * size.height,
-                                            0.0085 * size.width,
-                                            0.025 * size.height,
-                                          ),
-                                          // child: Text(
-                                          //   widget.entry.entryDescription,
-                                          //   style: GoogleFonts.aBeeZee(
-                                          //     textStyle: TextStyle(
-                                          //       color:
-                                          //           Colors.white.withOpacity(0.5),
-                                          //     ),
-                                          //   ),
-                                          // ),
-                                          child: TextFormField(
-                                            controller: _descriptionController,
-                                            style: GoogleFonts.aBeeZee(
-                                              textStyle: TextStyle(
-                                                color: Colors.white
-                                                    .withOpacity(0.5),
-                                              ),
-                                            ),
-                                            cursorColor:
-                                                Colors.white.withOpacity(0.5),
-                                            decoration: InputDecoration(
-                                              filled: false,
-                                              border: InputBorder.none,
-                                            ),
-                                            maxLines: null,
-                                            onChanged: (value) {
-                                              if (_descriptionController.text !=
-                                                  widget.entry.description) {
-                                                isChanged.value = true;
-                                              } else {
-                                                isChanged.value = false;
-                                              }
-                                            },
-                                          ),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            TextButton(
-                                              onPressed: () {
-                                                showDatePicker(
-                                                  context: context,
-                                                  initialDate: DateTime.now(),
-                                                  firstDate: DateTime(2000),
-                                                  lastDate: DateTime.now().add(
-                                                    const Duration(days: 7),
-                                                  ),
-                                                  builder:
-                                                      (BuildContext context,
-                                                          Widget? child) {
-                                                    return Theme(
-                                                      data: Theme.of(context),
-                                                      child: child!,
-                                                    );
-                                                  },
-                                                ).then((value) {
-                                                  setState(() {
-                                                    if (value != null) {
-                                                      dateController = value;
-                                                      isChanged.value = true;
-                                                    } else {
-                                                      dateController = widget
-                                                          .entry.entryCreatedAt;
-                                                    }
-                                                  });
-                                                });
-                                                //                                   showDatePicker(
-                                                //   context: context,
-                                                //   initialDate: DateTime.now(),
-                                                //   firstDate: DateTime(1970),
-                                                //   builder: (BuildContext context, Widget child) {
-                                                //     return Theme(
-                                                //       data: ThemeData.dark().copyWith(
-                                                //         colorScheme: ColorScheme.dark(
-                                                //             primary: Colors.deepPurple,
-                                                //             onPrimary: Colors.white,
-                                                //             surface: Colors.pink,
-                                                //             onSurface: Colors.yellow,
-                                                //             ),
-                                                //         dialogBackgroundColor:Colors.blue[900],
-                                                //       ),
-                                                //       child: child,
-                                                //     );
-                                                //   },
-                                                // );
-                                              },
-                                              child: Text(
-                                                "${dateController.day}/${dateController.month}/${dateController.year}",
-                                                style: GoogleFonts.ubuntu(
-                                                  textStyle: const TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                              ),
-                                            ),
-                                            ButtonBar(
-                                              alignment: MainAxisAlignment.end,
-                                              children: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    SnackBar snackBar =
-                                                        SnackBar(
-                                                      shape:
-                                                          const RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  10),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  10),
-                                                        ),
-                                                      ),
-                                                      duration: const Duration(
-                                                        seconds: 5,
-                                                      ),
-                                                      backgroundColor:
-                                                          Colors.grey.shade700,
-                                                      content: Container(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        height:
-                                                            0.170 * size.height,
-                                                        padding:
-                                                            EdgeInsets.fromLTRB(
-                                                          0,
-                                                          0.0125 * size.height,
-                                                          0,
-                                                          0,
-                                                        ),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .fromLTRB(
-                                                                0,
-                                                                0,
-                                                                0,
-                                                                0.0175 *
-                                                                    size.height,
-                                                              ),
-                                                              child: Text(
-                                                                "Are you sure you want to delete the entry ${widget.entry.entryTitle}?",
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .ubuntu(
-                                                                  textStyle:
-                                                                      const TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        20,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              child: ButtonBar(
-                                                                alignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  SizedBox(
-                                                                    width: size
-                                                                            .width *
-                                                                        0.40,
-                                                                    child:
-                                                                        TextButton(
-                                                                      style:
-                                                                          ButtonStyle(
-                                                                        shape: MaterialStateProperty.all<
-                                                                            RoundedRectangleBorder>(
-                                                                          RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(6.0),
-                                                                            side:
-                                                                                const BorderSide(
-                                                                              color: Colors.red,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      onPressed:
-                                                                          () {
-                                                                        ScaffoldMessenger.of(
-                                                                            context)
-                                                                          ..hideCurrentSnackBar();
-                                                                        deleteEntry(
-                                                                            deleteEntryClient,
-                                                                            widget.entry.entryId);
-                                                                      },
-                                                                      child:
-                                                                          Text(
-                                                                        "Yes",
-                                                                        style: GoogleFonts
-                                                                            .aBeeZee(
-                                                                          textStyle:
-                                                                              const TextStyle(
-                                                                            color:
-                                                                                Colors.red,
-                                                                            fontSize:
-                                                                                20,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: size
-                                                                            .width *
-                                                                        0.40,
-                                                                    child:
-                                                                        TextButton(
-                                                                      style:
-                                                                          ButtonStyle(
-                                                                        shape: MaterialStateProperty.all<
-                                                                            RoundedRectangleBorder>(
-                                                                          RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(
-                                                                              6.0,
-                                                                            ),
-                                                                            side:
-                                                                                BorderSide(
-                                                                              color: Colors.white,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      onPressed:
-                                                                          () {
-                                                                        ScaffoldMessenger.of(context)
-                                                                            .hideCurrentSnackBar();
-                                                                      },
-                                                                      child:
-                                                                          Text(
-                                                                        "No",
-                                                                        style: GoogleFonts
-                                                                            .aBeeZee(
-                                                                          textStyle: TextStyle(
-                                                                              color: Colors.white,
-                                                                              fontSize: 20),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    );
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(snackBar);
-                                                  },
-                                                  child: Text(
-                                                    "Delete",
-                                                    style: GoogleFonts.ubuntu(
-                                                      textStyle: TextStyle(
-                                                        color: Colors.red,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () {},
-                                                  child: Text(
-                                                    "Save as PDF",
-                                                    style: GoogleFonts.ubuntu(),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          children: utilWidgets,
                         ),
                       ),
                     )
