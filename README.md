@@ -6,8 +6,8 @@
     <img src="readmeAssets/ds2.png" width=150> &emsp;
     <img src="readmeAssets/ds3.jpg" width=150 height=314.57> &emsp;
     <img src="readmeAssets/ds4.jpg" width=150 height=314.57> &emsp;
-    <img src="readmeAssets/ds5.jpg" width=150 height=314.57> &emsp;
-    <img src="readmeAssets/ds6.jpg" width=150 height=314.57> &emsp;
+    <!-- <img src="readmeAssets/ds5.jpg" width=150 height=314.57> &emsp; -->
+    <!-- <img src="readmeAssets/ds6.jpg" width=150 height/=314.57> &emsp; -->
 </div>
 </br>
 
