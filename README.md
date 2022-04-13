@@ -34,7 +34,7 @@ Are you also one of those, who like to keep their best experiences captured in a
 
 </br>
 
-Download the app and _**start writing your lyf!**_
+### Download the app and _**start writing your lyf!**_
 
 **More features coming soon!** 
 
