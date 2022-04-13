@@ -25,3 +25,5 @@ LyfApp/
 *.sqlite3
 *.pyc
 *.env
+.vscode/
+.idea/
