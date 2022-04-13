@@ -168,7 +168,8 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 
-  void logIn(http.Client logInClient, String email, String password) async {
+  Future<void> logIn(
+      http.Client logInClient, String email, String password) async {
     SnackBar snackBar = const SnackBar(
       content: Text("Logging in ..."),
     );
@@ -290,9 +291,9 @@ class _LoginFormState extends State<LoginForm> {
               width: 0.75 * size.width,
               height: 50,
               child: TextButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    logIn(widget.logInClient, emailController.text,
+                    await logIn(widget.logInClient, emailController.text,
                         passwordController.text);
                   }
                 },

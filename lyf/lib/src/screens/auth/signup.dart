@@ -150,7 +150,7 @@ class _LoginFormState extends State<LoginForm> {
     super.initState();
   }
 
-  void signUp(http.Client signUpClient, String email, String username,
+  Future<void> signUp(http.Client signUpClient, String email, String username,
       String password, String cpassword) async {
     // SnackBar snackBar = const SnackBar(
     //   content: Text("Signing up ..."),
@@ -371,14 +371,15 @@ class _LoginFormState extends State<LoginForm> {
               width: 0.75 * size.width,
               height: 50,
               child: TextButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    signUp(
-                        widget.client,
-                        emailController.text,
-                        usernameController.text,
-                        passwordController.text,
-                        cpasswordController.text);
+                    await signUp(
+                      widget.client,
+                      emailController.text,
+                      usernameController.text,
+                      passwordController.text,
+                      cpasswordController.text,
+                    );
                   }
                 },
                 child: Text(
