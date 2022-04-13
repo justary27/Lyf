@@ -153,17 +153,17 @@ class _DiaryPageState extends State<DiaryPage> {
                         ),
                       ),
                       actions: [
-                        PopupMenuButton(
-                          color: Colors.white,
-                          itemBuilder: (context) {
-                            return [
-                              const PopupMenuItem(
-                                child: Text("Save all as PDF"),
-                              ),
-                            ];
-                          },
-                          icon: const Icon(Icons.more_vert),
-                        )
+                        // PopupMenuButton(
+                        //   color: Colors.white,
+                        //   itemBuilder: (context) {
+                        //     return [
+                        //       const PopupMenuItem(
+                        //         child: Text("Save all as PDF"),
+                        //       ),
+                        //     ];
+                        //   },
+                        //   icon: const Icon(Icons.more_vert),
+                        // )
                       ],
                     ),
                     // (retrieveStatus)
@@ -738,15 +738,15 @@ class _DiaryPageState extends State<DiaryPage> {
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                TextButton(
-                                                                  onPressed:
-                                                                      () {},
-                                                                  child: Text(
-                                                                    "Save as PDF",
-                                                                    style: GoogleFonts
-                                                                        .ubuntu(),
-                                                                  ),
-                                                                )
+                                                                // TextButton(
+                                                                //   onPressed:
+                                                                //       () {},
+                                                                //   child: Text(
+                                                                //     "Save as PDF",
+                                                                //     style: GoogleFonts
+                                                                //         .ubuntu(),
+                                                                //   ),
+                                                                // )
                                                               ],
                                                             ),
                                                           ],

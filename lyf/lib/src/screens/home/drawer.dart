@@ -132,33 +132,33 @@ class _SideDrawerState extends State<SideDrawer> {
                             RouteManager.navigateToDiary(context);
                           },
                         ),
-                        ListTile(
-                          // focusColor: Colors.black.withOpacity(0.5),
-                          // hoverColor: Colors.black.withOpacity(0.5),
-                          // tileColor: Colors.white.withOpacity(0.15),
-                          leading: SvgPicture.asset(
-                            "assets/images/statHealth.svg",
-                            height: 25,
-                          ),
-                          title: Text(
-                            "StatHealth",
-                            style: Theme.of(context).textTheme.headline4,
-                          ),
-                          onTap: () {},
-                        ),
-                        ListTile(
-                          focusColor: Colors.white.withOpacity(0.15),
-                          hoverColor: Colors.white.withOpacity(0.15),
-                          leading: const Icon(
-                            Icons.note_add,
-                            color: Colors.white,
-                          ),
-                          title: Text(
-                            "TODO",
-                            style: Theme.of(context).textTheme.headline4,
-                          ),
-                          onTap: () {},
-                        ),
+                        // ListTile(
+                        //   // focusColor: Colors.black.withOpacity(0.5),
+                        //   // hoverColor: Colors.black.withOpacity(0.5),
+                        //   // tileColor: Colors.white.withOpacity(0.15),
+                        //   leading: SvgPicture.asset(
+                        //     "assets/images/statHealth.svg",
+                        //     height: 25,
+                        //   ),
+                        //   title: Text(
+                        //     "StatHealth",
+                        //     style: Theme.of(context).textTheme.headline4,
+                        //   ),
+                        //   onTap: () {},
+                        // ),
+                        // ListTile(
+                        //   focusColor: Colors.white.withOpacity(0.15),
+                        //   hoverColor: Colors.white.withOpacity(0.15),
+                        //   leading: const Icon(
+                        //     Icons.note_add,
+                        //     color: Colors.white,
+                        //   ),
+                        //   title: Text(
+                        //     "TODO",
+                        //     style: Theme.of(context).textTheme.headline4,
+                        //   ),
+                        //   onTap: () {},
+                        // ),
                       ],
                     ),
                   ),

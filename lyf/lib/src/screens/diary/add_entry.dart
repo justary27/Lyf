@@ -149,22 +149,22 @@ class _AddDiaryEntryPageState extends State<AddDiaryEntryPage> {
                 ),
               ),
             ),
-            floatingActionButton: Builder(builder: (context) {
-              return FloatingActionButton(
-                tooltip: "Add attachment",
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                  // showBottomSheet(
-                  //     context: context,
-                  //     builder: (context) => Container(
-                  //           width: size.width * 0.8,
-                  //           height: 0.1 * size.height,
-                  //         ));
-                },
-                backgroundColor: Colors.white.withOpacity(0.35),
-                child: const Icon(Icons.attachment),
-              );
-            }),
+            // floatingActionButton: Builder(builder: (context) {
+            //   return FloatingActionButton(
+            //     tooltip: "Add attachment",
+            //     onPressed: () {
+            //       Scaffold.of(context).openDrawer();
+            //       // showBottomSheet(
+            //       //     context: context,
+            //       //     builder: (context) => Container(
+            //       //           width: size.width * 0.8,
+            //       //           height: 0.1 * size.height,
+            //       //         ));
+            //     },
+            //     backgroundColor: Colors.white.withOpacity(0.35),
+            //     child: const Icon(Icons.attachment),
+            //   );
+            // }),
             backgroundColor: Colors.transparent,
             body: CustomScrollView(slivers: [
               SliverAppBar(
@@ -228,13 +228,13 @@ class _AddDiaryEntryPageState extends State<AddDiaryEntryPage> {
                       color: Colors.white,
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.more_vert,
-                      color: Colors.white,
-                    ),
-                  ),
+                  // IconButton(
+                  //   onPressed: () {},
+                  //   icon: const Icon(
+                  //     Icons.more_vert,
+                  //     color: Colors.white,
+                  //   ),
+                  // ),
                 ],
               ),
               SliverFillRemaining(

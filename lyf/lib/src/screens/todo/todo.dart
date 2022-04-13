@@ -369,22 +369,22 @@ class _TodoPageState extends State<TodoPage> {
                                               ),
                                             ),
                                           ),
-                                          TextButton(
-                                            onPressed: () {
-                                              late TimeOfDay selectedTime;
-                                              late DateTime selectedDate;
-                                              dateTimePicker(
-                                                  parentContext: context);
-                                              // showTimePicker(
-                                              //   context: context,
-                                              //   initialTime: TimeOfDay.now(),
-                                              // );
-                                            },
-                                            child: Text(
-                                              "Set Reminder",
-                                              style: GoogleFonts.ubuntu(),
-                                            ),
-                                          )
+                                          // TextButton(
+                                          //   onPressed: () {
+                                          //     late TimeOfDay selectedTime;
+                                          //     late DateTime selectedDate;
+                                          //     dateTimePicker(
+                                          //         parentContext: context);
+                                          //     // showTimePicker(
+                                          //     //   context: context,
+                                          //     //   initialTime: TimeOfDay.now(),
+                                          //     // );
+                                          //   },
+                                          //   child: Text(
+                                          //     "Set Reminder",
+                                          //     style: GoogleFonts.ubuntu(),
+                                          //   ),
+                                          // )
                                         ],
                                       )
                                     ],

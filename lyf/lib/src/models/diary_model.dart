@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:lyf/src/global/globals.dart';
-import 'package:lyf/src/services/firebase/storage.dart';
 import 'package:lyf/src/services/http.dart';
 
 class DiaryEntry {
@@ -37,19 +36,19 @@ class DiaryEntry {
   }
 
   static DiaryEntry fromJson(Map<String, dynamic> jsonResponse) {
-    print(jsonResponse["_imageLinks"]);
     return DiaryEntry(
       jsonResponse['_id'],
       jsonResponse['_title'],
       jsonResponse['_description'].toString(),
       DateTime.parse(jsonResponse['_createdAt']),
       jsonResponse["_audioLink"],
-      (jsonResponse["_imageLinks"] != 'Null')
-          ? jsonResponse["_imageLinks"]
+      (jsonResponse["_imageLinks"] == 'None' ||
+              jsonResponse["_imageLinks"] == '')
+          ? null
+          : jsonResponse["_imageLinks"]
               .substring(1, jsonResponse["_imageLinks"].length - 1)
               .replaceAll('\'', '')
-              .split(',')
-          : null,
+              .split(','),
     );
   }
 

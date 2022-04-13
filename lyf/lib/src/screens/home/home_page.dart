@@ -212,25 +212,25 @@ class _HomePageState extends State<HomePage>
                                       ),
                                       child: InkWell(
                                         onTap: () {},
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.all(20.0),
-                                              child: SvgPicture.asset(
-                                                  "assets/images/statHealth.svg"),
-                                            ),
-                                            Text(
-                                              "StatHealth",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline5,
-                                            ),
-                                          ],
-                                        ),
+                                        // child: Column(
+                                        //   mainAxisAlignment:
+                                        //       MainAxisAlignment.center,
+                                        //   crossAxisAlignment:
+                                        //       CrossAxisAlignment.center,
+                                        //   children: [
+                                        //     Padding(
+                                        //       padding: EdgeInsets.all(20.0),
+                                        //       child: SvgPicture.asset(
+                                        //           "assets/images/statHealth.svg"),
+                                        //     ),
+                                        //     Text(
+                                        //       "StatHealth",
+                                        //       style: Theme.of(context)
+                                        //           .textTheme
+                                        //           .headline5,
+                                        //     ),
+                                        //   ],
+                                        // ),
                                       ),
                                     ),
                                     Card(
