@@ -25,7 +25,11 @@ class _SettingsPageState extends State<SettingsPage> {
               gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.grey.shade700, Colors.grey.shade900, Colors.black],
+            colors: [
+              Colors.grey.shade700,
+              Colors.grey.shade900,
+              Colors.black,
+            ],
           )),
           child: const CustomPaint(),
         ),

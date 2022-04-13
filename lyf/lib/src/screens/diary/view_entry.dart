@@ -1,13 +1,17 @@
+import 'dart:developer';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lyf/src/errors/firestorage_exceptions.dart';
 import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/permissions/permission_handler.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:http/http.dart' as http;
+import 'package:lyf/src/services/firebase/storage.dart';
 import 'package:lyf/src/shared/audio_viewer.dart';
 import 'package:lyf/src/shared/entry_card.dart';
 import 'package:lyf/src/shared/image_viewer.dart';
+import 'package:lyf/src/shared/snackbars/fileupload_snack.dart';
 
 class ViewDiaryEntryPage extends StatefulWidget {
   final DiaryEntry entry;
@@ -28,6 +32,7 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
   late http.Client updateEntryClient;
   late http.Client deleteEntryClient;
   late DateTime dateController;
+  List<String>? imageAttachmentLinks;
   late ValueNotifier<bool> isChanged;
   late List<Widget> utilWidgets;
   PlatformFile? audioAttachment;
@@ -36,6 +41,26 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
   void updateEntry(http.Client updateEntryClient, DiaryEntry entry) async {
     late int statusCode;
     try {
+      try {
+        if (imageAttachments != null || audioAttachment != null) {
+          ScaffoldMessenger.of(context).showSnackBar(fileSnackBar);
+          await FireStorage.diaryUploads(
+            entryId: entry.entryId!,
+            imageFiles: imageAttachments,
+            audioFile: audioAttachment,
+            notifyImageLinker: assignImageLinks,
+          );
+        }
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      } catch (e) {
+        log(e.runtimeType.toString());
+        if (e == ImageUploadException) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        } else if (e == AudioUploadException) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        }
+      }
+      entry.imageLinks = imageAttachmentLinks;
       statusCode = await DiaryEntry.updateEntry(
           updateEntryClient: updateEntryClient, entry: entry);
       if (statusCode == 200) {
@@ -90,7 +115,6 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
               widget.entry.description != _descriptionController.text ||
               widget.entry.createdAt != dateController) {
           } else {
-            print(utilWidgets.length);
             isChanged.value = flag;
           }
         }
@@ -137,10 +161,30 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
     });
   }
 
+  void assignImageLinks(List<String> imageLinkList) {
+    setState(() {
+      imageAttachmentLinks = imageLinkList;
+    });
+  }
+
   void assignImageAttachment(List<PlatformFile?>? imageFiles) {
     setState(() {
       imageAttachments = imageFiles;
     });
+  }
+
+  Widget? initImageWidgetProvider() {
+    if (widget.entry.imageLinks.toString() != '[Null]') {
+      return ImageViewer(
+        removeMethod: removeAttachment,
+        notifyflagChange: changeFlag,
+        fileHandler: assignImageAttachment,
+        size: MediaQuery.of(context).size,
+        imageUrls: widget.entry.imageLinks,
+      );
+    } else {
+      return null;
+    }
   }
 
   @override
@@ -166,6 +210,23 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
     ];
     super.initState();
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   try {
+  //     Widget? widget = initImageWidgetProvider();
+  //     setState(() {
+  //       if (widget != null) {
+  //         utilWidgets.add(widget);
+  //       }
+  //     });
+  //     print(utilWidgets.length);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //   // TODO: implement didChangeDependencies
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -318,14 +379,15 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
               drawer: Container(
                 width: 0.2 * size.width,
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    Colors.grey.shade500,
-                    Colors.grey.shade800,
-                  ],
-                )),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomLeft,
+                    colors: [
+                      Colors.grey.shade500,
+                      Colors.grey.shade800,
+                    ],
+                  ),
+                ),
                 child: Drawer(
                   backgroundColor: Colors.transparent,
                   child: Container(
@@ -619,13 +681,17 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
                                 visible: isChanged.value,
                                 child: IconButton(
                                   onPressed: () {
-                                    print(_titleController.text);
                                     if (isChanged.value == true) {
                                       DiaryEntry _updatedEntry = DiaryEntry(
-                                          widget.entry.id,
-                                          _titleController.text,
-                                          _descriptionController.text,
-                                          dateController);
+                                        widget.entry.id,
+                                        _titleController.text,
+                                        _descriptionController.text,
+                                        dateController,
+                                        "",
+                                        [
+                                          "https://www.google.com",
+                                        ],
+                                      );
                                       updateEntry(
                                           updateEntryClient, _updatedEntry);
                                     }

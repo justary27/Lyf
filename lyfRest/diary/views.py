@@ -26,7 +26,6 @@ import io
 def getAllDiaries(request,userId):
     entries = DiaryEntry.objects.getEntries(userId)
     data = [entry.asDict for entry in entries]
-
     return Response(data)
 
 @api_view(["GET"])
@@ -102,14 +101,18 @@ def getPDFbyEntryId(request,userId, entryId):
 @permission_classes([IsAuthenticated])
 def createEntry(request, userId):
     data = request.data
+    print(data["_imageLinks"])
 
     try:
         entry = DiaryEntry.objects.create(
                 _user = LyfUser.objects.get_user_by_id(data['_userId']),
                 _title = data['_title'],
                 _description = data['_description'],
-                _created_on = datetime.fromisoformat(data['_created_on'])
-            )
+                _created_on = datetime.fromisoformat(data['_created_on']),
+                _audioLink = data['_audioLink'],
+                _imageLinks = list(data['_imageLinks'][1:-1]) if data['_imageLinks'] != "Null" else "None",
+                )
+            
         return Response("Entry Created!" ,status=status.HTTP_200_OK)
     except Exception as e:
         return Response(str(e), status= status.HTTP_403_FORBIDDEN)
@@ -118,8 +121,19 @@ def createEntry(request, userId):
 @permission_classes([IsAuthenticated])
 def updateEntry(request, userId, entryId):
     data = request.data
+    print(data["_imageLinks"])
+    corrected_data = {
+        '_user':data["_userId"],
+        '_title':data["_title"],
+        '_description':data["_description"],
+        '_created_on': data['_created_on'],
+        '_audioLink':data["_audioLink"],
+        '_imageLinks':data["_imageLinks"].split(" "),
+    }
+    print(corrected_data)
+
     entry = DiaryEntry.objects.get_entry_by_id(entryId)    
-    serializer = DiaryEntrySerializer(entry, data = data)
+    serializer = DiaryEntrySerializer(entry, data = corrected_data)
     if serializer.is_valid():
         serializer.save()
         return Response("Entry Updated!", status=status.HTTP_200_OK)

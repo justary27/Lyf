@@ -53,6 +53,7 @@ dependencies:
   firebase_auth:
   googleapis_auth:
   googleapis:
+  firebase_storage: ^10.2.7
 
 dev_dependencies:
   flutter_test:

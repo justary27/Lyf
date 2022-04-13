@@ -6,6 +6,7 @@ import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:http/http.dart' as http;
 import 'package:lyf/src/services/http.dart';
+import 'package:lyf/src/shared/entry_card.dart';
 import 'package:share_plus/share_plus.dart';
 
 class DiaryPage extends StatefulWidget {
@@ -477,6 +478,12 @@ class _DiaryPageState extends State<DiaryPage> {
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 0.05 * size.width,
                                                 vertical: 0.015 * size.height),
+                                            // child: EntryCard(
+                                            //   entry: diaryEntries[index],
+                                            //   size: size,
+                                            //   parentContext: context,
+                                            //   pageCode: 1,
+                                            // ),
                                             child: Card(
                                               clipBehavior: Clip.antiAlias,
                                               shape: RoundedRectangleBorder(

@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:lyf/src/global/globals.dart';
+import 'package:lyf/src/services/firebase/storage.dart';
 import 'package:lyf/src/services/http.dart';
 
 class DiaryEntry {
@@ -9,12 +9,16 @@ class DiaryEntry {
   final String title;
   final String description;
   final DateTime createdAt;
+  String? audioLink;
+  List<String>? imageLinks;
 
   DiaryEntry(
     this.id,
     this.title,
     this.description,
     this.createdAt,
+    this.audioLink,
+    this.imageLinks,
   );
   String? get entryId {
     return id;
@@ -32,12 +36,20 @@ class DiaryEntry {
     return createdAt;
   }
 
-  static DiaryEntry fromJson(Map<String, dynamic> json) {
+  static DiaryEntry fromJson(Map<String, dynamic> jsonResponse) {
+    print(jsonResponse["_imageLinks"]);
     return DiaryEntry(
-      json['_id'],
-      json['_title'],
-      json['_description'].toString(),
-      DateTime.parse(json['_createdAt']),
+      jsonResponse['_id'],
+      jsonResponse['_title'],
+      jsonResponse['_description'].toString(),
+      DateTime.parse(jsonResponse['_createdAt']),
+      jsonResponse["_audioLink"],
+      (jsonResponse["_imageLinks"] != 'Null')
+          ? jsonResponse["_imageLinks"]
+              .substring(1, jsonResponse["_imageLinks"].length - 1)
+              .replaceAll('\'', '')
+              .split(',')
+          : null,
     );
   }
 
@@ -47,6 +59,9 @@ class DiaryEntry {
       '_title': entry.title,
       '_description': entry.description,
       '_created_on': entry.createdAt.toIso8601String(),
+      '_audioLink': entry.audioLink,
+      '_imageLinks':
+          (entry.imageLinks != null) ? entry.imageLinks!.join(" ") : "Null",
     };
   }
 
@@ -102,6 +117,7 @@ class DiaryEntry {
         ),
         headers: currentUser.authHeader(),
       );
+      // await FireStorage.deletediaryUploads(entryId: entry.entryId!);
       return response.statusCode;
     } catch (e) {
       print(e);

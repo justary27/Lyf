@@ -82,7 +82,6 @@ class Todo {
     required http.Client createTodoClient,
     required Todo todo,
   }) async {
-    late int statusCode;
     http.Response? response;
     try {
       response = await createTodoClient.post(

@@ -218,6 +218,8 @@ class _AddDiaryEntryPageState extends State<AddDiaryEntryPage> {
                         _titleController.text,
                         _descriptionController.text,
                         DateTime.now(),
+                        "",
+                        null,
                       );
                       createEntry(createEntryClient, entry);
                     },
