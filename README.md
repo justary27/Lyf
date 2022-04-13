@@ -48,3 +48,11 @@ Got ideas to improve the app? Contact us at thelyfApp@gmail.com.
 - Django Rest FrameWork
 - Heroku 
 - Firebase
+
+</br>
+</br>
+
+<div align=center>
+    <p>Made with ❤️ by
+    <a href="https://justary27.web.app"><img src="readmeAssets/justary27.png" align=center></a> </p>
+</div>
