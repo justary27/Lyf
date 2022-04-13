@@ -53,6 +53,10 @@ Got ideas to improve the app? Contact us at thelyfApp@gmail.com.
 </br>
 
 <div align=center>
+    <hr>
     <p>Made with ❤️ by
-    <a href="https://justary27.web.app"><img src="readmeAssets/justary27.png" align=center></a> </p>
+        <a href="https://justary27.web.app">
+            <img src="readmeAssets/justary27.png" align=center>
+        </a>
+    </p>
 </div>
