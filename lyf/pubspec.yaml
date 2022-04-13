@@ -54,6 +54,7 @@ dependencies:
   googleapis_auth:
   googleapis:
   firebase_storage: ^10.2.7
+  rename: ^2.0.1
 
 dev_dependencies:
   flutter_test:
