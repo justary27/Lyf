@@ -1,3 +1,5 @@
+<img src="readmeAssets/lyf.svg" align="left" height=40> 
+
 # Lyf
 `“Life, optimized.”`
 
