@@ -1,6 +1,8 @@
-<img src="readmeAssets/lyf.svg" align="left" height=40> 
+<div>
+    <img src="readmeAssets/lyf.svg" align="left" height=40> 
+    <h1>Lyf</h1>
+</div>
 
-# Lyf
 `“Life, optimized.”`
 
 <div>
@@ -37,3 +39,12 @@ Download the app and _**start writing your lyf!**_
 **More features coming soon!** 
 
 Got ideas to improve the app? Contact us at thelyfApp@gmail.com.
+
+</br>
+
+### Tech Stack
+- Flutter 
+- Django
+- Django Rest FrameWork
+- Heroku 
+- Firebase
