@@ -9,17 +9,6 @@ from .models import DiaryEntry
 from .serializers import DiaryEntrySerializer
 from .utils import DiaryGenerator
 
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A4
-from reportlab.platypus import BaseDocTemplate
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from django.conf import settings
-from reportlab import rl_config
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.units import inch
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
-
 import io
 # Create your views here.
 @api_view(["GET"])
@@ -57,10 +46,6 @@ def getPDFbyEntryId(request,userId, entryId):
     file_buffer.seek(0)
 
     return FileResponse(file_buffer,as_attachment=True,filename=f"{data['_title']}.pdf")
-
-# @api_view(["PUT"])
-# def updateEntry(request, userId, entryId):
-#     entry = DiaryEntry.objects.get_entry_by_id(entryId)
     
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])

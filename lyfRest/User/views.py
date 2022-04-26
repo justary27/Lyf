@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -5,7 +6,13 @@ from rest_framework.authtoken.models import Token
 from .models import LyfUser
 from rest_framework import status
 from rest_framework.authtoken.views import ObtainAuthToken
+from django.conf import settings
+
 # Create your views here.
+def index(request):
+    print(settings.STATIC_URL)
+    print(settings.MEDIA_ROOT)
+    return render(request,str(settings.BASE_DIR)+"/static/templates/index.html")
 
 @api_view(["GET",])
 @permission_classes([IsAuthenticated])

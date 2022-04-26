@@ -4,6 +4,7 @@ from rest_framework.authtoken import views as drf
 from . import views
 
 urlpatterns = [
+    path('', views.index),
     path('signUp/', views.createAccount),
     path('logIn/', views.loginToAccount.as_view()),
     path('<str:userId>/get/',views.get),

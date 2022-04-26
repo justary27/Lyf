@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <!-- <base href="/"> -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="lyf CDN">
+    <meta name="author" content="Lyf">
+    <meta name="theme-color" content="#000000">
+
+    <meta property="og:title" content="lyf CDN"/>
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="the lyf app's CDN" />
+    <meta property="og:image" content='{% static "assets/lyf.png" %}'/>
+    
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="lyf CDN" />
+    <meta name="twitter:description" content="the lyf app's CDN"/>
+    <meta name="twitter:image" content='{% static "assets/lyf.png" %}'/>
+
+    <link rel="stylesheet" href='{% static "css/index.css" %}'>
+    <link rel="shortcut icon" href='{% static "assets/favicon.ico" %}'' type="image/x-icon">
+    <title>lyf CDN</title>
+</head>
+<body>
+    <div class="splash" align="center">
+        <svg width="200" height="236.4820" viewBox="0 0 614 726" fill="none" xmlns="http://www.w3.org/2000/svg" id="lines">
+            <path d="M290.012 696.897C67.6776 798.283 -22.1569 542.007 12.0545 477.324M290.012 696.897C182.537 647.362 121.744 601.471 12.0545 477.324M290.012 696.897C506.232 671.075 575.303 556.848 607.678 177.905M290.012 696.897C290.73 657.075 287.897 624.184 281.137 597.091M290.012 696.897C440.405 513.448 507.866 398.285 607.678 177.905M12.0545 477.324C103.986 475.889 170.412 481.52 215.236 505.97M607.678 177.905C481.091 258.683 397.184 320.661 343.978 372.628C339.149 377.344 334.573 381.978 330.241 386.536M281.137 597.091C270.128 552.967 248.703 524.224 215.236 505.97M281.137 597.091C253.321 525.971 252.307 468.536 330.241 386.536M281.137 11C65.7545 330.89 127.662 467.309 215.236 505.97M281.137 11C240.409 236.912 206.241 346.974 257.284 539.533M281.137 11C399.095 272.485 350.399 367.991 330.241 386.536" stroke="#ffffff" stroke-width="8"/>
+        </svg>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+</body>
+</html>
