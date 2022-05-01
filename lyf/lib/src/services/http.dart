@@ -1,8 +1,8 @@
 //API endpoints.
 class ApiEndpoints {
   // static const String mainDomain = 'http://10.61.105.201:8000';
-  static const String mainDomain = 'http://10.38.1.92:8000';
-  // static const String mainDomain = 'https://cdn-lyf.herokuapp.com';
+  // static const String mainDomain = 'http://10.38.1.92:8000';
+  static const String mainDomain = 'https://cdn-lyf.herokuapp.com';
   ////'http://192.168.21.43:8000'; /* 'http://10.61.109.245:8000';*/'192.168.21.255';
   static const String signUp = "$mainDomain/signUp/";
   static const String signUpEmailError =
