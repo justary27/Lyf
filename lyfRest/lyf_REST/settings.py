@@ -37,7 +37,7 @@ ALLOWED_HOSTS = [
     '10.61.105.201',
     '192.168.21.43',
     '10.38.1.92',
-    'https://cdn-lyf.herokuapp.com',
+    'cdn-lyf.herokuapp.com',
 ]
 
 
