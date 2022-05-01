@@ -36,7 +36,7 @@ def getEntrybyId(request, userId, entryId):
     return Response(data)
 
 @api_view(["GET"])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def getPDFbyEntryId(request,userId, entryId, entryId2):
     entry = DiaryEntry.objects.get_entry_by_id(entryId)
     data = entry.asDict
