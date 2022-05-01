@@ -1,5 +1,5 @@
 name: lyf
-description: A new Flutter project.
+description: Life, optimized.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -53,6 +53,7 @@ dependencies:
   firebase_auth:
   googleapis_auth:
   googleapis:
+  open_file:
   firebase_storage: ^10.2.7
   rename: ^2.0.1
 

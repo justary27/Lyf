@@ -428,13 +428,13 @@ class _EntryCardState extends State<EntryCard> {
                                     ),
                                   ),
                                 ),
-                                // TextButton(
-                                //   onPressed: () {},
-                                //   child: Text(
-                                //     "Save as PDF",
-                                //     style: GoogleFonts.ubuntu(),
-                                //   ),
-                                // )
+                                TextButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    "Save as PDF",
+                                    style: GoogleFonts.ubuntu(),
+                                  ),
+                                )
                               ],
                             )
                           : Container(),

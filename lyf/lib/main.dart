@@ -14,7 +14,7 @@ void main() async {
   creds = await getCredentials();
   await login(creds, logInClient);
   logInClient.close();
-  runApp(const MyApp());
+  runApp(const Lyf());
 }
 
 login(Map<String, String?>? creds, http.Client logInClient) async {

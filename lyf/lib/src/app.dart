@@ -5,8 +5,8 @@ import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/themes/themes.dart';
 import 'dart:io' show Platform;
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class Lyf extends StatelessWidget {
+  const Lyf({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

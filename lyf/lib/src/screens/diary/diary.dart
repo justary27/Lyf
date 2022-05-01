@@ -738,15 +738,21 @@ class _DiaryPageState extends State<DiaryPage> {
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                // TextButton(
-                                                                //   onPressed:
-                                                                //       () {},
-                                                                //   child: Text(
-                                                                //     "Save as PDF",
-                                                                //     style: GoogleFonts
-                                                                //         .ubuntu(),
-                                                                //   ),
-                                                                // )
+                                                                TextButton(
+                                                                  onPressed:
+                                                                      () async {
+                                                                    await DiaryEntry.getEntryPdf(
+                                                                        getPdfClient:
+                                                                            diaryClient,
+                                                                        entry: diaryEntries[
+                                                                            index]);
+                                                                  },
+                                                                  child: Text(
+                                                                    "Save as PDF",
+                                                                    style: GoogleFonts
+                                                                        .ubuntu(),
+                                                                  ),
+                                                                )
                                                               ],
                                                             ),
                                                           ],
