@@ -36,16 +36,21 @@ class UserCredentials {
   }
 
   static Future<Map<String, String?>?> getCredentials() async {
-    String? email = await UserCredentials.getEmail();
-    String? password = await UserCredentials.getPassword();
-    String? username = await UserCredentials.getUsername();
-    if (email != null && password != null && username != null) {
-      return {
-        'email': email,
-        'password': password,
-        'username': username,
-      };
-    } else {
+    try {
+      String? email = await UserCredentials.getEmail();
+      String? password = await UserCredentials.getPassword();
+      String? username = await UserCredentials.getUsername();
+      if (email != null && password != null && username != null) {
+        return {
+          'email': email,
+          'password': password,
+          'username': username,
+        };
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
       return null;
     }
   }

@@ -78,14 +78,14 @@ def verificationEmail(request, userId):
                 },
             )
         emailObj = EmailMultiAlternatives(
-                "Verify you account", 
+                "Verify your account", 
                 "", 
                 to=[user.email], 
                 from_email= settings.EMAIL_HOST_USER,
             )
         emailObj.attach_alternative(template, 'text/html')
-        # emailObj.send()
-        # return HttpResponse("Successs")
+        emailObj.send()
+        return HttpResponse("Success")
         return render(request, str(settings.BASE_DIR)+"/static/templates/verification_email.html")
         # send_mail(
         #     subject="Verify your account" ,
