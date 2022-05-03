@@ -1,3 +1,4 @@
+from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -7,7 +8,8 @@ from .models import LyfUser
 from rest_framework import status
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.conf import settings
-
+from django.core.mail import EmailMultiAlternatives
+from django.template import loader
 
 # Create your views here.
 def index(request):
@@ -23,6 +25,7 @@ def handler500(request,*args, **argv):
 def handler404(request,exception):
     response = render(request,str(settings.BASE_DIR)+"/static/templates/404.html" )
     print(response.status_code)
+    print(exception)
     response.status_code=404
     return response
 
@@ -62,6 +65,45 @@ def createAccount(request):
     except Exception as e:
         print(e)
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+def verificationEmail(request, userId):
+    
+        user = LyfUser.objects.get_user_by_id(userId)
+        template = loader.render_to_string(
+                str(settings.BASE_DIR)+"/static/templates/verification_email.html",
+                {
+                    "site": "http://127.0.0.1:8000/",
+                    "username": user.username,
+                    "userId": userId
+                },
+            )
+        emailObj = EmailMultiAlternatives(
+                "Verify you account", 
+                "", 
+                to=[user.email], 
+                from_email= settings.EMAIL_HOST_USER,
+            )
+        emailObj.attach_alternative(template, 'text/html')
+        # emailObj.send()
+        # return HttpResponse("Successs")
+        return render(request, str(settings.BASE_DIR)+"/static/templates/verification_email.html")
+        # send_mail(
+        #     subject="Verify your account" ,
+        #     message="",
+        #     recipient_list=[user.email],
+        #     from_email= settings.EMAIL_HOST_USER,
+        #     html_message=template,
+        # )
+
+def verifyAccount(request, userId):
+    try:
+        template = loader.render_to_string(str(settings.BASE_DIR)+"/static/templates/verification_email.html")
+        user = LyfUser.objects.get_user_by_id(userId)
+        # emailObj = EmailMessage("Verify you account", to=[user.email], html_message = template)
+        # emailObj.send()
+    except Exception as e:
+        print(e)
+        return 
 
 # @api_view(["POST"])
 # def loginToAccount(request):
