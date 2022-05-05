@@ -72,7 +72,7 @@ def verificationEmail(request, userId):
         template = loader.render_to_string(
                 str(settings.BASE_DIR)+"/static/templates/verification_email.html",
                 {
-                    "site": "http://127.0.0.1:8000/",
+                    "site": "https://cdn-lyf.herokuapp.com/",
                     "username": user.username,
                     "userId": userId
                 },
