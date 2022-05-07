@@ -10,7 +10,7 @@ defaults:
     working-directory: ./lyf
 
 jobs:
-  build:
+  releaseApp:
     runs-on: ubuntu-latest
     steps:
     
@@ -21,10 +21,11 @@ jobs:
         java-version: '12.x'
     
     - name: Setup Flutter
-    - uses: subosito/flutter-action@v1
+      uses: subosito/flutter-action@v1
       with:
         channel: 'stable' 
         flutter-version: '2.10.4'
+
 
     - run: echo "${{ secrets.PRODKEY_PROP }}" | base64 --decode > android/key.properties
 
@@ -33,7 +34,7 @@ jobs:
     - name: Pub Get Packages
       run: flutter pub get
 
-    - run: flutter analyze .
+    # - run: flutter analyze .
 
     - name: Build APK
       run: flutter build apk --split-per-abi --release
@@ -41,8 +42,13 @@ jobs:
     - name: Build APPBUNDLE
       run: flutter build appbundle --release
 
+    - run: ls -LR
+    
     - name: Create Github Release
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "build/app/outputs/apk/release/*.apk,build/app/outputs/bundle/release/*.aab"
-          token: ${{ secrets.RELEASES_TOKEN }}
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "./lyf/build/app/outputs/apk/release/*.apk,./lyf/build/app/outputs/bundle/release/app-release.aab"
+        commit: alpha
+        allowUpdates: true
+        tag: v1.0.0
+
