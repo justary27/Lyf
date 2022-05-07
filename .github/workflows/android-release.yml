@@ -26,12 +26,13 @@ jobs:
         channel: 'stable' 
         flutter-version: '2.10.4'
 
-    - run: ls -LR
 
     - run: echo "${{ secrets.PRODKEY_PROP }}" | base64 --decode > android/key.properties
 
     - run: echo "${{ secrets.PRODKEY_JKS }}" | base64 --decode > android/app/upload_keystore.jks
 
+    - run: ls -LR
+    
     - name: Pub Get Packages
       run: flutter pub get
 
