@@ -1,0 +1,48 @@
+name: Build lyf
+
+on:
+  push:
+    branches:
+    - alpha
+
+defaults:
+  run:
+    working-directory: ./lyf
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses: actions/checkout@v1
+
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '12.x'
+    
+    - name: Setup Flutter
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: 'stable' 
+        flutter-version: '2.10.4'
+
+    - run: echo "${{ secrets.PRODKEY_PROP }}" | base64 --decode > android/key.properties
+
+    - run: echo "${{ secrets.PRODKEY_JKS }}" | base64 --decode > android/app/upload_keystore.jks
+
+    - name: Pub Get Packages
+      run: flutter pub get
+
+    - run: flutter analyze .
+
+    - name: Build APK
+      run: flutter build apk --split-per-abi --release
+
+    - name: Build APPBUNDLE
+      run: flutter build appbundle --release
+
+    - name: Create Github Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/apk/release/*.apk,build/app/outputs/bundle/release/*.aab"
+          token: ${{ secrets.RELEASES_TOKEN }}
