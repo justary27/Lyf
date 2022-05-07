@@ -42,6 +42,8 @@ jobs:
     - name: Build APPBUNDLE
       run: flutter build appbundle --release
 
+    - run: ls -LR
+    
     - name: Create Github Release
       uses: ncipollo/release-action@v1
       with:
