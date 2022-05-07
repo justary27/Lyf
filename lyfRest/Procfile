@@ -1,1 +1,1 @@
-web: gunicorn -b lyf_REST.wsgi
+web: gunicorn lyf_REST.wsgi

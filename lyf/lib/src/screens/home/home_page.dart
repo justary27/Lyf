@@ -117,12 +117,25 @@ class _HomePageState extends State<HomePage>
                                 height: 0.470 * size.height,
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 0.1 * size.width,
-                                    vertical: 0.1 * size.height),
+                                    vertical: 0.075 * size.height),
                                 width: size.width,
-                                child: SizedBox(
+                                child: Container(
                                   width: 0.725 * size.width,
-                                  child:
+                                  // color: Colors.white,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      // IconButton(
+                                      //     onPressed: () {
+                                      //       openBar();
+                                      //     },
+                                      //     color: Colors.white,
+                                      //     icon: Icon(Icons.menu_rounded)),
                                       Greetings(username: currentUser.username),
+                                    ],
+                                  ),
                                 ),
                               ),
                               Container(
@@ -212,25 +225,25 @@ class _HomePageState extends State<HomePage>
                                       ),
                                       child: InkWell(
                                         onTap: () {},
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.all(20.0),
-                                              child: SvgPicture.asset(
-                                                  "assets/images/statHealth.svg"),
-                                            ),
-                                            Text(
-                                              "StatHealth",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline5,
-                                            ),
-                                          ],
-                                        ),
+                                        // child: Column(
+                                        //   mainAxisAlignment:
+                                        //       MainAxisAlignment.center,
+                                        //   crossAxisAlignment:
+                                        //       CrossAxisAlignment.center,
+                                        //   children: [
+                                        //     Padding(
+                                        //       padding: EdgeInsets.all(20.0),
+                                        //       child: SvgPicture.asset(
+                                        //           "assets/images/statHealth.svg"),
+                                        //     ),
+                                        //     Text(
+                                        //       "StatHealth",
+                                        //       style: Theme.of(context)
+                                        //           .textTheme
+                                        //           .headline5,
+                                        //     ),
+                                        //   ],
+                                        // ),
                                       ),
                                     ),
                                     Card(

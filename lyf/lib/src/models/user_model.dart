@@ -1,10 +1,12 @@
 import 'dart:convert';
-
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:lyf/src/global/globals.dart';
 import 'package:lyf/src/services/http.dart';
 import 'package:lyf/src/services/user.dart';
 
+/// ## LyfUser
+///  Defining class of a user of the Lyf App.
 class LyfUser {
   String email;
   String password;
@@ -14,6 +16,8 @@ class LyfUser {
   late String pfpLink;
   late bool isActive;
   late bool isProUser;
+
+  // Constructor
 
   LyfUser(
     this.email,
@@ -68,7 +72,7 @@ class LyfUser {
         UserCredentials.setCredentials(
             currentUser.email, currentUser.password, currentUser.userName);
       } catch (e) {
-        print(e);
+        log(e.toString());
         loginState = false;
       }
     } else {
@@ -110,6 +114,7 @@ class LyfUser {
       }
       return response.statusCode;
     } catch (e) {
+      log(e.toString());
       loginState = false;
       return -1;
     }
@@ -134,7 +139,7 @@ class LyfUser {
         return -1;
       }
     } catch (e) {
-      print(e);
+      log(e.toString());
       return -1;
     }
   }
@@ -142,5 +147,11 @@ class LyfUser {
   static deleteAccount() async {}
 }
 
+/// Default user created before logging in to the app.
 final LyfUser guestUser = LyfUser(
-    "guest@lyf.com", "lyfGuest", "1234567890", "Guest", "GuestLyf23456");
+  "guest@lyf.com",
+  "lyfGuest",
+  "1234567890",
+  "Guest",
+  "GuestLyf23456",
+);

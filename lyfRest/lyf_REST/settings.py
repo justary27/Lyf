@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from django.conf.global_settings import AUTH_USER_MODEL
+import django_heroku
 
 load_dotenv()
 
@@ -28,12 +29,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+DEBUG_PROPAGATE_EXCEPTIONS = True
 
 ALLOWED_HOSTS = [
     '10.0.2.2',
     '127.0.0.1',
-    '10.61.109.245',
+    '10.61.105.201',
     '192.168.21.43',
     '10.38.1.92',
     'cdn-lyf.herokuapp.com',
@@ -75,7 +77,7 @@ ROOT_URLCONF = 'lyf_REST.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'static/templates/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -144,8 +146,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"), 
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -162,3 +166,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
 EMAIL_PORT = 587
+
+django_heroku.settings(locals())

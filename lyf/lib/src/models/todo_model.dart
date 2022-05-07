@@ -1,16 +1,31 @@
 import 'dart:convert';
-
+import 'dart:developer';
 import 'package:lyf/src/global/globals.dart';
 import 'package:http/http.dart' as http;
 import 'package:lyf/src/services/http.dart';
 
+/// ## Todo
+/// Defining class of a todo in the todo list of a [LyfUser].
 class Todo {
+  /// Unique Id of a [Todo]
   final String? id;
+
+  /// Title of a [Todo]
   final String title;
+
+  /// Description of a [Todo]
   final String description;
+
+  /// Time when a [Todo] was created.
   final DateTime createdAt;
+
+  /// Is a reminder set for the [Todo] in Google Calendar?
   final bool _isReminderSet;
+
+  /// Time when reminder is set in Google Calander, null if !_isReminderSet
   final DateTime? _reminderAt;
+
+  // Constructor
 
   Todo(
     this.id,
@@ -20,6 +35,8 @@ class Todo {
     this._isReminderSet,
     this._reminderAt,
   );
+
+  // Class properties
 
   String? get entryId {
     return id;
@@ -45,9 +62,9 @@ class Todo {
     return _reminderAt;
   }
 
-  ///Creates a [Todo] instance from json.
-  ///
-  ///[json] Map<String, dynamic> Sent by backend & required to create the new instance,
+  // Json Methods
+
+  /// Standard fromJson() method.
   factory Todo.fromJson(Map<String, dynamic> json) {
     return Todo(
         json['id'],
@@ -60,11 +77,7 @@ class Todo {
             : null);
   }
 
-  ///Converts a Todo object to json.
-  ///
-  ///[deleteTodoClient] http.Client required for contacting with Backend API
-  ///[todo] Todo instance to delete
-
+  /// Standard toJson() method.
   static Map<String, dynamic> toJson(Todo todo) {
     return {
       '_userId': currentUser.userID,
@@ -74,15 +87,11 @@ class Todo {
     };
   }
 
-  ///Creates a new Todo.
-  ///
-  ///[createTodoClient] http.Client required for contacting with Backend API
-  ///[todo] Todo instance to create
+  /// Helper method to create a [Todo] in the database.
   static Future<int> createTodo({
     required http.Client createTodoClient,
     required Todo todo,
   }) async {
-    late int statusCode;
     http.Response? response;
     try {
       response = await createTodoClient.post(
@@ -94,15 +103,12 @@ class Todo {
       );
       return response.statusCode;
     } catch (e) {
-      print(e);
+      log(e.toString());
       return -1;
     }
   }
 
-  ///Updates a given Todo.
-  ///
-  ///[updateTodoClient] http.Client required for contacting with Backend API
-  ///[todo] Todo instance to update
+  /// Helper method to update a [Todo] in the database.
   static Future<int> updateTodo({
     required http.Client updateTodoClient,
     required Todo todo,
@@ -118,15 +124,12 @@ class Todo {
       );
       return response.statusCode;
     } catch (e) {
-      print(e);
+      log(e.toString());
       return -1;
     }
   }
 
-  ///Deletes a given Todo.
-  ///
-  ///[deleteTodoClient] http.Client required for contacting with Backend API
-  ///[todo] Todo instance to delete
+  /// Helper method to delete a [Todo] in the database.
   static Future<int> deleteTodo({
     required http.Client deleteTodoClient,
     required Todo todo,
@@ -141,11 +144,12 @@ class Todo {
       );
       return response.statusCode;
     } catch (e) {
-      print(e);
+      log(e.toString());
       return -1;
     }
   }
 
+  /// Helper method to retrieve the entire Todo list of a [LyfUser].
   static Future<List<Todo?>?> getTodos({
     required http.Client getTodoClient,
     required void Function(bool flag) retrieveStatusNotifier,
@@ -172,7 +176,7 @@ class Todo {
         return [null];
       }
     } catch (e) {
-      print(e);
+      log(e.toString());
       retrieveStatusNotifier(false);
       return [null];
     }

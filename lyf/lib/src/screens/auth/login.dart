@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/global/globals.dart';
 import 'package:lyf/src/models/user_model.dart';
 import 'package:lyf/src/routes/routing.dart';
+import 'package:lyf/src/services/firebase/auth_service.dart';
 import 'package:lyf/src/services/http.dart';
 import 'package:lyf/src/services/user.dart';
 import 'package:lyf/src/shared/lyf.dart';
@@ -167,7 +168,8 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 
-  void logIn(http.Client logInClient, String email, String password) async {
+  Future<void> logIn(
+      http.Client logInClient, String email, String password) async {
     SnackBar snackBar = const SnackBar(
       content: Text("Logging in ..."),
     );
@@ -182,6 +184,7 @@ class _LoginFormState extends State<LoginForm> {
         'password': password,
       };
       await LyfUser.logIn(logInClient, creds);
+      await FireAuth.logIn(creds: creds!);
       print(loginState);
       if (loginState == false) {
         ScaffoldMessenger.of(widget.parentContext).showSnackBar(eSnackBar);
@@ -288,9 +291,9 @@ class _LoginFormState extends State<LoginForm> {
               width: 0.75 * size.width,
               height: 50,
               child: TextButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    logIn(widget.logInClient, emailController.text,
+                    await logIn(widget.logInClient, emailController.text,
                         passwordController.text);
                   }
                 },
@@ -324,7 +327,7 @@ class _LoginFormState extends State<LoginForm> {
                   RouteManager.navigateToSignUp(context);
                 },
                 child: Text("Sign Up"),
-              )
+              ),
             ],
           )
         ],
