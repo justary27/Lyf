@@ -36,6 +36,10 @@ class DiaryEntry(models.Model):
                 )
 
     _created_on = models.DateTimeField(default=timezone.now,)
+    
+    _audioLink = models.TextField(_("audioFileLink"),blank=True, editable=True, null=True)
+
+    _imageLinks = models.JSONField(_("imageFileLinks"), blank=True, null=True)
 
     # _audioAttachment = models.FileField(_("Audio Attachment"),upload_to=)
 
@@ -57,12 +61,22 @@ class DiaryEntry(models.Model):
         return str(self._created_on)
 
     @property
+    def audioAttachment(self) -> str:
+        return str(self._audioLink)
+
+    @property
+    def imageAttachment(self) -> str:
+        return str(self._imageLinks)
+
+    @property
     def asDict(self)->dict:
         return {
             "_id":self.entryId,
             "_title":self.entryTitle,
             "_description": self.entryDescription,
             "_createdAt":self.CreatedAt,
+            "_audioLink":self.audioAttachment,
+            "_imageLinks":self.imageAttachment#.replace('\'','').split(',') if self.imageAttachment != "Null" else "Null"
         }
 
     # def user_directory_path(userInstance,  filename):

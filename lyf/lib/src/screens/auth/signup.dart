@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/global/globals.dart';
 import 'package:lyf/src/models/user_model.dart';
 import 'package:lyf/src/routes/routing.dart';
+import 'package:lyf/src/services/firebase/auth_service.dart';
 import 'package:lyf/src/shared/lyf.dart';
 import 'package:http/http.dart' as http;
 
@@ -149,7 +150,7 @@ class _LoginFormState extends State<LoginForm> {
     super.initState();
   }
 
-  void signUp(http.Client signUpClient, String email, String username,
+  Future<void> signUp(http.Client signUpClient, String email, String username,
       String password, String cpassword) async {
     // SnackBar snackBar = const SnackBar(
     //   content: Text("Signing up ..."),
@@ -159,7 +160,6 @@ class _LoginFormState extends State<LoginForm> {
       content: Text("Invalid credentials, try again with correct ones!"),
     );
     // ScaffoldMessenger.of(widget.parentContext).showSnackBar(snackBar);
-    http.Response response;
     try {
       Map<String, String> signUpCreds = {
         'email': email,
@@ -167,6 +167,7 @@ class _LoginFormState extends State<LoginForm> {
         'password': password,
       };
       int statusCode = await LyfUser.signUp(signUpClient, signUpCreds);
+      await FireAuth.signUp(creds: signUpCreds);
       if (statusCode == 400) {
       } else if (statusCode == 200) {
         if (loginState == true) {
@@ -176,6 +177,7 @@ class _LoginFormState extends State<LoginForm> {
         }
       }
     } catch (e) {
+      print(e);
       ScaffoldMessenger.of(widget.parentContext).showSnackBar(snackBar1);
     }
   }
@@ -208,6 +210,7 @@ class _LoginFormState extends State<LoginForm> {
                           return "Please enter a valid email.";
                         }
                       }
+                      return null;
                     },
                     style: GoogleFonts.ubuntu(
                       textStyle: const TextStyle(color: Colors.white),
@@ -368,14 +371,15 @@ class _LoginFormState extends State<LoginForm> {
               width: 0.75 * size.width,
               height: 50,
               child: TextButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    signUp(
-                        widget.client,
-                        emailController.text,
-                        usernameController.text,
-                        passwordController.text,
-                        cpasswordController.text);
+                    await signUp(
+                      widget.client,
+                      emailController.text,
+                      usernameController.text,
+                      passwordController.text,
+                      cpasswordController.text,
+                    );
                   }
                 },
                 child: Text(

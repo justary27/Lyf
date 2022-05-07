@@ -3,12 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/models/diary_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:lyf/src/routes/routing.dart';
+import 'package:share_plus/share_plus.dart';
 
 /// The generic card used for displaying all the entry cards.
 ///
 /// [size] MediaQuery.of(context).size of parent, must not be null.
 /// [entry] The diary entry to be displayed, must not be null.
-/// [parentContext] The context used for displaying card's snackbars, must not be null.
+/// [parentContext] The context used for displaying card's snackbars and handling onTap events, must not be null.
 class EntryCard extends StatefulWidget {
   final Size size;
   final DiaryEntry entry;
@@ -61,294 +62,386 @@ class _EntryCardState extends State<EntryCard> {
     }
   }
 
+  Widget titleWidget({
+    required pageCode,
+    required DiaryEntry entry,
+  }) {
+    if (pageCode == 0) {
+      return const SizedBox(width: 0, height: 0);
+    } else if (pageCode == 1) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            entry.title,
+            style: Theme.of(context).textTheme.headline3,
+          ),
+          IconButton(
+            onPressed: () {
+              Share.share(
+                  "${entry.entryTitle}\n\n${entry.entryDescription}\n\nDated:${entry.entryCreatedAt.day}/${entry.entryCreatedAt.month}/${entry.entryCreatedAt.year}");
+            },
+            icon: const Icon(
+              Icons.share_rounded,
+              color: Colors.white,
+            ),
+          )
+        ],
+      );
+    } else {
+      return const SizedBox(width: 0, height: 0);
+    }
+  }
+
+  Widget descriptionWidget({
+    required pageCode,
+    required DiaryEntry entry,
+    TextEditingController? titleController,
+    TextEditingController? descriptionController,
+    ValueNotifier<DateTime>? dateController,
+    void Function(bool flag)? notifyflagChange,
+    void Function(String newDescription)? notifyDescriptionChange,
+    void Function(DateTime newDate)? notifyDateChange,
+  }) {
+    if (pageCode == 0) {
+      return TextFormField(
+        controller: _descriptionController,
+        style: GoogleFonts.aBeeZee(
+          textStyle: TextStyle(
+            color: Colors.white.withOpacity(0.5),
+          ),
+        ),
+        cursorColor: Colors.white.withOpacity(0.5),
+        decoration: InputDecoration(
+          filled: false,
+          border: InputBorder.none,
+        ),
+        maxLines: null,
+        onChanged: (notifyflagChange != null && notifyDescriptionChange != null)
+            ? (value) {
+                if (_descriptionController.text != entry.description) {
+                  notifyDescriptionChange(_descriptionController.text);
+                  notifyflagChange(true);
+                } else {
+                  notifyDescriptionChange(entry.description);
+                  notifyflagChange(false);
+                }
+              }
+            : null,
+      );
+    } else if (pageCode == 1) {
+      return Text(
+        entry.entryDescription,
+        style: Theme.of(context).textTheme.bodyText1,
+      );
+    } else {
+      return Text(
+        "entry.entryDescription",
+        style: Theme.of(context).textTheme.bodyText1,
+      );
+    }
+  }
+
   Widget entryCard({
     required Size size,
     required BuildContext context,
     required DiaryEntry entry,
-    required TextEditingController titleController,
-    required TextEditingController descriptionController,
-    required ValueNotifier<DateTime> dateController,
     required pageCode,
     required http.Client? deleteEntryClient,
+    TextEditingController? titleController,
+    TextEditingController? descriptionController,
+    ValueNotifier<DateTime>? dateController,
     void Function(bool flag)? notifyflagChange,
     void Function(String newDescription)? notifyDescriptionChange,
     void Function(DateTime newDate)? notifyDateChange,
   }) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: 0.05 * size.width, vertical: 0.015 * size.height),
+      padding: EdgeInsets.symmetric(vertical: 0.015 * size.height),
       child: Card(
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         color: Colors.white.withOpacity(0.15),
-        child: SizedBox(
-          width: 0.9 * size.width,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: 0.05 * size.width, vertical: 0.01 * size.height),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.fromLTRB(
-                    0,
-                    0.025 * size.height,
-                    0.0085 * size.width,
-                    0.025 * size.height,
-                  ),
-                  child: TextFormField(
-                    controller: _descriptionController,
-                    style: GoogleFonts.aBeeZee(
-                      textStyle: TextStyle(
-                        color: Colors.white.withOpacity(0.5),
+        child: InkWell(
+          onTap: () {
+            if (pageCode == 1) {
+              RouteManager.navigateToViewDiaryEntry(context, [
+                entry,
+                size,
+              ]);
+            }
+          },
+          child: SizedBox(
+            width: 0.9 * size.width,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: 0.05 * size.width, vertical: 0.015 * size.height),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  titleWidget(pageCode: pageCode, entry: entry),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(
+                      0,
+                      0.025 * size.height,
+                      0.0085 * size.width,
+                      0.025 * size.height,
+                    ),
+                    child: TextFormField(
+                      controller: _descriptionController,
+                      style: GoogleFonts.aBeeZee(
+                        textStyle: TextStyle(
+                          color: Colors.white.withOpacity(0.5),
+                        ),
                       ),
-                    ),
-                    cursorColor: Colors.white.withOpacity(0.5),
-                    decoration: InputDecoration(
-                      filled: false,
-                      border: InputBorder.none,
-                    ),
-                    maxLines: null,
-                    onChanged: (notifyflagChange != null &&
-                            notifyDescriptionChange != null)
-                        ? (value) {
-                            if (_descriptionController.text !=
-                                entry.description) {
-                              notifyDescriptionChange(
-                                  _descriptionController.text);
-                              notifyflagChange(true);
-                            } else {
-                              notifyDescriptionChange(entry.description);
-                              notifyflagChange(false);
+                      cursorColor: Colors.white.withOpacity(0.5),
+                      decoration: InputDecoration(
+                        filled: false,
+                        border: InputBorder.none,
+                      ),
+                      maxLines: null,
+                      onChanged: (notifyflagChange != null &&
+                              notifyDescriptionChange != null)
+                          ? (value) {
+                              if (_descriptionController.text !=
+                                  entry.description) {
+                                notifyDescriptionChange(
+                                    _descriptionController.text);
+                                notifyflagChange(true);
+                              } else {
+                                notifyDescriptionChange(entry.description);
+                                notifyflagChange(false);
+                              }
                             }
-                          }
-                        : null,
+                          : null,
+                    ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime.now().add(
-                            const Duration(days: 7),
-                          ),
-                          builder: (BuildContext context, Widget? child) {
-                            return Theme(
-                              data: Theme.of(context),
-                              child: child!,
-                            );
-                          },
-                        ).then((value) {
-                          setState(() {
-                            if (value != null &&
-                                notifyflagChange != null &&
-                                notifyDateChange != null) {
-                              dateController.value = value;
-                              notifyDateChange(value);
-                              notifyflagChange(true);
-                            } else {
-                              dateController.value = entry.entryCreatedAt;
-                            }
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime.now().add(
+                              const Duration(days: 7),
+                            ),
+                            builder: (BuildContext context, Widget? child) {
+                              return Theme(
+                                data: Theme.of(context),
+                                child: child!,
+                              );
+                            },
+                          ).then((value) {
+                            setState(() {
+                              if (value != null &&
+                                  notifyflagChange != null &&
+                                  notifyDateChange != null) {
+                                dateController!.value = value;
+                                notifyDateChange(value);
+                                notifyflagChange(true);
+                              } else {
+                                dateController!.value = entry.entryCreatedAt;
+                              }
+                            });
                           });
-                        });
-                        //                                   showDatePicker(
-                        //   context: context,
-                        //   initialDate: DateTime.now(),
-                        //   firstDate: DateTime(1970),
-                        //   builder: (BuildContext context, Widget child) {
-                        //     return Theme(
-                        //       data: ThemeData.dark().copyWith(
-                        //         colorScheme: ColorScheme.dark(
-                        //             primary: Colors.deepPurple,
-                        //             onPrimary: Colors.white,
-                        //             surface: Colors.pink,
-                        //             onSurface: Colors.yellow,
-                        //             ),
-                        //         dialogBackgroundColor:Colors.blue[900],
-                        //       ),
-                        //       child: child,
-                        //     );
-                        //   },
-                        // );
-                      },
-                      child: ValueListenableBuilder(
-                        valueListenable: _dateController,
-                        builder: (context, value, child) => Text(
-                          "${dateController.value.day}/${dateController.value.month}/${dateController.value.year}",
-                          style: GoogleFonts.ubuntu(
-                            textStyle: const TextStyle(color: Colors.white),
+                          //                                   showDatePicker(
+                          //   context: context,
+                          //   initialDate: DateTime.now(),
+                          //   firstDate: DateTime(1970),
+                          //   builder: (BuildContext context, Widget child) {
+                          //     return Theme(
+                          //       data: ThemeData.dark().copyWith(
+                          //         colorScheme: ColorScheme.dark(
+                          //             primary: Colors.deepPurple,
+                          //             onPrimary: Colors.white,
+                          //             surface: Colors.pink,
+                          //             onSurface: Colors.yellow,
+                          //             ),
+                          //         dialogBackgroundColor:Colors.blue[900],
+                          //       ),
+                          //       child: child,
+                          //     );
+                          //   },
+                          // );
+                        },
+                        child: ValueListenableBuilder(
+                          valueListenable: _dateController,
+                          builder: (context, value, child) => Text(
+                            "${dateController!.value.day}/${dateController.value.month}/${dateController.value.year}",
+                            style: GoogleFonts.ubuntu(
+                              textStyle: const TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    (pageCode == 0 || pageCode == 1)
-                        ? ButtonBar(
-                            alignment: MainAxisAlignment.end,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  SnackBar snackBar = SnackBar(
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10),
-                                        topRight: Radius.circular(10),
+                      (pageCode == 0 || pageCode == 1)
+                          ? ButtonBar(
+                              alignment: MainAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    SnackBar snackBar = SnackBar(
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                        ),
                                       ),
-                                    ),
-                                    duration: const Duration(
-                                      seconds: 5,
-                                    ),
-                                    backgroundColor: Colors.grey.shade700,
-                                    content: Container(
-                                      alignment: Alignment.center,
-                                      height: 0.170 * size.height,
-                                      padding: EdgeInsets.fromLTRB(
-                                        0,
-                                        0.0125 * size.height,
-                                        0,
-                                        0,
+                                      duration: const Duration(
+                                        seconds: 5,
                                       ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                              0,
-                                              0,
-                                              0,
-                                              0.0175 * size.height,
-                                            ),
-                                            child: Text(
-                                              "Are you sure you want to delete the entry ${entry.entryTitle}?",
-                                              textAlign: TextAlign.center,
-                                              style: GoogleFonts.ubuntu(
-                                                textStyle: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20,
+                                      backgroundColor: Colors.grey.shade700,
+                                      content: Container(
+                                        alignment: Alignment.center,
+                                        height: 0.170 * size.height,
+                                        padding: EdgeInsets.fromLTRB(
+                                          0,
+                                          0.0125 * size.height,
+                                          0,
+                                          0,
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                0,
+                                                0,
+                                                0,
+                                                0.0175 * size.height,
+                                              ),
+                                              child: Text(
+                                                "Are you sure you want to delete the entry ${entry.entryTitle}?",
+                                                textAlign: TextAlign.center,
+                                                style: GoogleFonts.ubuntu(
+                                                  textStyle: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            child: ButtonBar(
-                                              alignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                SizedBox(
-                                                  width: size.width * 0.40,
-                                                  child: TextButton(
-                                                    style: ButtonStyle(
-                                                      shape: MaterialStateProperty
-                                                          .all<
-                                                              RoundedRectangleBorder>(
-                                                        RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      6.0),
-                                                          side:
-                                                              const BorderSide(
+                                            Expanded(
+                                              child: ButtonBar(
+                                                alignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  SizedBox(
+                                                    width: size.width * 0.40,
+                                                    child: TextButton(
+                                                      style: ButtonStyle(
+                                                        shape: MaterialStateProperty
+                                                            .all<
+                                                                RoundedRectangleBorder>(
+                                                          RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        6.0),
+                                                            side:
+                                                                const BorderSide(
+                                                              color: Colors.red,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      onPressed: () {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .hideCurrentSnackBar();
+                                                        deleteEntry(
+                                                          deleteEntryClient,
+                                                          entry,
+                                                        );
+                                                      },
+                                                      child: Text(
+                                                        "Yes",
+                                                        style:
+                                                            GoogleFonts.aBeeZee(
+                                                          textStyle:
+                                                              const TextStyle(
                                                             color: Colors.red,
+                                                            fontSize: 20,
                                                           ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    onPressed: () {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .hideCurrentSnackBar();
-                                                      deleteEntry(
-                                                        deleteEntryClient,
-                                                        entry,
-                                                      );
-                                                    },
-                                                    child: Text(
-                                                      "Yes",
-                                                      style:
-                                                          GoogleFonts.aBeeZee(
-                                                        textStyle:
-                                                            const TextStyle(
-                                                          color: Colors.red,
-                                                          fontSize: 20,
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                  width: size.width * 0.40,
-                                                  child: TextButton(
-                                                    style: ButtonStyle(
-                                                      shape: MaterialStateProperty
-                                                          .all<
-                                                              RoundedRectangleBorder>(
-                                                        RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                            6.0,
-                                                          ),
-                                                          side: BorderSide(
-                                                            color: Colors.white,
+                                                  SizedBox(
+                                                    width: size.width * 0.40,
+                                                    child: TextButton(
+                                                      style: ButtonStyle(
+                                                        shape: MaterialStateProperty
+                                                            .all<
+                                                                RoundedRectangleBorder>(
+                                                          RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                              6.0,
+                                                            ),
+                                                            side: BorderSide(
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
-                                                    ),
-                                                    onPressed: () {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .hideCurrentSnackBar();
-                                                    },
-                                                    child: Text(
-                                                      "No",
-                                                      style:
-                                                          GoogleFonts.aBeeZee(
-                                                        textStyle: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 20),
+                                                      onPressed: () {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .hideCurrentSnackBar();
+                                                      },
+                                                      child: Text(
+                                                        "No",
+                                                        style:
+                                                            GoogleFonts.aBeeZee(
+                                                          textStyle: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 20),
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        ],
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
-                                },
-                                child: Text(
-                                  "Delete",
-                                  style: GoogleFonts.ubuntu(
-                                    textStyle: TextStyle(
-                                      color: Colors.red,
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  },
+                                  child: Text(
+                                    "Delete",
+                                    style: GoogleFonts.ubuntu(
+                                      textStyle: TextStyle(
+                                        color: Colors.red,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              TextButton(
-                                onPressed: () {},
-                                child: Text(
-                                  "Save as PDF",
-                                  style: GoogleFonts.ubuntu(),
-                                ),
-                              )
-                            ],
-                          )
-                        : Container(),
-                  ],
-                )
-              ],
+                                TextButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    "Save as PDF",
+                                    style: GoogleFonts.ubuntu(),
+                                  ),
+                                )
+                              ],
+                            )
+                          : Container(),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

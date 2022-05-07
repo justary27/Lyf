@@ -25,7 +25,11 @@ class _SettingsPageState extends State<SettingsPage> {
               gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.grey.shade700, Colors.grey.shade900, Colors.black],
+            colors: [
+              Colors.grey.shade700,
+              Colors.grey.shade900,
+              Colors.black,
+            ],
           )),
           child: const CustomPaint(),
         ),
@@ -95,7 +99,9 @@ class _SettingsPageState extends State<SettingsPage> {
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(12),
+                            bottomLeft: Radius.circular(12),
                             topRight: Radius.circular(12),
+                            bottomRight: Radius.circular(12),
                           ),
                         ),
                         tileColor: Colors.white.withOpacity(0.15),
@@ -117,144 +123,145 @@ class _SettingsPageState extends State<SettingsPage> {
                                   color: Colors.white.withOpacity(0.35))),
                         ),
                       ),
-                      ListTile(
-                        tileColor: Colors.white.withOpacity(0.15),
-                        leading: Icon(
-                          Icons.stacked_bar_chart_outlined,
-                          color: Colors.white,
-                        ),
-                        onTap: () {},
-                        title: Text(
-                          "Data",
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                        subtitle: Text(
-                          "Invite a friend",
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ),
-                      ListTile(
-                        tileColor: Colors.white.withOpacity(0.15),
-                        leading: Icon(
-                          Icons.access_alarm,
-                          color: Colors.white,
-                        ),
-                        onTap: () {
-                          RouteManager.navigateToNotificationSettings(context);
-                        },
-                        title: Text(
-                          "Notifications",
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                        subtitle: Text(
-                          "Invite a friend",
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ),
-                      ListTile(
-                        tileColor: Colors.white.withOpacity(0.15),
-                        leading: Icon(
-                          Icons.dark_mode_outlined,
-                          color: Colors.white,
-                        ),
-                        onTap: () {
-                          RouteManager.navigateToThemeSettings(context);
-                        },
-                        title: Text(
-                          "Themes",
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                        subtitle: Text(
-                          "Change the app's theme.",
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ),
-                      ListTile(
-                        tileColor: Colors.white.withOpacity(0.15),
-                        leading: Icon(
-                          // Icons.language_rounded,
-                          FontAwesomeIcons.language,
-                          color: Colors.white,
-                        ),
-                        onTap: () {
-                          RouteManager.navigateToThemeSettings(context);
-                        },
-                        title: Text(
-                          "Language",
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                        subtitle: Text(
-                          "Change the app's language.",
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ),
-                      ListTile(
-                        tileColor: Colors.white.withOpacity(0.15),
-                        leading: Icon(
-                          Icons.help_outline_rounded,
-                          color: Colors.white,
-                        ),
-                        onTap: () {},
-                        title: Text(
-                          "Help Center",
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                        subtitle: Text(
-                          "Invite a friend",
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ),
-                      ListTile(
-                        tileColor: Colors.white.withOpacity(0.15),
-                        leading: Stack(
-                          children: [
-                            Icon(
-                              FontAwesomeIcons.rupeeSign,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                        onTap: () {
-                          RouteManager.navigateToThemeSettings(context);
-                        },
-                        title: Text(
-                          "Billing & payments",
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                        subtitle: Text(
-                          "Change the app's theme.",
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ),
-                      ListTile(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(12),
-                            bottomRight: Radius.circular(12),
-                          ),
-                        ),
-                        tileColor: Colors.white.withOpacity(0.15),
-                        leading: Icon(
-                          Icons.access_alarm,
-                          color: Colors.white,
-                        ),
-                        onTap: () {
-                          RouteManager.navigateToInviteSettings(context);
-                        },
-                        title: Text(
-                          "Invite",
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                        subtitle: Text(
-                          "Invite a friend",
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ),
+
+                      // ListTile(
+                      //   tileColor: Colors.white.withOpacity(0.15),
+                      //   leading: Icon(
+                      //     Icons.stacked_bar_chart_outlined,
+                      //     color: Colors.white,
+                      //   ),
+                      //   onTap: () {},
+                      //   title: Text(
+                      //     "Data",
+                      //     style: Theme.of(context).textTheme.headline4,
+                      //   ),
+                      //   subtitle: Text(
+                      //     "Invite a friend",
+                      //     style: Theme.of(context).textTheme.bodyText1,
+                      //   ),
+                      // ),
+                      // ListTile(
+                      //   tileColor: Colors.white.withOpacity(0.15),
+                      //   leading: Icon(
+                      //     Icons.access_alarm,
+                      //     color: Colors.white,
+                      //   ),
+                      //   onTap: () {
+                      //     RouteManager.navigateToNotificationSettings(context);
+                      //   },
+                      //   title: Text(
+                      //     "Notifications",
+                      //     style: Theme.of(context).textTheme.headline4,
+                      //   ),
+                      //   subtitle: Text(
+                      //     "Invite a friend",
+                      //     style: Theme.of(context).textTheme.bodyText1,
+                      //   ),
+                      // ),
+                      // ListTile(
+                      //   tileColor: Colors.white.withOpacity(0.15),
+                      //   leading: Icon(
+                      //     Icons.dark_mode_outlined,
+                      //     color: Colors.white,
+                      //   ),
+                      //   onTap: () {
+                      //     RouteManager.navigateToThemeSettings(context);
+                      //   },
+                      //   title: Text(
+                      //     "Themes",
+                      //     style: Theme.of(context).textTheme.headline4,
+                      //   ),
+                      //   subtitle: Text(
+                      //     "Change the app's theme.",
+                      //     style: Theme.of(context).textTheme.bodyText1,
+                      //   ),
+                      // ),
+                      // ListTile(
+                      //   tileColor: Colors.white.withOpacity(0.15),
+                      //   leading: Icon(
+                      //     // Icons.language_rounded,
+                      //     FontAwesomeIcons.language,
+                      //     color: Colors.white,
+                      //   ),
+                      //   onTap: () {
+                      //     RouteManager.navigateToThemeSettings(context);
+                      //   },
+                      //   title: Text(
+                      //     "Language",
+                      //     style: Theme.of(context).textTheme.headline4,
+                      //   ),
+                      //   subtitle: Text(
+                      //     "Change the app's language.",
+                      //     style: Theme.of(context).textTheme.bodyText1,
+                      //   ),
+                      // ),
+                      // ListTile(
+                      //   tileColor: Colors.white.withOpacity(0.15),
+                      //   leading: Icon(
+                      //     Icons.help_outline_rounded,
+                      //     color: Colors.white,
+                      //   ),
+                      //   onTap: () {},
+                      //   title: Text(
+                      //     "Help Center",
+                      //     style: Theme.of(context).textTheme.headline4,
+                      //   ),
+                      //   subtitle: Text(
+                      //     "Invite a friend",
+                      //     style: Theme.of(context).textTheme.bodyText1,
+                      //   ),
+                      // ),
+                      // ListTile(
+                      //   tileColor: Colors.white.withOpacity(0.15),
+                      //   leading: Stack(
+                      //     children: [
+                      //       Icon(
+                      //         FontAwesomeIcons.rupeeSign,
+                      //         color: Colors.white,
+                      //       ),
+                      //     ],
+                      //   ),
+                      //   onTap: () {
+                      //     RouteManager.navigateToThemeSettings(context);
+                      //   },
+                      //   title: Text(
+                      //     "Billing & payments",
+                      //     style: Theme.of(context).textTheme.headline4,
+                      //   ),
+                      //   subtitle: Text(
+                      //     "Change the app's theme.",
+                      //     style: Theme.of(context).textTheme.bodyText1,
+                      //   ),
+                      // ),
+                      // ListTile(
+                      //   shape: RoundedRectangleBorder(
+                      //     borderRadius: BorderRadius.only(
+                      //       bottomLeft: Radius.circular(12),
+                      //       bottomRight: Radius.circular(12),
+                      //     ),
+                      //   ),
+                      //   tileColor: Colors.white.withOpacity(0.15),
+                      //   leading: Icon(
+                      //     Icons.access_alarm,
+                      //     color: Colors.white,
+                      //   ),
+                      //   onTap: () {
+                      //     RouteManager.navigateToInviteSettings(context);
+                      //   },
+                      //   title: Text(
+                      //     "Invite",
+                      //     style: Theme.of(context).textTheme.headline4,
+                      //   ),
+                      //   subtitle: Text(
+                      //     "Invite a friend",
+                      //     style: Theme.of(context).textTheme.bodyText1,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
                 SizedBox(
-                  height: 0.10 * size.height,
+                  height: 0.50 * size.height,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [

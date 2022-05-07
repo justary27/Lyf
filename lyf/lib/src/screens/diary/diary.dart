@@ -6,6 +6,7 @@ import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:http/http.dart' as http;
 import 'package:lyf/src/services/http.dart';
+import 'package:lyf/src/shared/entry_card.dart';
 import 'package:share_plus/share_plus.dart';
 
 class DiaryPage extends StatefulWidget {
@@ -152,17 +153,17 @@ class _DiaryPageState extends State<DiaryPage> {
                         ),
                       ),
                       actions: [
-                        PopupMenuButton(
-                          color: Colors.white,
-                          itemBuilder: (context) {
-                            return [
-                              const PopupMenuItem(
-                                child: Text("Save all as PDF"),
-                              ),
-                            ];
-                          },
-                          icon: const Icon(Icons.more_vert),
-                        )
+                        // PopupMenuButton(
+                        //   color: Colors.white,
+                        //   itemBuilder: (context) {
+                        //     return [
+                        //       const PopupMenuItem(
+                        //         child: Text("Save all as PDF"),
+                        //       ),
+                        //     ];
+                        //   },
+                        //   icon: const Icon(Icons.more_vert),
+                        // )
                       ],
                     ),
                     // (retrieveStatus)
@@ -477,6 +478,12 @@ class _DiaryPageState extends State<DiaryPage> {
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 0.05 * size.width,
                                                 vertical: 0.015 * size.height),
+                                            // child: EntryCard(
+                                            //   entry: diaryEntries[index],
+                                            //   size: size,
+                                            //   parentContext: context,
+                                            //   pageCode: 1,
+                                            // ),
                                             child: Card(
                                               clipBehavior: Clip.antiAlias,
                                               shape: RoundedRectangleBorder(
@@ -733,7 +740,13 @@ class _DiaryPageState extends State<DiaryPage> {
                                                                 ),
                                                                 TextButton(
                                                                   onPressed:
-                                                                      () {},
+                                                                      () async {
+                                                                    await DiaryEntry.getEntryPdf(
+                                                                        getPdfClient:
+                                                                            diaryClient,
+                                                                        entry: diaryEntries[
+                                                                            index]);
+                                                                  },
                                                                   child: Text(
                                                                     "Save as PDF",
                                                                     style: GoogleFonts

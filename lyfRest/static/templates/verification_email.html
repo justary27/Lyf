@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Caveat&family=Ubuntu:wght@300&display=swap');
+        body{
+            margin: 0;
+            background:linear-gradient(117.02deg, #606060 0%, #434343 51.8%, #000000 99.45%);
+        }
+        .wrapper{
+            width: 100%;
+            table-layout: fixed;
+            background:linear-gradient(117.02deg, #606060 0%, #434343 51.8%, #000000 99.45%);
+        }
+        .splash{
+            padding-top: 10px;
+            margin: 0 auto;
+            height: 800px;
+            width: 100%;
+            max-width: 600px;
+            padding-bottom: 10px;
+        }
+        .message{
+            height: 798px;
+            width: 80%;
+            max-width: 480px;
+            z-index: 1;
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 25px 10px;
+        }
+        #lines{
+            z-index: 0;
+            position: absolute;
+            top: 50%;
+            right: 15%;
+            opacity: 15%;
+            transform: translateY(-50%);
+        }
+        .hbox{
+            height: 150px;
+            /* background-color: rgba(255, 255, 255, 0.5); */
+            /* border: 1px solid rgba(255, 255, 255, 0.15); */
+        }
+        .tbox{
+            height: 50px;
+        }
+        .bbox{
+            height: 400px;
+        }
+        .abox{
+            height: 200px;
+            background-color: white;
+            border: 1px solid white;
+            border-radius: 0px 0px 10px 10px;
+        }
+        .btn{
+            height: 50px;
+            background-color: white; 
+            border: 1px solid white;
+            border-radius: 10px;
+            margin-left: 25%;
+            margin-right: 25%;
+
+        }
+        #header{
+            text-align: right;
+            font-family: 'Caveat';
+            font-size: 50px;
+            color: white;
+            margin: 0; 
+            padding:0px 50px 0px 20px;
+        }
+        #title{
+            text-align: left;
+            font-family: 'Ubuntu';
+            font-size: 30px;
+            color: white;
+            margin: 0; 
+            padding:0px 20px 0px 20px;
+        }
+        #body{
+            text-align: left;
+            font-family: 'ABeeZee';
+            font-size: 25px;
+            color: rgba(255, 255, 255, 0.75);
+            margin: 0; 
+            padding:0px 20px 100px 20px;
+        }
+        #alter{
+            text-align: left;
+            font-family: 'ABeeZee';
+            font-size: 20px;
+            color: rgba(97, 97, 97, 1);
+            margin: 0; 
+            padding:20px 20px 20px 20px;
+        }
+        #btntext{
+            text-align: center;
+            font-family: "Ubuntu";
+            font-size: 25px;
+            color: rgba(97, 97, 97, 1);
+            margin: 0; 
+            padding:10px 10px 10px 10px;
+        }
+        @media screen and (max-width: 1000px) and (min-width: 750px){
+            #header{
+                font-size: 40px;
+                padding:0px 50px 0px 20px;
+            }
+            #title{
+                font-size: 25px;
+                padding:0px 20px 0px 20px;
+            }
+            #body{
+                font-size: 20px;
+                padding:0px 20px 175px 20px;
+            }
+            #alter{
+                font-size: 15px;
+                padding:20px 20px 20px 20px;
+            }
+            #btntext{
+                font-size: 20px;
+                padding:15px 10px 15px 10px;
+            }
+        }
+        @media screen and (max-width: 750px) and (min-width: 450px){
+            #header{
+                font-size: 40px;
+                padding:0px 50px 0px 20px;
+            }
+            #title{
+                font-size: 25px;
+                padding:0px 20px 0px 20px;
+            }
+            #body{
+                font-size: 20px;
+                padding:0px 20px 150px 20px;
+            }
+            #alter{
+                font-size: 15px;
+                padding:20px 20px 20px 20px;
+            }
+            #btntext{
+                font-size: 20px;
+                padding:15px 10px 15px 10px;
+            }   
+        }
+        @media screen and (max-width: 450px) and (min-width: 360px){
+            #header{
+                font-size: 35px;
+                padding:0px 50px 0px 20px;
+            }
+            #title{
+                font-size: 22.5px;
+                padding:0px 20px 0px 20px;
+            }
+            #body{
+                font-size: 17.5px;
+                padding:0px 20px 200px 20px;
+            }
+            #alter{
+                font-size: 12.5px;
+                padding:20px 20px 20px 20px;
+            }
+            #btntext{
+                font-size: 15px;
+                padding:15px 10px 15px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <center class="wrapper">
+        <div class="splash" align="center">
+            <div class="message", align="center">
+                <div class="hbox">
+                    <p style="margin: 0; padding-top: 50px;" id="header"><img src="https://cdn-lyf.herokuapp.com/static/assets/lyflogo.png" alt="" height="50">Lyf</p>
+                </div>
+                <div class="tbox"> 
+                    <p style="margin: 0;" id="title">Dear {{ username }},</p>
+                </div>
+                <div class="bbox">
+                    <p style="margin: 0;" id="body">Welcome to the lyf app. You're one step away from starting to write your lyf! Click the button below and verify your account to unleash thou lyf's full potential :)</p>
+                    <a href="https://cdn-lyf.herokuapp.com/verifyAccount/{{ userId }}" style="text-decoration: none;"><div class="btn"><p id="btntext">Activate</p></div></a>
+                </div>
+                <div class="abox">
+                    <p style="margin: 0;"  id="alter">Button not working? Fret not we got your back! Copy and paste the link below in your browser:</p>
+                    <a href="https://cdn-lyf.herokuapp.com/verifyAccount/{{ userId }}" style="color: #2196F3; text-decoration: none; text-align: center;">https://cdn-lyf.herokuapp.com/verifyAccount/{{ userId }}</a>
+                </div>
+            </div>
+        </div>   
+    </center>
+</body>
+</html>

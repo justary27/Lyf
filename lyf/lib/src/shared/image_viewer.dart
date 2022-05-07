@@ -5,18 +5,19 @@ import 'package:flutter/material.dart';
 
 class ImageViewer extends StatefulWidget {
   final Size size;
-  final List<PlatformFile?> imageFiles;
+  final List<PlatformFile?>? imageFiles;
   final void Function(Key key) removeMethod;
   final void Function(bool flag) notifyflagChange;
   final void Function(List<PlatformFile?>? file) fileHandler;
-
+  final List<String>? imageUrls;
   const ImageViewer({
     Key? key,
     required this.size,
-    required this.imageFiles,
     required this.removeMethod,
     required this.notifyflagChange,
     required this.fileHandler,
+    this.imageFiles,
+    this.imageUrls,
   }) : super(
           key: const Key('imageAttachment'),
         );
@@ -28,11 +29,18 @@ class ImageViewer extends StatefulWidget {
 class _ImageViewerState extends State<ImageViewer> {
   Widget imageViewer({
     required Size size,
-    required List<PlatformFile?> imageFiles,
     required void Function(Key key) removeMethod,
     required void Function(bool flag) notifyflagChange,
     required void Function(List<PlatformFile?>? file) fileHandler,
+    List<PlatformFile?>? imageFiles,
+    List<String>? imageUrls,
   }) {
+    late int itemCount;
+    if (imageFiles != null) {
+      itemCount = imageFiles.length;
+    } else if (imageUrls != null) {
+      itemCount = imageUrls.length;
+    }
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 0.05 * size.width,
@@ -52,7 +60,7 @@ class _ImageViewerState extends State<ImageViewer> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    (imageFiles.length > 1)
+                    (itemCount > 1)
                         ? Text(
                             "Images",
                             style: TextStyle(color: Colors.white),
@@ -79,11 +87,14 @@ class _ImageViewerState extends State<ImageViewer> {
                   child: GridView.builder(
                     physics: const BouncingScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: (imageFiles.length > 2) ? 2 : 1,
+                      crossAxisCount: (itemCount > 2) ? 2 : 1,
                     ),
-                    itemCount: imageFiles.length,
+                    itemCount: itemCount,
                     itemBuilder: (context, index) {
-                      File image = File(imageFiles[index]!.path!);
+                      late File image;
+                      if (imageFiles != null) {
+                        image = File(imageFiles[index]!.path!);
+                      }
                       return Card(
                         color: Colors.white.withOpacity(0.15),
                         shape: const RoundedRectangleBorder(
@@ -92,12 +103,19 @@ class _ImageViewerState extends State<ImageViewer> {
                           ),
                         ),
                         clipBehavior: Clip.hardEdge,
-                        child: Ink.image(
-                          fit: BoxFit.cover,
-                          image: FileImage(
-                            image,
-                          ),
-                        ),
+                        child: (imageUrls != null)
+                            ? Ink.image(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                  imageUrls[index].trimLeft(),
+                                ),
+                              )
+                            : Ink.image(
+                                fit: BoxFit.cover,
+                                image: FileImage(
+                                  image,
+                                ),
+                              ),
                       );
                     },
                   ),
@@ -113,11 +131,13 @@ class _ImageViewerState extends State<ImageViewer> {
   @override
   Widget build(BuildContext context) {
     return imageViewer(
-        size: widget.size,
-        imageFiles: widget.imageFiles,
-        removeMethod: widget.removeMethod,
-        notifyflagChange: widget.notifyflagChange,
-        fileHandler: widget.fileHandler);
+      size: widget.size,
+      imageFiles: widget.imageFiles,
+      removeMethod: widget.removeMethod,
+      notifyflagChange: widget.notifyflagChange,
+      fileHandler: widget.fileHandler,
+      imageUrls: widget.imageUrls,
+    );
   }
 }
 

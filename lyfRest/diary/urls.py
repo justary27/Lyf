@@ -8,6 +8,6 @@ urlpatterns = [
     path('<str:entryId>/', views.getEntrybyId),
     path('<str:entryId>/update/', views.updateEntry),
     path('<str:entryId>/delete/', views.deleteEntry),
-    path('<str:entryId>/pdf/', views.getPDFbyEntryId),
+    path('<str:entryId>/<str:entryId2>.pdf', views.getPDFbyEntryId),
 
 ]
