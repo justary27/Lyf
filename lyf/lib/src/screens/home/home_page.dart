@@ -63,25 +63,26 @@ class _HomePageState extends State<HomePage>
         initialData: true,
         stream: isSidebarOpenedStream,
         builder: (context, snapshot) {
+          String? swipeDirection;
           return AnimatedPositioned(
             left: snapshot.data == true ? 0 : size.width * 0.6,
             // right: isSideBarOpenedAsync.data == false ? 0 : size.width - 45,
             duration: _animationDuration,
             child: GestureDetector(
-              onHorizontalDragUpdate: (dragDetails) {
-                if (dragDetails.primaryDelta! < -7.5) {
+              onPanUpdate: (dragDetails) {
+                swipeDirection = dragDetails.delta.dx < 2 ? 'left' : 'right';
+              },
+              onPanEnd: (dragDetails) {
+                if (swipeDirection == null) {
+                  return;
+                }
+                if (swipeDirection == 'left') {
                   openBar();
-                } else {
+                }
+                if (swipeDirection == 'right') {
                   closeBar();
                 }
               },
-              // onHorizontalDragEnd: (dragDetails) {
-              //   if (dragDetails.primaryVelocity! < 0) {
-              //     openBar();
-              //   } else {
-              //     closeBar();
-              //   }
-              // },
               child: Stack(
                 children: [
                   const SideDrawer(),

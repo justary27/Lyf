@@ -5,6 +5,7 @@ import 'package:lyf/src/models/todo_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/services/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:lyf/src/shared/todo_card.dart';
 
 class AddTodoPage extends StatefulWidget {
   const AddTodoPage({Key? key}) : super(key: key);
@@ -54,6 +55,12 @@ class _AddTodoPageState extends State<AddTodoPage> {
     }
   }
 
+  void changeDescription(String newDescription) {
+    setState(() {
+      _descriptionController.text = newDescription;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -80,109 +87,94 @@ class _AddTodoPageState extends State<AddTodoPage> {
             //   child: const Icon(Icons.attachment),
             // ),
             backgroundColor: Colors.transparent,
-            body: CustomScrollView(slivers: [
-              SliverAppBar(
-                pinned: true,
-                backgroundColor: Colors.transparent,
-                leading: IconButton(
-                  onPressed: () {
-                    RouteManager.navigateToTodo(context);
-                  },
-                  icon: const Icon(Icons.arrow_back_ios),
-                ),
-                expandedHeight: 0.3 * size.height,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: ColorFiltered(
-                    colorFilter: ColorFilter.mode(
-                      Colors.black.withBlue(10),
-                      BlendMode.saturation,
-                    ),
-                    child: Image.asset(
-                      "assets/images/todo.jpg",
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  title: SizedBox(
-                    width: 0.5 * size.width,
-                    child: TextField(
-                      controller: _titleController,
-                      style: GoogleFonts.ubuntu(
-                        textStyle: const TextStyle(color: Colors.white),
-                      ),
-                      cursorColor: Colors.white,
-                      decoration: InputDecoration(
-                        filled: true,
-                        border: InputBorder.none,
-                        fillColor: Colors.white.withOpacity(0.35),
-                      ),
-                    ),
-                  ),
-                ),
-                actions: [
-                  IconButton(
+            body: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  pinned: true,
+                  backgroundColor: Colors.transparent,
+                  leading: IconButton(
                     onPressed: () {
-                      Todo todo = Todo(
-                          null,
-                          _titleController.text,
-                          _descriptionController.text,
-                          DateTime.now(),
-                          false,
-                          null);
-
-                      createTodo(createTodoClient, todo);
+                      RouteManager.navigateToTodo(context);
                     },
-                    icon: Icon(
-                      Icons.check_box_rounded,
-                      color: Colors.white,
-                    ),
+                    icon: const Icon(Icons.arrow_back_ios),
                   ),
-                  // IconButton(
-                  //   onPressed: () {},
-                  //   icon: const Icon(
-                  //     Icons.more_vert,
-                  //     color: Colors.white,
-                  //   ),
-                  // ),
-                ],
-              ),
-              SliverFillRemaining(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 0.05 * size.width,
-                            vertical: 0.015 * size.height),
-                        child: Card(
-                          clipBehavior: Clip.antiAlias,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          color: Colors.white.withOpacity(0.15),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 0.05 * size.width,
-                                vertical: 0.01 * size.height),
-                            child: TextFormField(
-                              controller: _descriptionController,
-                              style: GoogleFonts.aBeeZee(
-                                textStyle: TextStyle(
-                                  color: Colors.white.withOpacity(0.5),
-                                ),
-                              ),
-                              cursorColor: Colors.white.withOpacity(0.5),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                              ),
-                              maxLines: null,
-                            ),
-                          ),
+                  expandedHeight: 0.3 * size.height,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: ColorFiltered(
+                      colorFilter: ColorFilter.mode(
+                        Colors.black.withBlue(10),
+                        BlendMode.saturation,
+                      ),
+                      child: Image.asset(
+                        "assets/images/todo.jpg",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    title: SizedBox(
+                      width: 0.5 * size.width,
+                      child: TextField(
+                        controller: _titleController,
+                        style: GoogleFonts.ubuntu(
+                          textStyle: const TextStyle(color: Colors.white),
+                        ),
+                        cursorColor: Colors.white,
+                        decoration: InputDecoration(
+                          filled: true,
+                          border: InputBorder.none,
+                          fillColor: Colors.white.withOpacity(0.35),
                         ),
                       ),
-                    ],
+                    ),
                   ),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        Todo todo = Todo(
+                            null,
+                            _titleController.text,
+                            _descriptionController.text,
+                            DateTime.now(),
+                            false,
+                            null);
+
+                        createTodo(createTodoClient, todo);
+                      },
+                      icon: Icon(
+                        Icons.check_box_rounded,
+                        color: Colors.white,
+                      ),
+                    ),
+                    // IconButton(
+                    //   onPressed: () {},
+                    //   icon: const Icon(
+                    //     Icons.more_vert,
+                    //     color: Colors.white,
+                    //   ),
+                    // ),
+                  ],
                 ),
-              )
-            ]),
+                SliverFillRemaining(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 0.05 * size.width,
+                              vertical: 0.015 * size.height),
+                          child: TodoCard(
+                            pageCode: "/todo/add",
+                            parentContext: context,
+                            size: size,
+                            todo: null,
+                            notifyDescriptionChange: changeDescription,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ],
@@ -194,6 +186,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
     _titleController.dispose();
     _descriptionController.dispose();
     createTodoClient.close();
+
     super.dispose();
   }
 }
