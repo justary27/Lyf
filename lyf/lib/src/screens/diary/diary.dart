@@ -77,8 +77,9 @@ class _DiaryPageState extends State<DiaryPage> {
     diaryClient = http.Client();
     deleteEntryClient = http.Client();
     _getEntries = DiaryEntry.getEntries(
-        getEntryClient: diaryClient,
-        retrieveStatusNotifier: retrieveStatusNotifier);
+      getEntryClient: diaryClient,
+      retrieveStatusNotifier: retrieveStatusNotifier,
+    );
     getEntries(diaryClient);
     super.initState();
   }

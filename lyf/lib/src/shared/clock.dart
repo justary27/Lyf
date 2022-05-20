@@ -58,7 +58,16 @@ class ClockPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
     double hourX;
     double hourY;
-    if (18 > DateTime.now().hour && DateTime.now().hour >= 6) {
+    if (6 <= DateTime.now().hour && DateTime.now().hour < 12) {
+      hourX = size.width +
+          0.075 *
+              size.height *
+              sin((DateTime.now().hour + DateTime.now().minute / 60) * pi / 6);
+      hourY = 0.55 * size.height -
+          0.075 *
+              size.height *
+              cos((DateTime.now().hour + DateTime.now().minute / 60) * pi / 6);
+    } else if (18 > DateTime.now().hour && DateTime.now().hour >= 12) {
       hourX = size.width -
           0.075 *
               size.height *
