@@ -1,1 +1,3 @@
-class UserApiClient {}
+class UserApiClient {
+  UserApiClient._();
+}

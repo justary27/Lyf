@@ -1,5 +1,5 @@
-import 'package:lyf/src/utils/config/cdn_configuration.dart';
-import 'package:lyf/src/utils/enums/query_type.dart';
+import '../config/cdn_configuration.dart';
+import '../enums/query_type.dart';
 
 class UriHelper {
   UriHelper._();

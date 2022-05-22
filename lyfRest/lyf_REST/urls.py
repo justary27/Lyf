@@ -16,11 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
+from . import views
+from User import views as userViews
 
-handler500 = 'User.views.handler500'
-handler404 = 'User.views.handler404'
+handler500 = 'lyf_REST.views.handler500'
+handler404 = 'lyf_REST.views.handler404'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", include("User.urls")),
+    path('', views.index),
+    path('signUp/', userViews.createAccount),
+    path('verify/<str:userId>/', userViews.verificationEmail),
+    path('verifyAccount/<str:userId>', userViews.verifyAccount),
+    path('logIn/', userViews.loginToAccount.as_view()),
+    path("<str:userId>/", include("User.urls")),
 ]

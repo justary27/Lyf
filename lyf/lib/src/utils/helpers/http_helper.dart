@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
-import 'package:lyf/src/utils/enums/request_type.dart';
 
+import '../enums/request_type.dart';
 import '../errors/diary/diary_errors.dart';
 import '../errors/todo/todo_errors.dart';
 import '../errors/user/user_errors.dart';

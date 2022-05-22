@@ -17,29 +17,27 @@ class ApiEndpoints {
   static String deactivateAccount(String userId) =>
       "$mainDomain/$userId/deactivate/";
 
-  static String getAllTodos(String userId) => "$mainDomain/$userId/todos/";
+  static String getAllTodos(String userId) => "$mainDomain/$userId/todo/";
 
-  static String createTodo(String userId) =>
-      "$mainDomain/$userId/todos/create/";
+  static String createTodo(String userId) => "$mainDomain/$userId/todo/create/";
 
   static String updateTodo(String userId, String entryId) =>
-      "$mainDomain/$userId/todos/$entryId/update/";
+      "$mainDomain/$userId/todo/$entryId/update/";
 
-  static String getAllEntries(String userId) =>
-      "$mainDomain/$userId/diaryEntries/";
+  static String getAllEntries(String userId) => "$mainDomain/$userId/diary/";
 
   static String createEntry(String userId) =>
-      "$mainDomain/$userId/diaryEntries/create/";
+      "$mainDomain/$userId/diary/create/";
 
   static String updateEntry(String userId, String entryId) =>
-      "$mainDomain/$userId/diaryEntries/$entryId/update/";
+      "$mainDomain/$userId/diary/$entryId/update/";
 
   static String deleteEntry(String userId, String entryId) =>
-      "$mainDomain/$userId/diaryEntries/$entryId/delete/";
+      "$mainDomain/$userId/diary/$entryId/delete/";
 
   static String getEntryPdf(String userId, String entryId) =>
-      "$mainDomain/$userId/diaryEntries/$entryId/$entryId.pdf";
+      "$mainDomain/$userId/diary/$entryId/$entryId.pdf";
 
   static String deleteTodo(userId, String entryId) =>
-      "$mainDomain/$userId/todos/$entryId/delete/";
+      "$mainDomain/$userId/todo/$entryId/delete/";
 }

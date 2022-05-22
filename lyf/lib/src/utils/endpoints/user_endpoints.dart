@@ -1,5 +1,5 @@
 class UserEndpoints {
   UserEndpoints._();
-  static const signUp = "signUp";
-  static const String login = "logIn";
+  static const List<String> signUp = ["signUp", ""];
+  static const List<String> login = ["logIn", ""];
 }

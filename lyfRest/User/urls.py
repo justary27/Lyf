@@ -1,18 +1,11 @@
-
 from django.urls import path,include
-from rest_framework.authtoken import views as drf
 from . import views
 
 urlpatterns = [
-    path('', views.index),
-    path('signUp/', views.createAccount),
-    path('verify/<str:userId>/', views.verificationEmail),
-    path('verifyAccount/<str:userId>', views.verifyAccount),
-    path('logIn/', views.loginToAccount.as_view()),
-    path('<str:userId>/get/',views.get),
-    path('<str:userId>/update/',views.updateAccount),
-    path('<str:userId>/deactivate/',views.deactivateAccount),
-    path('<str:userId>/delete/',views.deleteAccount),
-    path('<str:userId>/todos/',include("todo.urls"),),
-    path('<str:userId>/diaryEntries/', include("diary.urls"),),
+    path('get/',views.get),
+    path('update/',views.updateAccount),
+    path('deactivate/',views.deactivateAccount),
+    path('delete/',views.deleteAccount),
+    path('todo/',include("todo.urls"),),
+    path('diary/', include("diary.urls"),),
 ]
