@@ -1,0 +1,4 @@
+enum QueryType {
+  prod,
+  test,
+}

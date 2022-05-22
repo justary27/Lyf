@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:lyf/src/global/globals.dart';
-import 'package:lyf/src/permissions/permission_handler.dart';
+import 'package:lyf/src/utils/handlers/permission_handler.dart';
 import 'package:lyf/src/services/http.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
