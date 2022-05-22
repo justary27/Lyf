@@ -43,12 +43,12 @@ jobs:
       run: flutter build appbundle --release
     
     - name: Rename aab file
-      run: mv ./lyf/build/app/outputs/bundle/release/app-release.aab ./lyf/build/app/outputs/bundle/release/lyf.aab
+      run: mv build/app/outputs/bundle/release/app-release.aab build/app/outputs/bundle/release/lyf.aab
       
     - name: Create Github Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "./lyf/build/app/outputs/apk/release/*.apk,./lyf/build/app/outputs/bundle/release/app-release.aab"
+        artifacts: "./lyf/build/app/outputs/apk/release/*.apk,./lyf/build/app/outputs/bundle/release/lyf.aab"
         commit: alpha
         allowUpdates: true
         replacesArtifacts: true
