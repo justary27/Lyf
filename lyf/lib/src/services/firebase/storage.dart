@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firestorage;
-import 'package:lyf/src/errors/firestorage_exceptions.dart';
+import 'package:lyf/src/utils/errors/firestorage_exceptions.dart';
 import 'package:lyf/src/global/globals.dart';
 
 class FireStorage {

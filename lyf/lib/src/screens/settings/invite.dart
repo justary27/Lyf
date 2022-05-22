@@ -5,7 +5,7 @@ import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/shared/contact_viewer.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../permissions/permission_handler.dart';
+import '../../utils/handlers/permission_handler.dart';
 
 class InviteSettingsPage extends StatefulWidget {
   const InviteSettingsPage({Key? key}) : super(key: key);

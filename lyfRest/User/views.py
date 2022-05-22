@@ -1,4 +1,3 @@
-from pickle import TRUE
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
@@ -59,7 +58,7 @@ def createAccount(request):
                 'username':user.username,
                 'userId': user._id,
                 'token':str(token),
-                'isActive':TRUE,
+                'isActive': True,
             }
         )
 
