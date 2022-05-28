@@ -29,7 +29,7 @@ class LyfUser {
 
   String get userName => username;
   String get userID => userId;
-  dynamic authHeader() {
+  Map<String, String> authHeader() {
     return {
       'Authorization': "Token " + token.toString(),
     };

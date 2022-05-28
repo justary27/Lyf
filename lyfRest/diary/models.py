@@ -65,8 +65,8 @@ class DiaryEntry(models.Model):
         return str(self._audioLink)
 
     @property
-    def imageAttachment(self) -> str:
-        return str(self._imageLinks)
+    def imageAttachment(self):
+        return self._imageLinks
 
     @property
     def asDict(self)->dict:
@@ -75,7 +75,7 @@ class DiaryEntry(models.Model):
             "_title":self.entryTitle,
             "_description": self.entryDescription,
             "_createdAt":self.CreatedAt,
-            "_audioLink":self.audioAttachment,
+            "_audioLink":self.audioAttachment if self.audioAttachment!="None" else None,
             "_imageLinks":self.imageAttachment#.replace('\'','').split(',') if self.imageAttachment != "Null" else "Null"
         }
 

@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lyf/src/global/globals.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/screens/home/drawer.dart';
-import 'package:lyf/src/services/user.dart';
 import 'package:lyf/src/shared/clock.dart';
 import 'package:lyf/src/shared/greet.dart';
 import 'dart:async';
@@ -224,8 +223,30 @@ class _HomePageState extends State<HomePage>
                                           Radius.circular(12),
                                         ),
                                       ),
+                                      // child: Consumer(
+                                      //   builder: ((context, ref, child) {
+                                      //     final todosState =
+                                      //         ref.watch(todosNotifierProvider);
+                                      //     return Container();
+                                      //   }),
                                       child: InkWell(
                                         onTap: () {},
+                                        // child: Consumer(
+                                        //   builder: ((context, ref, child) {
+                                        //     final todoState =
+                                        //         ref.watch(todoListNotifier);
+                                        //     return todoState.when(
+                                        //         data: (List<Todo>? data) {
+                                        //       return Center(child: Text("c"));
+                                        //     }, error: (Object error,
+                                        //             StackTrace? stackTrace) {
+                                        //       return Text(error.toString());
+                                        //     }, loading: () {
+                                        //       return const CircularProgressIndicator(
+                                        //           color: Colors.white);
+                                        //     });
+                                        //   }),
+                                        // ),
                                         // child: Column(
                                         //   mainAxisAlignment:
                                         //       MainAxisAlignment.center,
@@ -247,6 +268,7 @@ class _HomePageState extends State<HomePage>
                                         // ),
                                       ),
                                     ),
+                                    // ),
                                     Card(
                                       clipBehavior: Clip.antiAlias,
                                       color: Colors.white.withOpacity(0.15),

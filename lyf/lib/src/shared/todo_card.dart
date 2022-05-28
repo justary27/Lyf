@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/models/todo_model.dart';
 import 'package:lyf/src/shared/snackbars/delete_snack.dart';
-import 'package:http/http.dart' as http;
 import '../routes/routing.dart';
+import '../state/todo/todo_list_state.dart';
 
 /// The generic card used for displaying all the todo cards.
-class TodoCard extends StatefulWidget {
+class TodoCard extends ConsumerStatefulWidget {
   /// The context used by the parent widget.
   final BuildContext parentContext;
 
@@ -18,8 +19,8 @@ class TodoCard extends StatefulWidget {
   /// The todo instance the card will use.
   final Todo? todo;
 
-  /// Helper delete method corresponding to pageCode=="/todoPage"
-  final void Function(http.Client deleteTodoClient, Todo todo)? deleteTodo;
+  // /// Helper delete method corresponding to pageCode=="/todoPage"
+  // final void Function(http.Client deleteTodoClient, Todo todo)? deleteTodo;
 
   /// Helper method to notify edit flag change corresponding
   /// to the pageCode == "/todo/view"
@@ -41,45 +42,48 @@ class TodoCard extends StatefulWidget {
     required this.pageCode,
     required this.size,
     required this.todo,
-    this.deleteTodo,
     this.notifyflagChange,
     this.notifyDescriptionChange,
     this.notifyDateChange,
   }) : super(key: key);
 
   @override
-  State<TodoCard> createState() => _TodoCardState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _TodoCardState();
 }
 
-class _TodoCardState extends State<TodoCard> {
+class _TodoCardState extends ConsumerState<TodoCard> {
   late TextEditingController _descriptionController;
   late ValueNotifier<DateTime> _dateController;
-  late http.Client? _deleteTodoClient;
 
   // tasks
 
   /// Class method to call the actual delete helper method for the todo.
-  void deleteTodo(http.Client deleteTodoClient, Todo todo) async {
+  void _deleteTodo(Todo todo) async {
     if (widget.pageCode == "/todo/view") {
-      late int statusCode;
-      try {
-        statusCode = await Todo.deleteTodo(
-          deleteTodoClient: deleteTodoClient,
-          todo: todo,
-        );
-        if (statusCode == 200) {
-          RouteManager.navigateToTodo(widget.parentContext);
-        } else {
-          SnackBar snackBar = const SnackBar(
-            content: Text("Something went wrong"),
-          );
-          ScaffoldMessenger.of(widget.parentContext).showSnackBar(snackBar);
-        }
-      } catch (e) {
-        print(e);
-      }
+      await ref.read(todoListNotifier.notifier).removeTodo(todo);
+      Navigator.of(context).pop();
+      // RouteManager.navigateToTodo(widget.parentContext);
+
+      // late int statusCode;
+      // try {
+      //   statusCode = await Todo.deleteTodo(
+      //     deleteTodoClient: deleteTodoClient,
+      //     todo: todo,
+      //   );
+      //   if (statusCode == 200) {
+      //   } else {
+      //     SnackBar snackBar = const SnackBar(
+      //       content: Text("Something went wrong"),
+      //     );
+      //     ScaffoldMessenger.of(widget.parentContext).showSnackBar(snackBar);
+      //   }
+      // } catch (e) {
+      //   print(e);
+      // }
     } else {
-      widget.deleteTodo!(deleteTodoClient, todo);
+      await ref.read(todoListNotifier.notifier).removeTodo(todo);
+
+      // widget.deleteTodo!(deleteTodoClient, todo);
     }
   }
 
@@ -212,8 +216,7 @@ class _TodoCardState extends State<TodoCard> {
                     parentContext: widget.parentContext,
                     size: size,
                     item: widget.todo!,
-                    deleteItemClient: _deleteTodoClient,
-                    performDeleteTask: deleteTodo,
+                    performDeleteTask: _deleteTodo,
                   );
                   ScaffoldMessenger.of(widget.parentContext)
                       .showSnackBar(snackBar);
@@ -257,8 +260,7 @@ class _TodoCardState extends State<TodoCard> {
                     parentContext: widget.parentContext,
                     size: size,
                     item: widget.todo!,
-                    deleteItemClient: _deleteTodoClient,
-                    performDeleteTask: deleteTodo,
+                    performDeleteTask: _deleteTodo,
                   );
                   ScaffoldMessenger.of(widget.parentContext)
                       .showSnackBar(snackBar);
@@ -374,8 +376,6 @@ class _TodoCardState extends State<TodoCard> {
       _descriptionController.text = "Description";
     }
 
-    _deleteTodoClient = http.Client();
-
     super.initState();
   }
 
@@ -396,7 +396,6 @@ class _TodoCardState extends State<TodoCard> {
   @override
   void dispose() {
     _descriptionController.dispose();
-    _deleteTodoClient!.close();
 
     super.dispose();
   }

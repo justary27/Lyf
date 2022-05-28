@@ -1,32 +1,42 @@
-import 'dart:convert';
 import 'dart:io';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
-import 'package:lyf/src/global/globals.dart';
-import 'package:lyf/src/utils/handlers/permission_handler.dart';
-import 'package:lyf/src/services/http.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-import 'dart:developer';
+import 'package:json_annotation/json_annotation.dart';
+import '../interface/json_object.dart';
+import '../global/globals.dart';
+import '../utils/handlers/permission_handler.dart';
+import '../services/http.dart';
+
+part 'diary_model.g.dart';
 
 /// ## Diary
 /// Defining class of an entry in diary of a [LyfUser].
-class DiaryEntry {
+@JsonSerializable()
+class DiaryEntry extends JsonObject {
   /// Unique Id of a [DiaryEntry]
+  @JsonKey(name: "_id")
   final String? id;
 
   /// Title of a [DiaryEntry]
+  @JsonKey(name: "_title")
   final String title;
 
   /// Description of a [DiaryEntry]
+  @JsonKey(name: "_description")
   final String description;
 
   /// Time when the [DiaryEntry] was created
+  @JsonKey(name: "_createdAt")
   final DateTime createdAt;
 
   /// Url of an audioFile attached with the [DiaryEntry]
+  @JsonKey(name: "_audioLink")
   String? audioLink;
 
   /// A list of urls attached with the [DiaryEntry]
+  @JsonKey(name: "_imageLinks")
   List<String>? imageLinks;
 
   // Constructor
@@ -58,59 +68,11 @@ class DiaryEntry {
     return createdAt;
   }
 
-  // Json Methods
+  factory DiaryEntry.fromJson(Map<String, dynamic> json) =>
+      _$DiaryEntryFromJson(json);
 
-  /// Standard fromJson() method.
-  static DiaryEntry fromJson(Map<String, dynamic> jsonResponse) {
-    return DiaryEntry(
-      jsonResponse['_id'],
-      jsonResponse['_title'],
-      jsonResponse['_description'].toString(),
-      DateTime.parse(jsonResponse['_createdAt']),
-      jsonResponse["_audioLink"],
-      (jsonResponse["_imageLinks"] == 'None' ||
-              jsonResponse["_imageLinks"] == '')
-          ? null
-          : jsonResponse["_imageLinks"]
-              .substring(1, jsonResponse["_imageLinks"].length - 1)
-              .replaceAll('\'', '')
-              .split(','),
-    );
-  }
-
-  /// Standard toJson() method.
-  static Map<String, dynamic> toJson(DiaryEntry entry) {
-    return {
-      '_userId': currentUser.userID,
-      '_title': entry.title,
-      '_description': entry.description,
-      '_created_on': entry.createdAt.toIso8601String(),
-      '_audioLink': entry.audioLink,
-      '_imageLinks':
-          (entry.imageLinks != null) ? entry.imageLinks!.join(" ") : "Null",
-    };
-  }
-
-  /// Helper method to create a [DiaryEntry] in the database.
-  static Future<int> createEntry({
-    required http.Client createEntryClient,
-    required DiaryEntry entry,
-  }) async {
-    http.Response? response;
-    try {
-      response = await createEntryClient.post(
-        Uri.parse(
-          ApiEndpoints.createEntry(currentUser.userID),
-        ),
-        body: DiaryEntry.toJson(entry),
-        headers: currentUser.authHeader(),
-      );
-      return response.statusCode;
-    } catch (e) {
-      log(e.toString());
-      return -1;
-    }
-  }
+  @override
+  Map<String, dynamic> toJson() => _$DiaryEntryToJson(this);
 
   /// Helper method to update a [DiaryEntry] in the database.
   static Future<int> updateEntry({
@@ -123,67 +85,13 @@ class DiaryEntry {
         Uri.parse(
           ApiEndpoints.updateEntry(currentUser.userID, entry.entryId!),
         ),
-        body: DiaryEntry.toJson(entry),
+        // body: DiaryEntry.toJson(entry),
         headers: currentUser.authHeader(),
       );
       return response.statusCode;
     } catch (e) {
       log(e.toString());
       return -1;
-    }
-  }
-
-  /// Helper method to delete a [DiaryEntry] in the database.
-  static Future<int> deleteEntry({
-    required http.Client deleteEntryClient,
-    required DiaryEntry entry,
-  }) async {
-    http.Response? response;
-    try {
-      response = await deleteEntryClient.delete(
-        Uri.parse(
-          ApiEndpoints.deleteEntry(currentUser.userID, entry.entryId!),
-        ),
-        headers: currentUser.authHeader(),
-      );
-      // await FireStorage.deletediaryUploads(entryId: entry.entryId!);
-      return response.statusCode;
-    } catch (e) {
-      log(e.toString());
-      return -1;
-    }
-  }
-
-  /// Helper method to retrieve the entire Diary of a [LyfUser].
-  static Future<List<DiaryEntry?>?> getEntries({
-    required http.Client getEntryClient,
-    required void Function(bool flag) retrieveStatusNotifier,
-  }) async {
-    http.Response? response;
-    List<DiaryEntry>? diary;
-    try {
-      response = await getEntryClient.get(
-        Uri.parse(
-          ApiEndpoints.getAllEntries(currentUser.userID),
-        ),
-        headers: currentUser.authHeader(),
-      );
-      if (response.statusCode == 200) {
-        diary = [];
-        json.decode(response.body).forEach((element) {
-          DiaryEntry entry = DiaryEntry.fromJson(element);
-          diary!.add(entry);
-        });
-        retrieveStatusNotifier(true);
-        return diary;
-      } else {
-        retrieveStatusNotifier(false);
-        return [null];
-      }
-    } catch (e) {
-      log(e.toString());
-      retrieveStatusNotifier(false);
-      return [null];
     }
   }
 

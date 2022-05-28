@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 
+import '../../global/globals.dart';
 import '../enums/request_type.dart';
 import '../errors/diary/diary_errors.dart';
 import '../errors/todo/todo_errors.dart';
@@ -8,34 +9,43 @@ import '../errors/user/user_errors.dart';
 class HttpHelper {
   HttpHelper._();
 
-  static Future<http.Response> doUserRequest({
+  static Future<http.Response?> doUserRequest({
     required RequestType requestType,
     required Uri requestUri,
+    required bool addAuthorization,
     Map<String, String>? requestBody,
   }) async {
-    late http.Response response;
+    http.Response? response;
     try {
       if (requestType == RequestType.get) {
         response = await http.get(
           requestUri,
-          headers: _buildHeaders(),
+          headers: _buildHeaders(
+            setAuthorization: addAuthorization,
+          ),
         );
       } else if (requestType == RequestType.post) {
         response = await http.post(
           requestUri,
-          headers: _buildHeaders(),
+          headers: _buildHeaders(
+            setAuthorization: addAuthorization,
+          ),
           body: requestBody,
         );
       } else if (requestType == RequestType.put) {
         response = await http.put(
           requestUri,
-          headers: _buildHeaders(),
+          headers: _buildHeaders(
+            setAuthorization: addAuthorization,
+          ),
           body: requestBody,
         );
       } else {
         response = await http.delete(
           requestUri,
-          headers: _buildHeaders(),
+          headers: _buildHeaders(
+            setAuthorization: addAuthorization,
+          ),
           body: requestBody,
         );
       }
@@ -45,38 +55,51 @@ class HttpHelper {
         throw UserException(response.body.toString());
       }
     } catch (e) {
-      throw UserException(e.toString());
+      if (e.runtimeType == UserException) {
+        return null;
+      } else {
+        throw Exception(e.toString());
+      }
     }
   }
 
-  static Future<http.Response> doTodoRequest({
+  static Future<http.Response?> doTodoRequest({
     required RequestType requestType,
     required Uri requestUri,
     Map<String, String>? requestBody,
   }) async {
-    late http.Response response;
+    http.Response? response;
     try {
       if (requestType == RequestType.get) {
+        print(requestUri);
         response = await http.get(
           requestUri,
-          headers: _buildHeaders(),
+          headers: _buildHeaders(
+            setAuthorization: true,
+          ),
         );
       } else if (requestType == RequestType.post) {
         response = await http.post(
           requestUri,
-          headers: _buildHeaders(),
+          headers: _buildHeaders(
+            setAuthorization: true,
+          ),
           body: requestBody,
         );
       } else if (requestType == RequestType.put) {
         response = await http.put(
           requestUri,
-          headers: _buildHeaders(),
+          headers: _buildHeaders(
+            setAuthorization: true,
+          ),
           body: requestBody,
         );
       } else {
         response = await http.delete(
           requestUri,
-          headers: _buildHeaders(),
+          headers: _buildHeaders(
+            setAuthorization: true,
+          ),
           body: requestBody,
         );
       }
@@ -86,38 +109,50 @@ class HttpHelper {
         throw TodoException(response.body.toString());
       }
     } catch (e) {
-      throw TodoException(e.toString());
+      if (e.runtimeType == TodoException) {
+        rethrow;
+      } else {
+        throw Exception(e.toString());
+      }
     }
   }
 
-  static Future<http.Response> doDiaryRequest({
+  static Future<http.Response?> doDiaryRequest({
     required RequestType requestType,
     required Uri requestUri,
     Map<String, String>? requestBody,
   }) async {
-    late http.Response response;
+    http.Response? response;
     try {
       if (requestType == RequestType.get) {
         response = await http.get(
           requestUri,
-          headers: _buildHeaders(),
+          headers: _buildHeaders(
+            setAuthorization: true,
+          ),
         );
       } else if (requestType == RequestType.post) {
         response = await http.post(
           requestUri,
-          headers: _buildHeaders(),
+          headers: _buildHeaders(
+            setAuthorization: true,
+          ),
           body: requestBody,
         );
       } else if (requestType == RequestType.put) {
         response = await http.put(
           requestUri,
-          headers: _buildHeaders(),
+          headers: _buildHeaders(
+            setAuthorization: true,
+          ),
           body: requestBody,
         );
       } else {
         response = await http.delete(
           requestUri,
-          headers: _buildHeaders(),
+          headers: _buildHeaders(
+            setAuthorization: true,
+          ),
           body: requestBody,
         );
       }
@@ -127,11 +162,21 @@ class HttpHelper {
         throw DiaryException(response.body.toString());
       }
     } catch (e) {
-      throw DiaryException(e.toString());
+      if (e.runtimeType == DiaryException) {
+        return null;
+      } else {
+        throw Exception(e.toString());
+      }
     }
   }
 
-  static Map<String, String> _buildHeaders() {
-    return {};
+  static Map<String, String> _buildHeaders({
+    required bool setAuthorization,
+  }) {
+    Map<String, String> headers = {};
+    if (setAuthorization) {
+      headers.addAll(currentUser.authHeader());
+    }
+    return headers;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/models/diary_model.dart';
 import 'package:http/http.dart' as http;
@@ -6,12 +7,14 @@ import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/shared/snackbars/delete_snack.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../state/diary/diary_list_state.dart';
+
 /// The generic card used for displaying all the entry cards.
 ///
 /// [size] MediaQuery.of(context).size of parent, must not be null.
 /// [entry] The diary entry to be displayed, must not be null.
 /// [parentContext] The context used for displaying card's snackbars and handling onTap events, must not be null.
-class EntryCard extends StatefulWidget {
+class EntryCard extends ConsumerStatefulWidget {
   final Size size;
   final DiaryEntry entry;
   final BuildContext parentContext;
@@ -31,36 +34,18 @@ class EntryCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _EntryCardState createState() => _EntryCardState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _EntryCardState();
 }
 
-class _EntryCardState extends State<EntryCard> {
+class _EntryCardState extends ConsumerState<EntryCard> {
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
   late ValueNotifier<DateTime> _dateController;
   http.Client? deleteEntryClient;
 
-  void deleteEntry(http.Client? deleteEntryClient, DiaryEntry entry) async {
-    late int statusCode;
-    try {
-      statusCode = await DiaryEntry.deleteEntry(
-          deleteEntryClient: deleteEntryClient!, entry: entry);
-      if (statusCode == 200) {
-        SnackBar snackBar = const SnackBar(
-          content: Text("Entry deleted successfully"),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-        RouteManager.navigateToDiary(context);
-      } else {
-        SnackBar snackBar = const SnackBar(
-          content: Text("Something went wrong"),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      }
-    } catch (e) {
-      print(e);
-    }
+  void _deleteEntry(DiaryEntry entry) async {
+    await ref.read(diaryNotifier.notifier).removeEntry(entry);
+    Navigator.of(context).pop();
   }
 
   Widget titleWidget({
@@ -287,8 +272,7 @@ class _EntryCardState extends State<EntryCard> {
                                       parentContext: widget.parentContext,
                                       size: size,
                                       item: entry,
-                                      deleteItemClient: deleteEntryClient,
-                                      performDeleteTask: deleteEntry,
+                                      performDeleteTask: _deleteEntry,
                                     );
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);

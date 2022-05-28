@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/utils/errors/firestorage_exceptions.dart';
@@ -14,7 +15,9 @@ import 'package:lyf/src/shared/image_viewer.dart';
 import 'package:lyf/src/shared/snackbars/fileupload_snack.dart';
 import 'package:lyf/src/shared/snackbars/unsaved_snack.dart';
 
-class ViewDiaryEntryPage extends StatefulWidget {
+import '../../state/diary/diary_list_state.dart';
+
+class ViewDiaryEntryPage extends ConsumerStatefulWidget {
   final DiaryEntry entry;
   final Size size;
   const ViewDiaryEntryPage({
@@ -24,14 +27,14 @@ class ViewDiaryEntryPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ViewDiaryEntryPageState createState() => _ViewDiaryEntryPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ViewDiaryEntryPageState();
 }
 
-class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
+class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
   late http.Client updateEntryClient;
-  late http.Client deleteEntryClient;
   late DateTime dateController;
   List<String>? imageAttachmentLinks;
   late ValueNotifier<bool> isChanged;
@@ -85,22 +88,9 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
     }
   }
 
-  void deleteEntry(http.Client deleteEntryClient, DiaryEntry entry) async {
-    late int statusCode;
-    try {
-      statusCode = await DiaryEntry.deleteEntry(
-          deleteEntryClient: deleteEntryClient, entry: entry);
-      if (statusCode == 200) {
-        RouteManager.navigateToDiary(context);
-      } else {
-        SnackBar snackBar = const SnackBar(
-          content: Text("Something went wrong"),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      }
-    } catch (e) {
-      print(e);
-    }
+  void _updateEntry(DiaryEntry updatedEntry) async {
+    await ref.read(diaryNotifier.notifier).editEntry(updatedEntry);
+    Navigator.of(context).pop();
   }
 
   void changeFlag(bool flag) {
@@ -194,7 +184,6 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
     _descriptionController = TextEditingController();
     isChanged = ValueNotifier(false);
     updateEntryClient = http.Client();
-    deleteEntryClient = http.Client();
     _titleController.text = widget.entry.entryTitle;
     _descriptionController.text = widget.entry.description;
     dateController = widget.entry.entryCreatedAt;
@@ -473,10 +462,10 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
                                         "",
                                         [
                                           "https://www.google.com",
+                                          "https://www.google.com",
                                         ],
                                       );
-                                      updateEntry(
-                                          updateEntryClient, _updatedEntry);
+                                      _updateEntry(_updatedEntry);
                                     }
                                   },
                                   icon: const Icon(
@@ -516,7 +505,6 @@ class _ViewDiaryEntryPageState extends State<ViewDiaryEntryPage> {
     _titleController.dispose();
     _descriptionController.dispose();
     updateEntryClient.close();
-    deleteEntryClient.close();
     super.dispose();
   }
 }

@@ -67,12 +67,12 @@ class Todo(models.Model):
     @property
     def asDict(self)->dict:
         return {
-            "id":self.todoId,
-            "title":self.todoTitle,
-            "description": self.todoDescription,
-            "createdAt":self.CreatedAt,
-            "isReminderSet":self.isReminderset,
-            "reminderAt":self.ReminderAt,
+            "_id":self.todoId,
+            "_title":self.todoTitle,
+            "_description": self.todoDescription,
+            "_createdAt":self.CreatedAt,
+            "_isReminderSet":self.isReminderset,
+            "_reminderAt":self.ReminderAt if self.ReminderAt !="None" else None,
         }
 
     def __str__(self) -> str:
