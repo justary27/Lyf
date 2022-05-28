@@ -21,7 +21,7 @@ class TodoApiClient {
       response = await HttpHelper.doTodoRequest(
         requestType: RequestType.post,
         requestUri: UriHelper.constructUri(
-          queryType: QueryType.test,
+          // queryType: QueryType.test,
           pathSegs: TodoEndpoints.createTodo(userId: currentUser.userID),
         ),
         requestBody: todo.toData(),
@@ -68,7 +68,7 @@ class TodoApiClient {
       response = await HttpHelper.doTodoRequest(
         requestType: RequestType.get,
         requestUri: UriHelper.constructUri(
-          queryType: QueryType.test,
+          // queryType: QueryType.test,
           pathSegs: TodoEndpoints.getAllTodos(
             userId: currentUser.userID,
           ),
@@ -97,7 +97,7 @@ class TodoApiClient {
       response = await HttpHelper.doTodoRequest(
         requestType: RequestType.put,
         requestUri: UriHelper.constructUri(
-          queryType: QueryType.test,
+          // queryType: QueryType.test,
           pathSegs: TodoEndpoints.updateTodo(
             userId: currentUser.userId,
             todoId: todo.id!,
@@ -124,7 +124,7 @@ class TodoApiClient {
       response = await HttpHelper.doTodoRequest(
         requestType: RequestType.delete,
         requestUri: UriHelper.constructUri(
-          queryType: QueryType.test,
+          // queryType: QueryType.test,
           pathSegs: TodoEndpoints.deleteTodo(
             userId: currentUser.userId,
             todoId: todo.id!,

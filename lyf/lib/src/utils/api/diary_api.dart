@@ -22,7 +22,7 @@ class DiaryApiClient {
       response = await HttpHelper.doDiaryRequest(
         requestType: RequestType.post,
         requestUri: UriHelper.constructUri(
-          queryType: QueryType.test,
+          // queryType: QueryType.test,
           pathSegs: DiaryEndpoints.createEntry(
             userId: currentUser.userId,
           ),
@@ -72,7 +72,7 @@ class DiaryApiClient {
       response = await HttpHelper.doDiaryRequest(
         requestType: RequestType.get,
         requestUri: UriHelper.constructUri(
-          queryType: QueryType.test,
+          // queryType: QueryType.test,
           pathSegs: DiaryEndpoints.getAllEntries(
             userId: currentUser.userId,
           ),
@@ -143,7 +143,7 @@ class DiaryApiClient {
       response = await HttpHelper.doDiaryRequest(
         requestType: RequestType.put,
         requestUri: UriHelper.constructUri(
-          queryType: QueryType.test,
+          // queryType: QueryType.test,
           pathSegs: DiaryEndpoints.updateEntry(
             userId: currentUser.userId,
             entryId: entry.entryId!,
@@ -170,7 +170,7 @@ class DiaryApiClient {
       response = await HttpHelper.doDiaryRequest(
         requestType: RequestType.delete,
         requestUri: UriHelper.constructUri(
-          queryType: QueryType.test,
+          // queryType: QueryType.test,
           pathSegs: DiaryEndpoints.deleteEntry(
             userId: currentUser.userId,
             entryId: entry.entryId!,
