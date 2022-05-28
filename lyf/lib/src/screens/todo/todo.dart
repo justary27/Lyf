@@ -1,75 +1,37 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lyf/src/global/globals.dart';
 import 'package:lyf/src/models/todo_model.dart';
 import 'package:lyf/src/routes/routing.dart';
-import 'package:http/http.dart' as http;
-import 'package:lyf/src/services/http.dart';
-import 'package:lyf/src/shared/datetime_picker.dart';
 import 'package:lyf/src/shared/todo_card.dart';
 
-class TodoPage extends StatefulWidget {
+import '../../state/todo/todo_list_state.dart';
+
+class TodoPage extends ConsumerStatefulWidget {
   const TodoPage({Key? key}) : super(key: key);
 
   @override
-  _TodoPageState createState() => _TodoPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _TodoPageState();
 }
 
-class _TodoPageState extends State<TodoPage> {
-  late http.Client todoClient;
-  late http.Client deleteTodoClient;
-  List<Todo> todos = [];
-  bool retrieveStatus = true;
-
-  getTodos(http.Client client) async {
-    List<Todo> todoList = [];
-    var tOdOs = await client.get(
-      Uri.parse(ApiEndpoints.getAllTodos(currentUser.userId)),
-      headers: currentUser.authHeader(),
-    );
-    try {
-      jsonDecode(tOdOs.body).forEach((element) {
-        Todo todo = Todo.fromJson(element);
-        todoList.add(todo);
-      });
-      setState(() {
-        todos = todoList;
-        retrieveStatus = true;
-      });
-    } catch (e) {
-      print(e);
-      setState(() {
-        retrieveStatus = false;
-      });
+class _TodoPageState extends ConsumerState<TodoPage> {
+  void _retrieve() async {
+    if (ref.read(todoListNotifier).value != null) {
+      await ref.read(todoListNotifier.notifier).retrieveTodoList();
     }
   }
 
-  void deleteTodo(http.Client deleteTodoClient, Todo todo) async {
-    late int statusCode;
-    try {
-      statusCode =
-          await Todo.deleteTodo(deleteTodoClient: todoClient, todo: todo);
-      if (statusCode == 200) {
-        getTodos(deleteTodoClient);
-      } else {
-        SnackBar snackBar = const SnackBar(
-          content: Text("Something went wrong"),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      }
-    } catch (e) {
-      print(e);
+  Future<void> _refresh() async {
+    if (ref.read(todoListNotifier).value != null) {
+      await ref.read(todoListNotifier.notifier).refresh();
     }
   }
 
   @override
   void initState() {
     super.initState();
-    todoClient = http.Client();
-    deleteTodoClient = http.Client();
-
-    getTodos(todoClient);
+    _retrieve();
+    // getTodos(todoClient);
   }
 
   @override
@@ -97,7 +59,6 @@ class _TodoPageState extends State<TodoPage> {
                 ],
               ),
             ),
-            child: CustomPaint(),
           ),
           SizedBox(
             height: size.height,
@@ -143,22 +104,57 @@ class _TodoPageState extends State<TodoPage> {
                       ),
                     ),
                   ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) => Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 0.05 * size.width,
-                            vertical: 0.015 * size.height),
-                        child: TodoCard(
-                          parentContext: context,
-                          pageCode: "/todoPage",
-                          size: size,
-                          todo: todos[index],
-                          deleteTodo: deleteTodo,
-                        ),
-                      ),
-                      childCount: todos.length,
-                    ),
+                  Consumer(
+                    builder: ((context, ref, child) {
+                      final todoState = ref.watch(todoListNotifier);
+                      return todoState.when(
+                        data: (List<Todo>? todoList) {
+                          if (todoList!.isEmpty) {
+                            return const SliverFillRemaining(
+                              child: Center(
+                                child: Text(
+                                  "Looks like you don't have any todos :) \n Yay!",
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            );
+                          } else {
+                            return SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                (context, index) => Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 0.05 * size.width,
+                                      vertical: 0.015 * size.height),
+                                  child: TodoCard(
+                                    parentContext: context,
+                                    pageCode: "/todoPage",
+                                    size: size,
+                                    todo: todoList[index],
+                                  ),
+                                ),
+                                childCount: todoList.length,
+                              ),
+                            );
+                          }
+                        },
+                        error: (Object error, StackTrace? stackTrace) {
+                          return const SliverFillRemaining(
+                            child: Center(
+                              child: Text("Unable to retrieve your Todo List."),
+                            ),
+                          );
+                        },
+                        loading: () {
+                          return const SliverFillRemaining(
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }),
                   ),
                 ],
               ),
@@ -167,12 +163,5 @@ class _TodoPageState extends State<TodoPage> {
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    todoClient.close();
-    deleteTodoClient.close();
-    super.dispose();
   }
 }

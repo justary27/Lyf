@@ -8,7 +8,6 @@ SnackBar deleteSnack({
   required BuildContext parentContext,
   required Size size,
   required Object item,
-  http.Client? deleteItemClient,
   Function? performDeleteTask,
 }) {
   Todo? todo;
@@ -70,13 +69,13 @@ SnackBar deleteSnack({
                         ),
                       ),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       ScaffoldMessenger.of(parentContext).hideCurrentSnackBar();
                       if (performDeleteTask != null) {
                         if (todo != null) {
-                          performDeleteTask(deleteItemClient!, todo);
+                          await performDeleteTask(todo);
                         } else if (entry != null) {
-                          performDeleteTask(deleteItemClient!, entry);
+                          await performDeleteTask(entry);
                         }
                       }
                     },

@@ -1,55 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/routes/routing.dart';
-import 'package:http/http.dart' as http;
+import 'package:lyf/src/state/diary/diary_list_state.dart';
 
-class AddDiaryEntryPage extends StatefulWidget {
+class AddDiaryEntryPage extends ConsumerStatefulWidget {
   const AddDiaryEntryPage({Key? key}) : super(key: key);
 
   @override
-  _AddDiaryEntryPageState createState() => _AddDiaryEntryPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _AddDiaryEntryPageState();
 }
 
-class _AddDiaryEntryPageState extends State<AddDiaryEntryPage> {
+class _AddDiaryEntryPageState extends ConsumerState<AddDiaryEntryPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  late http.Client createEntryClient;
   @override
   void initState() {
     _titleController.text = "Untitled";
     _descriptionController.text = "Description";
-    createEntryClient = http.Client();
     super.initState();
   }
 
-  void createEntry(http.Client createEntryClient, DiaryEntry entry) async {
-    late int statusCode;
-    try {
-      statusCode = await DiaryEntry.createEntry(
-          createEntryClient: createEntryClient, entry: entry);
-      if (statusCode == 200) {
-        SnackBar snackBar = const SnackBar(
-          content: Text("Entry created successfully!"),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        FocusManager.instance.primaryFocus?.unfocus();
-        // Navigator.of(context)
-        //     .popUntil(ModalRoute.withName(RouteManager.diaryPage));
-        // Navigator.of(context).pushNamed(RouteManager.diaryPage);
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          RouteManager.diaryPage,
-          ModalRoute.withName(RouteManager.diaryPage),
-        );
-      } else {
-        SnackBar snackBar = const SnackBar(
-          content: Text("Something went wrong"),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      }
-    } catch (e) {
-      print(e);
-    }
+  void _createEntry(DiaryEntry entry) async {
+    await ref.read(diaryNotifier.notifier).addEntry(entry);
+    SnackBar snackBar = const SnackBar(
+      content: Text("Entry created successfully!"),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -221,7 +201,8 @@ class _AddDiaryEntryPageState extends State<AddDiaryEntryPage> {
                         "",
                         null,
                       );
-                      createEntry(createEntryClient, entry);
+                      // createEntry(createEntryClient, entry);
+                      _createEntry(entry);
                     },
                     icon: Icon(
                       Icons.check_box_rounded,
@@ -287,7 +268,6 @@ class _AddDiaryEntryPageState extends State<AddDiaryEntryPage> {
   void dispose() {
     _titleController.dispose();
     _descriptionController.dispose();
-    createEntryClient.close();
     super.dispose();
   }
 }

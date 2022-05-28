@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -34,10 +35,10 @@ def createTodo(request, userId):
 
     try:
         entry = Todo.objects.create(
-                _user = LyfUser.objects.get_user_by_id(data['_userId']),
+                _user = LyfUser.objects.get_user_by_id(userId),
                 _title = data['_title'],
                 _description = data['_description'],
-                _created_on = datetime.fromisoformat(data['_created_on'])
+                _created_on = datetime.fromisoformat(data['_createdAt'])
             )
         return Response("Entry Created!", status = status.HTTP_200_OK)
     except Exception as e:
@@ -47,8 +48,20 @@ def createTodo(request, userId):
 @permission_classes([IsAuthenticated])
 def updateTodo(request, userId, todoId):
     data = request.data
+    print(request.data)
+
+    corrected_data = {
+        '_user':userId,
+        '_title':data["_title"],
+        '_description':data["_description"],
+        '_created_on': data["_createdAt"],
+        '_isReminderSet': data["_isReminderSet"],
+        "_reminderAt": data["_reminderAt"]
+    }
+    
+    print(corrected_data)
     todo = Todo.objects.get_todo_by_id(todoId)    
-    serializer = TodoSerializer(todo, data = data)
+    serializer = TodoSerializer(todo, data = corrected_data)
     if serializer.is_valid():
         serializer.save()
         return Response("Entry Updated!")

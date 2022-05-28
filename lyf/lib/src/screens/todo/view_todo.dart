@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/global/globals.dart';
 import 'package:lyf/src/models/todo_model.dart';
@@ -7,22 +8,22 @@ import 'package:http/http.dart' as http;
 import 'package:lyf/src/services/http.dart';
 import 'package:lyf/src/shared/snackbars/unsaved_snack.dart';
 import 'package:lyf/src/shared/todo_card.dart';
+import 'package:lyf/src/state/todo/todo_list_state.dart';
 
-class ViewTodoPage extends StatefulWidget {
+class ViewTodoPage extends ConsumerStatefulWidget {
   final Todo todo;
   const ViewTodoPage({Key? key, required this.todo}) : super(key: key);
 
   @override
-  _ViewTodoPageState createState() => _ViewTodoPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ViewTodoPageState();
 }
 
-class _ViewTodoPageState extends State<ViewTodoPage> {
+class _ViewTodoPageState extends ConsumerState<ViewTodoPage> {
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
   late DateTime _dateController;
 
   late http.Client updateTodoClient;
-  late http.Client deleteTodoClient;
   late ValueNotifier<bool> isChanged;
   void updateTodo(http.Client updateTodoClient, Todo todo) async {
     http.Response response;
@@ -52,22 +53,9 @@ class _ViewTodoPageState extends State<ViewTodoPage> {
     }
   }
 
-  void deleteTodo(http.Client deleteTodoClient, Todo todo) async {
-    late int statusCode;
-    try {
-      statusCode =
-          await Todo.deleteTodo(deleteTodoClient: deleteTodoClient, todo: todo);
-      if (statusCode == 200) {
-        RouteManager.navigateToTodo(context);
-      } else {
-        SnackBar snackBar = const SnackBar(
-          content: Text("Something went wrong"),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      }
-    } catch (e) {
-      print(e);
-    }
+  void _updateTodo(Todo todo) async {
+    await ref.read(todoListNotifier.notifier).editTodo(todo);
+    Navigator.of(context).pop();
   }
 
   void changeFlag(bool flag) {
@@ -98,7 +86,6 @@ class _ViewTodoPageState extends State<ViewTodoPage> {
     _descriptionController = TextEditingController();
     isChanged = ValueNotifier(false);
     updateTodoClient = http.Client();
-    deleteTodoClient = http.Client();
     _titleController.text = widget.todo.todoTitle;
     _descriptionController.text = widget.todo.todoDescription;
     _dateController = widget.todo.todoCreatedAt;
@@ -235,7 +222,8 @@ class _ViewTodoPageState extends State<ViewTodoPage> {
                                       _dateController,
                                       false,
                                       null);
-                                  updateTodo(updateTodoClient, updatedTodo);
+                                  _updateTodo(updatedTodo);
+                                  // updateTodo(updateTodoClient, updatedTodo);
                                 }
                               },
                               icon: const Icon(
@@ -291,7 +279,6 @@ class _ViewTodoPageState extends State<ViewTodoPage> {
     _titleController.dispose();
     _descriptionController.dispose();
     updateTodoClient.close();
-    deleteTodoClient.close();
 
     super.dispose();
   }

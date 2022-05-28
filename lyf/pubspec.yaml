@@ -56,9 +56,11 @@ dependencies:
   open_file:
   firebase_storage: ^10.2.7
   rename: ^2.0.1
+  json_annotation: ^4.5.0
+  flutter_riverpod: ^1.0.3
+
 
 dev_dependencies:
-
   build_runner: ^2.0.0
   json_serializable: ^6.0.0
 

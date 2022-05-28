@@ -16,6 +16,7 @@ class UriHelper {
     return Uri(
       scheme: LyfCdnConfig.getScheme(queryType: qType),
       host: LyfCdnConfig.getHost(queryType: qType),
+      port: LyfCdnConfig.getPort(queryType: qType),
       pathSegments: pathSegs,
       queryParameters: queryParams,
       fragment: frag,
