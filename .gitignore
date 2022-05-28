@@ -27,3 +27,4 @@ LyfApp/
 *.env
 .vscode/
 .idea/
+staticfiles/
