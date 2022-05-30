@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -61,9 +59,33 @@ class _ContactViewerState extends State<ContactViewer> {
                         padding: EdgeInsets.symmetric(
                           vertical: 0.020 * size.height,
                         ),
-                        child: const TextField(
-                          decoration: InputDecoration(labelText: "help"),
-                          cursorColor: Colors.white,
+                        child: SizedBox(
+                          height: 50,
+                          child: TextField(
+                            maxLines: 1,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.search_rounded,
+                                color: Colors.white,
+                              ),
+                              hintText: "Search People...",
+                              hintStyle: Theme.of(context).textTheme.bodyText1,
+                              filled: true,
+                              fillColor: Colors.white.withOpacity(0.25),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.25),
+                                    width: 1.0),
+                              ),
+
+                              // labelText: "Search...",
+                              // labelStyle: TextStyle(color: Colors.white),
+                            ),
+                            cursorColor: Colors.white,
+                          ),
                         ),
                       );
                     } else if (index == 1) {

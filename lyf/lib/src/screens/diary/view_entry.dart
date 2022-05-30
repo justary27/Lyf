@@ -88,8 +88,8 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
     }
   }
 
-  void _updateEntry(DiaryEntry updatedEntry) async {
-    await ref.read(diaryNotifier.notifier).editEntry(updatedEntry);
+  void _updateEntry(DiaryEntry updatedEntry) {
+    ref.read(diaryNotifier.notifier).editEntry(updatedEntry);
     Navigator.of(context).pop();
   }
 
@@ -475,13 +475,38 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                 ),
                               );
                             }),
-                        // IconButton(
-                        //   onPressed: () {},
-                        //   icon: const Icon(
-                        //     Icons.more_vert,
-                        //     color: Colors.white,
+                        // PopupMenuButton(
+                        //   shape: const RoundedRectangleBorder(
+                        //     borderRadius: BorderRadius.all(
+                        //       Radius.circular(15.0),
+                        //     ),
                         //   ),
-                        // ),
+                        //   color: Colors.white,
+                        //   itemBuilder: (context) {
+                        //     return [
+                        //       PopupMenuItem(
+                        //         padding: EdgeInsets.zero,
+                        //         child: ListTile(
+                        //           minLeadingWidth: 25,
+                        //           dense: true,
+                        //           leading: Icon(
+                        //             Icons.picture_as_pdf_rounded,
+                        //             color: Colors.grey.shade700,
+                        //           ),
+                        //           title: Text(
+                        //             "Save as Pdf",
+                        //             style: GoogleFonts.aBeeZee(
+                        //               textStyle: TextStyle(
+                        //                 color: Colors.grey.shade700,
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ];
+                        //   },
+                        //   icon: const Icon(Icons.more_vert),
+                        // )
                       ],
                     ),
                     SliverFillRemaining(

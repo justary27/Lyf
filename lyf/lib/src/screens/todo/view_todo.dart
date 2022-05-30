@@ -53,8 +53,8 @@ class _ViewTodoPageState extends ConsumerState<ViewTodoPage> {
     }
   }
 
-  void _updateTodo(Todo todo) async {
-    await ref.read(todoListNotifier.notifier).editTodo(todo);
+  void _updateTodo(Todo todo) {
+    ref.read(todoListNotifier.notifier).editTodo(todo);
     Navigator.of(context).pop();
   }
 

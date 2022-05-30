@@ -56,7 +56,7 @@ class HttpHelper {
       }
     } catch (e) {
       if (e.runtimeType == UserException) {
-        return null;
+        rethrow;
       } else {
         throw Exception(e.toString());
       }
@@ -163,7 +163,7 @@ class HttpHelper {
       }
     } catch (e) {
       if (e.runtimeType == DiaryException) {
-        return null;
+        rethrow;
       } else {
         throw Exception(e.toString());
       }

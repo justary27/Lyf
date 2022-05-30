@@ -24,8 +24,8 @@ class _AddTodoPageState extends ConsumerState<AddTodoPage> {
     super.initState();
   }
 
-  void _createTodo(Todo todo) async {
-    await ref.read(todoListNotifier.notifier).addTodo(todo);
+  void _createTodo(Todo todo) {
+    ref.read(todoListNotifier.notifier).addTodo(todo);
     SnackBar snackBar = const SnackBar(
       content: Text("Entry created successfully!"),
     );
@@ -95,6 +95,14 @@ class _AddTodoPageState extends ConsumerState<AddTodoPage> {
                         style: GoogleFonts.ubuntu(
                           textStyle: const TextStyle(color: Colors.white),
                         ),
+                        onTap: () {
+                          if (_titleController.text == "Untitled") {
+                            _titleController.selection = TextSelection(
+                              baseOffset: 0,
+                              extentOffset: _titleController.value.text.length,
+                            );
+                          }
+                        },
                         cursorColor: Colors.white,
                         decoration: InputDecoration(
                           filled: true,

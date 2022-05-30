@@ -23,8 +23,8 @@ class _AddDiaryEntryPageState extends ConsumerState<AddDiaryEntryPage> {
     super.initState();
   }
 
-  void _createEntry(DiaryEntry entry) async {
-    await ref.read(diaryNotifier.notifier).addEntry(entry);
+  void _createEntry(DiaryEntry entry) {
+    ref.read(diaryNotifier.notifier).addEntry(entry);
     SnackBar snackBar = const SnackBar(
       content: Text("Entry created successfully!"),
     );
@@ -175,6 +175,14 @@ class _AddDiaryEntryPageState extends ConsumerState<AddDiaryEntryPage> {
                       style: GoogleFonts.ubuntu(
                         textStyle: const TextStyle(color: Colors.white),
                       ),
+                      onTap: () {
+                        if (_titleController.text == "Untitled") {
+                          _titleController.selection = TextSelection(
+                            baseOffset: 0,
+                            extentOffset: _titleController.value.text.length,
+                          );
+                        }
+                      },
                       cursorColor: Colors.white,
                       decoration: InputDecoration(
                         filled: true,
@@ -243,6 +251,17 @@ class _AddDiaryEntryPageState extends ConsumerState<AddDiaryEntryPage> {
                                   color: Colors.white.withOpacity(0.5),
                                 ),
                               ),
+                              onTap: () {
+                                if (_descriptionController.text ==
+                                    "Description") {
+                                  _descriptionController.selection =
+                                      TextSelection(
+                                    baseOffset: 0,
+                                    extentOffset: _descriptionController
+                                        .value.text.length,
+                                  );
+                                }
+                              },
                               cursorColor: Colors.white.withOpacity(0.5),
                               decoration: InputDecoration(
                                 filled: false,

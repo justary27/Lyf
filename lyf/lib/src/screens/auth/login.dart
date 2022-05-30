@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,10 +5,10 @@ import 'package:lyf/src/global/globals.dart';
 import 'package:lyf/src/models/user_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/services/firebase/auth_service.dart';
-import 'package:lyf/src/services/http.dart';
 import 'package:lyf/src/services/user.dart';
 import 'package:lyf/src/shared/lyf.dart';
-import 'package:http/http.dart' as http;
+
+import '../../utils/api/user_api.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -19,13 +18,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late http.Client logInClient;
-  late http.Client profileClient;
-
   @override
   void initState() {
-    logInClient = http.Client();
-    profileClient = http.Client();
     super.initState();
   }
 
@@ -93,7 +87,9 @@ class _LoginPageState extends State<LoginPage> {
                                 "Lyf",
                                 style: GoogleFonts.caveat(
                                   textStyle: TextStyle(
-                                      fontSize: 60, color: Colors.white),
+                                    fontSize: 60,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ],
@@ -101,8 +97,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         LoginForm(
                           size: size,
-                          logInClient: logInClient,
-                          profileClient: profileClient,
                           parentContext: context,
                         ),
                       ],
@@ -119,24 +113,18 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-    logInClient.close();
-    profileClient.close();
     super.dispose();
   }
 }
 
 class LoginForm extends StatefulWidget {
-  final http.Client logInClient;
-  final http.Client profileClient;
   final Size size;
   final BuildContext parentContext;
-  const LoginForm(
-      {Key? key,
-      required this.size,
-      required this.logInClient,
-      required this.profileClient,
-      required this.parentContext})
-      : super(key: key);
+  const LoginForm({
+    Key? key,
+    required this.size,
+    required this.parentContext,
+  }) : super(key: key);
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -153,25 +141,30 @@ class _LoginFormState extends State<LoginForm> {
     super.initState();
   }
 
-  void getProfileData() async {
-    var data = await widget.profileClient.get(
-      Uri.parse(ApiEndpoints.getUserData(currentUser.userId)),
-      headers: currentUser.authHeader(),
-    );
-    try {
-      var dataValues = json.decode(data.body);
-      print(dataValues);
-      currentUser.username = dataValues['username'];
-      UserCredentials.setUsername(currentUser.username);
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Future<void> logIn(
-      http.Client logInClient, String email, String password) async {
-    SnackBar snackBar = const SnackBar(
-      content: Text("Logging in ..."),
+  Future<void> logIn(String email, String password) async {
+    SnackBar snackBar = SnackBar(
+      padding: EdgeInsets.zero,
+      dismissDirection: DismissDirection.startToEnd,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.white,
+      duration: const Duration(seconds: 20),
+      content: ListTile(
+        leading: Transform.scale(
+          scale: 0.5,
+          child: CircularProgressIndicator(
+            color: Colors.grey.shade700,
+          ),
+        ),
+        title: Text(
+          "Logging in ...",
+          style: GoogleFonts.aBeeZee(
+            textStyle: TextStyle(
+              color: Colors.grey.shade700,
+            ),
+          ),
+        ),
+      ),
+      // content: Text("Logging in ..."),
     );
     SnackBar eSnackBar = const SnackBar(
       content: Text("Invalid credentials, try again with correct ones!"),
@@ -183,16 +176,27 @@ class _LoginFormState extends State<LoginForm> {
         'email': email,
         'password': password,
       };
-      await LyfUser.logIn(logInClient, creds);
-      await FireAuth.logIn(creds: creds!);
-      print(loginState);
+      LyfUser? authenticatedUser = await UserApiClient.logIn(creds!);
+      if (authenticatedUser != null) {
+        currentUser = authenticatedUser;
+        UserCredentials.setCredentials(
+          currentUser.email,
+          currentUser.password,
+          currentUser.userName,
+        );
+        await FireAuth.logIn(creds: creds!);
+        loginState = true;
+      }
       if (loginState == false) {
+        ScaffoldMessenger.of(widget.parentContext).hideCurrentSnackBar();
         ScaffoldMessenger.of(widget.parentContext).showSnackBar(eSnackBar);
       } else {
+        ScaffoldMessenger.of(widget.parentContext).hideCurrentSnackBar();
         RouteManager.navigateToHome(context);
       }
     } catch (e) {
       loginState = false;
+      ScaffoldMessenger.of(widget.parentContext).hideCurrentSnackBar();
       ScaffoldMessenger.of(widget.parentContext).showSnackBar(eSnackBar);
     }
   }
@@ -293,8 +297,7 @@ class _LoginFormState extends State<LoginForm> {
               child: TextButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    await logIn(widget.logInClient, emailController.text,
-                        passwordController.text);
+                    await logIn(emailController.text, passwordController.text);
                   }
                 },
                 child: Text(

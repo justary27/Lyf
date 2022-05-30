@@ -15,15 +15,15 @@ class TodoPage extends ConsumerStatefulWidget {
 }
 
 class _TodoPageState extends ConsumerState<TodoPage> {
-  void _retrieve() async {
+  void _retrieve() {
     if (ref.read(todoListNotifier).value != null) {
-      await ref.read(todoListNotifier.notifier).retrieveTodoList();
+      ref.read(todoListNotifier.notifier).retrieveTodoList();
     }
   }
 
-  Future<void> _refresh() async {
+  void _refresh() {
     if (ref.read(todoListNotifier).value != null) {
-      await ref.read(todoListNotifier.notifier).refresh();
+      ref.read(todoListNotifier.notifier).refresh();
     }
   }
 

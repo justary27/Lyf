@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import '../enums/device_type.dart';
 
 class DeviceHandler {
@@ -19,6 +21,16 @@ class DeviceHandler {
       return DeviceType.smallLaptop;
     } else {
       return DeviceType.largeLaptop;
+    }
+  }
+
+  static void setAppOrientationOptions(DeviceType deviceType) {
+    if (deviceType == DeviceType.smallMobile ||
+        deviceType == DeviceType.largeMobile) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
     }
   }
 }

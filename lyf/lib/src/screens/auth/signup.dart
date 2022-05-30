@@ -6,7 +6,9 @@ import 'package:lyf/src/models/user_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/services/firebase/auth_service.dart';
 import 'package:lyf/src/shared/lyf.dart';
-import 'package:http/http.dart' as http;
+
+import '../../services/user.dart';
+import '../../utils/api/user_api.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -16,10 +18,8 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  late http.Client signUpClient;
   @override
   void initState() {
-    signUpClient = http.Client();
     super.initState();
   }
 
@@ -95,9 +95,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             ],
                           ),
                         ),
-                        LoginForm(
+                        SignUpForm(
                           size: size,
-                          client: signUpClient,
                           parentContext: context,
                         ),
                       ],
@@ -114,27 +113,21 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void dispose() {
-    signUpClient.close();
     super.dispose();
   }
 }
 
-class LoginForm extends StatefulWidget {
+class SignUpForm extends StatefulWidget {
   final Size size;
-  final http.Client client;
   final BuildContext parentContext;
-  const LoginForm(
-      {Key? key,
-      required this.size,
-      required this.client,
-      required this.parentContext})
+  const SignUpForm({Key? key, required this.size, required this.parentContext})
       : super(key: key);
 
   @override
-  _LoginFormState createState() => _LoginFormState();
+  _SignUpFormState createState() => _SignUpFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController emailController;
   late TextEditingController usernameController;
@@ -150,8 +143,8 @@ class _LoginFormState extends State<LoginForm> {
     super.initState();
   }
 
-  Future<void> signUp(http.Client signUpClient, String email, String username,
-      String password, String cpassword) async {
+  Future<void> signUp(
+      String email, String username, String password, String cpassword) async {
     // SnackBar snackBar = const SnackBar(
     //   content: Text("Signing up ..."),
     //   duration: Duration(seconds: 2),
@@ -166,15 +159,21 @@ class _LoginFormState extends State<LoginForm> {
         'username': username,
         'password': password,
       };
-      int statusCode = await LyfUser.signUp(signUpClient, signUpCreds);
-      await FireAuth.signUp(creds: signUpCreds);
-      if (statusCode == 400) {
-      } else if (statusCode == 200) {
-        if (loginState == true) {
-          RouteManager.navigateToHome(context);
-        } else {
-          ScaffoldMessenger.of(widget.parentContext).showSnackBar(snackBar1);
-        }
+      LyfUser? authenticatedNewUser = await UserApiClient.signUp(signUpCreds);
+      if (authenticatedNewUser != null) {
+        currentUser = authenticatedNewUser;
+        UserCredentials.setCredentials(
+          currentUser.email,
+          currentUser.password,
+          currentUser.userName,
+        );
+        await FireAuth.signUp(creds: signUpCreds);
+        loginState = true;
+      }
+      if (loginState == true) {
+        RouteManager.navigateToHome(context);
+      } else {
+        ScaffoldMessenger.of(widget.parentContext).showSnackBar(snackBar1);
       }
     } catch (e) {
       print(e);
@@ -374,7 +373,6 @@ class _LoginFormState extends State<LoginForm> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     await signUp(
-                      widget.client,
                       emailController.text,
                       usernameController.text,
                       passwordController.text,
