@@ -15,6 +15,8 @@ class TodoPage extends ConsumerStatefulWidget {
 }
 
 class _TodoPageState extends ConsumerState<TodoPage> {
+  final GlobalKey<SliverAnimatedListState> _diaryKey =
+      GlobalKey<SliverAnimatedListState>();
   void _retrieve() {
     if (ref.read(todoListNotifier).value != null) {
       ref.read(todoListNotifier.notifier).retrieveTodoList();
@@ -119,9 +121,11 @@ class _TodoPageState extends ConsumerState<TodoPage> {
                               ),
                             );
                           } else {
-                            return SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                (context, index) => Padding(
+                            return SliverAnimatedList(
+                              key: _diaryKey,
+                              initialItemCount: todoList.length,
+                              itemBuilder: (context, index, animation) {
+                                return Padding(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 0.05 * size.width,
                                       vertical: 0.015 * size.height),
@@ -131,10 +135,25 @@ class _TodoPageState extends ConsumerState<TodoPage> {
                                     size: size,
                                     todo: todoList[index],
                                   ),
-                                ),
-                                childCount: todoList.length,
-                              ),
+                                );
+                              },
                             );
+                            // return SliverList(
+                            //   delegate: SliverChildBuilderDelegate(
+                            //     (context, index) => Padding(
+                            //       padding: EdgeInsets.symmetric(
+                            //           horizontal: 0.05 * size.width,
+                            //           vertical: 0.015 * size.height),
+                            //       child: TodoCard(
+                            //         parentContext: context,
+                            //         pageCode: "/todoPage",
+                            //         size: size,
+                            //         todo: todoList[index],
+                            //       ),
+                            //     ),
+                            //     childCount: todoList.length,
+                            //   ),
+                            // );
                           }
                         },
                         error: (Object error, StackTrace? stackTrace) {

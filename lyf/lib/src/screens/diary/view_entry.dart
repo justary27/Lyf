@@ -14,6 +14,7 @@ import 'package:lyf/src/shared/entry_card.dart';
 import 'package:lyf/src/shared/image_viewer.dart';
 import 'package:lyf/src/shared/snackbars/fileupload_snack.dart';
 import 'package:lyf/src/shared/snackbars/unsaved_snack.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../state/diary/diary_list_state.dart';
 
@@ -42,55 +43,59 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
   PlatformFile? audioAttachment;
   List<PlatformFile?>? imageAttachments;
 
-  void updateEntry(http.Client updateEntryClient, DiaryEntry entry) async {
-    late int statusCode;
-    try {
-      try {
-        if (imageAttachments != null || audioAttachment != null) {
-          ScaffoldMessenger.of(context).showSnackBar(fileSnackBar);
-          await FireStorage.diaryUploads(
-            entryId: entry.entryId!,
-            imageFiles: imageAttachments,
-            audioFile: audioAttachment,
-            notifyImageLinker: assignImageLinks,
-          );
-        }
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      } catch (e) {
-        log(e.runtimeType.toString());
-        if (e == ImageUploadException) {
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        } else if (e == AudioUploadException) {
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        }
-      }
-      entry.imageLinks = imageAttachmentLinks;
-      statusCode = await DiaryEntry.updateEntry(
-          updateEntryClient: updateEntryClient, entry: entry);
-      if (statusCode == 200) {
-        SnackBar snackBar = const SnackBar(
-          content: Text("Entry updated successfully!"),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        FocusManager.instance.primaryFocus?.unfocus();
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          RouteManager.diaryPage,
-          ModalRoute.withName(RouteManager.diaryPage),
-        );
-      } else {
-        SnackBar snackBar = const SnackBar(
-          content: Text("Something went wrong"),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  // void updateEntry(http.Client updateEntryClient, DiaryEntry entry) async {
+  //   late int statusCode;
+  //   try {
+  //     try {
+  //       if (imageAttachments != null || audioAttachment != null) {
+  //         ScaffoldMessenger.of(context).showSnackBar(fileSnackBar);
+  //         await FireStorage.diaryUploads(
+  //           entryId: entry.entryId!,
+  //           imageFiles: imageAttachments,
+  //           audioFile: audioAttachment,
+  //           notifyImageLinker: assignImageLinks,
+  //         );
+  //       }
+  //       ScaffoldMessenger.of(context).hideCurrentSnackBar();
+  //     } catch (e) {
+  //       log(e.runtimeType.toString());
+  //       if (e == ImageUploadException) {
+  //         ScaffoldMessenger.of(context).hideCurrentSnackBar();
+  //       } else if (e == AudioUploadException) {
+  //         ScaffoldMessenger.of(context).hideCurrentSnackBar();
+  //       }
+  //     }
+  //     entry.imageLinks = imageAttachmentLinks;
+  //     statusCode = await DiaryEntry.updateEntry(
+  //         updateEntryClient: updateEntryClient, entry: entry);
+  //     if (statusCode == 200) {
+  //       SnackBar snackBar = const SnackBar(
+  //         content: Text("Entry updated successfully!"),
+  //       );
+  //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //       FocusManager.instance.primaryFocus?.unfocus();
+  //       Navigator.of(context).pushNamedAndRemoveUntil(
+  //         RouteManager.diaryPage,
+  //         ModalRoute.withName(RouteManager.diaryPage),
+  //       );
+  //     } else {
+  //       SnackBar snackBar = const SnackBar(
+  //         content: Text("Something went wrong"),
+  //       );
+  //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   void _updateEntry(DiaryEntry updatedEntry) {
     ref.read(diaryNotifier.notifier).editEntry(updatedEntry);
     Navigator.of(context).pop();
+  }
+
+  void _retrieveEntryPdf(DiaryEntry entry) {
+    ref.read(diaryNotifier.notifier).retrieveEntryPdf(entry);
   }
 
   void changeFlag(bool flag) {
@@ -475,38 +480,65 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                 ),
                               );
                             }),
-                        // PopupMenuButton(
-                        //   shape: const RoundedRectangleBorder(
-                        //     borderRadius: BorderRadius.all(
-                        //       Radius.circular(15.0),
-                        //     ),
-                        //   ),
-                        //   color: Colors.white,
-                        //   itemBuilder: (context) {
-                        //     return [
-                        //       PopupMenuItem(
-                        //         padding: EdgeInsets.zero,
-                        //         child: ListTile(
-                        //           minLeadingWidth: 25,
-                        //           dense: true,
-                        //           leading: Icon(
-                        //             Icons.picture_as_pdf_rounded,
-                        //             color: Colors.grey.shade700,
-                        //           ),
-                        //           title: Text(
-                        //             "Save as Pdf",
-                        //             style: GoogleFonts.aBeeZee(
-                        //               textStyle: TextStyle(
-                        //                 color: Colors.grey.shade700,
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ];
-                        //   },
-                        //   icon: const Icon(Icons.more_vert),
-                        // )
+                        PopupMenuButton(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15.0),
+                            ),
+                          ),
+                          color: Colors.white,
+                          itemBuilder: (context) {
+                            return [
+                              PopupMenuItem(
+                                padding: EdgeInsets.zero,
+                                child: ListTile(
+                                  minLeadingWidth: 25,
+                                  dense: true,
+                                  leading: Icon(
+                                    Icons.picture_as_pdf_rounded,
+                                    color: Colors.grey.shade700,
+                                  ),
+                                  title: Text(
+                                    "Save as Pdf",
+                                    style: GoogleFonts.aBeeZee(
+                                      textStyle: TextStyle(
+                                        color: Colors.grey.shade700,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                onTap: () {
+                                  _retrieveEntryPdf(widget.entry);
+                                },
+                              ),
+                              PopupMenuItem(
+                                padding: EdgeInsets.zero,
+                                child: ListTile(
+                                  minLeadingWidth: 25,
+                                  dense: true,
+                                  leading: Icon(
+                                    Icons.share_rounded,
+                                    color: Colors.grey.shade700,
+                                  ),
+                                  title: Text(
+                                    "Share",
+                                    style: GoogleFonts.aBeeZee(
+                                      textStyle: TextStyle(
+                                        color: Colors.grey.shade700,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                onTap: () {
+                                  Share.share(
+                                    "${widget.entry.entryTitle}\n\n${widget.entry.entryDescription}\n\nDated:${widget.entry.entryCreatedAt.day}/${widget.entry.entryCreatedAt.month}/${widget.entry.entryCreatedAt.year}",
+                                  );
+                                },
+                              ),
+                            ];
+                          },
+                          icon: const Icon(Icons.more_vert),
+                        )
                       ],
                     ),
                     SliverFillRemaining(

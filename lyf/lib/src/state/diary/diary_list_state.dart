@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lyf/src/utils/handlers/file_handler.dart';
 import '../../utils/errors/diary/diary_errors.dart';
 import '../../utils/api/diary_api.dart';
 import '../../models/diary_model.dart';
@@ -31,7 +32,6 @@ class DiaryNotifier extends StateNotifier<AsyncValue<List<DiaryEntry>?>> {
   }
 
   Future<void> _retrieveDiary() async {
-    print("hello");
     List<DiaryEntry>? diary = await DiaryApiClient.getDiary();
     state = AsyncValue.data(diary);
   }
@@ -42,6 +42,17 @@ class DiaryNotifier extends StateNotifier<AsyncValue<List<DiaryEntry>?>> {
       state = AsyncValue.data(diary);
     } catch (e) {
       state = AsyncValue.error(e);
+    }
+  }
+
+  Future<void> retrieveEntryPdf(DiaryEntry entry) async {
+    try {
+      await FileHandler.saveEntryPdf(
+        entry,
+        await DiaryApiClient.getEntryPdf(entry: entry),
+      );
+    } on DiaryException catch (e) {
+      // _handleException(e);
     }
   }
 

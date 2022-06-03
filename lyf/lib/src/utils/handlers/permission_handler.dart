@@ -1,6 +1,7 @@
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionManager {
+  PermissionManager._();
   static Future<int> _requestPermission(Permission permission) async {
     PermissionStatus status = await permission.request();
     if (status.isGranted) {

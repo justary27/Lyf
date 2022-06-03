@@ -9,16 +9,37 @@ import 'package:lyf/src/utils/helpers/screen_helper.dart';
 
 import 'dart:io' show Platform;
 
-class Lyf extends StatelessWidget {
+class Lyf extends StatefulWidget {
   const Lyf({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<Lyf> createState() => _LyfState();
+}
+
+class _LyfState extends State<Lyf> with WidgetsBindingObserver {
+  late AppLifecycleState _notification;
+
+  @override
+  void initState() {
+    super.initState();
     DeviceHandler.setAppOrientationOptions(
       DeviceHandler.getDeviceType(
         deviceSize: logicalScreenSize,
       ),
     );
+    WidgetsBinding.instance!.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    setState(() {
+      _notification = state;
+    });
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     if (Platform.isIOS) {
       return ProviderScope(
         child: GestureDetector(
@@ -55,5 +76,11 @@ class Lyf extends StatelessWidget {
         ),
       );
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance!.removeObserver(this);
   }
 }

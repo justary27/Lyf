@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/routes/routing.dart';
-import 'package:http/http.dart' as http;
 import 'package:lyf/src/shared/entry_card.dart';
 import 'package:lyf/src/shared/snackbars/delete_snack.dart';
 import 'package:share_plus/share_plus.dart';
@@ -18,8 +17,6 @@ class DiaryPage extends ConsumerStatefulWidget {
 }
 
 class _DiaryPageState extends ConsumerState<DiaryPage> {
-  late http.Client diaryClient;
-
   List<DiaryEntry>? diaryEntries = [];
   bool retrieveStatus = true;
 
@@ -29,8 +26,8 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
     });
   }
 
-  void _deleteEntry(DiaryEntry entry) async {
-    await ref.read(diaryNotifier.notifier).removeEntry(entry);
+  void _deleteEntry(DiaryEntry entry) {
+    ref.read(diaryNotifier.notifier).removeEntry(entry);
   }
 
   void _refresh() {
@@ -39,9 +36,12 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
     }
   }
 
+  void _retrieveEntryPdf(DiaryEntry entry) {
+    ref.read(diaryNotifier.notifier).retrieveEntryPdf(entry);
+  }
+
   @override
   void initState() {
-    diaryClient = http.Client();
     _refresh();
     super.initState();
   }
@@ -285,12 +285,14 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                                                       ),
                                                       TextButton(
                                                         onPressed: () async {
-                                                          await DiaryEntry
-                                                              .getEntryPdf(
-                                                                  getPdfClient:
-                                                                      diaryClient,
-                                                                  entry: diary[
-                                                                      index]);
+                                                          _retrieveEntryPdf(
+                                                              diary[index]);
+                                                          // await DiaryEntry
+                                                          //     .getEntryPdf(
+                                                          //         getPdfClient:
+                                                          //             diaryClient,
+                                                          //         entry: diary[
+                                                          //             index]);
                                                         },
                                                         child: Text(
                                                           "Save as Pdf",
@@ -736,7 +738,6 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
 
   @override
   void dispose() {
-    diaryClient.close();
     super.dispose();
   }
 }

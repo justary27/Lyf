@@ -71,7 +71,6 @@ class HttpHelper {
     http.Response? response;
     try {
       if (requestType == RequestType.get) {
-        print(requestUri);
         response = await http.get(
           requestUri,
           headers: _buildHeaders(

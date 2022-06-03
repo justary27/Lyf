@@ -12,7 +12,7 @@ class TodoCard extends ConsumerStatefulWidget {
   final BuildContext parentContext;
 
   /// The code that determines UI layout of card.
-  final pageCode;
+  final String pageCode;
 
   final Size size;
 

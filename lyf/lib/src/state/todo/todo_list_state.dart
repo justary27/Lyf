@@ -33,7 +33,6 @@ class TodoListNotifier extends StateNotifier<AsyncValue<List<Todo>?>> {
   }
 
   Future<void> retrieveTodoList() async {
-    print("hello");
     List<Todo>? todoList = await TodoApiClient.getTodoList();
     // await read(todoRepositoryProvider).retrieveTodoList();
     state = AsyncValue.data(todoList);
