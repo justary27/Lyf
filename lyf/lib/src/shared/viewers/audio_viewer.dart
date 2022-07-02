@@ -5,16 +5,16 @@ import '../../state/diary/diary_view_state.dart';
 
 class AudioViewer extends ConsumerStatefulWidget {
   final Size size;
-  final PlatformFile audioFile;
+  final PlatformFile? audioFile;
   final void Function(bool flag) notifyflagChange;
   final void Function(PlatformFile? file) fileHandler;
   final List<Widget>? stateWidgetList;
   final String? audioUrl;
   const AudioViewer({
     required this.size,
-    required this.audioFile,
     required this.notifyflagChange,
     required this.fileHandler,
+    this.audioFile,
     this.stateWidgetList,
     this.audioUrl,
   }) : super(
@@ -34,7 +34,7 @@ class _AudioViewerState extends ConsumerState<AudioViewer> {
 
   Widget audioViewer({
     required Size size,
-    required PlatformFile audioFile,
+    PlatformFile? audioFile,
     required void Function(bool flag) notifyflagChange,
     required void Function(PlatformFile? file) fileHandler,
   }) {
@@ -59,7 +59,7 @@ class _AudioViewerState extends ConsumerState<AudioViewer> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      audioFile.name,
+                      audioFile!.name,
                       style: TextStyle(color: Colors.white),
                     ),
                     IconButton(
@@ -115,7 +115,7 @@ class _AudioViewerState extends ConsumerState<AudioViewer> {
   Widget build(BuildContext context) {
     return audioViewer(
       size: widget.size,
-      audioFile: widget.audioFile,
+      audioFile: widget.audioFile!,
       notifyflagChange: widget.notifyflagChange,
       fileHandler: widget.fileHandler,
     );

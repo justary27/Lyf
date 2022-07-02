@@ -33,12 +33,16 @@ class FireStorage {
   static Future<int> uploadDiaryAudio({
     required PlatformFile? file,
     required String entryId,
+    required void Function(String map) notifyAudioLinker,
   }) async {
+    String linkAudio;
     try {
-      await storage
+      firestorage.UploadTask uploadAudio = storage
           .ref(
               '${currentUser.userID}/diary/$entryId/audio/audio.${file!.extension}')
           .putFile(File(file.path!));
+      linkAudio = await ((await uploadAudio).ref.getDownloadURL());
+      notifyAudioLinker(linkAudio);
       return 1;
     } catch (e) {
       throw AudioUploadException(e.toString());
@@ -87,6 +91,7 @@ class FireStorage {
     List<PlatformFile?>? imageFiles,
     PlatformFile? audioFile,
     required void Function(List<String> map) notifyImageLinker,
+    required void Function(String map) notifyAudioLinker,
   }) async {
     int statusCode = 0;
     if (imageFiles == null && audioFile == null) {
@@ -101,7 +106,11 @@ class FireStorage {
         );
       }
       if (audioFile != null) {
-        statusCode = await uploadDiaryAudio(file: audioFile, entryId: entryId);
+        statusCode = await uploadDiaryAudio(
+          file: audioFile,
+          entryId: entryId,
+          notifyAudioLinker: notifyAudioLinker,
+        );
       }
       return statusCode;
     }

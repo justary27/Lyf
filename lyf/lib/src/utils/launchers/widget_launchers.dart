@@ -13,18 +13,27 @@ class WidgetLauncher {
     required void Function(bool flag) notifyflagChange,
     required void Function(PlatformFile? file) fileServer,
     List<Widget>? stateWidgetList,
+    String? audioUrl,
   }) async {
     Widget? audioViewer;
-    PlatformFile? audioFile = await FileHandler.pickAudioFile();
-    if (audioFile != null) {
+    if (audioUrl == null || audioUrl == '') {
+      PlatformFile? audioFile = await FileHandler.pickAudioFile();
       notifyflagChange(true);
       fileServer(audioFile);
       audioViewer = AudioViewer(
         size: size,
-        audioFile: audioFile,
+        audioFile: audioFile!,
         notifyflagChange: notifyflagChange,
         fileHandler: fileServer,
         stateWidgetList: stateWidgetList,
+      );
+    } else {
+      audioViewer = AudioViewer(
+        size: size,
+        notifyflagChange: notifyflagChange,
+        fileHandler: fileServer,
+        stateWidgetList: stateWidgetList,
+        audioUrl: audioUrl,
       );
     }
     return audioViewer;

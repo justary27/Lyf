@@ -25,6 +25,7 @@ class ViewDiaryNotifier extends StateNotifier<AsyncValue<List<Widget>?>> {
     required void Function(bool flag) notifyflagChange,
     required void Function(PlatformFile? file) fileServer,
     List<Widget>? stateWidgetList,
+    String? audioUrl,
   }) async {
     try {
       Widget? audioWidget = await WidgetLauncher.launchAudioWidget(
@@ -32,6 +33,7 @@ class ViewDiaryNotifier extends StateNotifier<AsyncValue<List<Widget>?>> {
         notifyflagChange: notifyflagChange,
         fileServer: fileServer,
         stateWidgetList: stateWidgetList,
+        audioUrl: audioUrl,
       );
       state = state.whenData((widgetList) => [...widgetList!, audioWidget!]);
     } catch (e) {

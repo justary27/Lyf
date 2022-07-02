@@ -39,6 +39,7 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
   late http.Client updateEntryClient;
   late DateTime dateController;
   List<String>? imageAttachmentLinks;
+  String? audioAttachmentLink;
   late ValueNotifier<bool> isChanged;
   late List<Widget> utilWidgets;
   PlatformFile? audioAttachment;
@@ -104,6 +105,7 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
           imageFiles: imageAttachments,
           audioFile: audioAttachment,
           notifyImageLinker: assignImageLinks,
+          notifyAudioLinker: assignAudioLink,
         );
       }
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -126,12 +128,14 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
     required Size size,
     required void Function(bool flag) notifyflagChange,
     required void Function(PlatformFile? file) fileServer,
+    String? audioUrl,
   }) {
     ref.read(diaryViewNotifier(utilWidgets).notifier).addAudioAttachment(
           size: size,
           notifyflagChange: notifyflagChange,
           fileServer: fileServer,
           stateWidgetList: utilWidgets,
+          audioUrl: audioUrl,
         );
   }
 
@@ -194,6 +198,12 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
     });
   }
 
+  void assignAudioLink(String imageLinkList) {
+    setState(() {
+      audioAttachmentLink = imageLinkList;
+    });
+  }
+
   void assignImageAttachment(List<PlatformFile?>? imageFiles) {
     setState(() {
       imageAttachments = imageFiles;
@@ -209,7 +219,14 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
         imageUrls: widget.entry.imageLinks,
       );
     }
-    // if (widget.entry.audioLink!=null){}
+    if (widget.entry.audioLink != null || widget.entry.audioLink != '') {
+      _addAudioAttachment(
+        size: widget.size,
+        notifyflagChange: changeFlag,
+        fileServer: assignAudioAttachment,
+        audioUrl: widget.entry.audioLink,
+      );
+    }
   }
 
   @override
