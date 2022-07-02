@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lyf/src/global/globals.dart';
-import 'package:lyf/src/routes/routing.dart';
-import 'package:lyf/src/themes/themes.dart';
-import 'package:lyf/src/utils/handlers/device_handler.dart';
-import 'package:lyf/src/utils/helpers/screen_helper.dart';
+import 'global/variables.dart';
+import './routes/routing.dart';
+import './themes/themes.dart';
+import './utils/handlers/device_handler.dart';
+import './utils/helpers/screen_helper.dart';
 
 import 'dart:io' show Platform;
 

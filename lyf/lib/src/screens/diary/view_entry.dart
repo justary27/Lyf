@@ -9,14 +9,15 @@ import 'package:lyf/src/utils/handlers/permission_handler.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:http/http.dart' as http;
 import 'package:lyf/src/services/firebase/storage.dart';
-import 'package:lyf/src/shared/audio_viewer.dart';
+import 'package:lyf/src/shared/viewers/audio_viewer.dart';
 import 'package:lyf/src/shared/entry_card.dart';
-import 'package:lyf/src/shared/image_viewer.dart';
+import 'package:lyf/src/shared/viewers/image_viewer.dart';
 import 'package:lyf/src/shared/snackbars/fileupload_snack.dart';
 import 'package:lyf/src/shared/snackbars/unsaved_snack.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../state/diary/diary_list_state.dart';
+import '../../state/diary/diary_view_state.dart';
 
 class ViewDiaryEntryPage extends ConsumerStatefulWidget {
   final DiaryEntry entry;
@@ -94,8 +95,59 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
     Navigator.of(context).pop();
   }
 
+  Future<void> _updateEntryUploads(DiaryEntry entry) async {
+    try {
+      if (imageAttachments != null || audioAttachment != null) {
+        ScaffoldMessenger.of(context).showSnackBar(fileSnackBar);
+        await FireStorage.diaryUploads(
+          entryId: entry.entryId!,
+          imageFiles: imageAttachments,
+          audioFile: audioAttachment,
+          notifyImageLinker: assignImageLinks,
+        );
+      }
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    } catch (e) {
+      log(e.runtimeType.toString());
+      if (e == ImageUploadException) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      } else if (e == AudioUploadException) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      }
+    }
+    entry.imageLinks = imageAttachmentLinks;
+  }
+
   void _retrieveEntryPdf(DiaryEntry entry) {
     ref.read(diaryNotifier.notifier).retrieveEntryPdf(entry);
+  }
+
+  void _addAudioAttachment({
+    required Size size,
+    required void Function(bool flag) notifyflagChange,
+    required void Function(PlatformFile? file) fileServer,
+  }) {
+    ref.read(diaryViewNotifier(utilWidgets).notifier).addAudioAttachment(
+          size: size,
+          notifyflagChange: notifyflagChange,
+          fileServer: fileServer,
+          stateWidgetList: utilWidgets,
+        );
+  }
+
+  void _addImageAttachments({
+    required Size size,
+    required void Function(bool flag) notifyflagChange,
+    required void Function(List<PlatformFile?>? file) fileServer,
+    List<String>? imageUrls,
+  }) {
+    ref.read(diaryViewNotifier(utilWidgets).notifier).addImageAttachment(
+          size: size,
+          notifyflagChange: notifyflagChange,
+          fileServer: fileServer,
+          stateWidgetList: utilWidgets,
+          imageUrls: imageUrls,
+        );
   }
 
   void changeFlag(bool flag) {
@@ -130,27 +182,6 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
     });
   }
 
-  void addAttachment(Widget attachment) {
-    setState(() {
-      utilWidgets.add(attachment);
-    });
-  }
-
-  void removeAttachment(Key key) {
-    Widget? attachment;
-    for (Widget widget in utilWidgets) {
-      if (widget.key == key) {
-        attachment = widget;
-        break;
-      }
-    }
-    setState(() {
-      if (attachment != null) {
-        utilWidgets.remove(attachment);
-      }
-    });
-  }
-
   void assignAudioAttachment(PlatformFile? audioFile) {
     setState(() {
       audioAttachment = audioFile;
@@ -169,18 +200,16 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
     });
   }
 
-  Widget? initImageWidgetProvider() {
-    if (widget.entry.imageLinks.toString() != '[Null]') {
-      return ImageViewer(
-        removeMethod: removeAttachment,
+  void initWidgetProvider() {
+    if (widget.entry.imageLinks != null) {
+      _addImageAttachments(
+        size: widget.size,
         notifyflagChange: changeFlag,
-        fileHandler: assignImageAttachment,
-        size: MediaQuery.of(context).size,
+        fileServer: assignImageAttachment,
         imageUrls: widget.entry.imageLinks,
       );
-    } else {
-      return null;
     }
+    // if (widget.entry.audioLink!=null){}
   }
 
   @override
@@ -203,6 +232,7 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
         pageCode: 0,
       )
     ];
+    initWidgetProvider();
     super.initState();
   }
 
@@ -305,16 +335,11 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                           children: [
                             IconButton(
                               onPressed: () async {
-                                Widget? response = await imagePickerLauncher(
-                                    requestStorageAccess:
-                                        PermissionManager.requestStorageAccess,
-                                    size: size,
-                                    removeMethod: removeAttachment,
-                                    notifyflagChange: changeFlag,
-                                    fileServer: assignImageAttachment);
-                                if (response != null) {
-                                  addAttachment(response);
-                                }
+                                _addImageAttachments(
+                                  size: size,
+                                  notifyflagChange: changeFlag,
+                                  fileServer: assignImageAttachment,
+                                );
                                 Navigator.of(context).pop();
                               },
                               icon: Icon(
@@ -329,17 +354,11 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                           children: [
                             IconButton(
                               onPressed: () async {
-                                Widget? response = await audioPickerLauncher(
-                                  requestStorageAccess:
-                                      PermissionManager.requestStorageAccess,
+                                _addAudioAttachment(
                                   size: size,
-                                  removeMethod: removeAttachment,
                                   notifyflagChange: changeFlag,
                                   fileServer: assignAudioAttachment,
                                 );
-                                if (response != null) {
-                                  addAttachment(response);
-                                }
                                 Navigator.of(context).pop();
                               },
                               icon: Icon(
@@ -370,186 +389,218 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                 ),
               ),
               drawerEnableOpenDragGesture: false,
-              // floatingActionButton: Builder(builder: (context) {
-              //   return FloatingActionButton(
-              //     tooltip: "Add attachment",
-              //     onPressed: () {
-              //       Scaffold.of(context).openDrawer();
-              //       // showBottomSheet(
-              //       //     context: context,
-              //       //     builder: (context) => Container(
-              //       //           width: size.width * 0.8,
-              //       //           height: 0.1 * size.height,
-              //       //         ));
-              //     },
-              //     backgroundColor: Colors.white.withOpacity(0.35),
-              //     child: const Icon(Icons.attachment),
-              //   );
-              // }),
+              floatingActionButton: Builder(builder: (context) {
+                return FloatingActionButton(
+                  tooltip: "Add attachment",
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                    // showBottomSheet(
+                    //     context: context,
+                    //     builder: (context) => Container(
+                    //           width: size.width * 0.8,
+                    //           height: 0.1 * size.height,
+                    //         ));
+                  },
+                  backgroundColor: Colors.white.withOpacity(0.35),
+                  child: const Icon(Icons.attachment),
+                );
+              }),
               backgroundColor: Colors.transparent,
               body: CustomScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  slivers: [
-                    SliverAppBar(
-                      pinned: true,
-                      backgroundColor: Colors.transparent,
-                      leading: IconButton(
-                        onPressed: () async {
-                          if (isChanged.value == true) {
-                            SnackBar snackBar = unsavedSnack(
-                              parentContext: context,
-                              size: size,
-                              item: widget.entry,
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                            await Future.delayed(
-                              const Duration(seconds: 1),
-                            );
-                          } else {
-                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                physics: const BouncingScrollPhysics(),
+                slivers: [
+                  SliverAppBar(
+                    pinned: true,
+                    backgroundColor: Colors.transparent,
+                    leading: IconButton(
+                      onPressed: () async {
+                        if (isChanged.value == true) {
+                          SnackBar snackBar = unsavedSnack(
+                            parentContext: context,
+                            size: size,
+                            item: widget.entry,
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          await Future.delayed(
+                            const Duration(seconds: 1),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-                            Navigator.of(context).pop();
-                            return;
-                          }
-                        },
-                        icon: const Icon(Icons.arrow_back_ios),
-                      ),
-                      expandedHeight: 0.3 * size.height,
-                      flexibleSpace: FlexibleSpaceBar(
-                        background: ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            Colors.black.withBlue(10),
-                            BlendMode.saturation,
-                          ),
-                          child: Image.asset(
-                            "assets/images/diary.jpg",
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        title: SizedBox(
-                          width: 0.5 * size.width,
-                          child: TextFormField(
-                            controller: _titleController,
-                            style: GoogleFonts.ubuntu(
-                              textStyle: const TextStyle(color: Colors.white),
-                            ),
-                            cursorColor: Colors.white,
-                            decoration: InputDecoration(
-                              filled: true,
-                              border: InputBorder.none,
-                              fillColor: Colors.white.withOpacity(0.35),
-                            ),
-                            onChanged: (value) {
-                              if (_titleController.text != widget.entry.title) {
-                                isChanged.value = true;
-                              } else {
-                                isChanged.value = false;
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                      actions: [
-                        ValueListenableBuilder(
-                            valueListenable: isChanged,
-                            builder: (context, value, child) {
-                              return Visibility(
-                                visible: isChanged.value,
-                                child: IconButton(
-                                  onPressed: () {
-                                    if (isChanged.value == true) {
-                                      DiaryEntry _updatedEntry = DiaryEntry(
-                                        widget.entry.id,
-                                        _titleController.text,
-                                        _descriptionController.text,
-                                        dateController,
-                                        "",
-                                        [
-                                          "https://www.google.com",
-                                          "https://www.google.com",
-                                        ],
-                                      );
-                                      _updateEntry(_updatedEntry);
-                                    }
-                                  },
-                                  icon: const Icon(
-                                    Icons.check_box_rounded,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              );
-                            }),
-                        PopupMenuButton(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15.0),
-                            ),
-                          ),
-                          color: Colors.white,
-                          itemBuilder: (context) {
-                            return [
-                              PopupMenuItem(
-                                padding: EdgeInsets.zero,
-                                child: ListTile(
-                                  minLeadingWidth: 25,
-                                  dense: true,
-                                  leading: Icon(
-                                    Icons.picture_as_pdf_rounded,
-                                    color: Colors.grey.shade700,
-                                  ),
-                                  title: Text(
-                                    "Save as Pdf",
-                                    style: GoogleFonts.aBeeZee(
-                                      textStyle: TextStyle(
-                                        color: Colors.grey.shade700,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onTap: () {
-                                  _retrieveEntryPdf(widget.entry);
-                                },
-                              ),
-                              PopupMenuItem(
-                                padding: EdgeInsets.zero,
-                                child: ListTile(
-                                  minLeadingWidth: 25,
-                                  dense: true,
-                                  leading: Icon(
-                                    Icons.share_rounded,
-                                    color: Colors.grey.shade700,
-                                  ),
-                                  title: Text(
-                                    "Share",
-                                    style: GoogleFonts.aBeeZee(
-                                      textStyle: TextStyle(
-                                        color: Colors.grey.shade700,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onTap: () {
-                                  Share.share(
-                                    "${widget.entry.entryTitle}\n\n${widget.entry.entryDescription}\n\nDated:${widget.entry.entryCreatedAt.day}/${widget.entry.entryCreatedAt.month}/${widget.entry.entryCreatedAt.year}",
-                                  );
-                                },
-                              ),
-                            ];
-                          },
-                          icon: const Icon(Icons.more_vert),
-                        )
-                      ],
+                          Navigator.of(context).pop();
+                          return;
+                        }
+                      },
+                      icon: const Icon(Icons.arrow_back_ios),
                     ),
-                    SliverFillRemaining(
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        child: Column(
-                          children: utilWidgets,
+                    expandedHeight: 0.3 * size.height,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                          Colors.black.withBlue(10),
+                          BlendMode.saturation,
+                        ),
+                        child: Image.asset(
+                          "assets/images/diary.jpg",
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    )
-                  ]),
+                      title: SizedBox(
+                        width: 0.5 * size.width,
+                        child: TextFormField(
+                          controller: _titleController,
+                          style: GoogleFonts.ubuntu(
+                            textStyle: const TextStyle(color: Colors.white),
+                          ),
+                          cursorColor: Colors.white,
+                          decoration: InputDecoration(
+                            filled: true,
+                            border: InputBorder.none,
+                            fillColor: Colors.white.withOpacity(0.35),
+                          ),
+                          onChanged: (value) {
+                            if (_titleController.text != widget.entry.title) {
+                              isChanged.value = true;
+                            } else {
+                              isChanged.value = false;
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                    actions: [
+                      ValueListenableBuilder(
+                          valueListenable: isChanged,
+                          builder: (context, value, child) {
+                            return Visibility(
+                              visible: isChanged.value,
+                              child: IconButton(
+                                onPressed: () async {
+                                  if (isChanged.value == true) {
+                                    DiaryEntry _updatedEntry = DiaryEntry(
+                                      widget.entry.id,
+                                      _titleController.text,
+                                      _descriptionController.text,
+                                      dateController,
+                                      "",
+                                      [
+                                        "https://www.google.com",
+                                        "https://www.google.com",
+                                      ],
+                                    );
+                                    await _updateEntryUploads(_updatedEntry);
+                                    _updateEntry(_updatedEntry);
+                                  }
+                                },
+                                icon: const Icon(
+                                  Icons.check_box_rounded,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            );
+                          }),
+                      PopupMenuButton(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15.0),
+                          ),
+                        ),
+                        color: Colors.white,
+                        itemBuilder: (context) {
+                          return [
+                            PopupMenuItem(
+                              padding: EdgeInsets.zero,
+                              child: ListTile(
+                                minLeadingWidth: 25,
+                                dense: true,
+                                leading: Icon(
+                                  Icons.picture_as_pdf_rounded,
+                                  color: Colors.grey.shade700,
+                                ),
+                                title: Text(
+                                  "Save as Pdf",
+                                  style: GoogleFonts.aBeeZee(
+                                    textStyle: TextStyle(
+                                      color: Colors.grey.shade700,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              onTap: () {
+                                _retrieveEntryPdf(widget.entry);
+                              },
+                            ),
+                            PopupMenuItem(
+                              padding: EdgeInsets.zero,
+                              child: ListTile(
+                                minLeadingWidth: 25,
+                                dense: true,
+                                leading: Icon(
+                                  Icons.share_rounded,
+                                  color: Colors.grey.shade700,
+                                ),
+                                title: Text(
+                                  "Share",
+                                  style: GoogleFonts.aBeeZee(
+                                    textStyle: TextStyle(
+                                      color: Colors.grey.shade700,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              onTap: () {
+                                Share.share(
+                                  "${widget.entry.entryTitle}\n\n${widget.entry.entryDescription}\n\nDated:${widget.entry.entryCreatedAt.day}/${widget.entry.entryCreatedAt.month}/${widget.entry.entryCreatedAt.year}",
+                                );
+                              },
+                            ),
+                          ];
+                        },
+                        icon: const Icon(Icons.more_vert),
+                      )
+                    ],
+                  ),
+                  Consumer(
+                    builder:
+                        (BuildContext context, WidgetRef ref, Widget? child) {
+                      final diaryViewState = ref.watch(
+                        diaryViewNotifier(utilWidgets),
+                      );
+                      return diaryViewState.when(
+                        data: ((data) {
+                          return SliverFillRemaining(
+                            child: SingleChildScrollView(
+                              physics: const BouncingScrollPhysics(),
+                              child: Column(
+                                children: data!,
+                              ),
+                            ),
+                          );
+                        }),
+                        error: (Object error, StackTrace? stackTrace) {
+                          return const SliverFillRemaining(
+                            child: Center(
+                              child: Text("Unable to retrieve your Entry."),
+                            ),
+                          );
+                        },
+                        loading: () {
+                          return const SliverFillRemaining(
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: Column(
+                      children: utilWidgets,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ],

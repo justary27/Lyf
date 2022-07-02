@@ -1,11 +1,12 @@
 import 'dart:io';
 import 'dart:developer';
 import 'dart:typed_data';
+import 'package:file_picker/file_picker.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
 import './permission_handler.dart';
-import '../../global/globals.dart';
+import '../../global/variables.dart';
 import '../../models/diary_model.dart';
 
 class FileHandler {
@@ -55,6 +56,39 @@ class FileHandler {
     } catch (e) {
       log("pdf error");
       rethrow;
+    }
+  }
+
+  static Future<PlatformFile?> pickAudioFile() async {
+    int? requestResponse = await PermissionManager.requestStorageAccess();
+
+    if (requestResponse == 2) {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.audio,
+      );
+      if (result == null) {
+        return null;
+      } else {
+        PlatformFile audioFile = result.files.first;
+        return audioFile;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<List<PlatformFile>?> pickImages() async {
+    int? requestResponse = await PermissionManager.requestStorageAccess();
+    if (requestResponse == 2) {
+      FilePickerResult? result = await FilePicker.platform
+          .pickFiles(type: FileType.image, allowMultiple: true);
+      if (result == null) {
+        return null;
+      } else {
+        return result.files;
+      }
+    } else {
+      return null;
     }
   }
 }

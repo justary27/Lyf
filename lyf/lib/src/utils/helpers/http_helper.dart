@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 
-import '../../global/globals.dart';
+import '../../global/variables.dart';
 import '../enums/request_type.dart';
 import '../errors/diary/diary_errors.dart';
 import '../errors/todo/todo_errors.dart';

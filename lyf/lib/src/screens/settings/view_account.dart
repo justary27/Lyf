@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lyf/src/global/globals.dart';
+import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/models/user_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/services/firebase/auth_service.dart';

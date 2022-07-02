@@ -1,35 +1,42 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ImageViewer extends StatefulWidget {
+import '../../state/diary/diary_view_state.dart';
+
+class ImageViewer extends ConsumerStatefulWidget {
   final Size size;
   final List<PlatformFile?>? imageFiles;
-  final void Function(Key key) removeMethod;
   final void Function(bool flag) notifyflagChange;
   final void Function(List<PlatformFile?>? file) fileHandler;
   final List<String>? imageUrls;
+  final List<Widget>? stateWidgetList;
   const ImageViewer({
     Key? key,
     required this.size,
-    required this.removeMethod,
     required this.notifyflagChange,
     required this.fileHandler,
     this.imageFiles,
     this.imageUrls,
+    this.stateWidgetList,
   }) : super(
           key: const Key('imageAttachment'),
         );
 
   @override
-  _ImageViewerState createState() => _ImageViewerState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ImageViewerState();
 }
 
-class _ImageViewerState extends State<ImageViewer> {
+class _ImageViewerState extends ConsumerState<ImageViewer> {
+  void _removeImageAttachments() {
+    ref
+        .read(diaryViewNotifier(widget.stateWidgetList!).notifier)
+        .deleteImageAttachments();
+  }
+
   Widget imageViewer({
     required Size size,
-    required void Function(Key key) removeMethod,
     required void Function(bool flag) notifyflagChange,
     required void Function(List<PlatformFile?>? file) fileHandler,
     List<PlatformFile?>? imageFiles,
@@ -72,8 +79,8 @@ class _ImageViewerState extends State<ImageViewer> {
                     IconButton(
                       onPressed: () {
                         notifyflagChange(false);
-                        removeMethod(const Key('imageAttachment'));
                         fileHandler(null);
+                        _removeImageAttachments();
                       },
                       icon: Icon(
                         Icons.close_rounded,
@@ -133,43 +140,9 @@ class _ImageViewerState extends State<ImageViewer> {
     return imageViewer(
       size: widget.size,
       imageFiles: widget.imageFiles,
-      removeMethod: widget.removeMethod,
       notifyflagChange: widget.notifyflagChange,
       fileHandler: widget.fileHandler,
       imageUrls: widget.imageUrls,
     );
-  }
-}
-
-Future<Widget?> imagePickerLauncher({
-  required Future<int> Function() requestStorageAccess,
-  required Size size,
-  required void Function(Key key) removeMethod,
-  required void Function(bool flag) notifyflagChange,
-  required void Function(List<PlatformFile?>? files) fileServer,
-}) async {
-  int? requestResponse;
-  List<PlatformFile?>? imageFiles;
-  requestResponse = await requestStorageAccess();
-  if (requestResponse == 2) {
-    FilePickerResult? result = await FilePicker.platform
-        .pickFiles(type: FileType.image, allowMultiple: true);
-    if (result == null) {
-      return null;
-    } else {
-      imageFiles = result.files;
-      print(result.names);
-      notifyflagChange(true);
-      fileServer(imageFiles);
-      return ImageViewer(
-        size: size,
-        imageFiles: imageFiles,
-        removeMethod: removeMethod,
-        notifyflagChange: notifyflagChange,
-        fileHandler: fileServer,
-      );
-    }
-  } else {
-    return null;
   }
 }

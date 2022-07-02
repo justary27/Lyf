@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lyf/src/global/globals.dart';
+import 'package:lyf/src/global/variables.dart';
 
 class ViewProfilePicturePage extends StatefulWidget {
   const ViewProfilePicturePage({Key? key}) : super(key: key);

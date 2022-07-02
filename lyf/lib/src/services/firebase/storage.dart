@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firestorage;
 import 'package:lyf/src/utils/errors/firestorage_exceptions.dart';
-import 'package:lyf/src/global/globals.dart';
+import 'package:lyf/src/global/variables.dart';
 
 class FireStorage {
   static final firestorage.FirebaseStorage storage =
@@ -21,8 +21,6 @@ class FireStorage {
                 '${currentUser.userID}/diary/$entryId/images/${file!.name}.${file.extension}')
             .putFile(File(file.path!));
         linkList.add(await (await uploadImage).ref.getDownloadURL());
-        // await (await uploadImage).ref.getDownloadURL()
-        // linkList.add(await (await uploadImage).ref.getDownloadURL());
       }
       notifyImageLinker(linkList);
       return 1;

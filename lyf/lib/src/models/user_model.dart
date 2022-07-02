@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:http/http.dart' as http;
-import 'package:lyf/src/global/globals.dart';
+import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/services/http.dart';
 import 'package:lyf/src/services/user.dart';
 // import 'package:json_annotation/json_annotation.dart';

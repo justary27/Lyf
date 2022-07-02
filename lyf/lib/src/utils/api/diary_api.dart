@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 
-import '../../global/globals.dart';
+import '../../global/variables.dart';
 import '../../models/diary_model.dart';
 import '../endpoints/diary_endpoints.dart';
 import '../enums/query_type.dart';

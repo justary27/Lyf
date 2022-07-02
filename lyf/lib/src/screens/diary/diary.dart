@@ -287,12 +287,6 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                                                         onPressed: () async {
                                                           _retrieveEntryPdf(
                                                               diary[index]);
-                                                          // await DiaryEntry
-                                                          //     .getEntryPdf(
-                                                          //         getPdfClient:
-                                                          //             diaryClient,
-                                                          //         entry: diary[
-                                                          //             index]);
                                                         },
                                                         child: Text(
                                                           "Save as Pdf",

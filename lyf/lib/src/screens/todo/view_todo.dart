@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lyf/src/global/globals.dart';
+import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/models/todo_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:http/http.dart' as http;
