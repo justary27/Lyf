@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:http/http.dart' as http;
+import 'package:lyf/src/utils/enums/error_type.dart';
 
 import '../../global/variables.dart';
 import '../enums/request_type.dart';
@@ -108,10 +111,13 @@ class HttpHelper {
         throw TodoException(response.body.toString());
       }
     } catch (e) {
-      if (e.runtimeType == TodoException) {
-        rethrow;
+      if (e.runtimeType == SocketException) {
+        throw TodoException(
+          e.toString(),
+          errorType: ErrorType.networkError,
+        );
       } else {
-        throw Exception(e.toString());
+        throw TodoException(e.toString());
       }
     }
   }
@@ -161,10 +167,13 @@ class HttpHelper {
         throw DiaryException(response.body.toString());
       }
     } catch (e) {
-      if (e.runtimeType == DiaryException) {
-        rethrow;
+      if (e.runtimeType == SocketException) {
+        throw DiaryException(
+          e.toString(),
+          errorType: ErrorType.networkError,
+        );
       } else {
-        throw Exception(e.toString());
+        throw DiaryException(e.toString());
       }
     }
   }

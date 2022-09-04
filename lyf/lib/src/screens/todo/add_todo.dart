@@ -27,7 +27,7 @@ class _AddTodoPageState extends ConsumerState<AddTodoPage> {
   void _createTodo(Todo todo) {
     ref.read(todoListNotifier.notifier).addTodo(todo);
     SnackBar snackBar = const SnackBar(
-      content: Text("Entry created successfully!"),
+      content: Text("Todo created successfully!"),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
     Navigator.of(context).pop();

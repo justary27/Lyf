@@ -85,7 +85,7 @@ class TodoApiClient {
       }
       return todoList;
     } on TodoException {
-      return null;
+      rethrow;
     }
   }
 

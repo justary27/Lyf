@@ -27,9 +27,20 @@ class AudioViewer extends ConsumerStatefulWidget {
 
 class _AudioViewerState extends ConsumerState<AudioViewer> {
   void _removeAudioAttachment() {
-    ref
-        .read(diaryViewNotifier(widget.stateWidgetList!).notifier)
-        .deleteAudioAttachment();
+    if (widget.audioUrl != null) {
+      ref
+          .read(diaryViewNotifier(widget.stateWidgetList!).notifier)
+          .deleteAudioAttachment(
+            notifyflagChange: widget.notifyflagChange,
+            notify: true,
+          );
+    } else {
+      ref
+          .read(diaryViewNotifier(widget.stateWidgetList!).notifier)
+          .deleteAudioAttachment(
+            notifyflagChange: widget.notifyflagChange,
+          );
+    }
   }
 
   Widget audioViewer({
@@ -59,7 +70,7 @@ class _AudioViewerState extends ConsumerState<AudioViewer> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      audioFile!.name,
+                      audioFile != null ? audioFile.name : "AudioFile",
                       style: TextStyle(color: Colors.white),
                     ),
                     IconButton(
@@ -115,7 +126,7 @@ class _AudioViewerState extends ConsumerState<AudioViewer> {
   Widget build(BuildContext context) {
     return audioViewer(
       size: widget.size,
-      audioFile: widget.audioFile!,
+      audioFile: widget.audioFile,
       notifyflagChange: widget.notifyflagChange,
       fileHandler: widget.fileHandler,
     );

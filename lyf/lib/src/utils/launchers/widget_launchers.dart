@@ -16,7 +16,8 @@ class WidgetLauncher {
     String? audioUrl,
   }) async {
     Widget? audioViewer;
-    if (audioUrl == null || audioUrl == '') {
+    // TODO: Handle audioUrl == "" case on audioFile deletion;
+    if (audioUrl == null) {
       PlatformFile? audioFile = await FileHandler.pickAudioFile();
       notifyflagChange(true);
       fileServer(audioFile);
@@ -28,13 +29,17 @@ class WidgetLauncher {
         stateWidgetList: stateWidgetList,
       );
     } else {
-      audioViewer = AudioViewer(
-        size: size,
-        notifyflagChange: notifyflagChange,
-        fileHandler: fileServer,
-        stateWidgetList: stateWidgetList,
-        audioUrl: audioUrl,
-      );
+      if (audioUrl != "") {
+        audioViewer = AudioViewer(
+          size: size,
+          notifyflagChange: notifyflagChange,
+          fileHandler: fileServer,
+          stateWidgetList: stateWidgetList,
+          audioUrl: audioUrl,
+        );
+      } else {
+        audioViewer = null;
+      }
     }
     return audioViewer;
   }
@@ -43,6 +48,7 @@ class WidgetLauncher {
     required Size size,
     required void Function(bool flag) notifyflagChange,
     required void Function(List<PlatformFile?>? files) fileServer,
+    required void Function() onValueDelete,
     List<String>? imageUrls,
     List<Widget>? stateWidgetList,
   }) async {
@@ -57,6 +63,7 @@ class WidgetLauncher {
         notifyflagChange: notifyflagChange,
         fileHandler: fileServer,
         stateWidgetList: stateWidgetList,
+        onValueDelete: onValueDelete,
       );
     } else {
       imageViewer = ImageViewer(
@@ -65,6 +72,7 @@ class WidgetLauncher {
         notifyflagChange: notifyflagChange,
         fileHandler: fileServer,
         stateWidgetList: stateWidgetList,
+        onValueDelete: onValueDelete,
       );
     }
     return imageViewer;

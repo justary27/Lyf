@@ -139,6 +139,14 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
         );
   }
 
+  void _deleteAudioAttachment() {
+    if (widget.entry.audioLink != null) {
+      setState(() {
+        widget.entry.audioLink = "";
+      });
+    }
+  }
+
   void _addImageAttachments({
     required Size size,
     required void Function(bool flag) notifyflagChange,
@@ -149,9 +157,19 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
           size: size,
           notifyflagChange: notifyflagChange,
           fileServer: fileServer,
+          onValueDelete: _deleteImageAttachments,
           stateWidgetList: utilWidgets,
           imageUrls: imageUrls,
         );
+  }
+
+  void _deleteImageAttachments() {
+    if (widget.entry.imageLinks != null) {
+      setState(() {
+        widget.entry.imageLinks = [];
+      });
+      print(widget.entry.imageLinks);
+    }
   }
 
   void changeFlag(bool flag) {
@@ -238,6 +256,9 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
     _titleController.text = widget.entry.entryTitle;
     _descriptionController.text = widget.entry.description;
     dateController = widget.entry.entryCreatedAt;
+
+    isChanged = ValueNotifier(false);
+
     utilWidgets = [
       EntryCard(
         size: widget.size,
@@ -249,26 +270,11 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
         pageCode: 0,
       )
     ];
+
     initWidgetProvider();
+
     super.initState();
   }
-
-  // @override
-  // void didChangeDependencies() {
-  //   try {
-  //     Widget? widget = initImageWidgetProvider();
-  //     setState(() {
-  //       if (widget != null) {
-  //         utilWidgets.add(widget);
-  //       }
-  //     });
-  //     print(utilWidgets.length);
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  //   // TODO: implement didChangeDependencies
-  //   super.didChangeDependencies();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -499,11 +505,8 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                       _titleController.text,
                                       _descriptionController.text,
                                       dateController,
-                                      "",
-                                      [
-                                        "https://www.google.com",
-                                        "https://www.google.com",
-                                      ],
+                                      widget.entry.audioLink,
+                                      widget.entry.imageLinks,
                                     );
                                     await _updateEntryUploads(_updatedEntry);
                                     _updateEntry(_updatedEntry);

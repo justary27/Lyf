@@ -35,18 +35,24 @@ class ViewDiaryNotifier extends StateNotifier<AsyncValue<List<Widget>?>> {
         stateWidgetList: stateWidgetList,
         audioUrl: audioUrl,
       );
-      state = state.whenData((widgetList) => [...widgetList!, audioWidget!]);
+      if (audioWidget != null) {
+        state = state.whenData((widgetList) => [...widgetList!, audioWidget]);
+      }
     } catch (e) {
       _handleException(e);
     }
   }
 
-  void deleteAudioAttachment() {
+  void deleteAudioAttachment({
+    required void Function(bool flag) notifyflagChange,
+    bool? notify,
+  }) {
     _cacheState();
     try {
       state = state.whenData((widgetList) => widgetList!
           .where((widget) => widget.key != const Key("audioAttachment"))
           .toList());
+      notifyflagChange(notify ?? false);
     } catch (e) {
       log(e.toString());
       _handleException(e);
@@ -57,6 +63,7 @@ class ViewDiaryNotifier extends StateNotifier<AsyncValue<List<Widget>?>> {
     required Size size,
     required void Function(bool flag) notifyflagChange,
     required void Function(List<PlatformFile?>? file) fileServer,
+    required void Function() onValueDelete,
     List<Widget>? stateWidgetList,
     List<String>? imageUrls,
   }) async {
@@ -66,20 +73,29 @@ class ViewDiaryNotifier extends StateNotifier<AsyncValue<List<Widget>?>> {
         notifyflagChange: notifyflagChange,
         fileServer: fileServer,
         stateWidgetList: stateWidgetList,
+        onValueDelete: onValueDelete,
         imageUrls: imageUrls,
       );
-      state = state.whenData((widgetList) => [...widgetList!, imageWidget!]);
+      if (imageWidget != null) {
+        state = state.whenData((widgetList) => [...widgetList!, imageWidget]);
+      }
     } catch (e) {
       _handleException(e);
     }
   }
 
-  deleteImageAttachments() {
+  deleteImageAttachments({
+    required void Function(bool flag) notifyflagChange,
+    bool? notify,
+    void Function()? onValueDelete,
+  }) {
     _cacheState();
     try {
       state = state.whenData((widgetList) => widgetList!
           .where((widget) => widget.key != const Key("imageAttachment"))
           .toList());
+      notifyflagChange(notify ?? false);
+      if (onValueDelete != null) onValueDelete();
     } catch (e) {
       log(e.toString());
       _handleException(e);
@@ -103,6 +119,6 @@ class ViewDiaryNotifier extends StateNotifier<AsyncValue<List<Widget>?>> {
   }
 
   void clearState() {
-    state = AsyncValue.data(null);
+    state = const AsyncValue.data(null);
   }
 }

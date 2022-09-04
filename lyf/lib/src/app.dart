@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lyf/src/state/errors/error_state.dart';
 import 'global/variables.dart';
 import './routes/routing.dart';
 import './themes/themes.dart';
@@ -9,14 +10,14 @@ import './utils/helpers/screen_helper.dart';
 
 import 'dart:io' show Platform;
 
-class Lyf extends StatefulWidget {
+class Lyf extends ConsumerStatefulWidget {
   const Lyf({Key? key}) : super(key: key);
 
   @override
-  State<Lyf> createState() => _LyfState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _LyfState();
 }
 
-class _LyfState extends State<Lyf> with WidgetsBindingObserver {
+class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
   late AppLifecycleState _notification;
 
   @override
@@ -40,26 +41,9 @@ class _LyfState extends State<Lyf> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isIOS) {
-      return ProviderScope(
-        child: GestureDetector(
-          onTap: () {
-            FocusScopeNode currentScope = FocusScope.of(context);
-            if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
-              FocusManager.instance.primaryFocus!.unfocus();
-            }
-          },
-          child: CupertinoApp(
-            title: 'Lyf',
-            debugShowCheckedModeBanner: false,
-            initialRoute: (loginState) ? "/home" : "/welcome",
-            onGenerateRoute: RouteManager.generateRoute,
-          ),
-        ),
-      );
-    } else {
-      return ProviderScope(
-        child: GestureDetector(
+    switch (Platform.operatingSystem) {
+      case "android":
+        return GestureDetector(
           onTap: () {
             FocusScopeNode currentScope = FocusScope.of(context);
             if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
@@ -73,9 +57,72 @@ class _LyfState extends State<Lyf> with WidgetsBindingObserver {
             initialRoute: (loginState) ? "/home" : "/welcome",
             onGenerateRoute: RouteManager.generateRoute,
           ),
-        ),
-      );
+        );
+      case "ios":
+        return GestureDetector(
+          onTap: () {
+            FocusScopeNode currentScope = FocusScope.of(context);
+            if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+              FocusManager.instance.primaryFocus!.unfocus();
+            }
+          },
+          child: CupertinoApp(
+            title: 'Lyf',
+            debugShowCheckedModeBanner: false,
+            initialRoute: (loginState) ? "/home" : "/welcome",
+            onGenerateRoute: RouteManager.generateRoute,
+          ),
+        );
+
+      default:
+        return GestureDetector(
+          onTap: () {
+            FocusScopeNode currentScope = FocusScope.of(context);
+            if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+              FocusManager.instance.primaryFocus!.unfocus();
+            }
+          },
+          child: MaterialApp(
+            title: 'Lyf',
+            debugShowCheckedModeBanner: false,
+            theme: monochromeTheme,
+            initialRoute: (loginState) ? "/home" : "/welcome",
+            onGenerateRoute: RouteManager.generateRoute,
+          ),
+        );
     }
+    // if (Platform.isIOS) {
+    //   return GestureDetector(
+    //     onTap: () {
+    //       FocusScopeNode currentScope = FocusScope.of(context);
+    //       if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+    //         FocusManager.instance.primaryFocus!.unfocus();
+    //       }
+    //     },
+    //     child: CupertinoApp(
+    //       title: 'Lyf',
+    //       debugShowCheckedModeBanner: false,
+    //       initialRoute: (loginState) ? "/home" : "/welcome",
+    //       onGenerateRoute: RouteManager.generateRoute,
+    //     ),
+    //   );
+    // } else {
+    //   return GestureDetector(
+    //     onTap: () {
+    //       FocusScopeNode currentScope = FocusScope.of(context);
+    //       if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+    //         FocusManager.instance.primaryFocus!.unfocus();
+    //       }
+    //     },
+    //     child: MaterialApp(
+    //       title: 'Lyf',
+    //       debugShowCheckedModeBanner: false,
+    //       theme: monochromeTheme,
+    //       initialRoute: (loginState) ? "/home" : "/welcome",
+    //       onGenerateRoute: RouteManager.generateRoute,
+    //     ),
+    //   );
+    // }
   }
 
   @override

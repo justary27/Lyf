@@ -5,6 +5,7 @@ import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/shared/entry_card.dart';
 import 'package:lyf/src/shared/snackbars/delete_snack.dart';
+import 'package:lyf/src/utils/errors/diary/diary_errors.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../state/diary/diary_list_state.dart';
@@ -30,8 +31,13 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
     ref.read(diaryNotifier.notifier).removeEntry(entry);
   }
 
-  void _refresh() {
-    if (ref.read(diaryNotifier).value != null) {
+  void _refresh({bool? forceRefresh}) {
+    try {
+      var notifierValue = ref.read(diaryNotifier).value;
+      if (forceRefresh != null && forceRefresh) {
+        ref.read(diaryNotifier.notifier).refresh();
+      }
+    } on DiaryException catch (e) {
       ref.read(diaryNotifier.notifier).refresh();
     }
   }

@@ -6,6 +6,7 @@ import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/shared/todo_card.dart';
 
 import '../../state/todo/todo_list_state.dart';
+import '../../utils/errors/todo/todo_errors.dart';
 
 class TodoPage extends ConsumerStatefulWidget {
   const TodoPage({Key? key}) : super(key: key);
@@ -17,14 +18,14 @@ class TodoPage extends ConsumerStatefulWidget {
 class _TodoPageState extends ConsumerState<TodoPage> {
   final GlobalKey<SliverAnimatedListState> _diaryKey =
       GlobalKey<SliverAnimatedListState>();
-  void _retrieve() {
-    if (ref.read(todoListNotifier).value != null) {
-      ref.read(todoListNotifier.notifier).retrieveTodoList();
-    }
-  }
 
-  void _refresh() {
-    if (ref.read(todoListNotifier).value != null) {
+  void _refresh({bool? forceRefresh}) {
+    try {
+      var notifierValue = ref.read(todoListNotifier).value;
+      if (forceRefresh != null && forceRefresh) {
+        ref.read(todoListNotifier.notifier).refresh();
+      }
+    } on TodoException catch (e) {
       ref.read(todoListNotifier.notifier).refresh();
     }
   }
@@ -32,7 +33,7 @@ class _TodoPageState extends ConsumerState<TodoPage> {
   @override
   void initState() {
     super.initState();
-    _retrieve();
+    _refresh();
     // getTodos(todoClient);
   }
 
@@ -121,26 +122,11 @@ class _TodoPageState extends ConsumerState<TodoPage> {
                               ),
                             );
                           } else {
-                            return SliverAnimatedList(
-                              key: _diaryKey,
-                              initialItemCount: todoList.length,
-                              itemBuilder: (context, index, animation) {
-                                return Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 0.05 * size.width,
-                                      vertical: 0.015 * size.height),
-                                  child: TodoCard(
-                                    parentContext: context,
-                                    pageCode: "/todoPage",
-                                    size: size,
-                                    todo: todoList[index],
-                                  ),
-                                );
-                              },
-                            );
-                            // return SliverList(
-                            //   delegate: SliverChildBuilderDelegate(
-                            //     (context, index) => Padding(
+                            // return SliverAnimatedList(
+                            //   key: _diaryKey,
+                            //   initialItemCount: todoList.length,
+                            //   itemBuilder: (context, index, animation) {
+                            //     return Padding(
                             //       padding: EdgeInsets.symmetric(
                             //           horizontal: 0.05 * size.width,
                             //           vertical: 0.015 * size.height),
@@ -150,10 +136,25 @@ class _TodoPageState extends ConsumerState<TodoPage> {
                             //         size: size,
                             //         todo: todoList[index],
                             //       ),
-                            //     ),
-                            //     childCount: todoList.length,
-                            //   ),
+                            //     );
+                            //   },
                             // );
+                            return SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                (context, index) => Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 0.05 * size.width,
+                                      vertical: 0.015 * size.height),
+                                  child: TodoCard(
+                                    parentContext: context,
+                                    pageCode: "/todoPage",
+                                    size: size,
+                                    todo: todoList[index],
+                                  ),
+                                ),
+                                childCount: todoList.length,
+                              ),
+                            );
                           }
                         },
                         error: (Object error, StackTrace? stackTrace) {

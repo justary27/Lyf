@@ -10,6 +10,7 @@ class ImageViewer extends ConsumerStatefulWidget {
   final List<PlatformFile?>? imageFiles;
   final void Function(bool flag) notifyflagChange;
   final void Function(List<PlatformFile?>? file) fileHandler;
+  final void Function() onValueDelete;
   final List<String>? imageUrls;
   final List<Widget>? stateWidgetList;
   const ImageViewer({
@@ -17,6 +18,7 @@ class ImageViewer extends ConsumerStatefulWidget {
     required this.size,
     required this.notifyflagChange,
     required this.fileHandler,
+    required this.onValueDelete,
     this.imageFiles,
     this.imageUrls,
     this.stateWidgetList,
@@ -30,9 +32,21 @@ class ImageViewer extends ConsumerStatefulWidget {
 
 class _ImageViewerState extends ConsumerState<ImageViewer> {
   void _removeImageAttachments() {
-    ref
-        .read(diaryViewNotifier(widget.stateWidgetList!).notifier)
-        .deleteImageAttachments();
+    if (widget.imageUrls != null) {
+      ref
+          .read(diaryViewNotifier(widget.stateWidgetList!).notifier)
+          .deleteImageAttachments(
+            notifyflagChange: widget.notifyflagChange,
+            notify: true,
+            onValueDelete: widget.onValueDelete,
+          );
+    } else {
+      ref
+          .read(diaryViewNotifier(widget.stateWidgetList!).notifier)
+          .deleteImageAttachments(
+            notifyflagChange: widget.notifyflagChange,
+          );
+    }
   }
 
   Widget imageViewer({

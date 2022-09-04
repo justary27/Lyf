@@ -58,6 +58,7 @@ dependencies:
   rename: ^2.0.1
   json_annotation: ^4.5.0
   flutter_riverpod: ^1.0.3
+  firebase_dynamic_links: ^4.0.7
 
 
 dev_dependencies:

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import './src/app.dart';
 import 'src/global/functions.dart';
 import 'src/global/variables.dart';
@@ -9,5 +10,10 @@ void main() async {
   await Firebase.initializeApp();
   creds = await getCredentials();
   await login(creds);
-  runApp(const Lyf());
+
+  runApp(
+    const ProviderScope(
+      child: Lyf(),
+    ),
+  );
 }

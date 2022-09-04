@@ -90,7 +90,7 @@ class DiaryApiClient {
       }
       return diary;
     } on DiaryException {
-      return null;
+      rethrow;
     }
   }
 
