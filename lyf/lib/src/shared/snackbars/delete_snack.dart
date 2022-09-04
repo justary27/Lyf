@@ -69,13 +69,13 @@ SnackBar deleteSnack({
                         ),
                       ),
                     ),
-                    onPressed: () async {
+                    onPressed: () {
                       ScaffoldMessenger.of(parentContext).hideCurrentSnackBar();
                       if (performDeleteTask != null) {
                         if (todo != null) {
-                          await performDeleteTask(todo);
+                          performDeleteTask(todo);
                         } else if (entry != null) {
-                          await performDeleteTask(entry);
+                          performDeleteTask(entry);
                         }
                       }
                     },

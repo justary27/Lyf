@@ -1,0 +1,4 @@
+enum ErrorType {
+  networkError,
+  authError,
+}

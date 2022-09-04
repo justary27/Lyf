@@ -1,9 +1,10 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
-import 'package:lyf/src/global/globals.dart';
+import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/services/http.dart';
 import 'package:lyf/src/services/user.dart';
+// import 'package:json_annotation/json_annotation.dart';
+// import '../interface/json_object.dart';
 
 /// ## LyfUser
 ///  Defining class of a user of the Lyf App.
@@ -33,91 +34,6 @@ class LyfUser {
     return {
       'Authorization': "Token " + token.toString(),
     };
-  }
-
-  static logIn(http.Client logInClient, Map<String, String?>? creds) async {
-    http.Response response;
-    print(creds);
-    if (creds != null) {
-      try {
-        response = await logInClient.post(Uri.parse(ApiEndpoints.logIn), body: {
-          'username': creds['email'],
-          'password': creds['password'],
-        });
-        if (response.statusCode == 401) {
-          loginState = false;
-        } else if (response.statusCode == 200) {
-          loginState = true;
-          Map body = json.decode(response.body);
-          currentUser = LyfUser(
-            creds['email']!,
-            creds['password']!,
-            body['token'],
-            body['username'],
-            body['userId'],
-          );
-          creds = {
-            'email': currentUser.email,
-            'password': currentUser.password,
-            'username': currentUser.username,
-          };
-          if (body['isActive'] == 'True') {
-            currentUser.isActive = true;
-          } else {
-            currentUser.isActive = false;
-          }
-        }
-        loginState = true;
-        print("Logged in");
-        UserCredentials.setCredentials(
-            currentUser.email, currentUser.password, currentUser.userName);
-      } catch (e) {
-        log(e.toString());
-        loginState = false;
-      }
-    } else {
-      loginState = false;
-    }
-  }
-
-  static Future<int> signUp(
-      http.Client signUpClient, Map<String, String> signUpcreds) async {
-    http.Response response;
-    try {
-      response = await signUpClient.post(Uri.parse(ApiEndpoints.signUp), body: {
-        'email': signUpcreds['email'],
-        'username': signUpcreds['username'],
-        'password': signUpcreds['password'],
-      });
-      if (response.statusCode == 400) {
-        print(response.body);
-        loginState = false;
-        if (json.decode(response.body) == ApiEndpoints.signUpEmailError) {
-        } else if (response.body == ApiEndpoints.signUpUsernameError) {
-          print(response.body);
-        }
-      } else if (response.statusCode == 200) {
-        loginState = true;
-        Map body = json.decode(response.body);
-        currentUser = LyfUser(
-          signUpcreds['email']!,
-          signUpcreds['password']!,
-          body['token'],
-          body['username'],
-          body['userId'],
-        );
-        if (body['isActive'] == 'True') {
-          currentUser.isActive = true;
-        } else {
-          currentUser.isActive = false;
-        }
-      }
-      return response.statusCode;
-    } catch (e) {
-      log(e.toString());
-      loginState = false;
-      return -1;
-    }
   }
 
   static Future<int> deactivateAccount() async {

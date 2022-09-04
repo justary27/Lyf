@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 
-import '../../global/globals.dart';
+import '../../global/variables.dart';
 import '../../models/diary_model.dart';
 import '../endpoints/diary_endpoints.dart';
 import '../enums/query_type.dart';
@@ -89,30 +90,34 @@ class DiaryApiClient {
       }
       return diary;
     } on DiaryException {
-      return null;
+      rethrow;
     }
   }
 
-  // static Future<void> getEntryPdf({
-  //   required DiaryEntry entry,
-  // }) async {
-  //   late http.Response response;
-  //   try {
-  //     response = await HttpHelper.doDiaryRequest(
-  //       requestType: RequestType.get,
-  //       requestUri: UriHelper.constructUri(
-  //         pathSegs: DiaryEndpoints.updateEntry(
-  //           userId: currentUser.userId,
-  //           entryId: entry.entryId!,
-  //         ),
-  //       ),
-  //       // requestBody: DiaryEntry.toJson(entry);
-  //     );
-  //     return response.statusCode;
-  //   } catch (e) {
-  //     throw DiaryException(response.body.toString());
-  //   }
-  // }
+  /// Helper method that saves a [DiaryEntry] as a Pdf on the local storage.
+  static Future<Uint8List?> getEntryPdf({
+    required DiaryEntry entry,
+  }) async {
+    http.Response? response;
+    try {
+      response = await HttpHelper.doDiaryRequest(
+        requestType: RequestType.get,
+        requestUri: UriHelper.constructUri(
+          pathSegs: DiaryEndpoints.getEntryPdf(
+            userId: currentUser.userId,
+            entryId: entry.entryId!,
+          ),
+        ),
+      );
+      if (response != null) {
+        return response.bodyBytes;
+      } else {
+        return null;
+      }
+    } on DiaryException catch (e, stackTr) {
+      rethrow;
+    }
+  }
 
   // static Future<void> getDiaryPdf({
   //   required DiaryEntry entry,
@@ -135,6 +140,7 @@ class DiaryApiClient {
   //   }
   // }
 
+  /// Helper method to update a [DiaryEntry] in the database.
   static Future<int> updateEntry({
     required DiaryEntry entry,
   }) async {
@@ -187,4 +193,3 @@ class DiaryApiClient {
     }
   }
 }
-// Map<String, dynamic> hi = DiaryEntry.toJson();

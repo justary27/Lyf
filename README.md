@@ -30,9 +30,9 @@ Make TODOs so that you never loose task of an upcoming task! Just hit the tick b
 </br>
 
 ## Diary
-Are you also one of those, who like to keep their best experiences captured in a diary for the days to come? If yes, then the diary feature is just for you! Effortlessly write a diary and save it on the click of a button. 
+Are you also one of those, who like to keep their best experiences captured in a diary for the days to come? If yes, then we have someting for you too! Effortlessly write a diary and save it on the click of a button. 
 <br/>
-Not enough? You can also effortlessly save your memories as a PDF, if you want that "book" feel!
+Not enough? You can also effortlessly save your memories as a Pdf file, if you want that "book" feel!
 
 </br>
 
@@ -47,6 +47,7 @@ Got ideas to improve the app? Contact us at thelyfApp@gmail.com.
 - Flutter 
 - Django
 - Django Rest FrameWork
+- Report Lab
 - Heroku 
 - Firebase
 

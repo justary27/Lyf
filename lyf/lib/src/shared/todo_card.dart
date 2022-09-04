@@ -12,7 +12,7 @@ class TodoCard extends ConsumerStatefulWidget {
   final BuildContext parentContext;
 
   /// The code that determines UI layout of card.
-  final pageCode;
+  final String pageCode;
 
   final Size size;
 
@@ -58,9 +58,9 @@ class _TodoCardState extends ConsumerState<TodoCard> {
   // tasks
 
   /// Class method to call the actual delete helper method for the todo.
-  void _deleteTodo(Todo todo) async {
+  void _deleteTodo(Todo todo) {
     if (widget.pageCode == "/todo/view") {
-      await ref.read(todoListNotifier.notifier).removeTodo(todo);
+      ref.read(todoListNotifier.notifier).removeTodo(todo);
       Navigator.of(context).pop();
       // RouteManager.navigateToTodo(widget.parentContext);
 
@@ -81,7 +81,7 @@ class _TodoCardState extends ConsumerState<TodoCard> {
       //   print(e);
       // }
     } else {
-      await ref.read(todoListNotifier.notifier).removeTodo(todo);
+      ref.read(todoListNotifier.notifier).removeTodo(todo);
 
       // widget.deleteTodo!(deleteTodoClient, todo);
     }
@@ -338,6 +338,14 @@ class _TodoCardState extends ConsumerState<TodoCard> {
             border: InputBorder.none,
           ),
           maxLines: null,
+          onTap: () {
+            if (_descriptionController.text == "Description") {
+              _descriptionController.selection = TextSelection(
+                baseOffset: 0,
+                extentOffset: _descriptionController.value.text.length,
+              );
+            }
+          },
           onChanged: (value) {
             widget.notifyDescriptionChange!(value);
           },

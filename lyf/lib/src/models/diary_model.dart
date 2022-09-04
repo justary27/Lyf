@@ -1,13 +1,5 @@
-import 'dart:io';
-import 'dart:developer';
-import 'package:http/http.dart' as http;
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:json_annotation/json_annotation.dart';
 import '../interface/json_object.dart';
-import '../global/globals.dart';
-import '../utils/handlers/permission_handler.dart';
-import '../services/http.dart';
 
 part 'diary_model.g.dart';
 
@@ -74,61 +66,6 @@ class DiaryEntry extends JsonObject {
   @override
   Map<String, dynamic> toJson() => _$DiaryEntryToJson(this);
 
-  /// Helper method to update a [DiaryEntry] in the database.
-  static Future<int> updateEntry({
-    required http.Client updateEntryClient,
-    required DiaryEntry entry,
-  }) async {
-    http.Response? response;
-    try {
-      response = await updateEntryClient.put(
-        Uri.parse(
-          ApiEndpoints.updateEntry(currentUser.userID, entry.entryId!),
-        ),
-        // body: DiaryEntry.toJson(entry),
-        headers: currentUser.authHeader(),
-      );
-      return response.statusCode;
-    } catch (e) {
-      log(e.toString());
-      return -1;
-    }
-  }
-
-  /// Helper method that saves a [DiaryEntry] as a PDF on the local storage.
-  static Future<void> getEntryPdf({
-    required http.Client getPdfClient,
-    required DiaryEntry entry,
-  }) async {
-    http.Response? response;
-    Directory? _appDocumentsDirectory =
-        await getApplicationDocumentsDirectory();
-    String pdfPath =
-        "${_appDocumentsDirectory.path}/${currentUser.username}/diary/${entry.title}.pdf";
-
-    try {
-      response = await getPdfClient.get(
-        Uri.parse(
-          ApiEndpoints.getEntryPdf(currentUser.userID, entry.entryId!),
-        ),
-        headers: currentUser.authHeader(),
-      );
-      if (await PermissionManager.requestStorageAccess() == 2) {
-        File pdf = File(pdfPath);
-        if (pdf.existsSync()) {
-          pdf.writeAsBytesSync(response.bodyBytes);
-        } else {
-          await pdf.create(recursive: true);
-          pdf.writeAsBytesSync(response.bodyBytes);
-        }
-
-        await OpenFile.open(pdfPath);
-      }
-    } catch (e) {
-      log(e.toString());
-    }
-  }
   // static Stream<List<DiaryEntry?>?> getEntriesStream(){
-
   // }
 }

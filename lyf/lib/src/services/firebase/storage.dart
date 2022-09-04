@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firestorage;
 import 'package:lyf/src/utils/errors/firestorage_exceptions.dart';
-import 'package:lyf/src/global/globals.dart';
+import 'package:lyf/src/global/variables.dart';
 
 class FireStorage {
   static final firestorage.FirebaseStorage storage =
@@ -21,8 +21,6 @@ class FireStorage {
                 '${currentUser.userID}/diary/$entryId/images/${file!.name}.${file.extension}')
             .putFile(File(file.path!));
         linkList.add(await (await uploadImage).ref.getDownloadURL());
-        // await (await uploadImage).ref.getDownloadURL()
-        // linkList.add(await (await uploadImage).ref.getDownloadURL());
       }
       notifyImageLinker(linkList);
       return 1;
@@ -35,12 +33,16 @@ class FireStorage {
   static Future<int> uploadDiaryAudio({
     required PlatformFile? file,
     required String entryId,
+    required void Function(String map) notifyAudioLinker,
   }) async {
+    String linkAudio;
     try {
-      await storage
+      firestorage.UploadTask uploadAudio = storage
           .ref(
               '${currentUser.userID}/diary/$entryId/audio/audio.${file!.extension}')
           .putFile(File(file.path!));
+      linkAudio = await ((await uploadAudio).ref.getDownloadURL());
+      notifyAudioLinker(linkAudio);
       return 1;
     } catch (e) {
       throw AudioUploadException(e.toString());
@@ -89,6 +91,7 @@ class FireStorage {
     List<PlatformFile?>? imageFiles,
     PlatformFile? audioFile,
     required void Function(List<String> map) notifyImageLinker,
+    required void Function(String map) notifyAudioLinker,
   }) async {
     int statusCode = 0;
     if (imageFiles == null && audioFile == null) {
@@ -103,7 +106,11 @@ class FireStorage {
         );
       }
       if (audioFile != null) {
-        statusCode = await uploadDiaryAudio(file: audioFile, entryId: entryId);
+        statusCode = await uploadDiaryAudio(
+          file: audioFile,
+          entryId: entryId,
+          notifyAudioLinker: notifyAudioLinker,
+        );
       }
       return statusCode;
     }

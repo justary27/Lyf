@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lyf/src/global/globals.dart';
+import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/models/todo_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:http/http.dart' as http;
@@ -53,8 +53,8 @@ class _ViewTodoPageState extends ConsumerState<ViewTodoPage> {
     }
   }
 
-  void _updateTodo(Todo todo) async {
-    await ref.read(todoListNotifier.notifier).editTodo(todo);
+  void _updateTodo(Todo todo) {
+    ref.read(todoListNotifier.notifier).editTodo(todo);
     Navigator.of(context).pop();
   }
 

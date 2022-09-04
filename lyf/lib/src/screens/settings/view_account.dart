@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lyf/src/global/globals.dart';
+import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/models/user_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/services/firebase/auth_service.dart';
@@ -47,7 +47,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                   onPressed: () async {
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
                     await Future.delayed(
-                      const Duration(seconds: 1),
+                      const Duration(milliseconds: 100),
                     );
                     RouteManager.navigateToSettings(context);
                   },
@@ -111,10 +111,33 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                           onTap: () {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text(
-                                  "Username can't be changed.",
-                                  style: GoogleFonts.aBeeZee(),
+                                padding: EdgeInsets.zero,
+                                dismissDirection: DismissDirection.startToEnd,
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor: Colors.white,
+                                content: ListTile(
+                                  leading: Icon(
+                                    Icons.warning_rounded,
+                                    color: Colors.grey.shade700,
+                                  ),
+                                  title: Text(
+                                    "Username can't be changed.",
+                                    style: GoogleFonts.aBeeZee(
+                                      textStyle: TextStyle(
+                                        color: Colors.grey.shade700,
+                                      ),
+                                    ),
+                                  ),
                                 ),
+
+                                // content: Text(
+                                //   "Username can't be changed.",
+                                //   style: GoogleFonts.aBeeZee(
+                                //     textStyle: TextStyle(
+                                //       color: Colors.black.withOpacity(0.75),
+                                //     ),
+                                //   ),
+                                // ),
                                 duration: Duration(seconds: 1),
                               ),
                             );

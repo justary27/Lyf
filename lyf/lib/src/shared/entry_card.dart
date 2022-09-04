@@ -43,8 +43,8 @@ class _EntryCardState extends ConsumerState<EntryCard> {
   late ValueNotifier<DateTime> _dateController;
   http.Client? deleteEntryClient;
 
-  void _deleteEntry(DiaryEntry entry) async {
-    await ref.read(diaryNotifier.notifier).removeEntry(entry);
+  void _deleteEntry(DiaryEntry entry) {
+    ref.read(diaryNotifier.notifier).removeEntry(entry);
     Navigator.of(context).pop();
   }
 

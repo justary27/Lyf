@@ -1,31 +1,51 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../state/diary/diary_view_state.dart';
 
-class AudioViewer extends StatefulWidget {
+class AudioViewer extends ConsumerStatefulWidget {
   final Size size;
-  final PlatformFile audioFile;
-  final void Function(Key key) removeMethod;
+  final PlatformFile? audioFile;
   final void Function(bool flag) notifyflagChange;
   final void Function(PlatformFile? file) fileHandler;
+  final List<Widget>? stateWidgetList;
+  final String? audioUrl;
   const AudioViewer({
     required this.size,
-    required this.audioFile,
-    required this.removeMethod,
     required this.notifyflagChange,
     required this.fileHandler,
+    this.audioFile,
+    this.stateWidgetList,
+    this.audioUrl,
   }) : super(
           key: const Key('audioAttachment'),
         );
 
   @override
-  _AudioViewerState createState() => _AudioViewerState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _AudioViewerState();
 }
 
-class _AudioViewerState extends State<AudioViewer> {
+class _AudioViewerState extends ConsumerState<AudioViewer> {
+  void _removeAudioAttachment() {
+    if (widget.audioUrl != null) {
+      ref
+          .read(diaryViewNotifier(widget.stateWidgetList!).notifier)
+          .deleteAudioAttachment(
+            notifyflagChange: widget.notifyflagChange,
+            notify: true,
+          );
+    } else {
+      ref
+          .read(diaryViewNotifier(widget.stateWidgetList!).notifier)
+          .deleteAudioAttachment(
+            notifyflagChange: widget.notifyflagChange,
+          );
+    }
+  }
+
   Widget audioViewer({
     required Size size,
-    required PlatformFile audioFile,
-    required void Function(Key key) removeMethod,
+    PlatformFile? audioFile,
     required void Function(bool flag) notifyflagChange,
     required void Function(PlatformFile? file) fileHandler,
   }) {
@@ -50,13 +70,13 @@ class _AudioViewerState extends State<AudioViewer> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      audioFile.name,
+                      audioFile != null ? audioFile.name : "AudioFile",
                       style: TextStyle(color: Colors.white),
                     ),
                     IconButton(
                       onPressed: () {
                         notifyflagChange(false);
-                        removeMethod(const Key('audioAttachment'));
+                        _removeAudioAttachment();
                         fileHandler(null);
                       },
                       icon: Icon(
@@ -107,42 +127,8 @@ class _AudioViewerState extends State<AudioViewer> {
     return audioViewer(
       size: widget.size,
       audioFile: widget.audioFile,
-      removeMethod: widget.removeMethod,
       notifyflagChange: widget.notifyflagChange,
       fileHandler: widget.fileHandler,
     );
-  }
-}
-
-Future<Widget?> audioPickerLauncher({
-  required Future<int> Function() requestStorageAccess,
-  required Size size,
-  required void Function(Key key) removeMethod,
-  required void Function(bool flag) notifyflagChange,
-  required void Function(PlatformFile? file) fileServer,
-}) async {
-  int? requestResponse;
-  requestResponse = await requestStorageAccess();
-  print(requestResponse);
-  if (requestResponse == 2) {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(type: FileType.audio);
-    if (result == null) {
-      return null;
-    } else {
-      PlatformFile audioFile = result.files.first;
-      // Uint8List? fileBytes = file.bytes;
-      notifyflagChange(true);
-      fileServer(audioFile);
-      return AudioViewer(
-        size: size,
-        audioFile: audioFile,
-        removeMethod: removeMethod,
-        notifyflagChange: notifyflagChange,
-        fileHandler: fileServer,
-      );
-    }
-  } else {
-    return null;
   }
 }

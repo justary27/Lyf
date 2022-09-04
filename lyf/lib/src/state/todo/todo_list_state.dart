@@ -2,7 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/todo_model.dart';
 import '../../utils/api/todo_api.dart';
 import '../../utils/errors/todo/todo_errors.dart';
-import 'todo_view_state.dart';
+import '../errors/error_state.dart';
+// import 'todo_view_state.dart';
 
 final todoListNotifier =
     StateNotifierProvider<TodoListNotifier, AsyncValue<List<Todo>?>>((ref) {
@@ -28,24 +29,25 @@ class TodoListNotifier extends StateNotifier<AsyncValue<List<Todo>?>> {
       );
       await retrieveTodoList();
     } on TodoException catch (e) {
-      _handleException(e);
+      handleException(e);
     }
   }
 
   Future<void> retrieveTodoList() async {
-    print("hello");
-    List<Todo>? todoList = await TodoApiClient.getTodoList();
-    // await read(todoRepositoryProvider).retrieveTodoList();
-    state = AsyncValue.data(todoList);
+    try {
+      List<Todo>? todoList = await TodoApiClient.getTodoList();
+      state = AsyncValue.data(todoList);
+    } on TodoException catch (e) {
+      handleException(e);
+    }
   }
 
   Future<void> refresh() async {
-    state = const AsyncValue.loading();
     try {
       List<Todo>? todoList = await TodoApiClient.getTodoList();
       state = AsyncValue.data(todoList);
     } catch (e) {
-      state = AsyncValue.error(e);
+      handleException(e);
     }
   }
 
@@ -61,7 +63,7 @@ class TodoListNotifier extends StateNotifier<AsyncValue<List<Todo>?>> {
     try {
       await TodoApiClient.updateTodo(todo: updatedTodo);
     } on TodoException catch (e) {
-      _handleException(e);
+      handleException(e);
     }
   }
 
@@ -73,7 +75,7 @@ class TodoListNotifier extends StateNotifier<AsyncValue<List<Todo>?>> {
     try {
       await TodoApiClient.deleteTodo(todo: todo);
     } on TodoException catch (e) {
-      _handleException(e);
+      handleException(e);
     }
   }
 
@@ -88,8 +90,13 @@ class TodoListNotifier extends StateNotifier<AsyncValue<List<Todo>?>> {
     }
   }
 
-  void _handleException(TodoException e) {
-    _resetState();
-    // read(todoExceptionProvider).state = e;
+  void handleException(Object e) {
+    if (state == const AsyncValue<List<Todo>?>.loading() &&
+        e.runtimeType == TodoException) {
+      state = AsyncValue.error(e);
+    } else {
+      _resetState();
+      read(errorNotifier.notifier).addError(e);
+    }
   }
 }

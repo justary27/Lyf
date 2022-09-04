@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../enums/query_type.dart';
 import '../errors/todo/todo_errors.dart';
-import '../../global/globals.dart';
+import '../../global/variables.dart';
 import '../endpoints/todo_endpoints.dart';
 import '../helpers/uri_helper.dart';
 import '../enums/request_type.dart';
@@ -85,7 +85,7 @@ class TodoApiClient {
       }
       return todoList;
     } on TodoException {
-      return null;
+      rethrow;
     }
   }
 

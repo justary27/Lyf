@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lyf/src/state/errors/error_state.dart';
+import 'package:lyf/src/utils/handlers/file_handler.dart';
 import '../../utils/errors/diary/diary_errors.dart';
 import '../../utils/api/diary_api.dart';
 import '../../models/diary_model.dart';
@@ -26,14 +30,17 @@ class DiaryNotifier extends StateNotifier<AsyncValue<List<DiaryEntry>?>> {
       );
       await _retrieveDiary();
     } on DiaryException catch (e) {
-      _handleException(e);
+      handleException(e);
     }
   }
 
   Future<void> _retrieveDiary() async {
-    print("hello");
-    List<DiaryEntry>? diary = await DiaryApiClient.getDiary();
-    state = AsyncValue.data(diary);
+    try {
+      List<DiaryEntry>? diary = await DiaryApiClient.getDiary();
+      state = AsyncValue.data(diary);
+    } on DiaryException catch (e) {
+      handleException(e);
+    }
   }
 
   Future<void> refresh() async {
@@ -41,7 +48,19 @@ class DiaryNotifier extends StateNotifier<AsyncValue<List<DiaryEntry>?>> {
       List<DiaryEntry>? diary = await DiaryApiClient.getDiary();
       state = AsyncValue.data(diary);
     } catch (e) {
-      state = AsyncValue.error(e);
+      handleException(e);
+      // state = AsyncValue.error(e);
+    }
+  }
+
+  Future<void> retrieveEntryPdf(DiaryEntry entry) async {
+    try {
+      await FileHandler.saveEntryPdf(
+        entry,
+        await DiaryApiClient.getEntryPdf(entry: entry),
+      );
+    } on DiaryException catch (e) {
+      // _handleException(e);
     }
   }
 
@@ -59,7 +78,7 @@ class DiaryNotifier extends StateNotifier<AsyncValue<List<DiaryEntry>?>> {
         entry: updatedEntry,
       );
     } on DiaryException catch (e) {
-      _handleException(e);
+      handleException(e);
     }
   }
 
@@ -73,7 +92,7 @@ class DiaryNotifier extends StateNotifier<AsyncValue<List<DiaryEntry>?>> {
         entry: entry,
       );
     } on DiaryException catch (e) {
-      _handleException(e);
+      handleException(e);
     }
   }
 
@@ -88,8 +107,14 @@ class DiaryNotifier extends StateNotifier<AsyncValue<List<DiaryEntry>?>> {
     }
   }
 
-  void _handleException(DiaryException e) {
-    _resetState();
+  void handleException(Object e) {
+    if (state == const AsyncValue<List<DiaryEntry>?>.loading() &&
+        e.runtimeType == DiaryException) {
+      state = AsyncValue.error(e);
+    } else {
+      _resetState();
+      read(errorNotifier.notifier).addError(e);
+    }
     // read(todoExceptionProvider).state = e;
   }
 }

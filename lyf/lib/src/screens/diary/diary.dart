@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/routes/routing.dart';
-import 'package:http/http.dart' as http;
 import 'package:lyf/src/shared/entry_card.dart';
 import 'package:lyf/src/shared/snackbars/delete_snack.dart';
+import 'package:lyf/src/utils/errors/diary/diary_errors.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../state/diary/diary_list_state.dart';
@@ -18,8 +18,6 @@ class DiaryPage extends ConsumerStatefulWidget {
 }
 
 class _DiaryPageState extends ConsumerState<DiaryPage> {
-  late http.Client diaryClient;
-
   List<DiaryEntry>? diaryEntries = [];
   bool retrieveStatus = true;
 
@@ -29,19 +27,27 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
     });
   }
 
-  void _deleteEntry(DiaryEntry entry) async {
-    await ref.read(diaryNotifier.notifier).removeEntry(entry);
+  void _deleteEntry(DiaryEntry entry) {
+    ref.read(diaryNotifier.notifier).removeEntry(entry);
   }
 
-  void _refresh() async {
-    if (ref.read(diaryNotifier).value != null) {
-      await ref.read(diaryNotifier.notifier).refresh();
+  void _refresh({bool? forceRefresh}) {
+    try {
+      var notifierValue = ref.read(diaryNotifier).value;
+      if (forceRefresh != null && forceRefresh) {
+        ref.read(diaryNotifier.notifier).refresh();
+      }
+    } on DiaryException catch (e) {
+      ref.read(diaryNotifier.notifier).refresh();
     }
+  }
+
+  void _retrieveEntryPdf(DiaryEntry entry) {
+    ref.read(diaryNotifier.notifier).retrieveEntryPdf(entry);
   }
 
   @override
   void initState() {
-    diaryClient = http.Client();
     _refresh();
     super.initState();
   }
@@ -117,11 +123,32 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                     ),
                     actions: [
                       // PopupMenuButton(
+                      //   shape: const RoundedRectangleBorder(
+                      //     borderRadius: BorderRadius.all(
+                      //       Radius.circular(15.0),
+                      //     ),
+                      //   ),
                       //   color: Colors.white,
                       //   itemBuilder: (context) {
                       //     return [
-                      //       const PopupMenuItem(
-                      //         child: Text("Save all as PDF"),
+                      //       PopupMenuItem(
+                      //         padding: EdgeInsets.zero,
+                      //         child: ListTile(
+                      //           minLeadingWidth: 25,
+                      //           dense: true,
+                      //           leading: Icon(
+                      //             Icons.picture_as_pdf_rounded,
+                      //             color: Colors.grey.shade700,
+                      //           ),
+                      //           title: Text(
+                      //             "Save diary Pdf",
+                      //             style: GoogleFonts.aBeeZee(
+                      //               textStyle: TextStyle(
+                      //                 color: Colors.grey.shade700,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ),
                       //       ),
                       //     ];
                       //   },
@@ -129,305 +156,6 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                       // )
                     ],
                   ),
-                  // (retrieveStatus)
-                  //     ? SliverList(
-                  //         delegate: SliverChildBuilderDelegate(
-                  //           (context, index) => Padding(
-                  //             padding: EdgeInsets.symmetric(
-                  //                 horizontal: 0.05 * size.width,
-                  //                 vertical: 0.015 * size.height),
-                  //             child: Card(
-                  //               clipBehavior: Clip.antiAlias,
-                  //               shape: RoundedRectangleBorder(
-                  //                   borderRadius: BorderRadius.circular(12)),
-                  //               color: Colors.white.withOpacity(0.15),
-                  //               child: InkWell(
-                  //                 onTap: () {
-                  //                   RouteManager.navigateToViewDiaryEntry(
-                  //                       context, [
-                  //                     diaryEntries[index],
-                  //                     size,
-                  //                   ]);
-                  //                 },
-                  //                 child: SizedBox(
-                  //                   height: 0.4 * size.height,
-                  //                   width: 0.2 * size.width,
-                  //                   child: Padding(
-                  //                     padding: EdgeInsets.symmetric(
-                  //                         horizontal: 0.05 * size.width,
-                  //                         vertical: 0.01 * size.height),
-                  //                     child: Column(
-                  //                       crossAxisAlignment:
-                  //                           CrossAxisAlignment.start,
-                  //                       children: [
-                  //                         Container(
-                  //                           child: Row(
-                  //                             mainAxisAlignment:
-                  //                                 MainAxisAlignment
-                  //                                     .spaceBetween,
-                  //                             children: [
-                  //                               Text(
-                  //                                 diaryEntries[index].title,
-                  //                                 style: Theme.of(context)
-                  //                                     .textTheme
-                  //                                     .headline3,
-                  //                               ),
-                  //                               IconButton(
-                  //                                 onPressed: () {
-                  //                                   Share.share(
-                  //                                       "${diaryEntries[index].entryTitle}\n\n${diaryEntries[index].entryDescription}\n\nDated:${diaryEntries[index].entryCreatedAt.day}/${diaryEntries[index].entryCreatedAt.month}/${diaryEntries[index].entryCreatedAt.year}");
-                  //                                 },
-                  //                                 icon: const Icon(
-                  //                                   Icons.share_rounded,
-                  //                                   color: Colors.white,
-                  //                                 ),
-                  //                               )
-                  //                             ],
-                  //                           ),
-                  //                           height: 0.075 * size.height,
-                  //                           alignment: Alignment.bottomLeft,
-                  //                         ),
-                  //                         Container(
-                  //                           padding: EdgeInsets.fromLTRB(
-                  //                             0,
-                  //                             0.025 * size.height,
-                  //                             0.0085 * size.width,
-                  //                             0.025 * size.height,
-                  //                           ),
-                  //                           height: 0.225 * size.height,
-                  //                           child: Text(
-                  //                             diaryEntries[index].description,
-                  //                             // "cjnd mdsfs,fslnlwsd vsd,v snfs, vsf wrf wrfwr fwwr gwgwgwr gwrgw rrgrwhwr hwhrwhwh....",
-                  //                             style: Theme.of(context)
-                  //                                 .textTheme
-                  //                                 .bodyText1,
-                  //                           ),
-                  //                         ),
-                  //                         Row(
-                  //                           mainAxisAlignment:
-                  //                               MainAxisAlignment
-                  //                                   .spaceBetween,
-                  //                           children: [
-                  //                             Text(
-                  //                               "${diaryEntries[index].entryCreatedAt.day}/${diaryEntries[index].entryCreatedAt.month}/${diaryEntries[index].entryCreatedAt.year}",
-                  //                               style: GoogleFonts.ubuntu(
-                  //                                 textStyle: const TextStyle(
-                  //                                     color: Colors.white),
-                  //                               ),
-                  //                             ),
-                  //                             ButtonBar(
-                  //                               alignment:
-                  //                                   MainAxisAlignment.end,
-                  //                               children: [
-                  //                                 TextButton(
-                  //                                   onPressed: () {
-                  //                                     SnackBar snackBar =
-                  //                                         SnackBar(
-                  //                                       shape:
-                  //                                           const RoundedRectangleBorder(
-                  //                                         borderRadius:
-                  //                                             BorderRadius
-                  //                                                 .only(
-                  //                                           topLeft: Radius
-                  //                                               .circular(10),
-                  //                                           topRight: Radius
-                  //                                               .circular(10),
-                  //                                         ),
-                  //                                       ),
-                  //                                       duration:
-                  //                                           const Duration(
-                  //                                         seconds: 5,
-                  //                                       ),
-                  //                                       backgroundColor:
-                  //                                           Colors.grey
-                  //                                               .shade700,
-                  //                                       content: Container(
-                  //                                         alignment: Alignment
-                  //                                             .center,
-                  //                                         height: 0.170 *
-                  //                                             size.height,
-                  //                                         padding: EdgeInsets
-                  //                                             .fromLTRB(
-                  //                                           0,
-                  //                                           0.0125 *
-                  //                                               size.height,
-                  //                                           0,
-                  //                                           0,
-                  //                                         ),
-                  //                                         child: Column(
-                  //                                           crossAxisAlignment:
-                  //                                               CrossAxisAlignment
-                  //                                                   .center,
-                  //                                           mainAxisAlignment:
-                  //                                               MainAxisAlignment
-                  //                                                   .end,
-                  //                                           children: [
-                  //                                             Padding(
-                  //                                               padding:
-                  //                                                   EdgeInsets
-                  //                                                       .fromLTRB(
-                  //                                                 0,
-                  //                                                 0,
-                  //                                                 0,
-                  //                                                 0.0175 *
-                  //                                                     size.height,
-                  //                                               ),
-                  //                                               child: Text(
-                  //                                                 "Are you sure you want to delete the entry ${diaryEntries[index].entryTitle}?",
-                  //                                                 textAlign:
-                  //                                                     TextAlign
-                  //                                                         .center,
-                  //                                                 style: GoogleFonts
-                  //                                                     .ubuntu(
-                  //                                                   textStyle:
-                  //                                                       const TextStyle(
-                  //                                                     color: Colors
-                  //                                                         .white,
-                  //                                                     fontSize:
-                  //                                                         20,
-                  //                                                   ),
-                  //                                                 ),
-                  //                                               ),
-                  //                                             ),
-                  //                                             Expanded(
-                  //                                               child:
-                  //                                                   ButtonBar(
-                  //                                                 alignment:
-                  //                                                     MainAxisAlignment
-                  //                                                         .center,
-                  //                                                 children: [
-                  //                                                   SizedBox(
-                  //                                                     width: size.width *
-                  //                                                         0.40,
-                  //                                                     child:
-                  //                                                         TextButton(
-                  //                                                       style:
-                  //                                                           ButtonStyle(
-                  //                                                         shape:
-                  //                                                             MaterialStateProperty.all<RoundedRectangleBorder>(
-                  //                                                           RoundedRectangleBorder(
-                  //                                                             borderRadius: BorderRadius.circular(6.0),
-                  //                                                             side: const BorderSide(
-                  //                                                               color: Colors.red,
-                  //                                                             ),
-                  //                                                           ),
-                  //                                                         ),
-                  //                                                       ),
-                  //                                                       onPressed:
-                  //                                                           () {
-                  //                                                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  //                                                         deleteEntry(
-                  //                                                           deleteEntryClient,
-                  //                                                           diaryClient,
-                  //                                                           diaryEntries[index],
-                  //                                                         );
-                  //                                                       },
-                  //                                                       child:
-                  //                                                           Text(
-                  //                                                         "Yes",
-                  //                                                         style:
-                  //                                                             GoogleFonts.aBeeZee(
-                  //                                                           textStyle: const TextStyle(
-                  //                                                             color: Colors.red,
-                  //                                                             fontSize: 20,
-                  //                                                           ),
-                  //                                                         ),
-                  //                                                       ),
-                  //                                                     ),
-                  //                                                   ),
-                  //                                                   SizedBox(
-                  //                                                     width: size.width *
-                  //                                                         0.40,
-                  //                                                     child:
-                  //                                                         TextButton(
-                  //                                                       style:
-                  //                                                           ButtonStyle(
-                  //                                                         shape:
-                  //                                                             MaterialStateProperty.all<RoundedRectangleBorder>(
-                  //                                                           RoundedRectangleBorder(
-                  //                                                             borderRadius: BorderRadius.circular(
-                  //                                                               6.0,
-                  //                                                             ),
-                  //                                                             side: BorderSide(
-                  //                                                               color: Colors.white,
-                  //                                                             ),
-                  //                                                           ),
-                  //                                                         ),
-                  //                                                       ),
-                  //                                                       onPressed:
-                  //                                                           () {
-                  //                                                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  //                                                       },
-                  //                                                       child:
-                  //                                                           Text(
-                  //                                                         "No",
-                  //                                                         style:
-                  //                                                             GoogleFonts.aBeeZee(
-                  //                                                           textStyle: TextStyle(color: Colors.white, fontSize: 20),
-                  //                                                         ),
-                  //                                                       ),
-                  //                                                     ),
-                  //                                                   )
-                  //                                                 ],
-                  //                                               ),
-                  //                                             )
-                  //                                           ],
-                  //                                         ),
-                  //                                       ),
-                  //                                     );
-                  //                                     ScaffoldMessenger.of(
-                  //                                             context)
-                  //                                         .showSnackBar(
-                  //                                             snackBar);
-                  //                                   },
-                  //                                   child: Text(
-                  //                                     "Delete",
-                  //                                     style:
-                  //                                         GoogleFonts.ubuntu(
-                  //                                       textStyle: TextStyle(
-                  //                                         color: Colors.red,
-                  //                                       ),
-                  //                                     ),
-                  //                                   ),
-                  //                                 ),
-                  //                                 TextButton(
-                  //                                   onPressed: () {},
-                  //                                   child: Text(
-                  //                                     "Save as PDF",
-                  //                                     style: GoogleFonts
-                  //                                         .ubuntu(),
-                  //                                   ),
-                  //                                 )
-                  //                               ],
-                  //                             ),
-                  //                           ],
-                  //                         )
-                  //                       ],
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //           childCount: diaryEntries.length,
-                  //         ),
-                  //       )
-                  //     : SliverFillRemaining(
-                  //         child: Center(
-                  //           child: Column(
-                  //             mainAxisAlignment: MainAxisAlignment.center,
-                  //             crossAxisAlignment: CrossAxisAlignment.center,
-                  //             children: [
-                  //               Icon(
-                  //                 Icons.warning_amber_rounded,
-                  //                 color: Colors.white,
-                  //                 size: 40,
-                  //               ),
-                  //               Text("Unable to retrieve your diary."),
-                  //             ],
-                  //           ),
-                  //         ),
-                  //       ),
                   Consumer(
                     builder: ((context, ref, child) {
                       final diaryState = ref.watch(diaryNotifier);
@@ -563,15 +291,11 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                                                       ),
                                                       TextButton(
                                                         onPressed: () async {
-                                                          await DiaryEntry
-                                                              .getEntryPdf(
-                                                                  getPdfClient:
-                                                                      diaryClient,
-                                                                  entry: diary[
-                                                                      index]);
+                                                          _retrieveEntryPdf(
+                                                              diary[index]);
                                                         },
                                                         child: Text(
-                                                          "Save as PDF",
+                                                          "Save as Pdf",
                                                           style: GoogleFonts
                                                               .ubuntu(),
                                                         ),
@@ -1014,7 +738,6 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
 
   @override
   void dispose() {
-    diaryClient.close();
     super.dispose();
   }
 }

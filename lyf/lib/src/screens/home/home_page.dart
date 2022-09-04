@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:lyf/src/global/globals.dart';
+import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/screens/home/drawer.dart';
 import 'package:lyf/src/shared/clock.dart';
@@ -278,7 +278,7 @@ class _HomePageState extends State<HomePage>
                                         ),
                                       ),
                                       child: InkWell(
-                                        onTap: () {},
+                                        onTap: () async {},
                                       ),
                                     ),
                                   ],
