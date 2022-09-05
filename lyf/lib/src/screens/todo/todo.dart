@@ -21,7 +21,7 @@ class _TodoPageState extends ConsumerState<TodoPage> {
 
   void _refresh({bool? forceRefresh}) {
     try {
-      var notifierValue = ref.read(todoListNotifier).value;
+      ref.read(todoListNotifier).value;
       if (forceRefresh != null && forceRefresh) {
         ref.read(todoListNotifier.notifier).refresh();
       }

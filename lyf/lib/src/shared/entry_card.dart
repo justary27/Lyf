@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lyf/src/models/diary_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:lyf/src/routes/routing.dart';
-import 'package:lyf/src/shared/snackbars/delete_snack.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../models/diary_model.dart';
+import '../routes/routing.dart';
+import '../shared/snackbars/delete_snack.dart';
 import '../state/diary/diary_list_state.dart';
 
 /// The generic card used for displaying all the entry cards.

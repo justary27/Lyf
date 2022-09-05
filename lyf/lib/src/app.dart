@@ -1,10 +1,12 @@
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lyf/src/state/errors/error_state.dart';
-import 'global/variables.dart';
+
+import './global/variables.dart';
 import './routes/routing.dart';
 import './themes/themes.dart';
+import './state/firebase/link_state.dart';
 import './utils/handlers/device_handler.dart';
 import './utils/helpers/screen_helper.dart';
 
@@ -29,6 +31,11 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
       ),
     );
     WidgetsBinding.instance!.addObserver(this);
+    FirebaseDynamicLinks.instance.onLink.listen(
+      (event) {
+        ref.read(deepLinkNotifier.notifier).addError(event.link.path);
+      },
+    );
   }
 
   @override
@@ -56,6 +63,7 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
             theme: monochromeTheme,
             initialRoute: (loginState) ? "/home" : "/welcome",
             onGenerateRoute: RouteManager.generateRoute,
+            scaffoldMessengerKey: snackKey,
           ),
         );
       case "ios":
@@ -88,6 +96,7 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
             theme: monochromeTheme,
             initialRoute: (loginState) ? "/home" : "/welcome",
             onGenerateRoute: RouteManager.generateRoute,
+            scaffoldMessengerKey: snackKey,
           ),
         );
     }

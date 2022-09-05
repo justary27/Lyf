@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import '../../enums/error_type.dart';
 
 class TodoException implements Exception {

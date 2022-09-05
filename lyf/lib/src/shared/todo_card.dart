@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lyf/src/models/todo_model.dart';
-import 'package:lyf/src/shared/snackbars/delete_snack.dart';
+
+import '../models/todo_model.dart';
+import '../shared/snackbars/delete_snack.dart';
 import '../routes/routing.dart';
 import '../state/todo/todo_list_state.dart';
 

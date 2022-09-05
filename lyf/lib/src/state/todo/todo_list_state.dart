@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lyf/src/state/snackbar/snack_state.dart';
 import '../../models/todo_model.dart';
 import '../../utils/api/todo_api.dart';
+import '../../utils/enums/snack_type.dart';
 import '../../utils/errors/todo/todo_errors.dart';
 import '../errors/error_state.dart';
 // import 'todo_view_state.dart';
@@ -62,6 +64,7 @@ class TodoListNotifier extends StateNotifier<AsyncValue<List<Todo>?>> {
 
     try {
       await TodoApiClient.updateTodo(todo: updatedTodo);
+      read(snackNotifier.notifier).sendSignal(SnackType.todoUpdated);
     } on TodoException catch (e) {
       handleException(e);
     }
@@ -96,7 +99,7 @@ class TodoListNotifier extends StateNotifier<AsyncValue<List<Todo>?>> {
       state = AsyncValue.error(e);
     } else {
       _resetState();
-      read(errorNotifier.notifier).addError(e);
     }
+    read(errorNotifier.notifier).addError(e);
   }
 }

@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lyf/src/state/snackbar/snack_state.dart';
 
+import '../../utils/enums/snack_type.dart';
 import '../../utils/errors/diary/diary_errors.dart';
 import '../../utils/errors/todo/todo_errors.dart';
 import '../../utils/errors/user/user_errors.dart';
@@ -45,11 +47,17 @@ class ErrorNotifier extends StateNotifier<Stream<dynamic>> {
 
   void handleTodoError(error) {
     if (error.errorType != null && error.errorType == ErrorType.networkError) {
+      read(snackNotifier.notifier).sendSignal(
+        SnackType.networkError,
+      );
     } else {}
   }
 
   void handleDiaryError(error) {
     if (error.errorType != null && error.errorType == ErrorType.networkError) {
+      read(snackNotifier.notifier).sendSignal(
+        SnackType.networkError,
+      );
     } else {}
   }
 
