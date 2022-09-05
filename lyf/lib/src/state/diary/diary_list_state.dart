@@ -62,7 +62,7 @@ class DiaryNotifier extends StateNotifier<AsyncValue<List<DiaryEntry>?>> {
         await DiaryApiClient.getEntryPdf(entry: entry),
       );
     } on DiaryException catch (e) {
-      // _handleException(e);
+      handleException(e);
     }
   }
 

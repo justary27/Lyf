@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 SnackBar networkErrorSnack = SnackBar(
-  padding: const EdgeInsets.symmetric(
-    horizontal: 12,
-    vertical: 10,
-  ),
-  content: Row(
-    children: const [
-      Icon(Icons.wifi_off_rounded, color: Colors.white),
-      SizedBox(width: 12),
-      Text("Network error, check your internet connection!"),
-    ],
-  ),
+  padding: EdgeInsets.zero,
   duration: const Duration(seconds: 2),
+  backgroundColor: Colors.white,
+  dismissDirection: DismissDirection.startToEnd,
+  content: ListTile(
+    leading: Icon(
+      Icons.wifi_off_rounded,
+      color: Colors.grey.shade700,
+    ),
+    title: Text(
+      "Network error, check your internet connection!",
+      style: GoogleFonts.aBeeZee(
+        textStyle: TextStyle(
+          color: Colors.grey.shade700,
+        ),
+      ),
+    ),
+  ),
 );
