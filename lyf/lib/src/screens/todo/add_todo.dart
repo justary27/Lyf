@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lyf/src/models/todo_model.dart';
-import 'package:lyf/src/routes/routing.dart';
-import 'package:lyf/src/shared/todo_card.dart';
-import 'package:lyf/src/state/todo/todo_list_state.dart';
+
+import '../../models/todo_model.dart';
+import '../../routes/routing.dart';
+import '../../shared/todo_card.dart';
+import '../../state/todo/todo_list_state.dart';
+import '../../utils/enums/snack_type.dart';
+import '../../state/snackbar/snack_state.dart';
 
 class AddTodoPage extends ConsumerStatefulWidget {
   const AddTodoPage({Key? key}) : super(key: key);
@@ -26,10 +29,7 @@ class _AddTodoPageState extends ConsumerState<AddTodoPage> {
 
   void _createTodo(Todo todo) {
     ref.read(todoListNotifier.notifier).addTodo(todo);
-    SnackBar snackBar = const SnackBar(
-      content: Text("Todo created successfully!"),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    ref.read(snackNotifier.notifier).sendSignal(SnackType.todoCreated);
     Navigator.of(context).pop();
   }
 

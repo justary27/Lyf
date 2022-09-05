@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:lyf/src/models/user_model.dart';
 
 Map<String, String?>? creds;
@@ -9,3 +10,6 @@ bool loginState = false;
 /// all operations in the app are done by this user only.
 /// Equals the [guestUser] before user login.
 LyfUser currentUser = guestUser;
+
+final GlobalKey<ScaffoldMessengerState> snackKey =
+    GlobalKey<ScaffoldMessengerState>();

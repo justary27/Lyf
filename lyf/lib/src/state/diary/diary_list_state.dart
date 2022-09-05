@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lyf/src/state/errors/error_state.dart';
+import 'package:lyf/src/state/snackbar/snack_state.dart';
+import 'package:lyf/src/utils/enums/snack_type.dart';
 import 'package:lyf/src/utils/handlers/file_handler.dart';
 import '../../utils/errors/diary/diary_errors.dart';
 import '../../utils/api/diary_api.dart';
@@ -77,6 +79,7 @@ class DiaryNotifier extends StateNotifier<AsyncValue<List<DiaryEntry>?>> {
       await DiaryApiClient.updateEntry(
         entry: updatedEntry,
       );
+      read(snackNotifier.notifier).sendSignal(SnackType.entryUpdated);
     } on DiaryException catch (e) {
       handleException(e);
     }
@@ -113,8 +116,7 @@ class DiaryNotifier extends StateNotifier<AsyncValue<List<DiaryEntry>?>> {
       state = AsyncValue.error(e);
     } else {
       _resetState();
-      read(errorNotifier.notifier).addError(e);
     }
-    // read(todoExceptionProvider).state = e;
+    read(errorNotifier.notifier).addError(e);
   }
 }

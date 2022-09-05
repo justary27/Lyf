@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lyf/src/models/diary_model.dart';
-import 'package:lyf/src/routes/routing.dart';
-import 'package:lyf/src/state/diary/diary_list_state.dart';
+
+import '../../models/diary_model.dart';
+import '../../routes/routing.dart';
+import '../../state/diary/diary_list_state.dart';
+import '../../state/snackbar/snack_state.dart';
+import '../../utils/enums/snack_type.dart';
 
 class AddDiaryEntryPage extends ConsumerStatefulWidget {
   const AddDiaryEntryPage({Key? key}) : super(key: key);
@@ -25,10 +28,7 @@ class _AddDiaryEntryPageState extends ConsumerState<AddDiaryEntryPage> {
 
   void _createEntry(DiaryEntry entry) {
     ref.read(diaryNotifier.notifier).addEntry(entry);
-    SnackBar snackBar = const SnackBar(
-      content: Text("Entry created successfully!"),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    ref.read(snackNotifier.notifier).sendSignal(SnackType.entryCreated);
     Navigator.of(context).pop();
   }
 

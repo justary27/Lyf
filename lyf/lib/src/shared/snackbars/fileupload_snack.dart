@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 SnackBar fileSnackBar = SnackBar(
-  duration: const Duration(hours: 1),
   content: Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: [
+    children: const [
       Text("Uploading files"),
       CircularProgressIndicator.adaptive(),
     ],
   ),
+  duration: const Duration(hours: 1),
 );
