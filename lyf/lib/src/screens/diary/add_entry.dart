@@ -6,6 +6,7 @@ import '../../models/diary_model.dart';
 import '../../routes/routing.dart';
 import '../../state/diary/diary_list_state.dart';
 import '../../state/snackbar/snack_state.dart';
+import '../../state/theme/theme_state.dart';
 import '../../utils/enums/snack_type.dart';
 
 class AddDiaryEntryPage extends ConsumerStatefulWidget {
@@ -35,17 +36,20 @@ class _AddDiaryEntryPageState extends ConsumerState<AddDiaryEntryPage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+
     return Stack(
       children: [
         Container(
           height: size.height,
           width: size.width,
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Colors.grey.shade700, Colors.grey.shade900, Colors.black],
-          )),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: theme.gradientColors,
+            ),
+          ),
           child: const CustomPaint(),
         ),
         SizedBox(
@@ -158,14 +162,19 @@ class _AddDiaryEntryPageState extends ConsumerState<AddDiaryEntryPage> {
                 ),
                 expandedHeight: 0.3 * size.height,
                 flexibleSpace: FlexibleSpaceBar(
-                  background: ColorFiltered(
-                    colorFilter: ColorFilter.mode(
-                      Colors.black.withBlue(10),
-                      BlendMode.saturation,
+                  background: Container(
+                    foregroundDecoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor.withOpacity(0.15),
                     ),
-                    child: Image.asset(
-                      "assets/images/diary.jpg",
-                      fit: BoxFit.cover,
+                    child: ColorFiltered(
+                      colorFilter: ColorFilter.mode(
+                        Colors.black.withBlue(10),
+                        BlendMode.saturation,
+                      ),
+                      child: Image.asset(
+                        "assets/images/diary.jpg",
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   title: SizedBox(

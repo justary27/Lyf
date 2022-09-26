@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lyf/src/routes/routing.dart';
 
-class SideDrawer extends StatefulWidget {
+import '../../state/theme/theme_state.dart';
+
+class SideDrawer extends ConsumerStatefulWidget {
   const SideDrawer({Key? key}) : super(key: key);
 
   @override
-  _SideDrawerState createState() => _SideDrawerState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SideDrawerState();
 }
 
-class _SideDrawerState extends State<SideDrawer> {
+class _SideDrawerState extends ConsumerState<SideDrawer> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+
     return GestureDetector(
       onHorizontalDragEnd: (dragDetails) {
         if (dragDetails.primaryVelocity! < 0) {}
@@ -23,17 +28,14 @@ class _SideDrawerState extends State<SideDrawer> {
           height: size.height,
           width: 0.6 * size.width,
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.grey.shade700,
-              Colors.grey.shade800,
-              Colors.grey.shade900,
-            ],
-          )),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: theme.gradientColors,
+            ),
+          ),
           child: CustomPaint(
-            painter: SidePainter(),
+            painter: SidePainter(context),
             child: Column(
               children: [
                 Container(
@@ -85,7 +87,6 @@ class _SideDrawerState extends State<SideDrawer> {
                           },
                           icon: const Icon(
                             Icons.settings,
-                            color: Colors.white,
                             size: 35,
                           ),
                         ),
@@ -111,6 +112,7 @@ class _SideDrawerState extends State<SideDrawer> {
                           ),
                           leading: SvgPicture.asset(
                             "assets/images/todo.svg",
+                            color: Theme.of(context).iconTheme.color,
                             height: 25,
                           ),
                           onTap: () {
@@ -122,6 +124,7 @@ class _SideDrawerState extends State<SideDrawer> {
                           hoverColor: Colors.white.withOpacity(0.15),
                           leading: SvgPicture.asset(
                             "assets/images/diary.svg",
+                            color: Theme.of(context).iconTheme.color,
                             height: 25,
                           ),
                           title: Text(
@@ -181,11 +184,15 @@ class _SideDrawerState extends State<SideDrawer> {
 }
 
 class SidePainter extends CustomPainter {
+  final BuildContext context;
+
+  SidePainter(this.context);
+
   @override
   void paint(Canvas canvas, Size size) {
     Path path = Path();
     Paint paint = Paint()
-      ..color = Colors.white.withOpacity(0.5)
+      ..color = Theme.of(context).primaryColor.withOpacity(0.6)
       ..strokeWidth = 5
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;

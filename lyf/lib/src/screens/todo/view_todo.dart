@@ -10,6 +10,8 @@ import 'package:lyf/src/shared/snackbars/unsaved_snack.dart';
 import 'package:lyf/src/shared/todo_card.dart';
 import 'package:lyf/src/state/todo/todo_list_state.dart';
 
+import '../../state/theme/theme_state.dart';
+
 class ViewTodoPage extends ConsumerStatefulWidget {
   final Todo todo;
   const ViewTodoPage({Key? key, required this.todo}) : super(key: key);
@@ -96,6 +98,8 @@ class _ViewTodoPageState extends ConsumerState<ViewTodoPage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+
     return WillPopScope(
       onWillPop: () async {
         if (isChanged.value == true) {
@@ -120,15 +124,12 @@ class _ViewTodoPageState extends ConsumerState<ViewTodoPage> {
             height: size.height,
             width: size.width,
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Colors.grey.shade700,
-                Colors.grey.shade900,
-                Colors.black
-              ],
-            )),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: theme.gradientColors,
+              ),
+            ),
             child: const CustomPaint(),
           ),
           SizedBox(
@@ -172,14 +173,20 @@ class _ViewTodoPageState extends ConsumerState<ViewTodoPage> {
                     ),
                     expandedHeight: 0.3 * size.height,
                     flexibleSpace: FlexibleSpaceBar(
-                      background: ColorFiltered(
-                        colorFilter: ColorFilter.mode(
-                          Colors.black.withBlue(10),
-                          BlendMode.saturation,
+                      background: Container(
+                        foregroundDecoration: BoxDecoration(
+                          color:
+                              Theme.of(context).primaryColor.withOpacity(0.15),
                         ),
-                        child: Image.asset(
-                          "assets/images/todo.jpg",
-                          fit: BoxFit.cover,
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.black.withBlue(10),
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset(
+                            "assets/images/todo.jpg",
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       title: SizedBox(

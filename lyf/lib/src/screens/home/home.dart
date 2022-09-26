@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 import 'package:lyf/src/global/variables.dart';
-import 'home/drawer.dart';
-import 'home/home_page.dart';
+import 'drawer.dart';
+import 'home_page.dart';
 import 'dart:io' show Platform;
 
 class Home extends StatefulWidget {

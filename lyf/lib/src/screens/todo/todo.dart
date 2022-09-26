@@ -5,6 +5,7 @@ import 'package:lyf/src/models/todo_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/shared/todo_card.dart';
 
+import '../../state/theme/theme_state.dart';
 import '../../state/todo/todo_list_state.dart';
 import '../../utils/errors/todo/todo_errors.dart';
 
@@ -40,6 +41,8 @@ class _TodoPageState extends ConsumerState<TodoPage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+
     return WillPopScope(
       onWillPop: () async {
         RouteManager.navigateToHome(context);
@@ -55,11 +58,7 @@ class _TodoPageState extends ConsumerState<TodoPage> {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [
-                  Colors.grey.shade700,
-                  Colors.grey.shade900,
-                  Colors.black
-                ],
+                colors: theme.gradientColors,
               ),
             ),
           ),
@@ -71,8 +70,13 @@ class _TodoPageState extends ConsumerState<TodoPage> {
                 onPressed: () {
                   RouteManager.navigateToAddTodo(context);
                 },
-                backgroundColor: Colors.white.withOpacity(0.35),
-                child: Icon(Icons.add),
+                backgroundColor: Theme.of(context).primaryColor.withOpacity(
+                      0.35,
+                    ),
+                child: Icon(
+                  Icons.add,
+                  color: Theme.of(context).iconTheme.color,
+                ),
               ),
               backgroundColor: Colors.transparent,
               body: CustomScrollView(
@@ -85,25 +89,32 @@ class _TodoPageState extends ConsumerState<TodoPage> {
                       onPressed: () {
                         RouteManager.navigateToHome(context);
                       },
-                      icon: Icon(Icons.arrow_back_ios),
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
                     ),
                     expandedHeight: 0.3 * size.height,
                     flexibleSpace: FlexibleSpaceBar(
-                      background: ColorFiltered(
-                        colorFilter: ColorFilter.mode(
-                          Colors.black.withBlue(10),
-                          BlendMode.saturation,
+                      background: Container(
+                        foregroundDecoration: BoxDecoration(
+                          color:
+                              Theme.of(context).primaryColor.withOpacity(0.15),
                         ),
-                        child: Image.asset(
-                          "assets/images/todo.jpg",
-                          fit: BoxFit.cover,
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.black.withBlue(10),
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset(
+                            "assets/images/todo.jpg",
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       title: Text(
                         "Your TODOs",
-                        style: GoogleFonts.ubuntu(
-                          textStyle: Theme.of(context).textTheme.headline3,
-                        ),
+                        style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
                   ),
@@ -165,10 +176,10 @@ class _TodoPageState extends ConsumerState<TodoPage> {
                           );
                         },
                         loading: () {
-                          return const SliverFillRemaining(
+                          return SliverFillRemaining(
                             child: Center(
                               child: CircularProgressIndicator(
-                                color: Colors.white,
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
                           );

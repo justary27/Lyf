@@ -18,6 +18,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../state/diary/diary_list_state.dart';
 import '../../state/diary/diary_view_state.dart';
+import '../../state/theme/theme_state.dart';
 
 class ViewDiaryEntryPage extends ConsumerStatefulWidget {
   final DiaryEntry entry;
@@ -279,6 +280,8 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+
     return WillPopScope(
       onWillPop: () async {
         if (isChanged.value == true) {
@@ -306,11 +309,7 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                 gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                Colors.grey.shade700,
-                Colors.grey.shade900,
-                Colors.black
-              ],
+              colors: theme.gradientColors,
             )),
             child: const CustomPaint(),
           ),
@@ -458,14 +457,20 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                     ),
                     expandedHeight: 0.3 * size.height,
                     flexibleSpace: FlexibleSpaceBar(
-                      background: ColorFiltered(
-                        colorFilter: ColorFilter.mode(
-                          Colors.black.withBlue(10),
-                          BlendMode.saturation,
+                      background: Container(
+                        foregroundDecoration: BoxDecoration(
+                          color:
+                              Theme.of(context).primaryColor.withOpacity(0.15),
                         ),
-                        child: Image.asset(
-                          "assets/images/diary.jpg",
-                          fit: BoxFit.cover,
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.black.withBlue(10),
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset(
+                            "assets/images/diary.jpg",
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       title: SizedBox(
@@ -605,10 +610,10 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                           );
                         },
                         loading: () {
-                          return const SliverFillRemaining(
+                          return SliverFillRemaining(
                             child: Center(
                               child: CircularProgressIndicator(
-                                color: Colors.white,
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
                           );

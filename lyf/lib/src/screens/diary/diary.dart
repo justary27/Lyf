@@ -9,6 +9,7 @@ import 'package:lyf/src/utils/errors/diary/diary_errors.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../state/diary/diary_list_state.dart';
+import '../../state/theme/theme_state.dart';
 
 class DiaryPage extends ConsumerStatefulWidget {
   const DiaryPage({Key? key}) : super(key: key);
@@ -55,6 +56,7 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    var theme = ref.read(themeNotifier.notifier).getCurrentState();
     return WillPopScope(
       onWillPop: () async {
         RouteManager.navigateToHome(context);
@@ -67,15 +69,12 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
             height: size.height,
             width: size.width,
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Colors.grey.shade700,
-                Colors.grey.shade900,
-                Colors.black
-              ],
-            )),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: theme.gradientColors,
+              ),
+            ),
             child: const CustomPaint(),
           ),
           SizedBox(
@@ -86,8 +85,13 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                 onPressed: () {
                   RouteManager.navigateToAddDiaryEntry(context);
                 },
-                backgroundColor: Colors.white.withOpacity(0.35),
-                child: const Icon(Icons.add),
+                backgroundColor: Theme.of(context).primaryColor.withOpacity(
+                      0.35,
+                    ),
+                child: Icon(
+                  Icons.add,
+                  color: Theme.of(context).iconTheme.color,
+                ),
               ),
               backgroundColor: Colors.transparent,
               body: CustomScrollView(
@@ -100,25 +104,32 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                       onPressed: () {
                         RouteManager.navigateToHome(context);
                       },
-                      icon: const Icon(Icons.arrow_back_ios),
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
                     ),
                     expandedHeight: 0.3 * size.height,
                     flexibleSpace: FlexibleSpaceBar(
-                      background: ColorFiltered(
-                        colorFilter: ColorFilter.mode(
-                          Colors.black.withBlue(10),
-                          BlendMode.saturation,
+                      background: Container(
+                        foregroundDecoration: BoxDecoration(
+                          color:
+                              Theme.of(context).primaryColor.withOpacity(0.15),
                         ),
-                        child: Image.asset(
-                          "assets/images/diary.jpg",
-                          fit: BoxFit.cover,
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.black.withBlue(10),
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset(
+                            "assets/images/diary.jpg",
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       title: Text(
                         "Your Diary Entries",
-                        style: GoogleFonts.ubuntu(
-                          textStyle: Theme.of(context).textTheme.headline3,
-                        ),
+                        style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
                     actions: [
@@ -182,7 +193,7 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(12)),
-                                    color: Colors.white.withOpacity(0.15),
+                                    // color: Colors.white.withOpacity(0.15),
                                     child: InkWell(
                                       onTap: () {
                                         RouteManager.navigateToViewDiaryEntry(
@@ -219,9 +230,11 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                                                         Share.share(
                                                             "${diary[index].entryTitle}\n\n${diary[index].entryDescription}\n\nDated:${diary[index].entryCreatedAt.day}/${diary[index].entryCreatedAt.month}/${diary[index].entryCreatedAt.year}");
                                                       },
-                                                      icon: const Icon(
+                                                      icon: Icon(
                                                         Icons.share_rounded,
-                                                        color: Colors.white,
+                                                        color: Theme.of(context)
+                                                            .iconTheme
+                                                            .color,
                                                       ),
                                                     )
                                                   ],
@@ -253,9 +266,9 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                                                     "${diary[index].entryCreatedAt.day}/${diary[index].entryCreatedAt.month}/${diary[index].entryCreatedAt.year}",
                                                     style: GoogleFonts.ubuntu(
                                                       textStyle:
-                                                          const TextStyle(
-                                                              color:
-                                                                  Colors.white),
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyText1,
                                                     ),
                                                   ),
                                                   ButtonBar(
@@ -324,10 +337,10 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                           );
                         },
                         loading: () {
-                          return const SliverFillRemaining(
+                          return SliverFillRemaining(
                             child: Center(
                               child: CircularProgressIndicator(
-                                color: Colors.white,
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
                           );

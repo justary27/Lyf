@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/screens/home/drawer.dart';
 import 'package:lyf/src/shared/clock.dart';
 import 'package:lyf/src/shared/greet.dart';
+import 'package:lyf/src/state/theme/theme_state.dart';
 import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({
     Key? key,
   }) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
+class _HomePageState extends ConsumerState<HomePage>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late StreamController<bool> isSidebarOpenedStreamController;
@@ -58,6 +60,7 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    // var theme = ref.read(themeNotifier.notifier).getCurrentState();
     return StreamBuilder<bool>(
         initialData: true,
         stream: isSidebarOpenedStream,
@@ -94,11 +97,10 @@ class _HomePageState extends State<HomePage>
                           gradient: LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
-                            colors: [
-                              Colors.grey.shade700,
-                              Colors.grey.shade900,
-                              Colors.black
-                            ],
+                            colors: ref
+                                .read(themeNotifier.notifier)
+                                .getCurrentState()
+                                .gradientColors,
                           ),
                         ),
                         child: Clock(
@@ -151,7 +153,6 @@ class _HomePageState extends State<HomePage>
                                   children: [
                                     Card(
                                       clipBehavior: Clip.antiAlias,
-                                      color: Colors.white.withOpacity(0.15),
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(12),
@@ -170,7 +171,11 @@ class _HomePageState extends State<HomePage>
                                             Padding(
                                               padding: EdgeInsets.all(20.0),
                                               child: SvgPicture.asset(
-                                                  "assets/images/todo.svg"),
+                                                "assets/images/todo.svg",
+                                                color: Theme.of(context)
+                                                    .iconTheme
+                                                    .color,
+                                              ),
                                             ),
                                             Text(
                                               "Todo",
@@ -184,7 +189,6 @@ class _HomePageState extends State<HomePage>
                                     ),
                                     Card(
                                       clipBehavior: Clip.antiAlias,
-                                      color: Colors.white.withOpacity(0.15),
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(12),
@@ -203,7 +207,11 @@ class _HomePageState extends State<HomePage>
                                             Padding(
                                               padding: EdgeInsets.all(20.0),
                                               child: SvgPicture.asset(
-                                                  "assets/images/diary.svg"),
+                                                "assets/images/diary.svg",
+                                                color: Theme.of(context)
+                                                    .iconTheme
+                                                    .color,
+                                              ),
                                             ),
                                             Text(
                                               "Diary",
@@ -217,7 +225,9 @@ class _HomePageState extends State<HomePage>
                                     ),
                                     Card(
                                       clipBehavior: Clip.antiAlias,
-                                      color: Colors.white.withOpacity(0.4),
+                                      color: Theme.of(context)
+                                          .cardColor
+                                          .withOpacity(0.5),
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(12),
@@ -231,22 +241,6 @@ class _HomePageState extends State<HomePage>
                                       //   }),
                                       child: InkWell(
                                         onTap: () {},
-                                        // child: Consumer(
-                                        //   builder: ((context, ref, child) {
-                                        //     final todoState =
-                                        //         ref.watch(todoListNotifier);
-                                        //     return todoState.when(
-                                        //         data: (List<Todo>? data) {
-                                        //       return Center(child: Text("c"));
-                                        //     }, error: (Object error,
-                                        //             StackTrace? stackTrace) {
-                                        //       return Text(error.toString());
-                                        //     }, loading: () {
-                                        //       return const CircularProgressIndicator(
-                                        //           color: Colors.white);
-                                        //     });
-                                        //   }),
-                                        // ),
                                         // child: Column(
                                         //   mainAxisAlignment:
                                         //       MainAxisAlignment.center,
@@ -271,7 +265,6 @@ class _HomePageState extends State<HomePage>
                                     // ),
                                     Card(
                                       clipBehavior: Clip.antiAlias,
-                                      color: Colors.white.withOpacity(0.15),
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(12),
