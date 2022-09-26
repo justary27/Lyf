@@ -28,7 +28,7 @@ class _ClockState extends State<Clock> {
   Widget build(BuildContext context) {
     Size size = widget.size;
     return CustomPaint(
-      painter: ClockPainter(size),
+      painter: ClockPainter(context, size),
     );
   }
 
@@ -40,19 +40,20 @@ class _ClockState extends State<Clock> {
 }
 
 class ClockPainter extends CustomPainter {
+  BuildContext context;
   Size size;
-  ClockPainter(this.size);
+  ClockPainter(this.context, this.size);
   @override
   void paint(Canvas canvas, Size size) {
     Paint framePainter = Paint()
-      ..color = Colors.white.withOpacity(0.5)
+      ..color = Theme.of(context).primaryColor.withOpacity(0.75)
       ..strokeWidth = 4
       ..style = PaintingStyle.stroke;
     canvas.drawCircle(Offset(size.width, 0.55 * size.height),
         0.25 * size.height, framePainter);
 
     Paint hourPainter = Paint()
-      ..color = Colors.white.withOpacity(0.5)
+      ..color = Theme.of(context).primaryColor.withOpacity(0.75)
       ..strokeWidth = 6
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
@@ -102,7 +103,7 @@ class ClockPainter extends CustomPainter {
     );
 
     Paint minutePainter = Paint()
-      ..color = Colors.white.withOpacity(0.5)
+      ..color = Theme.of(context).primaryColor.withOpacity(0.75)
       ..strokeWidth = 4
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
@@ -139,7 +140,7 @@ class ClockPainter extends CustomPainter {
         minutePainter);
 
     Paint secondPainter = Paint()
-      ..color = Colors.white.withOpacity(0.5)
+      ..color = Theme.of(context).primaryColor.withOpacity(0.75)
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;

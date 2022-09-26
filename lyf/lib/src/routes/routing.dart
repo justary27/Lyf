@@ -7,7 +7,7 @@ import 'package:lyf/src/screens/auth/welcome.dart';
 import 'package:lyf/src/screens/diary/diary.dart';
 import 'package:lyf/src/screens/diary/view_entry.dart';
 import 'package:lyf/src/screens/diary/add_entry.dart';
-import 'package:lyf/src/screens/home.dart';
+import 'package:lyf/src/screens/home/home.dart';
 import 'package:lyf/src/screens/home/view_pfp.dart';
 import 'package:lyf/src/screens/settings/invite.dart';
 import 'package:lyf/src/screens/settings/settings.dart';

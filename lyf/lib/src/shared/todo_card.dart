@@ -395,7 +395,7 @@ class _TodoCardState extends ConsumerState<TodoCard> {
     return Card(
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      color: Colors.white.withOpacity(0.15),
+      color: Theme.of(context).cardColor,
       child: buildCardContents(
         size: size,
       ),

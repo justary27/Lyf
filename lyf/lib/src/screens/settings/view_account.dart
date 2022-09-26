@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/models/user_model.dart';
@@ -8,17 +9,22 @@ import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/services/firebase/auth_service.dart';
 import 'package:lyf/src/services/user.dart';
 
-class AccountSettingsPage extends StatefulWidget {
+import '../../state/theme/theme_state.dart';
+
+class AccountSettingsPage extends ConsumerStatefulWidget {
   const AccountSettingsPage({Key? key}) : super(key: key);
 
   @override
-  _AccountSettingsPageState createState() => _AccountSettingsPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _AccountSettingsPageState();
 }
 
-class _AccountSettingsPageState extends State<AccountSettingsPage> {
+class _AccountSettingsPageState extends ConsumerState<AccountSettingsPage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+
     double _sigmaX = 0;
     double _sigmaY = 0;
     return Stack(
@@ -27,11 +33,12 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
           height: size.height,
           width: size.width,
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Colors.grey.shade700, Colors.grey.shade900, Colors.black],
-          )),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: theme.gradientColors,
+            ),
+          ),
           child: const CustomPaint(),
         ),
         SizedBox(
@@ -51,12 +58,14 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                     );
                     RouteManager.navigateToSettings(context);
                   },
-                  icon: Icon(Icons.arrow_back_ios),
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: Theme.of(context).iconTheme.color,
+                  ),
                 ),
                 title: Text(
                   "Account",
-                  style: GoogleFonts.ubuntu(
-                      textStyle: TextStyle(color: Colors.white)),
+                  style: Theme.of(context).textTheme.headline3,
                 ),
               ),
               backgroundColor: Colors.transparent,
@@ -71,23 +80,19 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         ListTile(
+                          tileColor: Colors.transparent,
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 0.05 * size.width,
                             vertical: 0.025 * size.height,
                           ),
                           leading: Icon(
                             Icons.info_outline_rounded,
-                            color: Colors.white,
+                            color: Theme.of(context).iconTheme.color,
                             size: 35,
                           ),
                           title: Text(
                             "Account info",
-                            style: GoogleFonts.ubuntu(
-                              textStyle: TextStyle(
-                                fontSize: 25,
-                                color: Colors.white,
-                              ),
-                            ),
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                           subtitle: Text(
                             "Basic account related settings.",
@@ -107,7 +112,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                               bottomRight: Radius.circular(12),
                             ),
                           ),
-                          tileColor: Colors.white.withOpacity(0.15),
+                          tileColor: Theme.of(context).listTileTheme.tileColor,
                           onTap: () {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -138,7 +143,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                                 //     ),
                                 //   ),
                                 // ),
-                                duration: Duration(seconds: 1),
+                                duration: const Duration(seconds: 1),
                               ),
                             );
                           },
@@ -308,23 +313,19 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         ListTile(
+                          tileColor: Colors.transparent,
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 0.05 * size.width,
                             vertical: 0.025 * size.height,
                           ),
                           leading: Icon(
                             Icons.bar_chart_rounded,
-                            color: Colors.white,
+                            color: Theme.of(context).iconTheme.color,
                             size: 35,
                           ),
                           title: Text(
                             "Activity",
-                            style: GoogleFonts.ubuntu(
-                              textStyle: TextStyle(
-                                fontSize: 25,
-                                color: Colors.white,
-                              ),
-                            ),
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                           subtitle: Text(
                             "Settings related to your account's activity.",
@@ -358,7 +359,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             horizontal: 0.05 * size.width,
                             vertical: 0.0125 * size.height,
                           ),
-                          tileColor: Colors.white.withOpacity(0.15),
+                          tileColor: Theme.of(context).listTileTheme.tileColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(12),
@@ -419,7 +420,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             horizontal: 0.05 * size.width,
                             vertical: 0.0125 * size.height,
                           ),
-                          tileColor: Colors.white.withOpacity(0.15),
+                          tileColor: Theme.of(context).listTileTheme.tileColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                               // topLeft: Radius.circular(12),

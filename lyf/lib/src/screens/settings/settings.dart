@@ -1,36 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/routes/routing.dart';
 
-class SettingsPage extends StatefulWidget {
+import '../../state/theme/theme_state.dart';
+
+class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
   @override
-  _SettingsPageState createState() => _SettingsPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SettingsPageState extends ConsumerState<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+
     return Stack(
       children: [
         Container(
           height: size.height,
           width: size.width,
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.grey.shade700,
-              Colors.grey.shade900,
-              Colors.black,
-            ],
-          )),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: theme.gradientColors,
+            ),
+          ),
           child: const CustomPaint(),
         ),
         SizedBox(
@@ -44,7 +46,10 @@ class _SettingsPageState extends State<SettingsPage> {
                 onPressed: () {
                   RouteManager.navigateToHome(context);
                 },
-                icon: Icon(Icons.arrow_back_ios),
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: Theme.of(context).iconTheme.color,
+                ),
               ),
             ),
             backgroundColor: Colors.transparent,
@@ -82,7 +87,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         padding:
                             EdgeInsets.symmetric(vertical: 0.025 * size.height),
                         child: Text(
-                          "${currentUser.userName}",
+                          currentUser.userName,
                           style: Theme.of(context).textTheme.headline5,
                         ),
                       )
@@ -99,15 +104,13 @@ class _SettingsPageState extends State<SettingsPage> {
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(12),
-                            bottomLeft: Radius.circular(12),
                             topRight: Radius.circular(12),
-                            bottomRight: Radius.circular(12),
                           ),
                         ),
-                        tileColor: Colors.white.withOpacity(0.15),
+                        tileColor: Theme.of(context).listTileTheme.tileColor,
                         leading: Icon(
                           Icons.manage_accounts_outlined,
-                          color: Colors.white,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                         onTap: () {
                           RouteManager.navigateToAccountSettings(context);
@@ -118,12 +121,9 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         subtitle: Text(
                           "Account info, security, activity.",
-                          style: GoogleFonts.aBeeZee(
-                              textStyle: TextStyle(
-                                  color: Colors.white.withOpacity(0.35))),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
-
                       // ListTile(
                       //   tileColor: Colors.white.withOpacity(0.15),
                       //   leading: Icon(
@@ -155,24 +155,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       //   ),
                       //   subtitle: Text(
                       //     "Invite a friend",
-                      //     style: Theme.of(context).textTheme.bodyText1,
-                      //   ),
-                      // ),
-                      // ListTile(
-                      //   tileColor: Colors.white.withOpacity(0.15),
-                      //   leading: Icon(
-                      //     Icons.dark_mode_outlined,
-                      //     color: Colors.white,
-                      //   ),
-                      //   onTap: () {
-                      //     RouteManager.navigateToThemeSettings(context);
-                      //   },
-                      //   title: Text(
-                      //     "Themes",
-                      //     style: Theme.of(context).textTheme.headline4,
-                      //   ),
-                      //   subtitle: Text(
-                      //     "Change the app's theme.",
                       //     style: Theme.of(context).textTheme.bodyText1,
                       //   ),
                       // ),
@@ -234,12 +216,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       //   ),
                       // ),
                       // ListTile(
-                      //   shape: RoundedRectangleBorder(
-                      //     borderRadius: BorderRadius.only(
-                      //       bottomLeft: Radius.circular(12),
-                      //       bottomRight: Radius.circular(12),
-                      //     ),
-                      //   ),
                       //   tileColor: Colors.white.withOpacity(0.15),
                       //   leading: Icon(
                       //     Icons.access_alarm,
@@ -257,6 +233,30 @@ class _SettingsPageState extends State<SettingsPage> {
                       //     style: Theme.of(context).textTheme.bodyText1,
                       //   ),
                       // ),
+                      ListTile(
+                        tileColor: Theme.of(context).listTileTheme.tileColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(12),
+                            bottomRight: Radius.circular(12),
+                          ),
+                        ),
+                        leading: Icon(
+                          Icons.dark_mode_outlined,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
+                        onTap: () {
+                          RouteManager.navigateToThemeSettings(context);
+                        },
+                        title: Text(
+                          "Themes",
+                          style: Theme.of(context).textTheme.headline4,
+                        ),
+                        subtitle: Text(
+                          "Change the app's theme.",
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -270,10 +270,11 @@ class _SettingsPageState extends State<SettingsPage> {
                         child: Text(
                           "Crafted by",
                           style: GoogleFonts.caveat(
-                              textStyle: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white.withOpacity(0.5),
-                          )),
+                            textStyle: TextStyle(
+                              fontSize: 15,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
                         ),
                       ),
                       Container(
@@ -282,7 +283,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         child: SvgPicture.asset(
                           "assets/images/InCognoS_labs.svg",
                           width: 40,
-                          color: Colors.white,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                       ),
                     ],

@@ -1,12 +1,11 @@
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lyf/src/state/theme/theme_state.dart';
 
 import './global/variables.dart';
 import './routes/routing.dart';
 import './themes/themes.dart';
-import './state/firebase/link_state.dart';
 import './utils/handlers/device_handler.dart';
 import './utils/helpers/screen_helper.dart';
 
@@ -31,11 +30,6 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
       ),
     );
     WidgetsBinding.instance!.addObserver(this);
-    FirebaseDynamicLinks.instance.onLink.listen(
-      (event) {
-        ref.read(deepLinkNotifier.notifier).addError(event.link.path);
-      },
-    );
   }
 
   @override
@@ -48,6 +42,7 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = ref.watch(themeNotifier);
     switch (Platform.operatingSystem) {
       case "android":
         return GestureDetector(
@@ -60,7 +55,7 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
           child: MaterialApp(
             title: 'Lyf',
             debugShowCheckedModeBanner: false,
-            theme: monochromeTheme,
+            theme: appTheme.themeData,
             initialRoute: (loginState) ? "/home" : "/welcome",
             onGenerateRoute: RouteManager.generateRoute,
             scaffoldMessengerKey: snackKey,
@@ -93,45 +88,13 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
           child: MaterialApp(
             title: 'Lyf',
             debugShowCheckedModeBanner: false,
-            theme: monochromeTheme,
+            theme: appTheme.themeData,
             initialRoute: (loginState) ? "/home" : "/welcome",
             onGenerateRoute: RouteManager.generateRoute,
             scaffoldMessengerKey: snackKey,
           ),
         );
     }
-    // if (Platform.isIOS) {
-    //   return GestureDetector(
-    //     onTap: () {
-    //       FocusScopeNode currentScope = FocusScope.of(context);
-    //       if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
-    //         FocusManager.instance.primaryFocus!.unfocus();
-    //       }
-    //     },
-    //     child: CupertinoApp(
-    //       title: 'Lyf',
-    //       debugShowCheckedModeBanner: false,
-    //       initialRoute: (loginState) ? "/home" : "/welcome",
-    //       onGenerateRoute: RouteManager.generateRoute,
-    //     ),
-    //   );
-    // } else {
-    //   return GestureDetector(
-    //     onTap: () {
-    //       FocusScopeNode currentScope = FocusScope.of(context);
-    //       if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
-    //         FocusManager.instance.primaryFocus!.unfocus();
-    //       }
-    //     },
-    //     child: MaterialApp(
-    //       title: 'Lyf',
-    //       debugShowCheckedModeBanner: false,
-    //       theme: monochromeTheme,
-    //       initialRoute: (loginState) ? "/home" : "/welcome",
-    //       onGenerateRoute: RouteManager.generateRoute,
-    //     ),
-    //   );
-    // }
   }
 
   @override
