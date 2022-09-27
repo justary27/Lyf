@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/state/theme/theme_state.dart';
 
 import '../global/functions.dart';
@@ -16,16 +17,24 @@ class SplashScreen extends ConsumerStatefulWidget {
 class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     initRouteProvider();
   }
 
   Future<void> initRouteProvider() async {
-    creds = await getCredentials();
     try {
+      creds = await getCredentials();
       await login(creds);
-    } catch (e) {}
+      print(loginState);
+      if (loginState) {
+        Navigator.of(context).pushNamed(RouteManager.homePage);
+      } else {
+        Navigator.of(context).pushNamed(RouteManager.loginPage);
+      }
+    } catch (e) {
+      print(e);
+      Navigator.of(context).pushNamed(RouteManager.loginPage);
+    }
   }
 
   @override
@@ -42,17 +51,35 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             colors: ref
                 .read(themeNotifier.notifier)
                 .getCurrentState()
-                .gradientColors,
+                .gradientColors
+                .reversed
+                .toList(),
           ),
         ),
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                "assets/images/lyf.svg",
-                color: Theme.of(context).primaryColor,
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 0.075 * size.height,
+                ),
+                child: SvgPicture.asset(
+                  "assets/images/lyf.svg",
+                  width: 0.5 * size.width,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
-              const CircularProgressIndicator.adaptive(),
+              Text(
+                "Lyf",
+                style: Theme.of(context).textTheme.headline2,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  vertical: 0.075 * size.height,
+                ),
+                child: const CircularProgressIndicator.adaptive(),
+              ),
             ],
           ),
         ),
@@ -62,7 +89,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 }

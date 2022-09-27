@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 import 'package:lyf/src/global/variables.dart';
+import 'package:lyf/src/screens/splash.dart';
 import 'drawer.dart';
 import 'home_page.dart';
 import 'dart:io' show Platform;
@@ -33,6 +34,7 @@ class _HomeState extends State<Home> {
       child: Stack(
         children: const [
           SideDrawer(),
+          // SplashScreen(),
           HomePage(),
         ],
       ),

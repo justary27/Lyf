@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/models/todo_model.dart';
 import 'package:lyf/src/screens/auth/login.dart';
@@ -18,8 +19,11 @@ import 'package:lyf/src/screens/todo/todo.dart';
 import 'package:lyf/src/screens/todo/view_todo.dart';
 import 'package:lyf/src/screens/settings/notifications.dart';
 
+import '../screens/splash.dart';
+
 class RouteManager {
   static const String homePage = "/home";
+  static const String splashPage = "/splash";
   static const String welcomePage = "/welcome";
   static const String signUpPage = "/signup";
   static const String loginPage = "/login";
@@ -373,7 +377,11 @@ class RouteManager {
           },
           transitionDuration: const Duration(milliseconds: 750),
         );
-
+      case splashPage:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const SplashScreen(),
+        );
       default:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
@@ -467,3 +475,11 @@ class RouteManager {
     RouteManager.currentRoute = RouteManager.inviteSettingsPage;
   }
 }
+
+var goRouter = GoRouter(
+  routes: [
+    GoRoute(
+      path: "/",
+    )
+  ],
+);

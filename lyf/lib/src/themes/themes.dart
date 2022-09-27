@@ -62,6 +62,10 @@ ThemeHelper monochromeTheme = ThemeHelper(
     iconTheme: const IconThemeData(
       color: Colors.white,
     ),
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: Colors.white,
+      circularTrackColor: Colors.white.withOpacity(0.15),
+    ),
     textTheme: TextTheme(
       headline1: GoogleFonts.ubuntu(
         textStyle: const TextStyle(color: Colors.white, fontSize: 50),
