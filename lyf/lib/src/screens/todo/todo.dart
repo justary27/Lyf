@@ -5,7 +5,7 @@ import 'package:lyf/src/models/todo_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/shared/todo_card.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../state/theme/theme_state.dart';
 import '../../state/todo/todo_list_state.dart';
 import '../../utils/errors/todo/todo_errors.dart';
@@ -107,7 +107,7 @@ class _TodoPageState extends ConsumerState<TodoPage> {
                       ),
                     ),
                     title: Text(
-                      "Your TODOs",
+                      AppLocalizations.of(context)!.yourTodos,
                       style: Theme.of(context).textTheme.headline3,
                     ),
                   ),

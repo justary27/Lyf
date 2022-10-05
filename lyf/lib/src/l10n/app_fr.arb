@@ -1,0 +1,53 @@
+{
+    "goodMorning": "Bonjour",
+
+    "goodAfternoon": "Bonne après-midi",
+
+    "goodEvening": "Bonsoir",
+
+    "goodNight": "Bonne nuit",
+
+    "todo": "Faire",
+
+    "yourTodos": "Vos TODO",
+
+    "diary": "Agenda",
+
+    "yourDiary": "Vos entrées de journal",
+
+    "account": "Compte",
+
+    "accountDesc": "Informations sur le compte, sécurité et activité.",
+
+    "accountInfo": "Informations de compte",
+  
+    "accountInfoDesc": "Paramètres de base liés au compte.",
+  
+    "username": "Nom d'utilisateur",
+  
+    "activity": "Activité",
+  
+    "activityDesc": "Paramètres liés à l'activité de votre compte.",
+  
+    "logout": "Se déconnecter",
+  
+    "logoutDesc": "Cela vous déconnectera de l'application et vous devrez vous reconnecter.",
+  
+    "deactivateAccount": "Désactiver le compte",
+  
+    "deactivateAccountDesc": "Cela désactivera votre compte pour une durée indéterminée jusqu'à ce que vous le réactiviez à nouveau.",
+
+    "deactivateMyAccount": "Désactivez mon compte",
+
+    "themes": "Thèmes",
+
+    "themesDesc": "Changez le thème de l'application.",
+
+    "appThemes": "Thèmes d'application",
+
+    "appThemesDesc": "Choisissez le thème de l'application.",
+
+    "language": "Langue",
+
+    "languageDesc": "Changez la langue de l'application."
+}

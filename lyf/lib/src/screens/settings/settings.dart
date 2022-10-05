@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../state/theme/theme_state.dart';
 
@@ -117,11 +118,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                           goRouter.push(RouteHandler.accountSettings);
                         },
                         title: Text(
-                          "Account",
+                          AppLocalizations.of(context)!.account,
                           style: Theme.of(context).textTheme.headline4,
                         ),
                         subtitle: Text(
-                          "Account info, security, activity.",
+                          AppLocalizations.of(context)!.accountDesc,
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
@@ -156,25 +157,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                       //   ),
                       //   subtitle: Text(
                       //     "Invite a friend",
-                      //     style: Theme.of(context).textTheme.bodyText1,
-                      //   ),
-                      // ),
-                      // ListTile(
-                      //   tileColor: Colors.white.withOpacity(0.15),
-                      //   leading: Icon(
-                      //     // Icons.language_rounded,
-                      //     FontAwesomeIcons.language,
-                      //     color: Colors.white,
-                      //   ),
-                      //   onTap: () {
-                      //     RouteManager.navigateToThemeSettings(context);
-                      //   },
-                      //   title: Text(
-                      //     "Language",
-                      //     style: Theme.of(context).textTheme.headline4,
-                      //   ),
-                      //   subtitle: Text(
-                      //     "Change the app's language.",
                       //     style: Theme.of(context).textTheme.bodyText1,
                       //   ),
                       // ),
@@ -236,12 +218,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                       // ),
                       ListTile(
                         tileColor: Theme.of(context).listTileTheme.tileColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(12),
-                            bottomRight: Radius.circular(12),
-                          ),
-                        ),
                         leading: Icon(
                           Icons.dark_mode_outlined,
                           color: Theme.of(context).iconTheme.color,
@@ -250,11 +226,35 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                           goRouter.push(RouteHandler.themeSettings);
                         },
                         title: Text(
-                          "Themes",
+                          AppLocalizations.of(context)!.themes,
                           style: Theme.of(context).textTheme.headline4,
                         ),
                         subtitle: Text(
-                          "Change the app's theme.",
+                          AppLocalizations.of(context)!.themesDesc,
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ),
+                      ListTile(
+                        tileColor: Theme.of(context).listTileTheme.tileColor,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(12),
+                            bottomRight: Radius.circular(12),
+                          ),
+                        ),
+                        leading: Icon(
+                          FontAwesomeIcons.language,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
+                        onTap: () {
+                          goRouter.push(RouteHandler.languageSettings);
+                        },
+                        title: Text(
+                          AppLocalizations.of(context)!.language,
+                          style: Theme.of(context).textTheme.headline4,
+                        ),
+                        subtitle: Text(
+                          AppLocalizations.of(context)!.languageDesc,
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),

@@ -8,18 +8,22 @@ import 'package:lyf/src/state/theme/theme_state.dart';
 import 'package:lyf/src/utils/helpers/theme_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ThemeSettingsPage extends ConsumerStatefulWidget {
-  const ThemeSettingsPage({Key? key}) : super(key: key);
+import '../../constants/language_constants.dart';
+import '../../state/language/language_state.dart';
+
+class LanguageSettingsScreen extends ConsumerStatefulWidget {
+  const LanguageSettingsScreen({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ThemeSettingsPageState();
+      _LanguageSettingsScreenState();
 }
 
-class _ThemeSettingsPageState extends ConsumerState<ThemeSettingsPage> {
-  void _changeTheme(ThemeHelper themeName, int themeIndex) {
-    ref.read(themeNotifier.notifier).changeTheme(themeName);
-    LyfService.themeService.setTheme(themeIndex.toString());
+class _LanguageSettingsScreenState
+    extends ConsumerState<LanguageSettingsScreen> {
+  void _changeLanguage(Locale langName) {
+    ref.read(languageNotifier.notifier).changeLanguage(langName);
+    // LyfService.themeService.setTheme(themeIndex.toString());
   }
 
   @override
@@ -58,7 +62,7 @@ class _ThemeSettingsPageState extends ConsumerState<ThemeSettingsPage> {
                 ),
               ),
               title: Text(
-                AppLocalizations.of(context)!.themes,
+                "Language",
                 style: Theme.of(context).textTheme.headline3,
               ),
             ),
@@ -87,11 +91,11 @@ class _ThemeSettingsPageState extends ConsumerState<ThemeSettingsPage> {
                           size: 35,
                         ),
                         title: Text(
-                          AppLocalizations.of(context)!.appThemes,
+                          "App Languages",
                           style: Theme.of(context).textTheme.headline2,
                         ),
                         subtitle: Text(
-                          AppLocalizations.of(context)!.appThemesDesc,
+                          "Choose the app's language.",
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         tileColor: Colors.transparent,
@@ -104,39 +108,38 @@ class _ThemeSettingsPageState extends ConsumerState<ThemeSettingsPage> {
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: ((context, index) {
                           return ListTile(
-                            leading: Container(
-                              padding: EdgeInsets.all(5),
-                              width: 50,
-                              decoration: BoxDecoration(
-                                color: Color(
-                                  themeConstants[index]['bColor'],
-                                ),
-                              ),
-                              child: Center(
-                                child: SvgPicture.asset(
-                                  "assets/images/lyf.svg",
-                                  color: Color(
-                                    themeConstants[index]['iColor'],
-                                  ),
-                                ),
-                              ),
-                            ),
+                            // leading: Container(
+                            //   padding: EdgeInsets.all(5),
+                            //   width: 50,
+                            //   decoration: BoxDecoration(
+                            //     color: Color(
+                            //       themeConstants[index]['bColor'],
+                            //     ),
+                            //   ),
+                            //   child: Center(
+                            //     child: SvgPicture.asset(
+                            //       "assets/images/lyf.svg",
+                            //       color: Color(
+                            //         themeConstants[index]['iColor'],
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                             title: Text(
-                              themeConstants[index]['themeName'],
+                              languageConstants[index]['langName'],
                               style: Theme.of(context).textTheme.headline3,
                             ),
                             subtitle: Text(
-                              themeConstants[index]['desc'],
+                              languageConstants[index]['desc'],
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
-                            onTap: () => _changeTheme(
-                              themeConstants[index]['theme'],
-                              index,
+                            onTap: () => _changeLanguage(
+                              languageConstants[index]['locale'],
                             ),
                             tileColor: Colors.transparent,
                           );
                         }),
-                        itemCount: 3,
+                        itemCount: 4,
                       ),
                     ),
                   ],

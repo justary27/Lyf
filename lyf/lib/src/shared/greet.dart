@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Greetings extends StatefulWidget {
   final String username;
@@ -31,13 +32,13 @@ class _GreetingsState extends State<Greetings> {
   @override
   Widget build(BuildContext context) {
     if (currentTime.hour >= 4 && currentTime.hour < 12) {
-      greeting = "Good Morning";
+      greeting = AppLocalizations.of(context)!.goodMorning;
     } else if (currentTime.hour >= 12 && currentTime.hour < 16) {
-      greeting = "Good Afternoon";
+      greeting = AppLocalizations.of(context)!.goodMorning; // Afternoon
     } else if (currentTime.hour >= 16 && currentTime.hour < 20) {
-      greeting = "Good Evening";
+      greeting = AppLocalizations.of(context)!.goodEvening;
     } else {
-      greeting = "Good Night";
+      greeting = AppLocalizations.of(context)!.goodNight;
     }
     final String username = widget.username;
     return Text(
