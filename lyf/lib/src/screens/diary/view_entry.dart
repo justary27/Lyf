@@ -589,7 +589,7 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                 minLeadingWidth: 25,
                                 dense: true,
                                 leading: Icon(
-                                  Icons.picture_as_pdf_rounded,
+                                  Icons.short_text,
                                   color: Colors.grey.shade700,
                                 ),
                                 title: Text(

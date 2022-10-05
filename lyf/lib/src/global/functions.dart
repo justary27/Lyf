@@ -1,5 +1,6 @@
 import '../models/user_model.dart';
 import '../services/firebase/auth_service.dart';
+import '../services/init_service.dart';
 import '../services/user.dart';
 import '../utils/api/user_api.dart';
 import 'variables.dart';
@@ -33,4 +34,8 @@ Future<Map<String, String?>?> getCredentials() async {
   } else {
     return null;
   }
+}
+
+Future<void> initServiceProvider() async {
+  await InitService.initializeServices();
 }

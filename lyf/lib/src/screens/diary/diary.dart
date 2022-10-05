@@ -141,7 +141,7 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                           Radius.circular(15.0),
                         ),
                       ),
-                      color: Colors.white,
+                      color: Theme.of(context).iconTheme.color,
                       itemBuilder: (context) {
                         return [
                           PopupMenuItem(

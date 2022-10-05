@@ -36,7 +36,7 @@ class WelcomePage extends StatelessWidget {
               SizedBox(
                 height: 0.9 * size.height,
                 width: size.width,
-                child: const Lyf(),
+                child: Lyf(parentContext: context),
               ),
             ],
           ),

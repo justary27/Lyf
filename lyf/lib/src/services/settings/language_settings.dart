@@ -1,10 +1,10 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class LanguageSettings {
+class LanguageService {
   late FlutterSecureStorage _storageInstance;
   final String _keyLanguageSettings = 'lsUuid';
 
-  LanguageSettings(this._storageInstance);
+  LanguageService(this._storageInstance);
 
   Future setLanguage(String language) async =>
       await _storageInstance.write(key: _keyLanguageSettings, value: language);

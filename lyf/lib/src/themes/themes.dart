@@ -14,10 +14,15 @@ ThemeHelper lyfTheme = ThemeHelper(
     listTileTheme: ListTileThemeData(
       tileColor: const Color.fromARGB(255, 14, 105, 87).withOpacity(0.15),
     ),
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: const Color.fromARGB(255, 14, 105, 87),
+      circularTrackColor:
+          const Color.fromARGB(255, 14, 105, 87).withOpacity(0.15),
+    ),
     textTheme: TextTheme(
       headline1: GoogleFonts.merienda(
         textStyle: const TextStyle(
-            color: Color.fromARGB(255, 14, 105, 87), fontSize: 50),
+            color: Color.fromARGB(255, 14, 105, 87), fontSize: 40),
       ),
       headline2: GoogleFonts.merienda(
         textStyle: const TextStyle(color: Colors.white, fontSize: 25),
@@ -110,6 +115,10 @@ ThemeHelper funkyTheme = ThemeHelper(
     ),
     iconTheme: const IconThemeData(
       color: Color(0xFFCA81F5),
+    ),
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: const Color(0xFFCA81F5),
+      circularTrackColor: const Color(0xFFCA81F5).withOpacity(0.15),
     ),
     textTheme: TextTheme(
       headline1: GoogleFonts.londrinaSolid(

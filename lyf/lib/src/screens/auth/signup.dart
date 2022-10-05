@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/global/variables.dart';
@@ -9,16 +10,17 @@ import 'package:lyf/src/shared/lyf.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
 
 import '../../services/user.dart';
+import '../../state/theme/theme_state.dart';
 import '../../utils/api/user_api.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   @override
   void initState() {
     super.initState();
@@ -36,11 +38,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                Colors.grey.shade700,
-                Colors.grey.shade900,
-                Colors.black
-              ],
+              colors: ref
+                  .read(themeNotifier.notifier)
+                  .getCurrentState()
+                  .gradientColors,
             ),
           ),
           child: Column(
@@ -52,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(
                 height: 0.9 * size.height,
                 width: size.width,
-                child: const Lyf(),
+                child: Lyf(parentContext: context),
               ),
             ],
           ),
@@ -82,14 +83,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               SvgPicture.asset(
                                 "assets/images/lyf.svg",
                                 width: 40,
-                                color: Colors.white,
+                                color: Theme.of(context).primaryColor,
                               ),
                               Text(
                                 "Lyf",
                                 style: GoogleFonts.caveat(
                                   textStyle: TextStyle(
                                     fontSize: 60,
-                                    color: Colors.white,
+                                    color: Theme.of(context).primaryColor,
                                   ),
                                 ),
                               ),
