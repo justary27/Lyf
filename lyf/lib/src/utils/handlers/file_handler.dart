@@ -11,23 +11,46 @@ import '../../models/diary_model.dart';
 
 class FileHandler {
   FileHandler._();
-  static Future<void> saveDiaryPdf(Uint8List int8List) async {
+  static Future<void> saveDiaryPdf(Uint8List? int8List) async {
     Directory? _appDocumentsDirectory =
         await getApplicationDocumentsDirectory();
     String pdfPath =
-        "${_appDocumentsDirectory.path}/${currentUser.username}/${currentUser.userName}s diary.pdf";
+        "${_appDocumentsDirectory.path}/${currentUser.username}/${currentUser.userName}_diary.pdf";
 
     try {
       if (await PermissionManager.requestStorageAccess() == 2) {
         File pdf = File(pdfPath);
 
         if (pdf.existsSync()) {
-          pdf.writeAsBytesSync(int8List);
+          pdf.writeAsBytesSync(int8List!);
         } else {
           await pdf.create(recursive: true);
-          pdf.writeAsBytesSync(int8List);
+          pdf.writeAsBytesSync(int8List!);
         }
         await OpenFile.open(pdfPath);
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future<void> saveDiaryTxt(Uint8List? int8List) async {
+    Directory? _appDocumentsDirectory =
+        await getApplicationDocumentsDirectory();
+    String txtPath =
+        "${_appDocumentsDirectory.path}/${currentUser.username}/${currentUser.userName}_diary.txt";
+
+    try {
+      if (await PermissionManager.requestStorageAccess() == 2) {
+        File txt = File(txtPath);
+
+        if (txt.existsSync()) {
+          txt.writeAsBytesSync(int8List!);
+        } else {
+          await txt.create(recursive: true);
+          txt.writeAsBytesSync(int8List!);
+        }
+        await OpenFile.open(txtPath);
       }
     } catch (e) {
       log(e.toString());
@@ -55,6 +78,31 @@ class FileHandler {
       }
     } catch (e) {
       log("pdf error");
+      rethrow;
+    }
+  }
+
+  static Future<void> saveEntryTxt(
+      DiaryEntry entry, Uint8List? int8List) async {
+    Directory? _appDocumentsDirectory =
+        await getApplicationDocumentsDirectory();
+    String txtPath =
+        "${_appDocumentsDirectory.path}/${currentUser.username}/diary/${entry.title}.txt";
+
+    try {
+      if (await PermissionManager.requestStorageAccess() == 2) {
+        File txt = File(txtPath);
+
+        if (txt.existsSync()) {
+          txt.writeAsBytesSync(int8List!);
+        } else {
+          await txt.create(recursive: true);
+          txt.writeAsBytesSync(int8List!);
+        }
+        await OpenFile.open(txtPath);
+      }
+    } catch (e) {
+      log("txt error");
       rethrow;
     }
   }

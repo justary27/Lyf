@@ -55,11 +55,42 @@ class DiaryNotifier extends StateNotifier<AsyncValue<List<DiaryEntry>?>> {
     }
   }
 
+  Future<void> retrieveDiaryPdf() async {
+    try {
+      await FileHandler.saveDiaryPdf(
+        await DiaryApiClient.getDiaryPdf(),
+      );
+    } on DiaryException catch (e) {
+      handleException(e);
+    }
+  }
+
+  Future<void> retrieveDiaryTxt() async {
+    try {
+      await FileHandler.saveDiaryTxt(
+        await DiaryApiClient.getDiaryTxt(),
+      );
+    } on DiaryException catch (e) {
+      handleException(e);
+    }
+  }
+
   Future<void> retrieveEntryPdf(DiaryEntry entry) async {
     try {
       await FileHandler.saveEntryPdf(
         entry,
         await DiaryApiClient.getEntryPdf(entry: entry),
+      );
+    } on DiaryException catch (e) {
+      handleException(e);
+    }
+  }
+
+  Future<void> retrieveEntryTxt(DiaryEntry entry) async {
+    try {
+      await FileHandler.saveEntryTxt(
+        entry,
+        await DiaryApiClient.getEntryTxt(entry: entry),
       );
     } on DiaryException catch (e) {
       handleException(e);

@@ -125,6 +125,10 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
     ref.read(diaryNotifier.notifier).retrieveEntryPdf(entry);
   }
 
+  void _retrieveEntryTxt(DiaryEntry entry) {
+    ref.read(diaryNotifier.notifier).retrieveEntryTxt(entry);
+  }
+
   void _addAudioAttachment({
     required Size size,
     required void Function(bool flag) notifyflagChange,
@@ -539,6 +543,30 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                 minLeadingWidth: 25,
                                 dense: true,
                                 leading: Icon(
+                                  Icons.share_rounded,
+                                  color: Colors.grey.shade700,
+                                ),
+                                title: Text(
+                                  "Share",
+                                  style: GoogleFonts.aBeeZee(
+                                    textStyle: TextStyle(
+                                      color: Colors.grey.shade700,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              onTap: () {
+                                Share.share(
+                                  "${widget.entry.entryTitle}\n\n${widget.entry.entryDescription}\n\nDated:${widget.entry.entryCreatedAt.day}/${widget.entry.entryCreatedAt.month}/${widget.entry.entryCreatedAt.year}",
+                                );
+                              },
+                            ),
+                            PopupMenuItem(
+                              padding: EdgeInsets.zero,
+                              child: ListTile(
+                                minLeadingWidth: 25,
+                                dense: true,
+                                leading: Icon(
                                   Icons.picture_as_pdf_rounded,
                                   color: Colors.grey.shade700,
                                 ),
@@ -561,11 +589,11 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                 minLeadingWidth: 25,
                                 dense: true,
                                 leading: Icon(
-                                  Icons.share_rounded,
+                                  Icons.picture_as_pdf_rounded,
                                   color: Colors.grey.shade700,
                                 ),
                                 title: Text(
-                                  "Share",
+                                  "Save as Txt",
                                   style: GoogleFonts.aBeeZee(
                                     textStyle: TextStyle(
                                       color: Colors.grey.shade700,
@@ -574,9 +602,7 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                 ),
                               ),
                               onTap: () {
-                                Share.share(
-                                  "${widget.entry.entryTitle}\n\n${widget.entry.entryDescription}\n\nDated:${widget.entry.entryCreatedAt.day}/${widget.entry.entryCreatedAt.month}/${widget.entry.entryCreatedAt.year}",
-                                );
+                                _retrieveEntryTxt(widget.entry);
                               },
                             ),
                           ];

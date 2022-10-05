@@ -44,6 +44,14 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
     }
   }
 
+  void _retrieveDiaryPdf() {
+    ref.read(diaryNotifier.notifier).retrieveDiaryPdf();
+  }
+
+  void _retrieveDiaryTxt() {
+    ref.read(diaryNotifier.notifier).retrieveDiaryTxt();
+  }
+
   void _retrieveEntryPdf(DiaryEntry entry) {
     ref.read(diaryNotifier.notifier).retrieveEntryPdf(entry);
   }
@@ -127,38 +135,63 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                     ),
                   ),
                   actions: [
-                    // PopupMenuButton(
-                    //   shape: const RoundedRectangleBorder(
-                    //     borderRadius: BorderRadius.all(
-                    //       Radius.circular(15.0),
-                    //     ),
-                    //   ),
-                    //   color: Colors.white,
-                    //   itemBuilder: (context) {
-                    //     return [
-                    //       PopupMenuItem(
-                    //         padding: EdgeInsets.zero,
-                    //         child: ListTile(
-                    //           minLeadingWidth: 25,
-                    //           dense: true,
-                    //           leading: Icon(
-                    //             Icons.picture_as_pdf_rounded,
-                    //             color: Colors.grey.shade700,
-                    //           ),
-                    //           title: Text(
-                    //             "Save diary Pdf",
-                    //             style: GoogleFonts.aBeeZee(
-                    //               textStyle: TextStyle(
-                    //                 color: Colors.grey.shade700,
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ];
-                    //   },
-                    //   icon: const Icon(Icons.more_vert),
-                    // )
+                    PopupMenuButton(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15.0),
+                        ),
+                      ),
+                      color: Colors.white,
+                      itemBuilder: (context) {
+                        return [
+                          PopupMenuItem(
+                            padding: EdgeInsets.zero,
+                            child: ListTile(
+                              onTap: () {
+                                _retrieveDiaryPdf();
+                              },
+                              minLeadingWidth: 25,
+                              dense: true,
+                              leading: Icon(
+                                Icons.picture_as_pdf_rounded,
+                                color: Colors.grey.shade700,
+                              ),
+                              title: Text(
+                                "Export as Pdf",
+                                style: GoogleFonts.aBeeZee(
+                                  textStyle: TextStyle(
+                                    color: Colors.grey.shade700,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          PopupMenuItem(
+                            padding: EdgeInsets.zero,
+                            child: ListTile(
+                              onTap: () {
+                                _retrieveDiaryTxt();
+                              },
+                              minLeadingWidth: 25,
+                              dense: true,
+                              leading: Icon(
+                                Icons.short_text,
+                                color: Colors.grey.shade700,
+                              ),
+                              title: Text(
+                                "Export as Txt",
+                                style: GoogleFonts.aBeeZee(
+                                  textStyle: TextStyle(
+                                    color: Colors.grey.shade700,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ];
+                      },
+                      icon: const Icon(Icons.more_vert),
+                    )
                   ],
                 ),
                 Consumer(

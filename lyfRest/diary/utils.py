@@ -16,16 +16,20 @@ import io
 
 from .models import DiaryEntry
 
+
 class EntryPDFGenerator:
-    def __init__(self, fontData: dict,):
+    def __init__(self, fontData: dict, ):
+        self.diary = None
+        self.canva = None
+        self.fileBuffer = None
+        self.entry = None
         self.fontData = fontData
         self.registerFont()
 
-
-    def textFormatter(self, text:str): 
-        text = text.replace(' ','&nbsp;')
-        text = text.replace('\n','<br />')
-        text = text.replace('\t','&nbsp;&nbsp;&nbsp;&nbsp')
+    def textFormatter(self, text: str):
+        text = text.replace(' ', '&nbsp;')
+        text = text.replace('\n', '<br />')
+        text = text.replace('\t', '&nbsp;&nbsp;&nbsp;&nbsp')
         return text
 
     def registerFont(self):
@@ -37,7 +41,7 @@ class EntryPDFGenerator:
             pdfmetrics.registerFont(newFont)
 
     def drawLogo(self, canvas: canvas.Canvas, X, Y, width, height):
-        
+
         # logoPath = str(settings.BASE_DIR) + "/static/assets/lyf.svg"
         # canvas.drawImage(
         #     logoPath,
@@ -48,26 +52,24 @@ class EntryPDFGenerator:
         # )
 
         pass
-    
 
     def addPageNumber(self, canvas: canvas.Canvas, doc):
         pageNumber = canvas.getPageNumber()
-        canvas.setFont("Caveat",18)
+        canvas.setFont("Caveat", 18)
         text = f"lyf | {pageNumber}"
-        canvas.setFillColorRGB(22/256,133/256,111/256)
-        canvas.drawRightString(180*mm, 17.5*mm, text)
+        canvas.setFillColorRGB(22 / 256, 133 / 256, 111 / 256)
+        canvas.drawRightString(180 * mm, 17.5 * mm, text)
 
-
-    def generateEntry(self, entry:DiaryEntry, file_buffer: io.BytesIO):
+    def generateEntry(self, entry: DiaryEntry, file_buffer: io.BytesIO):
 
         self.entry = entry
         self.fileBuffer = file_buffer
-        self.canva = canvas.Canvas(self.fileBuffer,pagesize=A4)
+        self.canva = canvas.Canvas(self.fileBuffer, pagesize=A4)
         self.canva.setCreator("Lyf")
         # self.drawLogo(canvas=self.canva,)
 
         parts = []
-        
+
         title = self.textFormatter(self.entry.asDict['_title'])
         dateObj = datetime.fromisoformat(self.entry.asDict["_createdAt"]).date()
         dateText = dateObj.strftime("%B %d, %Y")
@@ -81,10 +83,10 @@ class EntryPDFGenerator:
             textColor=HexColor("#16856f")
         )
         dateStyle = ParagraphStyle(
-            name="Date", 
-            fontName = "ABZee",
-            fontSize = 9, 
-            fontStyle = "italic",
+            name="Date",
+            fontName="ABZee",
+            fontSize=9,
+            fontStyle="italic",
             textColor=HexColor("#ff5e0e")
         )
         descriptionStyle = ParagraphStyle(
@@ -98,21 +100,21 @@ class EntryPDFGenerator:
         )
 
         parts.append(Paragraph(dateText, style=dateStyle))
-        parts.append(Paragraph(title, style = titleStyle))
+        parts.append(Paragraph(title, style=titleStyle))
         parts.append(Paragraph(lineBreak, style=titleStyle))
         parts.append(Paragraph(lineBreak, style=titleStyle))
         parts.append(Paragraph(lineBreak, style=titleStyle))
-        parts.append(Paragraph(description, style = descriptionStyle))
+        parts.append(Paragraph(description, style=descriptionStyle))
         summaryName = SimpleDocTemplate(
-            self.fileBuffer, 
-            title=self.entry.asDict['_title'], 
-            creator="Lyf", 
-            author=entry._user.username, 
-            subject=entry._user.username+"'s "+self.entry.asDict['_title']
-            )
+            self.fileBuffer,
+            title=self.entry.asDict['_title'],
+            creator="Lyf",
+            author=entry._user.username,
+            subject=entry._user.username + "'s " + self.entry.asDict['_title']
+        )
         summaryName.build(
             parts,
-            onFirstPage=self.addPageNumber, 
+            onFirstPage=self.addPageNumber,
             onLaterPages=self.addPageNumber
         )
 
@@ -122,13 +124,12 @@ class EntryPDFGenerator:
 
         self.diary = diary
         self.fileBuffer = file_buffer
-        self.canva = canvas.Canvas(self.fileBuffer,pagesize=A4)
+        self.canva = canvas.Canvas(self.fileBuffer, pagesize=A4)
         self.canva.setCreator("Lyf")
-
 
         templateEntry = diary[0]
         parts = []
-        
+
         titleStyle = ParagraphStyle(
             name="Title",
             fontName="Ubuntu",
@@ -136,10 +137,10 @@ class EntryPDFGenerator:
             textColor=HexColor("#16856f")
         )
         dateStyle = ParagraphStyle(
-            name="Date", 
-            fontName = "ABZee",
-            fontSize = 9, 
-            fontStyle = "italic",
+            name="Date",
+            fontName="ABZee",
+            fontSize=9,
+            fontStyle="italic",
             textColor=HexColor("#ff5e0e")
         )
         descriptionStyle = ParagraphStyle(
@@ -155,36 +156,35 @@ class EntryPDFGenerator:
         lineBreak = "&nbsp;&nbsp;<br />"
 
         for entry in self.diary:
-
             title = self.textFormatter(entry.asDict['_title'])
             dateObj = datetime.fromisoformat(entry.asDict["_createdAt"]).date()
             dateText = dateObj.strftime("%B %d, %Y")
             description = self.textFormatter(entry.asDict['_description'])
 
             parts.append(Paragraph(dateText, style=dateStyle))
-            parts.append(Paragraph(title, style = titleStyle))
+            parts.append(Paragraph(title, style=titleStyle))
             parts.append(Paragraph(lineBreak, style=titleStyle))
             parts.append(Paragraph(lineBreak, style=titleStyle))
             parts.append(Paragraph(lineBreak, style=titleStyle))
-            parts.append(Paragraph(description, style = descriptionStyle))
+            parts.append(Paragraph(description, style=descriptionStyle))
             parts.append(Paragraph(lineBreak, style=titleStyle))
-
 
         summaryName = SimpleDocTemplate(
-            self.fileBuffer, 
-            title=templateEntry._user.username + "'s Diary", 
-            creator="Lyf", 
-            author=templateEntry._user.username, 
-            subject=templateEntry._user.username+"'s "+templateEntry.asDict['_title']
-            )
+            self.fileBuffer,
+            title=templateEntry._user.username + "'s Diary",
+            creator="Lyf",
+            author=templateEntry._user.username,
+            subject=templateEntry._user.username + "'s " + templateEntry.asDict['_title']
+        )
 
         summaryName.build(
             parts,
-            onFirstPage=self.addPageNumber, 
+            onFirstPage=self.addPageNumber,
             onLaterPages=self.addPageNumber
         )
 
         return self.fileBuffer
+
 
 fontData = {
     "ABZee": "ABeeZee-Regular.ttf",
@@ -193,3 +193,42 @@ fontData = {
 }
 
 DiaryGenerator = EntryPDFGenerator(fontData=fontData)
+
+
+class EntryTxtGenerator:
+    def __init__(self):
+        self.entry = None
+        self.diary = None
+        self.fileBuffer = None
+
+    def generateEntryTxt(self, entry: DiaryEntry, file_buffer: io.BytesIO):
+        self.entry = entry
+        self.fileBuffer = file_buffer
+
+        text = f"""{entry._user}'s Diary\n\n{entry.entryTitle}\n{entry.entryDescription}\n{entry.CreatedAt}"""
+
+        bytes_text = bytes(text, "utf-8")
+
+        file_buffer.write(bytes_text)
+
+        return self.fileBuffer
+
+    def generateDiaryTxt(self, diary: list, file_buffer: io.BytesIO):
+        self.diary = diary
+        self.fileBuffer = file_buffer
+
+        first_entry = diary[0]
+
+        text = f"""{first_entry._user}'s Diary\n\n"""
+
+        for entry in diary:
+            text += f"{entry.entryTitle}\n{entry.entryDescription}\n{entry.CreatedAt}\n"
+
+        bytes_text = bytes(text, "utf-8")
+
+        file_buffer.write(bytes_text)
+
+        return self.fileBuffer
+
+
+TxtGenerator = EntryTxtGenerator()
