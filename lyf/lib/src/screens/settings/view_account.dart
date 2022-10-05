@@ -9,6 +9,7 @@ import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/services/firebase/auth_service.dart';
 import 'package:lyf/src/services/user.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../state/theme/theme_state.dart';
 
@@ -65,7 +66,7 @@ class _AccountSettingsPageState extends ConsumerState<AccountSettingsPage> {
                   ),
                 ),
                 title: Text(
-                  "Account",
+                  AppLocalizations.of(context)!.account,
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),
@@ -92,11 +93,11 @@ class _AccountSettingsPageState extends ConsumerState<AccountSettingsPage> {
                             size: 35,
                           ),
                           title: Text(
-                            "Account info",
+                            AppLocalizations.of(context)!.accountInfo,
                             style: Theme.of(context).textTheme.headline2,
                           ),
                           subtitle: Text(
-                            "Basic account related settings.",
+                            AppLocalizations.of(context)!.accountInfoDesc,
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
                         ),
@@ -149,7 +150,7 @@ class _AccountSettingsPageState extends ConsumerState<AccountSettingsPage> {
                             );
                           },
                           title: Text(
-                            "Username",
+                            AppLocalizations.of(context)!.username,
                             style: Theme.of(context).textTheme.headline4,
                           ),
                           subtitle: Text(
@@ -325,11 +326,11 @@ class _AccountSettingsPageState extends ConsumerState<AccountSettingsPage> {
                             size: 35,
                           ),
                           title: Text(
-                            "Activity",
+                            AppLocalizations.of(context)!.activity,
                             style: Theme.of(context).textTheme.headline2,
                           ),
                           subtitle: Text(
-                            "Settings related to your account's activity.",
+                            AppLocalizations.of(context)!.activityDesc,
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
                         ),
@@ -370,7 +371,7 @@ class _AccountSettingsPageState extends ConsumerState<AccountSettingsPage> {
                             ),
                           ),
                           title: Text(
-                            "Log out",
+                            AppLocalizations.of(context)!.logout,
                             style: Theme.of(context).textTheme.headline4,
                           ),
                           isThreeLine: true,
@@ -378,7 +379,7 @@ class _AccountSettingsPageState extends ConsumerState<AccountSettingsPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "This will log you out of the app and you'll have to login again.",
+                                AppLocalizations.of(context)!.logoutDesc,
                                 style: Theme.of(context).textTheme.bodyText1,
                               ),
                               ButtonBar(
@@ -405,7 +406,7 @@ class _AccountSettingsPageState extends ConsumerState<AccountSettingsPage> {
                                       creds = null;
                                     },
                                     child: Text(
-                                      "Log out",
+                                      AppLocalizations.of(context)!.logout,
                                       style: GoogleFonts.aBeeZee(
                                           textStyle:
                                               TextStyle(color: Colors.red)),
@@ -432,13 +433,14 @@ class _AccountSettingsPageState extends ConsumerState<AccountSettingsPage> {
                           ),
                           isThreeLine: true,
                           title: Text(
-                            "Deactivate account",
+                            AppLocalizations.of(context)!.deactivateAccount,
                             style: Theme.of(context).textTheme.headline4,
                           ),
                           subtitle: Column(
                             children: [
                               Text(
-                                "This will deactivate your account for an indefinite period till you reactivate it again.",
+                                AppLocalizations.of(context)!
+                                    .deactivateAccountDesc,
                                 style: Theme.of(context).textTheme.bodyText1,
                               ),
                               ButtonBar(
@@ -701,7 +703,8 @@ class _AccountSettingsPageState extends ConsumerState<AccountSettingsPage> {
                                           .showSnackBar(snackBar);
                                     },
                                     child: Text(
-                                      "Deactivate my account",
+                                      AppLocalizations.of(context)!
+                                          .deactivateMyAccount,
                                       style: GoogleFonts.aBeeZee(
                                           textStyle:
                                               TextStyle(color: Colors.red)),

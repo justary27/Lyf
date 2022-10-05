@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lyf/src/state/language/language_state.dart';
 import 'package:lyf/src/state/theme/theme_state.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import './global/variables.dart';
 import './routes/routing.dart';
 import './themes/themes.dart';
@@ -44,6 +45,7 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final appTheme = ref.watch(themeNotifier);
+    final appLanguage = ref.watch(languageNotifier);
     switch (Platform.operatingSystem) {
       case "android":
         return GestureDetector(
@@ -60,14 +62,16 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
             scaffoldMessengerKey: snackKey,
             routerDelegate: goRouter.routerDelegate,
             routeInformationParser: goRouter.routeInformationParser,
+            locale: appLanguage,
             localizationsDelegates: const [
+              AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: const [
               Locale('en', ''), // English, no country code
-              Locale('hi', 'IN'),
+              Locale('hi', ''),
               Locale('es', ''), // Spanish, no country code
               Locale('fr', ''),
             ],

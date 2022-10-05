@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/models/todo_model.dart';
+import 'package:lyf/src/screens/settings/language_screen.dart';
 import 'package:lyf/src/utils/helpers/screen_helper.dart';
 import '../screens/auth/login.dart';
 import '../screens/auth/signup.dart';
@@ -458,7 +459,7 @@ var goRouter = GoRouter(
                 );
               },
               transitionDuration: const Duration(milliseconds: 750),
-              child: const AccountSettingsPage(),
+              child: const LanguageSettingsScreen(),
             );
           },
         ),

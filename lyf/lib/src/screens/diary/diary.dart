@@ -8,6 +8,7 @@ import 'package:lyf/src/shared/snackbars/delete_snack.dart';
 import 'package:lyf/src/utils/errors/diary/diary_errors.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../state/diary/diary_list_state.dart';
 import '../../state/theme/theme_state.dart';
@@ -130,7 +131,7 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                       ),
                     ),
                     title: Text(
-                      "Your Diary Entries",
+                      AppLocalizations.of(context)!.yourDiary,
                       style: Theme.of(context).textTheme.headline3,
                     ),
                   ),

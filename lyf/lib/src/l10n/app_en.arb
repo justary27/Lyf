@@ -1,0 +1,132 @@
+{
+    "goodMorning": "Good Morning",
+    "@goodMorning": {
+      "description": "The conventional good morning"
+    },
+
+    "goodAfternoon": "Good Afternoon",
+    "@goodAfternoon": {
+        "description": "The conventional good afternoon"
+    },
+
+    "goodEvening": "Good Evening",
+    "@goodEvening": {
+        "description": "The conventional good evening"
+    },
+
+    "goodNight": "Good Night",
+    "@goodNight": {
+        "description": "The conventional good night"
+    },
+    
+    "todo": "Todo",
+    "@todo": {
+        "description": "The conventional todo phrase"
+    },
+
+    "yourTodos": "Your TODOs",
+    "@yourTodos": {
+        "description": "The conventional your todo phrase"
+    },
+
+    "diary": "Diary",
+    "@diary": {
+        "description": "The conventional diary phrase"
+    },
+
+    "yourDiary": "Your Diary Entries",
+    "@yourDiary": {
+        "description": "The conventional your diary phrase"
+    },
+
+    "account": "Account",
+    "@account": {
+        "description": "The conventional account phrase"
+    },
+
+    "accountDesc": "Account info, security, and activity.",
+    "@accountDesc": {
+        "description": "The conventional account description phrase"
+    },
+
+    "accountInfo": "Account info",
+    "@accountInfo": {
+        "description": "The conventional account description phrase"
+    },
+
+    "accountInfoDesc": "Basic account related settings.",
+    "@accountInfoDesc": {
+        "description": "The conventional account description phrase"
+    },
+
+    "username": "Username",
+    "@username": {
+        "description": "The conventional account description phrase"
+    },
+
+    "activity": "Activity",
+    "@activity": {
+        "description": "The conventional account description phrase"
+    },
+
+    "activityDesc": "Settings related to your account's activity.",
+    "@activityDesc": {
+        "description": "The conventional account description phrase"
+    },
+
+    "logout": "Log out",
+    "@logout": {
+        "description": "The conventional account description phrase"
+    },
+
+    "logoutDesc": "This will log you out of the app and you'll have to login again.",
+    "@logoutDesc": {
+        "description": "The conventional account description phrase"
+    },
+
+    "deactivateAccount": "Deactivate account",
+    "@deactivateAccount": {
+        "description": "The conventional account description phrase"
+    },
+
+    "deactivateAccountDesc": "This will deactivate your account for an indefinite period till you reactivate it again.",
+    "@deactivateAccountDesc": {
+        "description": "The conventional account description phrase"
+    },
+
+    "deactivateMyAccount": "Deactivate my account",
+    "@deactivateMyAccount": {
+        "description": "The conventional account description phrase"
+    },
+
+
+    "themes": "Themes",
+    "@themes": {
+        "description": "The conventional themes phrase"
+    },
+
+    "themesDesc": "Change the app's theme.",
+    "@themesDesc": {
+        "description": "The conventional themes description phrase"
+    },
+
+    "appThemes": "App Themes",
+    "@appThemes": {
+        "description": "The conventional themes description phrase"
+    },
+
+    "appThemesDesc": "Choose the app's theme.",
+    "@appThemesDesc": {
+        "description": "The conventional themes description phrase"
+    },
+
+    "language": "Language",
+    "@language": {
+        "description": "The conventional language phrase"
+    },
+
+    "languageDesc": "Change the app's language.",
+    "@languageDesc": {
+        "description": "The conventional language description phrase"
+    }
+}

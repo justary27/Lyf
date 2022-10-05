@@ -10,6 +10,7 @@ import 'package:lyf/src/state/theme/theme_state.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
 import 'dart:async';
 import 'package:rxdart/rxdart.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({
@@ -193,7 +194,8 @@ class _HomePageState extends ConsumerState<HomePage>
                                                 ),
                                               ),
                                               Text(
-                                                "Todo",
+                                                AppLocalizations.of(context)!
+                                                    .todo,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .headline5,
@@ -233,7 +235,8 @@ class _HomePageState extends ConsumerState<HomePage>
                                                 ),
                                               ),
                                               Text(
-                                                "Diary",
+                                                AppLocalizations.of(context)!
+                                                    .diary,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .headline5,
