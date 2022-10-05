@@ -156,7 +156,7 @@ class _AddDiaryEntryPageState extends ConsumerState<AddDiaryEntryPage> {
                 backgroundColor: Colors.transparent,
                 leading: IconButton(
                   onPressed: () {
-                    RouteManager.navigateToDiary(context);
+                    goRouter.pop();
                   },
                   icon: const Icon(Icons.arrow_back_ios),
                 ),

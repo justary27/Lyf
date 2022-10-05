@@ -46,7 +46,7 @@ class _InviteSettingsPageState extends State<InviteSettingsPage> {
               backgroundColor: Colors.transparent,
               leading: IconButton(
                 onPressed: () {
-                  RouteManager.navigateToSettings(context);
+                  goRouter.pop();
                 },
                 icon: Icon(Icons.arrow_back_ios),
               ),

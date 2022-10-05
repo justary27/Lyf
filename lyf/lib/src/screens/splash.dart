@@ -27,13 +27,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       await login(creds);
       print(loginState);
       if (loginState) {
-        Navigator.of(context).pushNamed(RouteManager.homePage);
+        goRouter.push("/");
       } else {
-        Navigator.of(context).pushNamed(RouteManager.loginPage);
+        goRouter.push("/login");
       }
     } catch (e) {
       print(e);
-      Navigator.of(context).pushNamed(RouteManager.loginPage);
+      goRouter.push("/login");
     }
   }
 

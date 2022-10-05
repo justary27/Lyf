@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/routes/routing.dart';
+import 'package:lyf/src/utils/handlers/route_handler.dart';
 
 import '../../state/theme/theme_state.dart';
 
@@ -44,7 +45,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               backgroundColor: Colors.transparent,
               leading: IconButton(
                 onPressed: () {
-                  RouteManager.navigateToHome(context);
+                  goRouter.pop();
                 },
                 icon: Icon(
                   Icons.arrow_back_ios,
@@ -72,7 +73,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                           color: Colors.transparent,
                           child: InkWell(
                             onTap: () {
-                              RouteManager.navigateToProfilePicture(context);
+                              goRouter.push(RouteHandler.avatar);
                             },
                             child: CircleAvatar(
                               radius: 50,
@@ -113,7 +114,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                           color: Theme.of(context).iconTheme.color,
                         ),
                         onTap: () {
-                          RouteManager.navigateToAccountSettings(context);
+                          goRouter.push(RouteHandler.accountSettings);
                         },
                         title: Text(
                           "Account",
@@ -246,7 +247,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                           color: Theme.of(context).iconTheme.color,
                         ),
                         onTap: () {
-                          RouteManager.navigateToThemeSettings(context);
+                          goRouter.push(RouteHandler.themeSettings);
                         },
                         title: Text(
                           "Themes",

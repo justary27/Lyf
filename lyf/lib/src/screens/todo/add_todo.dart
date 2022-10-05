@@ -76,7 +76,7 @@ class _AddTodoPageState extends ConsumerState<AddTodoPage> {
                   backgroundColor: Colors.transparent,
                   leading: IconButton(
                     onPressed: () {
-                      RouteManager.navigateToTodo(context);
+                      goRouter.pop();
                     },
                     icon: const Icon(Icons.arrow_back_ios),
                   ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lyf/src/utils/handlers/route_handler.dart';
 
 import '../models/todo_model.dart';
 import '../shared/snackbars/delete_snack.dart';
@@ -355,7 +356,12 @@ class _TodoCardState extends ConsumerState<TodoCard> {
     } else {
       return InkWell(
         onTap: () {
-          RouteManager.navigateToViewTodo(widget.parentContext, widget.todo!);
+          goRouter.push(
+            RouteHandler.viewTodo(
+              widget.todo!.id!,
+            ),
+            extra: widget.todo!,
+          );
         },
         child: SizedBox(
           // height: 0.4 * size.height,

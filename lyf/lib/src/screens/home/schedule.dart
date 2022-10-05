@@ -52,7 +52,7 @@ class _ScheduleSideDrawerState extends State<ScheduleSideDrawer> {
                         IconButton(
                           splashColor: Colors.white.withOpacity(0.2),
                           onPressed: () {
-                            RouteManager.navigateToSettings(context);
+                            // RouteManager.navigateToSettings(context);
                           },
                           icon: const Icon(
                             Icons.settings,
@@ -86,7 +86,7 @@ class _ScheduleSideDrawerState extends State<ScheduleSideDrawer> {
                             color: Colors.white,
                           ),
                           onTap: () {
-                            RouteManager.navigateToTodo(context);
+                            // RouteManager.navigateToTodo(context);
                           },
                         ),
                         ListTile(
@@ -103,7 +103,7 @@ class _ScheduleSideDrawerState extends State<ScheduleSideDrawer> {
                             ),
                           ),
                           onTap: () {
-                            RouteManager.navigateToDiary(context);
+                            // RouteManager.navigateToDiary(context);
                           },
                         ),
                         ListTile(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyf/src/global/variables.dart';
+import 'package:lyf/src/routes/routing.dart';
 
 class ViewProfilePicturePage extends StatefulWidget {
   const ViewProfilePicturePage({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _ViewProfilePicturePageState extends State<ViewProfilePicturePage> {
           backgroundColor: Colors.transparent,
           leading: IconButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              goRouter.pop();
             },
             icon: Icon(
               Icons.arrow_back_ios_rounded,

@@ -7,6 +7,7 @@ import 'package:lyf/src/screens/home/drawer.dart';
 import 'package:lyf/src/shared/clock.dart';
 import 'package:lyf/src/shared/greet.dart';
 import 'package:lyf/src/state/theme/theme_state.dart';
+import 'package:lyf/src/utils/handlers/route_handler.dart';
 import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
@@ -160,7 +161,7 @@ class _HomePageState extends ConsumerState<HomePage>
                                       ),
                                       child: InkWell(
                                         onTap: () {
-                                          RouteManager.navigateToTodo(context);
+                                          goRouter.push(RouteHandler.todo);
                                         },
                                         child: Column(
                                           mainAxisAlignment:
@@ -196,7 +197,7 @@ class _HomePageState extends ConsumerState<HomePage>
                                       ),
                                       child: InkWell(
                                         onTap: () {
-                                          RouteManager.navigateToDiary(context);
+                                          goRouter.push(RouteHandler.diary);
                                         },
                                         child: Column(
                                           mainAxisAlignment:

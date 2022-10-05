@@ -43,7 +43,7 @@ class _ThemeSettingsPageState extends ConsumerState<ThemeSettingsPage> {
               backgroundColor: Colors.transparent,
               leading: IconButton(
                 onPressed: () {
-                  RouteManager.navigateToSettings(context);
+                  goRouter.pop();
                 },
                 icon: Icon(
                   Icons.arrow_back_ios,

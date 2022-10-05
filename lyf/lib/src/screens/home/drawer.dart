@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lyf/src/routes/routing.dart';
+import 'package:lyf/src/utils/handlers/route_handler.dart';
 
 import '../../state/theme/theme_state.dart';
 
@@ -65,8 +66,7 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
                               color: Colors.transparent,
                               child: InkWell(
                                 onTap: () {
-                                  RouteManager.navigateToProfilePicture(
-                                      context);
+                                  goRouter.push(RouteHandler.avatar);
                                 },
                                 child: CircleAvatar(
                                   radius: 50,
@@ -83,7 +83,7 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
                         IconButton(
                           splashColor: Colors.white.withOpacity(0.2),
                           onPressed: () {
-                            RouteManager.navigateToSettings(context);
+                            goRouter.push(RouteHandler.settings);
                           },
                           icon: const Icon(
                             Icons.settings,
@@ -116,7 +116,7 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
                             height: 25,
                           ),
                           onTap: () {
-                            RouteManager.navigateToTodo(context);
+                            goRouter.push(RouteHandler.todo);
                           },
                         ),
                         ListTile(
@@ -132,7 +132,7 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
                             style: Theme.of(context).textTheme.headline4,
                           ),
                           onTap: () {
-                            RouteManager.navigateToDiary(context);
+                            goRouter.push(RouteHandler.diary);
                           },
                         ),
                         // ListTile(

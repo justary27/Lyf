@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/shared/lyf.dart';
+import 'package:lyf/src/utils/handlers/route_handler.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -86,7 +87,7 @@ class WelcomePage extends StatelessWidget {
                           height: 50,
                           child: TextButton(
                             onPressed: () {
-                              RouteManager.navigateToSignUp(context);
+                              goRouter.push(RouteHandler.signup);
                             },
                             child: Text(
                               "Sign Up",
@@ -115,7 +116,7 @@ class WelcomePage extends StatelessWidget {
                           height: 50,
                           child: TextButton(
                             onPressed: () {
-                              RouteManager.navigateToLogin(context);
+                              goRouter.push(RouteHandler.login);
                             },
                             child: Text(
                               "Log In",
