@@ -7,17 +7,18 @@ import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/services/firebase/auth_service.dart';
 import 'package:lyf/src/services/user.dart';
 import 'package:lyf/src/shared/lyf.dart';
+import 'package:lyf/src/utils/handlers/route_handler.dart';
 
 import '../../utils/api/user_api.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
@@ -192,7 +193,7 @@ class _LoginFormState extends State<LoginForm> {
         ScaffoldMessenger.of(widget.parentContext).showSnackBar(eSnackBar);
       } else {
         ScaffoldMessenger.of(widget.parentContext).hideCurrentSnackBar();
-        RouteManager.navigateToHome(context);
+        goRouter.push(RouteHandler.home);
       }
     } catch (e) {
       loginState = false;
@@ -327,7 +328,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               TextButton(
                 onPressed: () {
-                  RouteManager.navigateToSignUp(context);
+                  goRouter.push(RouteHandler.signup);
                 },
                 child: Text("Sign Up"),
               ),

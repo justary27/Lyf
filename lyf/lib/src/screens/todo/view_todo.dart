@@ -40,10 +40,10 @@ class _ViewTodoPageState extends ConsumerState<ViewTodoPage> {
           content: Text("Todo updated successfully!"),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          RouteManager.todoPage,
-          ModalRoute.withName(RouteManager.todoPage),
-        );
+        // Navigator.of(context).pushNamedAndRemoveUntil(
+        //   RouteManager.todoPage,
+        //   ModalRoute.withName(RouteManager.todoPage),
+        // );
       } else {
         SnackBar snackBar = const SnackBar(
           content: Text("Something went wrong"),
@@ -167,7 +167,7 @@ class _ViewTodoPageState extends ConsumerState<ViewTodoPage> {
                           return;
                         }
 
-                        RouteManager.navigateToTodo(context);
+                        goRouter.pop();
                       },
                       icon: const Icon(Icons.arrow_back_ios),
                     ),

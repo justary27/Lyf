@@ -1,3 +1,4 @@
+from re import template
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfbase import pdfmetrics
@@ -109,6 +110,74 @@ class EntryPDFGenerator:
             author=entry._user.username, 
             subject=entry._user.username+"'s "+self.entry.asDict['_title']
             )
+        summaryName.build(
+            parts,
+            onFirstPage=self.addPageNumber, 
+            onLaterPages=self.addPageNumber
+        )
+
+        return self.fileBuffer
+
+    def generateDiary(self, diary: list, file_buffer: io.BytesIO):
+
+        self.diary = diary
+        self.fileBuffer = file_buffer
+        self.canva = canvas.Canvas(self.fileBuffer,pagesize=A4)
+        self.canva.setCreator("Lyf")
+
+
+        templateEntry = diary[0]
+        parts = []
+        
+        titleStyle = ParagraphStyle(
+            name="Title",
+            fontName="Ubuntu",
+            fontSize=25,
+            textColor=HexColor("#16856f")
+        )
+        dateStyle = ParagraphStyle(
+            name="Date", 
+            fontName = "ABZee",
+            fontSize = 9, 
+            fontStyle = "italic",
+            textColor=HexColor("#ff5e0e")
+        )
+        descriptionStyle = ParagraphStyle(
+            name='Description',
+            fontName='ABZee',
+            fontSize=10,
+            leading=15,
+            wordWrap="CJK",
+            alignment=TA_JUSTIFY
+            # textColor=HexColor("#695d46")
+        )
+
+        lineBreak = "&nbsp;&nbsp;<br />"
+
+        for entry in self.diary:
+
+            title = self.textFormatter(entry.asDict['_title'])
+            dateObj = datetime.fromisoformat(entry.asDict["_createdAt"]).date()
+            dateText = dateObj.strftime("%B %d, %Y")
+            description = self.textFormatter(entry.asDict['_description'])
+
+            parts.append(Paragraph(dateText, style=dateStyle))
+            parts.append(Paragraph(title, style = titleStyle))
+            parts.append(Paragraph(lineBreak, style=titleStyle))
+            parts.append(Paragraph(lineBreak, style=titleStyle))
+            parts.append(Paragraph(lineBreak, style=titleStyle))
+            parts.append(Paragraph(description, style = descriptionStyle))
+            parts.append(Paragraph(lineBreak, style=titleStyle))
+
+
+        summaryName = SimpleDocTemplate(
+            self.fileBuffer, 
+            title=templateEntry._user.username + "'s Diary", 
+            creator="Lyf", 
+            author=templateEntry._user.username, 
+            subject=templateEntry._user.username+"'s "+templateEntry.asDict['_title']
+            )
+
         summaryName.build(
             parts,
             onFirstPage=self.addPageNumber, 

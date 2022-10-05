@@ -6,6 +6,7 @@ import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/shared/entry_card.dart';
 import 'package:lyf/src/shared/snackbars/delete_snack.dart';
 import 'package:lyf/src/utils/errors/diary/diary_errors.dart';
+import 'package:lyf/src/utils/handlers/route_handler.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../state/diary/diary_list_state.dart';
@@ -57,303 +58,293 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     var theme = ref.read(themeNotifier.notifier).getCurrentState();
-    return WillPopScope(
-      onWillPop: () async {
-        RouteManager.navigateToHome(context);
-        await Future.delayed(const Duration(microseconds: 100));
-        return true;
-      },
-      child: Stack(
-        children: [
-          Container(
-            height: size.height,
-            width: size.width,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: theme.gradientColors,
+    return Stack(
+      children: [
+        Container(
+          height: size.height,
+          width: size.width,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: theme.gradientColors,
+            ),
+          ),
+          child: const CustomPaint(),
+        ),
+        SizedBox(
+          height: size.height,
+          width: size.width,
+          child: Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                goRouter.push(RouteHandler.createDiary);
+              },
+              backgroundColor: Theme.of(context).primaryColor.withOpacity(
+                    0.35,
+                  ),
+              child: Icon(
+                Icons.add,
+                color: Theme.of(context).iconTheme.color,
               ),
             ),
-            child: const CustomPaint(),
-          ),
-          SizedBox(
-            height: size.height,
-            width: size.width,
-            child: Scaffold(
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  RouteManager.navigateToAddDiaryEntry(context);
-                },
-                backgroundColor: Theme.of(context).primaryColor.withOpacity(
-                      0.35,
+            backgroundColor: Colors.transparent,
+            body: CustomScrollView(
+              physics: const BouncingScrollPhysics(),
+              slivers: [
+                SliverAppBar(
+                  pinned: true,
+                  backgroundColor: Colors.transparent,
+                  leading: IconButton(
+                    onPressed: () {
+                      goRouter.pop();
+                    },
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: Theme.of(context).iconTheme.color,
                     ),
-                child: Icon(
-                  Icons.add,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-              ),
-              backgroundColor: Colors.transparent,
-              body: CustomScrollView(
-                physics: const BouncingScrollPhysics(),
-                slivers: [
-                  SliverAppBar(
-                    pinned: true,
-                    backgroundColor: Colors.transparent,
-                    leading: IconButton(
-                      onPressed: () {
-                        RouteManager.navigateToHome(context);
-                      },
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: Theme.of(context).iconTheme.color,
-                      ),
-                    ),
-                    expandedHeight: 0.3 * size.height,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Container(
-                        foregroundDecoration: BoxDecoration(
-                          color:
-                              Theme.of(context).primaryColor.withOpacity(0.15),
-                        ),
-                        child: ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            Colors.black.withBlue(10),
-                            BlendMode.saturation,
-                          ),
-                          child: Image.asset(
-                            "assets/images/diary.jpg",
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      title: Text(
-                        "Your Diary Entries",
-                        style: Theme.of(context).textTheme.headline3,
-                      ),
-                    ),
-                    actions: [
-                      // PopupMenuButton(
-                      //   shape: const RoundedRectangleBorder(
-                      //     borderRadius: BorderRadius.all(
-                      //       Radius.circular(15.0),
-                      //     ),
-                      //   ),
-                      //   color: Colors.white,
-                      //   itemBuilder: (context) {
-                      //     return [
-                      //       PopupMenuItem(
-                      //         padding: EdgeInsets.zero,
-                      //         child: ListTile(
-                      //           minLeadingWidth: 25,
-                      //           dense: true,
-                      //           leading: Icon(
-                      //             Icons.picture_as_pdf_rounded,
-                      //             color: Colors.grey.shade700,
-                      //           ),
-                      //           title: Text(
-                      //             "Save diary Pdf",
-                      //             style: GoogleFonts.aBeeZee(
-                      //               textStyle: TextStyle(
-                      //                 color: Colors.grey.shade700,
-                      //               ),
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ];
-                      //   },
-                      //   icon: const Icon(Icons.more_vert),
-                      // )
-                    ],
                   ),
-                  Consumer(
-                    builder: ((context, ref, child) {
-                      final diaryState = ref.watch(diaryNotifier);
-                      return diaryState.when(
-                        data: ((diary) {
-                          if (diary!.isEmpty) {
-                            return const SliverFillRemaining(
-                              child: Center(
-                                child: Text(
-                                  "Looks like you don't have any todos :) \n Yay!",
-                                  textAlign: TextAlign.center,
-                                ),
+                  expandedHeight: 0.3 * size.height,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Container(
+                      foregroundDecoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor.withOpacity(0.15),
+                      ),
+                      child: ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                          Colors.black.withBlue(10),
+                          BlendMode.saturation,
+                        ),
+                        child: Image.asset(
+                          "assets/images/diary.jpg",
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    title: Text(
+                      "Your Diary Entries",
+                      style: Theme.of(context).textTheme.headline3,
+                    ),
+                  ),
+                  actions: [
+                    // PopupMenuButton(
+                    //   shape: const RoundedRectangleBorder(
+                    //     borderRadius: BorderRadius.all(
+                    //       Radius.circular(15.0),
+                    //     ),
+                    //   ),
+                    //   color: Colors.white,
+                    //   itemBuilder: (context) {
+                    //     return [
+                    //       PopupMenuItem(
+                    //         padding: EdgeInsets.zero,
+                    //         child: ListTile(
+                    //           minLeadingWidth: 25,
+                    //           dense: true,
+                    //           leading: Icon(
+                    //             Icons.picture_as_pdf_rounded,
+                    //             color: Colors.grey.shade700,
+                    //           ),
+                    //           title: Text(
+                    //             "Save diary Pdf",
+                    //             style: GoogleFonts.aBeeZee(
+                    //               textStyle: TextStyle(
+                    //                 color: Colors.grey.shade700,
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ];
+                    //   },
+                    //   icon: const Icon(Icons.more_vert),
+                    // )
+                  ],
+                ),
+                Consumer(
+                  builder: ((context, ref, child) {
+                    final diaryState = ref.watch(diaryNotifier);
+                    return diaryState.when(
+                      data: ((diary) {
+                        if (diary!.isEmpty) {
+                          return const SliverFillRemaining(
+                            child: Center(
+                              child: Text(
+                                "Looks like you don't have any todos :) \n Yay!",
+                                textAlign: TextAlign.center,
                               ),
-                            );
-                          } else {
-                            return SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                (context, index) => Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 0.05 * size.width,
-                                      vertical: 0.015 * size.height),
-                                  child: Card(
-                                    clipBehavior: Clip.antiAlias,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    // color: Colors.white.withOpacity(0.15),
-                                    child: InkWell(
-                                      onTap: () {
-                                        RouteManager.navigateToViewDiaryEntry(
-                                            context, [
-                                          diary[index],
-                                          size,
-                                        ]);
-                                      },
-                                      child: SizedBox(
-                                        height: 0.4 * size.height,
-                                        width: 0.2 * size.width,
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 0.05 * size.width,
-                                              vertical: 0.01 * size.height),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      diary[index].title,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline3,
-                                                    ),
-                                                    IconButton(
-                                                      onPressed: () {
-                                                        Share.share(
-                                                            "${diary[index].entryTitle}\n\n${diary[index].entryDescription}\n\nDated:${diary[index].entryCreatedAt.day}/${diary[index].entryCreatedAt.month}/${diary[index].entryCreatedAt.year}");
-                                                      },
-                                                      icon: Icon(
-                                                        Icons.share_rounded,
-                                                        color: Theme.of(context)
-                                                            .iconTheme
-                                                            .color,
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                                height: 0.075 * size.height,
-                                                alignment: Alignment.bottomLeft,
-                                              ),
-                                              Container(
-                                                padding: EdgeInsets.fromLTRB(
-                                                  0,
-                                                  0.025 * size.height,
-                                                  0.0085 * size.width,
-                                                  0.025 * size.height,
-                                                ),
-                                                height: 0.225 * size.height,
-                                                child: Text(
-                                                  diary[index].description,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1,
-                                                ),
-                                              ),
-                                              Row(
+                            ),
+                          );
+                        } else {
+                          return SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                              (context, index) => Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 0.05 * size.width,
+                                    vertical: 0.015 * size.height),
+                                child: Card(
+                                  clipBehavior: Clip.antiAlias,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12)),
+                                  // color: Colors.white.withOpacity(0.15),
+                                  child: InkWell(
+                                    onTap: () {
+                                      goRouter.push(
+                                        RouteHandler.viewDiary(
+                                          diary[index].entryId!,
+                                        ),
+                                        extra: diary[index],
+                                      );
+                                    },
+                                    child: SizedBox(
+                                      height: 0.4 * size.height,
+                                      width: 0.2 * size.width,
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 0.05 * size.width,
+                                            vertical: 0.01 * size.height),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    "${diary[index].entryCreatedAt.day}/${diary[index].entryCreatedAt.month}/${diary[index].entryCreatedAt.year}",
-                                                    style: GoogleFonts.ubuntu(
-                                                      textStyle:
-                                                          Theme.of(context)
-                                                              .textTheme
-                                                              .bodyText1,
-                                                    ),
+                                                    diary[index].title,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline3,
                                                   ),
-                                                  ButtonBar(
-                                                    alignment:
-                                                        MainAxisAlignment.end,
-                                                    children: [
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          SnackBar snackBar =
-                                                              deleteSnack(
-                                                            parentContext:
-                                                                context,
-                                                            size: size,
-                                                            item: diary[index],
-                                                            performDeleteTask:
-                                                                _deleteEntry,
-                                                          );
-                                                          ScaffoldMessenger.of(
-                                                                  context)
-                                                              .showSnackBar(
-                                                                  snackBar);
-                                                        },
-                                                        child: Text(
-                                                          "Delete",
-                                                          style: GoogleFonts
-                                                              .ubuntu(
-                                                            textStyle:
-                                                                TextStyle(
-                                                              color: Colors.red,
-                                                            ),
+                                                  IconButton(
+                                                    onPressed: () {
+                                                      Share.share(
+                                                          "${diary[index].entryTitle}\n\n${diary[index].entryDescription}\n\nDated:${diary[index].entryCreatedAt.day}/${diary[index].entryCreatedAt.month}/${diary[index].entryCreatedAt.year}");
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.share_rounded,
+                                                      color: Theme.of(context)
+                                                          .iconTheme
+                                                          .color,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                              height: 0.075 * size.height,
+                                              alignment: Alignment.bottomLeft,
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.fromLTRB(
+                                                0,
+                                                0.025 * size.height,
+                                                0.0085 * size.width,
+                                                0.025 * size.height,
+                                              ),
+                                              height: 0.225 * size.height,
+                                              child: Text(
+                                                diary[index].description,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1,
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "${diary[index].entryCreatedAt.day}/${diary[index].entryCreatedAt.month}/${diary[index].entryCreatedAt.year}",
+                                                  style: GoogleFonts.ubuntu(
+                                                    textStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyText1,
+                                                  ),
+                                                ),
+                                                ButtonBar(
+                                                  alignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        SnackBar snackBar =
+                                                            deleteSnack(
+                                                          parentContext:
+                                                              context,
+                                                          size: size,
+                                                          item: diary[index],
+                                                          performDeleteTask:
+                                                              _deleteEntry,
+                                                        );
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                                snackBar);
+                                                      },
+                                                      child: Text(
+                                                        "Delete",
+                                                        style:
+                                                            GoogleFonts.ubuntu(
+                                                          textStyle: TextStyle(
+                                                            color: Colors.red,
                                                           ),
                                                         ),
                                                       ),
-                                                      TextButton(
-                                                        onPressed: () async {
-                                                          _retrieveEntryPdf(
-                                                              diary[index]);
-                                                        },
-                                                        child: Text(
-                                                          "Save as Pdf",
-                                                          style: GoogleFonts
-                                                              .ubuntu(),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ],
-                                              )
-                                            ],
-                                          ),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () async {
+                                                        _retrieveEntryPdf(
+                                                            diary[index]);
+                                                      },
+                                                      child: Text(
+                                                        "Save as Pdf",
+                                                        style: GoogleFonts
+                                                            .ubuntu(),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            )
+                                          ],
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                                childCount: diary.length,
                               ),
-                            );
-                          }
-                        }),
-                        error: (Object error, StackTrace? stackTrace) {
-                          return const SliverFillRemaining(
-                            child: Center(
-                              child: Text("Unable to retrieve your Diary."),
+                              childCount: diary.length,
                             ),
                           );
-                        },
-                        loading: () {
-                          return SliverFillRemaining(
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color: Theme.of(context).primaryColor,
-                              ),
+                        }
+                      }),
+                      error: (Object error, StackTrace? stackTrace) {
+                        return const SliverFillRemaining(
+                          child: Center(
+                            child: Text("Unable to retrieve your Diary."),
+                          ),
+                        );
+                      },
+                      loading: () {
+                        return SliverFillRemaining(
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: Theme.of(context).primaryColor,
                             ),
-                          );
-                        },
-                      );
-                    }),
-                  ),
-                ],
-              ),
+                          ),
+                        );
+                      },
+                    );
+                  }),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

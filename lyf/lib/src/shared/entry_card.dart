@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:lyf/src/utils/handlers/route_handler.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../models/diary_model.dart';
@@ -150,10 +151,12 @@ class _EntryCardState extends ConsumerState<EntryCard> {
         child: InkWell(
           onTap: () {
             if (pageCode == 1) {
-              RouteManager.navigateToViewDiaryEntry(context, [
-                entry,
-                size,
-              ]);
+              goRouter.push(
+                RouteHandler.viewDiary(
+                  entry.entryId!,
+                ),
+                extra: [entry, size],
+              );
             }
           },
           child: SizedBox(

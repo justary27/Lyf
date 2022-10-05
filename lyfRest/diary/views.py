@@ -22,10 +22,13 @@ def getAllDiaries(request,userId):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def getAllPDFs(request,userId):
-    entries = DiaryEntry.objects.getEntries(userId)
-    data = [entry.asDict for entry in entries]
+    diary = DiaryEntry.objects.getEntries(userId)
 
-    return Response(data)
+    file_buffer = io.BytesIO()
+    file_buffer = DiaryGenerator.generateDiary(diary=diary, file_buffer=file_buffer)
+    file_buffer.seek(0)
+
+    return FileResponse(file_buffer,as_attachment=True,filename=f"{diary[0]._user.username}_diary.pdf")
 
 
 @api_view(["GET"])

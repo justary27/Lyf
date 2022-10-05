@@ -1,71 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/models/todo_model.dart';
-import 'package:lyf/src/screens/auth/login.dart';
-import 'package:lyf/src/screens/auth/signup.dart';
-import 'package:lyf/src/screens/auth/welcome.dart';
-import 'package:lyf/src/screens/diary/diary.dart';
-import 'package:lyf/src/screens/diary/view_entry.dart';
-import 'package:lyf/src/screens/diary/add_entry.dart';
-import 'package:lyf/src/screens/home/home.dart';
-import 'package:lyf/src/screens/home/view_pfp.dart';
-import 'package:lyf/src/screens/settings/invite.dart';
-import 'package:lyf/src/screens/settings/settings.dart';
-import 'package:lyf/src/screens/settings/view_account.dart';
-import 'package:lyf/src/screens/settings/view_themes.dart';
-import 'package:lyf/src/screens/todo/add_todo.dart';
-import 'package:lyf/src/screens/todo/todo.dart';
-import 'package:lyf/src/screens/todo/view_todo.dart';
-import 'package:lyf/src/screens/settings/notifications.dart';
+import 'package:lyf/src/utils/helpers/screen_helper.dart';
+import '../screens/auth/login.dart';
+import '../screens/auth/signup.dart';
+import '../screens/auth/welcome.dart';
+import '../screens/diary/diary.dart';
+import '../screens/diary/view_entry.dart';
+import '../screens/diary/add_entry.dart';
+import '../screens/home/home.dart';
+import '../screens/home/view_pfp.dart';
+import '../screens/settings/invite.dart';
+import '../screens/settings/settings.dart';
+import '../screens/settings/view_account.dart';
+import '../screens/settings/view_themes.dart';
+import '../screens/todo/add_todo.dart';
+import '../screens/todo/todo.dart';
+import '../screens/todo/view_todo.dart';
+import '../screens/settings/notifications.dart';
+import '../screens/splash.dart';
 
-class RouteManager {
-  static const String homePage = "/home";
-  static const String welcomePage = "/welcome";
-  static const String signUpPage = "/signup";
-  static const String loginPage = "/login";
-  static const String todoPage = "/todo";
-  static const String diaryPage = "/diary";
-  static const String viewTodoPage = "/todo/view";
-  static const String addTodoPage = "/todo/add";
-  static const String viewDiaryEntryPage = "/diary/view";
-  static const String addDiaryEntryPage = "/diary/add";
-  static const String viewPfpPage = "/pfp";
-  static const String settingsPage = "/settings";
-  static const String accountSettingsPage = "/settings/account";
-  static const String themeSettingsPage = "/settings/themes";
-  static const String dataSettingsPage = "/settings/data";
-  static const String notificationSettingsPage = "/settings/notifications";
-  static const String inviteSettingsPage = "/settings/invite";
-
-  static String currentRoute = "/home";
-
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    final arguments = settings.arguments;
-    switch (settings.name) {
-      case welcomePage:
-        return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                const WelcomePage(),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              const begin = Offset(1.0, 0);
-              const end = Offset.zero;
-              const curve = Curves.ease;
-
-              var tween =
-                  Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-              return SlideTransition(
-                position: animation.drive(tween),
-                child: child,
-              );
-            },
-            transitionDuration: const Duration(milliseconds: 750));
-
-      case signUpPage:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const SignUpPage(),
+var goRouter = GoRouter(
+  initialLocation: "/splash",
+  routes: [
+    GoRoute(
+      path: "/splash",
+      pageBuilder: (context, pageBuilder) {
+        return const MaterialPage(
+          child: SplashScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: "/auth",
+      pageBuilder: (context, pageBuilder) {
+        return CustomTransitionPage(
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             const begin = Offset(1.0, 0);
             const end = Offset.zero;
@@ -80,31 +50,58 @@ class RouteManager {
             );
           },
           transitionDuration: const Duration(milliseconds: 750),
+          child: const WelcomePage(),
         );
+      },
+    ),
+    GoRoute(
+      path: "/login",
+      pageBuilder: (context, pageBuilder) {
+        return CustomTransitionPage(
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(1.0, 0);
+            const end = Offset.zero;
+            const curve = Curves.ease;
 
-      case loginPage:
-        return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                const LoginPage(),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              const begin = Offset(1.0, 0);
-              const end = Offset.zero;
-              const curve = Curves.ease;
+            var tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-              var tween =
-                  Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            return SlideTransition(
+              position: animation.drive(tween),
+              child: child,
+            );
+          },
+          transitionDuration: const Duration(milliseconds: 750),
+          child: const LoginScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: "/signup",
+      pageBuilder: (context, pageBuilder) {
+        return CustomTransitionPage(
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(1.0, 0);
+            const end = Offset.zero;
+            const curve = Curves.ease;
 
-              return SlideTransition(
-                position: animation.drive(tween),
-                child: child,
-              );
-            },
-            transitionDuration: const Duration(milliseconds: 750));
+            var tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-      case homePage:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => const Home(),
+            return SlideTransition(
+              position: animation.drive(tween),
+              child: child,
+            );
+          },
+          transitionDuration: const Duration(milliseconds: 750),
+          child: const SignUpScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: "/",
+      pageBuilder: (context, pageBuilder) {
+        return CustomTransitionPage(
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             const begin = Offset(1.0, 0);
             const end = Offset.zero;
@@ -120,31 +117,14 @@ class RouteManager {
             );
           },
           transitionDuration: const Duration(milliseconds: 750),
+          child: const Home(),
         );
-      case todoPage:
-        return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                const TodoPage(),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              const begin = 0.0;
-              const end = 1.0;
-              const curve = Curves.ease;
-
-              var tween = Tween(begin: begin, end: end).chain(
-                CurveTween(curve: curve),
-              );
-
-              return FadeTransition(
-                opacity: animation.drive(tween),
-                child: child,
-              );
-            },
-            transitionDuration: const Duration(milliseconds: 750));
-      case diaryPage:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const DiaryPage(),
+      },
+    ),
+    GoRoute(
+      path: "/todo",
+      pageBuilder: (context, pageBuilder) {
+        return CustomTransitionPage(
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             const begin = 0.0;
             const end = 1.0;
@@ -160,15 +140,142 @@ class RouteManager {
             );
           },
           transitionDuration: const Duration(milliseconds: 750),
+          child: const TodoPage(),
         );
-      case viewTodoPage:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) {
-            if (arguments is Todo) {
-              return ViewTodoPage(todo: arguments);
-            }
-            return Home();
+      },
+      routes: [
+        GoRoute(
+          path: "add",
+          pageBuilder: (context, pageBuilder) {
+            return CustomTransitionPage(
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = 0.0;
+                const end = 1.0;
+                const curve = Curves.ease;
+
+                var tween = Tween(begin: begin, end: end).chain(
+                  CurveTween(curve: curve),
+                );
+
+                return FadeTransition(
+                  opacity: animation.drive(tween),
+                  child: child,
+                );
+              },
+              transitionDuration: const Duration(milliseconds: 750),
+              child: const AddTodoPage(),
+            );
           },
+        ),
+        GoRoute(
+          path: ":id",
+          pageBuilder: (context, pageBuilder) {
+            return CustomTransitionPage(
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0);
+                const end = Offset.zero;
+                const curve = Curves.ease;
+
+                var tween = Tween(begin: begin, end: end).chain(
+                  CurveTween(curve: curve),
+                );
+
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+              transitionDuration: const Duration(milliseconds: 750),
+              child: ViewTodoPage(
+                todo: pageBuilder.extra as Todo,
+              ),
+            );
+          },
+        ),
+      ],
+    ),
+    GoRoute(
+      path: "/diary",
+      pageBuilder: (context, pageBuilder) {
+        return CustomTransitionPage(
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = 0.0;
+            const end = 1.0;
+            const curve = Curves.ease;
+
+            var tween = Tween(begin: begin, end: end).chain(
+              CurveTween(curve: curve),
+            );
+
+            return FadeTransition(
+              opacity: animation.drive(tween),
+              child: child,
+            );
+          },
+          transitionDuration: const Duration(milliseconds: 750),
+          child: const DiaryPage(),
+        );
+      },
+      routes: [
+        GoRoute(
+          path: "add",
+          pageBuilder: (context, pageBuilder) {
+            return CustomTransitionPage(
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = 0.0;
+                const end = 1.0;
+                const curve = Curves.ease;
+
+                var tween = Tween(begin: begin, end: end).chain(
+                  CurveTween(curve: curve),
+                );
+
+                return FadeTransition(
+                  opacity: animation.drive(tween),
+                  child: child,
+                );
+              },
+              transitionDuration: const Duration(milliseconds: 750),
+              child: const AddDiaryEntryPage(),
+            );
+          },
+        ),
+        GoRoute(
+          path: ":id",
+          pageBuilder: (context, pageBuilder) {
+            return CustomTransitionPage(
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0);
+                const end = Offset.zero;
+                const curve = Curves.ease;
+
+                var tween = Tween(begin: begin, end: end).chain(
+                  CurveTween(curve: curve),
+                );
+
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+              transitionDuration: const Duration(milliseconds: 750),
+              child: ViewDiaryEntryPage(
+                entry: pageBuilder.extra as DiaryEntry,
+                size: logicalScreenSize,
+              ),
+            );
+          },
+        ),
+      ],
+    ),
+    GoRoute(
+      path: "/avatar",
+      pageBuilder: (context, pageBuilder) {
+        return CustomTransitionPage(
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             const begin = Offset(1.0, 0);
             const end = Offset.zero;
@@ -184,31 +291,14 @@ class RouteManager {
             );
           },
           transitionDuration: const Duration(milliseconds: 750),
+          child: const ViewProfilePicturePage(),
         );
-      case viewPfpPage:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const ViewProfilePicturePage(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(1.0, 0);
-            const end = Offset.zero;
-            const curve = Curves.ease;
-
-            var tween = Tween(begin: begin, end: end).chain(
-              CurveTween(curve: curve),
-            );
-
-            return SlideTransition(
-              position: animation.drive(tween),
-              child: child,
-            );
-          },
-          transitionDuration: const Duration(milliseconds: 750),
-        );
-      case settingsPage:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const SettingsPage(),
+      },
+    ),
+    GoRoute(
+      path: "/settings",
+      pageBuilder: (context, pageBuilder) {
+        return CustomTransitionPage(
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             const begin = Offset(-1.0, 0);
             const end = Offset.zero;
@@ -224,246 +314,179 @@ class RouteManager {
             );
           },
           transitionDuration: const Duration(milliseconds: 750),
+          child: const SettingsPage(),
         );
-      case accountSettingsPage:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const AccountSettingsPage(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(1.0, 0);
-            const end = Offset.zero;
-            const curve = Curves.ease;
+      },
+      routes: [
+        GoRoute(
+          path: "account",
+          pageBuilder: (context, pageBuilder) {
+            return CustomTransitionPage(
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0);
+                const end = Offset.zero;
+                const curve = Curves.ease;
 
-            var tween = Tween(begin: begin, end: end).chain(
-              CurveTween(curve: curve),
-            );
+                var tween = Tween(begin: begin, end: end).chain(
+                  CurveTween(curve: curve),
+                );
 
-            return SlideTransition(
-              position: animation.drive(tween),
-              child: child,
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+              transitionDuration: const Duration(milliseconds: 750),
+              child: const AccountSettingsPage(),
             );
           },
-          transitionDuration: const Duration(milliseconds: 750),
-        );
-      case themeSettingsPage:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const ThemeSettingsPage(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(1.0, 0);
-            const end = Offset.zero;
-            const curve = Curves.ease;
+        ),
+        GoRoute(
+          path: "data",
+          pageBuilder: (context, pageBuilder) {
+            return CustomTransitionPage(
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0);
+                const end = Offset.zero;
+                const curve = Curves.ease;
 
-            var tween = Tween(begin: begin, end: end).chain(
-              CurveTween(curve: curve),
-            );
+                var tween = Tween(begin: begin, end: end).chain(
+                  CurveTween(curve: curve),
+                );
 
-            return SlideTransition(
-              position: animation.drive(tween),
-              child: child,
-            );
-          },
-          transitionDuration: const Duration(milliseconds: 750),
-        );
-      case notificationSettingsPage:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const NotifactionSettingsPage(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(1.0, 0);
-            const end = Offset.zero;
-            const curve = Curves.ease;
-
-            var tween = Tween(begin: begin, end: end).chain(
-              CurveTween(curve: curve),
-            );
-
-            return SlideTransition(
-              position: animation.drive(tween),
-              child: child,
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+              transitionDuration: const Duration(milliseconds: 750),
+              child: const AccountSettingsPage(),
             );
           },
-          transitionDuration: const Duration(milliseconds: 750),
-        );
-      case inviteSettingsPage:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const InviteSettingsPage(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(1.0, 0);
-            const end = Offset.zero;
-            const curve = Curves.ease;
+        ),
+        GoRoute(
+          path: "help",
+          pageBuilder: (context, pageBuilder) {
+            return CustomTransitionPage(
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0);
+                const end = Offset.zero;
+                const curve = Curves.ease;
 
-            var tween = Tween(begin: begin, end: end).chain(
-              CurveTween(curve: curve),
-            );
+                var tween = Tween(begin: begin, end: end).chain(
+                  CurveTween(curve: curve),
+                );
 
-            return SlideTransition(
-              position: animation.drive(tween),
-              child: child,
-            );
-          },
-          transitionDuration: const Duration(milliseconds: 750),
-        );
-
-      case viewDiaryEntryPage:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) {
-            if (arguments is List && arguments[0] is DiaryEntry) {
-              return ViewDiaryEntryPage(
-                entry: arguments[0],
-                size: arguments[1],
-              );
-            }
-            return Home();
-          },
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(1.0, 0);
-            const end = Offset.zero;
-            const curve = Curves.ease;
-
-            var tween = Tween(begin: begin, end: end).chain(
-              CurveTween(curve: curve),
-            );
-
-            return SlideTransition(
-              position: animation.drive(tween),
-              child: child,
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+              transitionDuration: const Duration(milliseconds: 750),
+              child: const AccountSettingsPage(),
             );
           },
-          transitionDuration: const Duration(milliseconds: 750),
-        );
-      case addDiaryEntryPage:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const AddDiaryEntryPage(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = 0.0;
-            const end = 1.0;
-            const curve = Curves.ease;
+        ),
+        GoRoute(
+          path: "notification",
+          pageBuilder: (context, pageBuilder) {
+            return CustomTransitionPage(
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0);
+                const end = Offset.zero;
+                const curve = Curves.ease;
 
-            var tween = Tween(begin: begin, end: end).chain(
-              CurveTween(curve: curve),
-            );
+                var tween = Tween(begin: begin, end: end).chain(
+                  CurveTween(curve: curve),
+                );
 
-            return FadeTransition(
-              opacity: animation.drive(tween),
-              child: child,
-            );
-          },
-          transitionDuration: const Duration(milliseconds: 750),
-        );
-      case addTodoPage:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const AddTodoPage(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = 0.0;
-            const end = 1.0;
-            const curve = Curves.ease;
-
-            var tween = Tween(begin: begin, end: end).chain(
-              CurveTween(curve: curve),
-            );
-
-            return FadeTransition(
-              opacity: animation.drive(tween),
-              child: child,
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+              transitionDuration: const Duration(milliseconds: 750),
+              child: const NotifactionSettingsPage(),
             );
           },
-          transitionDuration: const Duration(milliseconds: 750),
-        );
+        ),
+        GoRoute(
+          path: "themes",
+          pageBuilder: (context, pageBuilder) {
+            return CustomTransitionPage(
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0);
+                const end = Offset.zero;
+                const curve = Curves.ease;
 
-      default:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const WelcomePage(),
-        );
-    }
-  }
+                var tween = Tween(begin: begin, end: end).chain(
+                  CurveTween(curve: curve),
+                );
 
-  static void navigateToWelcome(BuildContext context) {
-    Navigator.of(context).pushNamed(RouteManager.welcomePage);
-    RouteManager.currentRoute = RouteManager.welcomePage;
-  }
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+              transitionDuration: const Duration(milliseconds: 750),
+              child: const ThemeSettingsPage(),
+            );
+          },
+        ),
+        GoRoute(
+          path: "language",
+          pageBuilder: (context, pageBuilder) {
+            return CustomTransitionPage(
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0);
+                const end = Offset.zero;
+                const curve = Curves.ease;
 
-  static void navigateToSignUp(BuildContext context) {
-    Navigator.of(context).pushNamed(RouteManager.signUpPage);
-    RouteManager.currentRoute = RouteManager.signUpPage;
-  }
+                var tween = Tween(begin: begin, end: end).chain(
+                  CurveTween(curve: curve),
+                );
 
-  static void navigateToLogin(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      RouteManager.loginPage,
-      ModalRoute.withName('/welcome'),
-    );
-    RouteManager.currentRoute = RouteManager.loginPage;
-  }
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+              transitionDuration: const Duration(milliseconds: 750),
+              child: const AccountSettingsPage(),
+            );
+          },
+        ),
+        GoRoute(
+          path: "invite",
+          pageBuilder: (context, pageBuilder) {
+            return CustomTransitionPage(
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0);
+                const end = Offset.zero;
+                const curve = Curves.ease;
 
-  static void navigateToHome(BuildContext context) {
-    Navigator.of(context).pushNamed(RouteManager.homePage);
-    RouteManager.currentRoute = RouteManager.homePage;
-  }
+                var tween = Tween(begin: begin, end: end).chain(
+                  CurveTween(curve: curve),
+                );
 
-  static void navigateToTodo(BuildContext context) {
-    Navigator.of(context).pushNamed(RouteManager.todoPage);
-    RouteManager.currentRoute = RouteManager.todoPage;
-  }
-
-  static void navigateToDiary(BuildContext context) {
-    Navigator.of(context).pushNamed(RouteManager.diaryPage);
-    RouteManager.currentRoute = RouteManager.diaryPage;
-  }
-
-  static void navigateToViewTodo(BuildContext context, Todo todo) {
-    Navigator.of(context).pushNamed(RouteManager.viewTodoPage, arguments: todo);
-    RouteManager.currentRoute = RouteManager.viewTodoPage;
-  }
-
-  static void navigateToViewDiaryEntry(
-      BuildContext context, List entryObjects) {
-    Navigator.of(context)
-        .pushNamed(RouteManager.viewDiaryEntryPage, arguments: entryObjects);
-    RouteManager.currentRoute = RouteManager.viewDiaryEntryPage;
-  }
-
-  static void navigateToAddDiaryEntry(BuildContext context) {
-    Navigator.of(context).pushNamed(RouteManager.addDiaryEntryPage);
-    RouteManager.currentRoute = RouteManager.addDiaryEntryPage;
-  }
-
-  static void navigateToAddTodo(BuildContext context) {
-    Navigator.of(context).pushNamed(RouteManager.addTodoPage);
-    RouteManager.currentRoute = RouteManager.addTodoPage;
-  }
-
-  static void navigateToProfilePicture(BuildContext context) {
-    Navigator.of(context).pushNamed(RouteManager.viewPfpPage);
-    RouteManager.currentRoute = RouteManager.viewPfpPage;
-  }
-
-  static void navigateToSettings(BuildContext context) {
-    Navigator.of(context).pushNamed(RouteManager.settingsPage);
-    RouteManager.currentRoute = RouteManager.settingsPage;
-  }
-
-  static void navigateToAccountSettings(BuildContext context) {
-    Navigator.of(context).pushNamed(RouteManager.accountSettingsPage);
-    RouteManager.currentRoute = RouteManager.accountSettingsPage;
-  }
-
-  static void navigateToThemeSettings(BuildContext context) {
-    Navigator.of(context).pushNamed(RouteManager.themeSettingsPage);
-    RouteManager.currentRoute = RouteManager.themeSettingsPage;
-  }
-
-  static void navigateToNotificationSettings(BuildContext context) {
-    Navigator.of(context).pushNamed(RouteManager.notificationSettingsPage);
-    RouteManager.currentRoute = RouteManager.notificationSettingsPage;
-  }
-
-  static void navigateToInviteSettings(BuildContext context) {
-    Navigator.of(context).pushNamed(RouteManager.inviteSettingsPage);
-    RouteManager.currentRoute = RouteManager.inviteSettingsPage;
-  }
-}
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+              transitionDuration: const Duration(milliseconds: 750),
+              child: const InviteSettingsPage(),
+            );
+          },
+        ),
+      ],
+    ),
+  ],
+);

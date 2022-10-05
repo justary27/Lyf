@@ -52,13 +52,13 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
               FocusManager.instance.primaryFocus!.unfocus();
             }
           },
-          child: MaterialApp(
+          child: MaterialApp.router(
             title: 'Lyf',
             debugShowCheckedModeBanner: false,
             theme: appTheme.themeData,
-            initialRoute: (loginState) ? "/home" : "/welcome",
-            onGenerateRoute: RouteManager.generateRoute,
             scaffoldMessengerKey: snackKey,
+            routerDelegate: goRouter.routerDelegate,
+            routeInformationParser: goRouter.routeInformationParser,
           ),
         );
       case "ios":
@@ -69,11 +69,11 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
               FocusManager.instance.primaryFocus!.unfocus();
             }
           },
-          child: CupertinoApp(
+          child: CupertinoApp.router(
             title: 'Lyf',
             debugShowCheckedModeBanner: false,
-            initialRoute: (loginState) ? "/home" : "/welcome",
-            onGenerateRoute: RouteManager.generateRoute,
+            routerDelegate: goRouter.routerDelegate,
+            routeInformationParser: goRouter.routeInformationParser,
           ),
         );
 
@@ -85,13 +85,13 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
               FocusManager.instance.primaryFocus!.unfocus();
             }
           },
-          child: MaterialApp(
+          child: MaterialApp.router(
             title: 'Lyf',
             debugShowCheckedModeBanner: false,
             theme: appTheme.themeData,
-            initialRoute: (loginState) ? "/home" : "/welcome",
-            onGenerateRoute: RouteManager.generateRoute,
             scaffoldMessengerKey: snackKey,
+            routerDelegate: goRouter.routerDelegate,
+            routeInformationParser: goRouter.routeInformationParser,
           ),
         );
     }

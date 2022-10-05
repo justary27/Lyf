@@ -8,6 +8,7 @@ import 'package:lyf/src/models/user_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/services/firebase/auth_service.dart';
 import 'package:lyf/src/services/user.dart';
+import 'package:lyf/src/utils/handlers/route_handler.dart';
 
 import '../../state/theme/theme_state.dart';
 
@@ -56,7 +57,7 @@ class _AccountSettingsPageState extends ConsumerState<AccountSettingsPage> {
                     await Future.delayed(
                       const Duration(milliseconds: 100),
                     );
-                    RouteManager.navigateToSettings(context);
+                    goRouter.pop();
                   },
                   icon: Icon(
                     Icons.arrow_back_ios,
@@ -395,7 +396,7 @@ class _AccountSettingsPageState extends ConsumerState<AccountSettingsPage> {
                                       ),
                                     ),
                                     onPressed: () async {
-                                      RouteManager.navigateToLogin(context);
+                                      goRouter.push(RouteHandler.login);
                                       int x = await FireAuth.logOut();
                                       print(x);
                                       loginState = false;
@@ -517,9 +518,8 @@ class _AccountSettingsPageState extends ConsumerState<AccountSettingsPage> {
                                                     statusCode = await LyfUser
                                                         .deactivateAccount();
                                                     if (statusCode == 200) {
-                                                      RouteManager
-                                                          .navigateToWelcome(
-                                                              context);
+                                                      goRouter.push(
+                                                          RouteHandler.auth);
                                                       ScaffoldMessenger.of(
                                                               context)
                                                           .clearSnackBars();
