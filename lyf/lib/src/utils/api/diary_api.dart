@@ -119,26 +119,77 @@ class DiaryApiClient {
     }
   }
 
-  // static Future<void> getDiaryPdf({
-  //   required DiaryEntry entry,
-  // }) async {
-  //   late http.Response response;
-  //   try {
-  //     response = await HttpHelper.doDiaryRequest(
-  //       requestType: RequestType.get,
-  //       requestUri: UriHelper.constructUri(
-  //         pathSegs: DiaryEndpoints.updateEntry(
-  //           userId: currentUser.userId,
-  //           entryId: entry.entryId!,
-  //         ),
-  //       ),
-  //       // requestBody: DiaryEntry.toJson(entry);
-  //     );
-  //     return response.statusCode;
-  //   } catch (e) {
-  //     throw DiaryException(response.body.toString());
-  //   }
-  // }
+  /// Helper method that saves a [DiaryEntry] as a Txt file
+  /// on the local storage.
+  static Future<Uint8List?> getEntryTxt({
+    required DiaryEntry entry,
+  }) async {
+    http.Response? response;
+    try {
+      response = await HttpHelper.doDiaryRequest(
+        requestType: RequestType.get,
+        requestUri: UriHelper.constructUri(
+          pathSegs: DiaryEndpoints.getEntryTxt(
+            userId: currentUser.userId,
+            entryId: entry.entryId!,
+          ),
+        ),
+      );
+      if (response != null) {
+        return response.bodyBytes;
+      } else {
+        return null;
+      }
+    } on DiaryException catch (e, stackTr) {
+      rethrow;
+    }
+  }
+
+  /// Helper method that saves the diary of a [LyfUser] as a Pdf
+  /// on the local storage.
+  static Future<Uint8List?> getDiaryPdf() async {
+    late http.Response? response;
+    try {
+      response = await HttpHelper.doDiaryRequest(
+        requestType: RequestType.get,
+        requestUri: UriHelper.constructUri(
+          pathSegs: DiaryEndpoints.getDiaryPdf(
+            userId: currentUser.userId,
+          ),
+        ),
+      );
+      if (response != null) {
+        return response.bodyBytes;
+      } else {
+        return null;
+      }
+    } on DiaryException catch (e, stackTr) {
+      rethrow;
+    }
+  }
+
+  /// Helper method that saves the diary of a [LyfUser] as a Txt file
+  /// on the local storage.
+  static Future<Uint8List?> getDiaryTxt() async {
+    late http.Response? response;
+    try {
+      response = await HttpHelper.doDiaryRequest(
+        requestType: RequestType.get,
+        requestUri: UriHelper.constructUri(
+          pathSegs: DiaryEndpoints.getDiaryTxt(
+            userId: currentUser.userId,
+          ),
+        ),
+      );
+      if (response != null) {
+        return response.bodyBytes;
+      } else {
+        return null;
+      }
+    } on DiaryException catch (e, stackTr) {
+      rethrow;
+    }
+  }
 
   /// Helper method to update a [DiaryEntry] in the database.
   static Future<int> updateEntry({

@@ -61,7 +61,6 @@ class _HomePageState extends ConsumerState<HomePage>
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    // var theme = ref.read(themeNotifier.notifier).getCurrentState();
     return StreamBuilder<bool>(
         initialData: true,
         stream: isSidebarOpenedStream,
@@ -117,7 +116,7 @@ class _HomePageState extends ConsumerState<HomePage>
                           child: Column(
                             children: [
                               Container(
-                                height: 0.470 * size.height,
+                                height: 0.50 * size.height,
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 0.1 * size.width,
                                     vertical: 0.075 * size.height),
@@ -130,19 +129,31 @@ class _HomePageState extends ConsumerState<HomePage>
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      // IconButton(
-                                      //     onPressed: () {
-                                      //       openBar();
-                                      //     },
-                                      //     color: Colors.white,
-                                      //     icon: Icon(Icons.menu_rounded)),
-                                      Greetings(username: currentUser.username),
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                          bottom: 0.0125 * size.height,
+                                        ),
+                                        child: IconButton(
+                                          onPressed: () {
+                                            closeBar();
+                                          },
+                                          color:
+                                              Theme.of(context).iconTheme.color,
+                                          iconSize: 35,
+                                          icon: const Icon(Icons.menu_rounded),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 0.45 * size.width,
+                                        child: Greetings(
+                                            username: currentUser.username),
+                                      ),
                                     ],
                                   ),
                                 ),
                               ),
                               Container(
-                                height: 0.530 * size.height,
+                                height: 0.50 * size.height,
                                 alignment: Alignment.center,
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 0.05 * size.width,
@@ -152,127 +163,137 @@ class _HomePageState extends ConsumerState<HomePage>
                                   //shrinkWrap: true,
                                   crossAxisCount: 2,
                                   children: [
-                                    Card(
-                                      clipBehavior: Clip.antiAlias,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(12),
+                                    SizedBox(
+                                      width: 0.25 * size.width,
+                                      height: 0.25 * size.width,
+                                      child: Card(
+                                        clipBehavior: Clip.antiAlias,
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(12),
+                                          ),
                                         ),
-                                      ),
-                                      child: InkWell(
-                                        onTap: () {
-                                          goRouter.push(RouteHandler.todo);
-                                        },
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.all(20.0),
-                                              child: SvgPicture.asset(
-                                                "assets/images/todo.svg",
-                                                color: Theme.of(context)
-                                                    .iconTheme
-                                                    .color,
+                                        child: InkWell(
+                                          onTap: () {
+                                            goRouter.push(RouteHandler.todo);
+                                          },
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.all(20.0),
+                                                child: SvgPicture.asset(
+                                                  "assets/images/todo.svg",
+                                                  color: Theme.of(context)
+                                                      .iconTheme
+                                                      .color,
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              "Todo",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline5,
-                                            ),
-                                          ],
+                                              Text(
+                                                "Todo",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline5,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                    Card(
-                                      clipBehavior: Clip.antiAlias,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(12),
+                                    SizedBox(
+                                      width: 0.25 * size.width,
+                                      height: 0.25 * size.width,
+                                      child: Card(
+                                        clipBehavior: Clip.antiAlias,
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(12),
+                                          ),
                                         ),
-                                      ),
-                                      child: InkWell(
-                                        onTap: () {
-                                          goRouter.push(RouteHandler.diary);
-                                        },
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.all(20.0),
-                                              child: SvgPicture.asset(
-                                                "assets/images/diary.svg",
-                                                color: Theme.of(context)
-                                                    .iconTheme
-                                                    .color,
+                                        child: InkWell(
+                                          onTap: () {
+                                            goRouter.push(RouteHandler.diary);
+                                          },
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.all(20.0),
+                                                child: SvgPicture.asset(
+                                                  "assets/images/diary.svg",
+                                                  color: Theme.of(context)
+                                                      .iconTheme
+                                                      .color,
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              "Diary",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline5,
-                                            ),
-                                          ],
+                                              Text(
+                                                "Diary",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline5,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                    Card(
-                                      clipBehavior: Clip.antiAlias,
-                                      color: Theme.of(context)
-                                          .cardColor
-                                          .withOpacity(0.5),
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(12),
+                                    SizedBox(
+                                      width: 0.25 * size.width,
+                                      height: 0.25 * size.width,
+                                      child: Card(
+                                        clipBehavior: Clip.antiAlias,
+                                        color: Theme.of(context)
+                                            .cardColor
+                                            .withOpacity(0.5),
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(12),
+                                          ),
                                         ),
-                                      ),
-                                      // child: Consumer(
-                                      //   builder: ((context, ref, child) {
-                                      //     final todosState =
-                                      //         ref.watch(todosNotifierProvider);
-                                      //     return Container();
-                                      //   }),
-                                      child: InkWell(
-                                        onTap: () {},
-                                        // child: Column(
-                                        //   mainAxisAlignment:
-                                        //       MainAxisAlignment.center,
-                                        //   crossAxisAlignment:
-                                        //       CrossAxisAlignment.center,
-                                        //   children: [
-                                        //     Padding(
-                                        //       padding: EdgeInsets.all(20.0),
-                                        //       child: SvgPicture.asset(
-                                        //           "assets/images/statHealth.svg"),
-                                        //     ),
-                                        //     Text(
-                                        //       "StatHealth",
-                                        //       style: Theme.of(context)
-                                        //           .textTheme
-                                        //           .headline5,
-                                        //     ),
-                                        //   ],
-                                        // ),
+                                        child: InkWell(
+                                          onTap: () {},
+                                          // child: Column(
+                                          //   mainAxisAlignment:
+                                          //       MainAxisAlignment.center,
+                                          //   crossAxisAlignment:
+                                          //       CrossAxisAlignment.center,
+                                          //   children: [
+                                          //     Padding(
+                                          //       padding: EdgeInsets.all(20.0),
+                                          //       child: SvgPicture.asset(
+                                          //           "assets/images/statHealth.svg"),
+                                          //     ),
+                                          //     Text(
+                                          //       "StatHealth",
+                                          //       style: Theme.of(context)
+                                          //           .textTheme
+                                          //           .headline5,
+                                          //     ),
+                                          //   ],
+                                          // ),
+                                        ),
                                       ),
                                     ),
                                     // ),
-                                    Card(
-                                      clipBehavior: Clip.antiAlias,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(12),
+                                    SizedBox(
+                                      width: 0.25 * size.width,
+                                      height: 0.25 * size.width,
+                                      child: Card(
+                                        clipBehavior: Clip.antiAlias,
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(12),
+                                          ),
                                         ),
-                                      ),
-                                      child: InkWell(
-                                        onTap: () async {},
+                                        child: InkWell(
+                                          onTap: () async {},
+                                        ),
                                       ),
                                     ),
                                   ],

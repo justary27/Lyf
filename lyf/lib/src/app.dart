@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lyf/src/state/theme/theme_state.dart';
 
@@ -59,6 +60,17 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
             scaffoldMessengerKey: snackKey,
             routerDelegate: goRouter.routerDelegate,
             routeInformationParser: goRouter.routeInformationParser,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en', ''), // English, no country code
+              Locale('hi', 'IN'),
+              Locale('es', ''), // Spanish, no country code
+              Locale('fr', ''),
+            ],
           ),
         );
       case "ios":
