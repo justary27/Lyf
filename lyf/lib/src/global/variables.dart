@@ -11,5 +11,8 @@ bool loginState = false;
 /// Equals the [guestUser] before user login.
 LyfUser currentUser = guestUser;
 
+///
+late int themeCode;
+
 final GlobalKey<ScaffoldMessengerState> snackKey =
     GlobalKey<ScaffoldMessengerState>();

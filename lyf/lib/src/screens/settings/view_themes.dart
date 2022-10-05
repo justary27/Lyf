@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/constants/theme_constants.dart';
 import 'package:lyf/src/routes/routing.dart';
+import 'package:lyf/src/services/lyf_settings.dart';
 import 'package:lyf/src/state/theme/theme_state.dart';
+import 'package:lyf/src/utils/helpers/theme_helper.dart';
 
 class ThemeSettingsPage extends ConsumerStatefulWidget {
   const ThemeSettingsPage({Key? key}) : super(key: key);
@@ -15,6 +16,11 @@ class ThemeSettingsPage extends ConsumerStatefulWidget {
 }
 
 class _ThemeSettingsPageState extends ConsumerState<ThemeSettingsPage> {
+  void _changeTheme(ThemeHelper themeName, int themeIndex) {
+    ref.read(themeNotifier.notifier).changeTheme(themeName);
+    LyfService.themeService.setTheme(themeIndex.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -122,126 +128,16 @@ class _ThemeSettingsPageState extends ConsumerState<ThemeSettingsPage> {
                               themeConstants[index]['desc'],
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
-                            onTap: () {
-                              ref.read(themeNotifier.notifier).changeTheme(
-                                    themeConstants[index]['theme'],
-                                  );
-                            },
+                            onTap: () => _changeTheme(
+                              themeConstants[index]['theme'],
+                              index,
+                            ),
                             tileColor: Colors.transparent,
                           );
                         }),
                         itemCount: 3,
                       ),
-                      // child: GridView.count(
-                      //   crossAxisCount: 2,
-                      //   children: [
-                      //     Card(
-                      //       clipBehavior: Clip.antiAlias,
-                      //       shape: const RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.all(
-                      //           Radius.circular(12),
-                      //         ),
-                      //       ),
-                      //       color: Colors.white.withOpacity(0.15),
-                      //       child: InkWell(
-                      //         onTap: () {},
-                      //         child: Column(
-                      //           crossAxisAlignment: CrossAxisAlignment.start,
-                      //           children: [
-                      //             Container(
-                      //               width: 0.425 * size.width,
-                      //               height: 0.10 * size.height,
-                      //               color: Colors.white.withOpacity(0.35),
-                      //             ),
-                      //             Container(
-                      //               padding: EdgeInsets.symmetric(
-                      //                 horizontal: 0.025 * size.width,
-                      //                 vertical: 0.0125 * size.height,
-                      //               ),
-                      //               width: 0.425 * size.width,
-                      //               height: 0.10 * size.height,
-                      //               child: Column(
-                      //                 crossAxisAlignment:
-                      //                     CrossAxisAlignment.start,
-                      //                 children: [
-                      //                   Text(
-                      //                     "Lyf",
-                      //                     style: Theme.of(context)
-                      //                         .textTheme
-                      //                         .headline3,
-                      //                   ),
-                      //                   Padding(
-                      //                     padding: const EdgeInsets.fromLTRB(
-                      //                         0, 8, 0, 0),
-                      //                     child: Text(
-                      //                       "The default theme of the Lyf app.",
-                      //                       style: Theme.of(context)
-                      //                           .textTheme
-                      //                           .bodyText2,
-                      //                     ),
-                      //                   )
-                      //                 ],
-                      //               ),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     Card(
-                      //       clipBehavior: Clip.antiAlias,
-                      //       shape: const RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.all(
-                      //           Radius.circular(12),
-                      //         ),
-                      //       ),
-                      //       color: Colors.white.withOpacity(0.15),
-                      //       child: InkWell(
-                      //         onTap: () {},
-                      //         child: Column(
-                      //           crossAxisAlignment: CrossAxisAlignment.start,
-                      //           children: [
-                      //             Container(
-                      //               width: 0.425 * size.width,
-                      //               height: 0.10 * size.height,
-                      //               color: Colors.white.withOpacity(0.35),
-                      //             ),
-                      //             Container(
-                      //               padding: EdgeInsets.symmetric(
-                      //                 horizontal: 0.025 * size.width,
-                      //                 vertical: 0.0125 * size.height,
-                      //               ),
-                      //               width: 0.425 * size.width,
-                      //               height: 0.10 * size.height,
-                      //               child: Column(
-                      //                 crossAxisAlignment:
-                      //                     CrossAxisAlignment.start,
-                      //                 children: [
-                      //                   Text(
-                      //                     "Monochrome",
-                      //                     style: Theme.of(context)
-                      //                         .textTheme
-                      //                         .headline3,
-                      //                   ),
-                      //                   Padding(
-                      //                     padding: const EdgeInsets.fromLTRB(
-                      //                         0, 8, 0, 0),
-                      //                     child: Text(
-                      //                       "The classic black and white theme.",
-                      //                       style: Theme.of(context)
-                      //                           .textTheme
-                      //                           .bodyText2,
-                      //                     ),
-                      //                   )
-                      //                 ],
-                      //               ),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                    )
+                    ),
                   ],
                 ),
               ),

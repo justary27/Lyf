@@ -222,7 +222,7 @@ class EntryTxtGenerator:
         text = f"""{first_entry._user}'s Diary\n\n"""
 
         for entry in diary:
-            text += f"{entry.entryTitle}\n{entry.entryDescription}\n{entry.CreatedAt}\n"
+            text += f"{entry.entryTitle}\n{entry.entryDescription}\n{entry.CreatedAt}\n\n"
 
         bytes_text = bytes(text, "utf-8")
 

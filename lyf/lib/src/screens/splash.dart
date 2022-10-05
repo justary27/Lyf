@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyf/src/routes/routing.dart';
+import 'package:lyf/src/services/init_service.dart';
 import 'package:lyf/src/state/theme/theme_state.dart';
 
 import '../global/functions.dart';
@@ -18,14 +19,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    initRouteProvider();
+    _initRouteProvider();
   }
 
-  Future<void> initRouteProvider() async {
+  Future<void> _initRouteProvider() async {
     try {
-      creds = await getCredentials();
       await login(creds);
-      print(loginState);
       if (loginState) {
         goRouter.push("/");
       } else {
