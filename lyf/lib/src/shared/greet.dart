@@ -34,7 +34,7 @@ class _GreetingsState extends State<Greetings> {
     if (currentTime.hour >= 4 && currentTime.hour < 12) {
       greeting = AppLocalizations.of(context)!.goodMorning;
     } else if (currentTime.hour >= 12 && currentTime.hour < 16) {
-      greeting = AppLocalizations.of(context)!.goodMorning; // Afternoon
+      greeting = AppLocalizations.of(context)!.goodAfternoon;
     } else if (currentTime.hour >= 16 && currentTime.hour < 20) {
       greeting = AppLocalizations.of(context)!.goodEvening;
     } else {

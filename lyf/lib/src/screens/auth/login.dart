@@ -83,14 +83,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               SvgPicture.asset(
                                 "assets/images/lyf.svg",
                                 width: 40,
-                                color: Theme.of(context).primaryColor,
+                                color: Colors.white,
                               ),
                               Text(
                                 "Lyf",
                                 style: GoogleFonts.caveat(
-                                  textStyle: TextStyle(
+                                  textStyle: const TextStyle(
                                     fontSize: 60,
-                                    color: Theme.of(context).primaryColor,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ),
@@ -324,7 +324,7 @@ class _LoginFormState extends State<LoginForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 "Don't have an account?",
               ),
               TextButton(

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:lyf/src/constants/theme_constants.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/services/lyf_settings.dart';
 import 'package:lyf/src/state/theme/theme_state.dart';
-import 'package:lyf/src/utils/helpers/theme_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../constants/language_constants.dart';
@@ -30,6 +28,7 @@ class _LanguageSettingsScreenState
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     var theme = ref.read(themeNotifier.notifier).getCurrentState();
+    final languageConstants = languageProvider(context);
 
     return Stack(
       children: [
@@ -62,7 +61,7 @@ class _LanguageSettingsScreenState
                 ),
               ),
               title: Text(
-                "Language",
+                AppLocalizations.of(context)!.language,
                 style: Theme.of(context).textTheme.headline3,
               ),
             ),
@@ -86,16 +85,16 @@ class _LanguageSettingsScreenState
                           vertical: 0.025 * size.height,
                         ),
                         leading: Icon(
-                          Icons.mode_night_outlined,
+                          FontAwesomeIcons.language,
                           color: Theme.of(context).iconTheme.color,
                           size: 35,
                         ),
                         title: Text(
-                          "App Languages",
+                          AppLocalizations.of(context)!.appLanguage,
                           style: Theme.of(context).textTheme.headline2,
                         ),
                         subtitle: Text(
-                          "Choose the app's language.",
+                          AppLocalizations.of(context)!.appLanguageDesc,
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         tileColor: Colors.transparent,
@@ -108,30 +107,18 @@ class _LanguageSettingsScreenState
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: ((context, index) {
                           return ListTile(
-                            // leading: Container(
-                            //   padding: EdgeInsets.all(5),
-                            //   width: 50,
-                            //   decoration: BoxDecoration(
-                            //     color: Color(
-                            //       themeConstants[index]['bColor'],
-                            //     ),
-                            //   ),
-                            //   child: Center(
-                            //     child: SvgPicture.asset(
-                            //       "assets/images/lyf.svg",
-                            //       color: Color(
-                            //         themeConstants[index]['iColor'],
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
+                            leading: CircleAvatar(
+                              backgroundColor: Theme.of(context).primaryColor,
+                              child: Text(
+                                languageConstants[index]['code'],
+                                style: TextStyle(
+                                  color: theme.gradientColors[0],
+                                ),
+                              ),
+                            ),
                             title: Text(
                               languageConstants[index]['langName'],
                               style: Theme.of(context).textTheme.headline3,
-                            ),
-                            subtitle: Text(
-                              languageConstants[index]['desc'],
-                              style: Theme.of(context).textTheme.bodyText2,
                             ),
                             onTap: () => _changeLanguage(
                               languageConstants[index]['locale'],

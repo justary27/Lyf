@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/shared/lyf.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
 
-class WelcomePage extends StatelessWidget {
+import '../../state/theme/theme_state.dart';
+
+class WelcomePage extends ConsumerStatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
 
   @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends ConsumerState<WelcomePage> {
+  @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
     return Stack(
       children: [
         Container(
@@ -20,11 +29,10 @@ class WelcomePage extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                Colors.grey.shade700,
-                Colors.grey.shade900,
-                Colors.black
-              ],
+              colors: ref
+                  .read(themeNotifier.notifier)
+                  .getCurrentState()
+                  .gradientColors,
             ),
           ),
           child: Column(

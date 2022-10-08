@@ -15,6 +15,18 @@
 
     "yourDiary": "Sus entradas de diario",
 
+    "delete": "Borrar",
+
+    "saveAsPdf": "Guardar como pdf",
+
+    "saveAsTxt": "Guardar como texto",
+
+    "share": "Cuota",
+
+    "exportAsPdf": "Exportar como pdf",
+
+    "exportAsTxt": "Exportar como texto",
+
     "account": "Cuenta",
 
     "accountDesc": "Información de la cuenta, seguridad y actividad.",
@@ -49,5 +61,15 @@
 
     "language": "Idioma",
 
-    "languageDesc": "Cambia el idioma de la aplicación."
+    "languageDesc": "Cambia el idioma de la aplicación.",
+
+    "appLanguage": "Idiomas de la aplicación",
+    
+    "appLanguageDesc": "Elige el idioma de la aplicación.",
+
+    "hindi": "Hindi",
+
+    "french": "Francesa",
+
+    "spanish": "Española"
 }

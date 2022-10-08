@@ -39,6 +39,36 @@
         "description": "The conventional your diary phrase"
     },
 
+    "delete": "Delete",
+    "@delete": {
+        "description": "The conventional delete phrase"
+    },
+
+    "saveAsPdf": "Save as Pdf",
+    "@saveAsPdf": {
+        "description": "The conventional save as pdf phrase"
+    },
+
+    "saveAsTxt": "Save as Txt",
+    "@saveAsTxt": {
+        "description": "The conventional save as text phrase"
+    },
+
+    "share": "Share",
+    "@share": {
+        "description": "The conventional share phrase"
+    },
+
+    "exportAsPdf": "Export as Pdf",
+    "@exportAsPdf": {
+        "description": "The conventional export as pdf phrase"
+    },
+
+    "exportAsTxt": "Export as Txt",
+    "@exportAsTxt": {
+        "description": "The conventional export as text phrase"
+    },
+
     "account": "Account",
     "@account": {
         "description": "The conventional account phrase"
@@ -51,47 +81,47 @@
 
     "accountInfo": "Account info",
     "@accountInfo": {
-        "description": "The conventional account description phrase"
+        "description": "The conventional account info phrase"
     },
 
     "accountInfoDesc": "Basic account related settings.",
     "@accountInfoDesc": {
-        "description": "The conventional account description phrase"
+        "description": "The conventional account info description phrase"
     },
 
     "username": "Username",
     "@username": {
-        "description": "The conventional account description phrase"
+        "description": "The conventional username phrase"
     },
 
     "activity": "Activity",
     "@activity": {
-        "description": "The conventional account description phrase"
+        "description": "The conventional activity phrase"
     },
 
     "activityDesc": "Settings related to your account's activity.",
     "@activityDesc": {
-        "description": "The conventional account description phrase"
+        "description": "The conventional activity description phrase"
     },
 
     "logout": "Log out",
     "@logout": {
-        "description": "The conventional account description phrase"
+        "description": "The conventional log out phrase"
     },
 
     "logoutDesc": "This will log you out of the app and you'll have to login again.",
     "@logoutDesc": {
-        "description": "The conventional account description phrase"
+        "description": "The conventional log out description phrase"
     },
 
     "deactivateAccount": "Deactivate account",
     "@deactivateAccount": {
-        "description": "The conventional account description phrase"
+        "description": "The conventional deactivate account phrase"
     },
 
     "deactivateAccountDesc": "This will deactivate your account for an indefinite period till you reactivate it again.",
     "@deactivateAccountDesc": {
-        "description": "The conventional account description phrase"
+        "description": "The conventional deactivate account description phrase"
     },
 
     "deactivateMyAccount": "Deactivate my account",
@@ -128,5 +158,35 @@
     "languageDesc": "Change the app's language.",
     "@languageDesc": {
         "description": "The conventional language description phrase"
+    },
+
+    "appLanguage": "App Languages",
+    "@appLanguage": {
+        "description": "The conventional lapp anguage description phrase"
+    },
+
+    "appLanguageDesc": "Choose the app's language.",
+    "@appLanguageDesc": {
+        "description": "The conventional app language description phrase"
+    },
+
+    "english": "English",
+    "@english": {
+        "description": "The conventional english phrase"
+    },
+
+    "hindi": "Hindi",
+    "@hindi": {
+        "description": "The conventional hindi phrase"
+    },
+
+    "french": "French",
+    "@french": {
+        "description": "The conventional french phrase"
+    },
+
+    "spanish": "Spanish",
+    "@spanish": {
+        "description": "The conventional spanish phrase"
     }
 }

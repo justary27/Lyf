@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/models/todo_model.dart';
+import 'package:lyf/src/screens/error/error_screen.dart';
 import 'package:lyf/src/screens/settings/language_screen.dart';
 import 'package:lyf/src/utils/helpers/screen_helper.dart';
 import '../screens/auth/login.dart';
@@ -14,7 +15,7 @@ import '../screens/home/home.dart';
 import '../screens/home/view_pfp.dart';
 import '../screens/settings/invite.dart';
 import '../screens/settings/settings.dart';
-import '../screens/settings/view_account.dart';
+import '../screens/settings/account_screen.dart';
 import '../screens/settings/view_themes.dart';
 import '../screens/todo/add_todo.dart';
 import '../screens/todo/todo.dart';
@@ -490,4 +491,24 @@ var goRouter = GoRouter(
       ],
     ),
   ],
+  errorPageBuilder: (context, pageBuilder) {
+    return CustomTransitionPage(
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = 0.0;
+        const end = 1.0;
+        const curve = Curves.ease;
+
+        var tween = Tween(begin: begin, end: end).chain(
+          CurveTween(curve: curve),
+        );
+
+        return FadeTransition(
+          opacity: animation.drive(tween),
+          child: child,
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 750),
+      child: const ErrorScreen(),
+    );
+  },
 );

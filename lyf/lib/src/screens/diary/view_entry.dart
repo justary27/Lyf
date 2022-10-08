@@ -15,6 +15,7 @@ import 'package:lyf/src/shared/viewers/image_viewer.dart';
 import 'package:lyf/src/shared/snackbars/fileupload_snack.dart';
 import 'package:lyf/src/shared/snackbars/unsaved_snack.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../state/diary/diary_list_state.dart';
 import '../../state/diary/diary_view_state.dart';
@@ -547,7 +548,7 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                   color: Colors.grey.shade700,
                                 ),
                                 title: Text(
-                                  "Share",
+                                  AppLocalizations.of(context)!.share,
                                   style: GoogleFonts.aBeeZee(
                                     textStyle: TextStyle(
                                       color: Colors.grey.shade700,
@@ -571,7 +572,7 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                   color: Colors.grey.shade700,
                                 ),
                                 title: Text(
-                                  "Save as Pdf",
+                                  AppLocalizations.of(context)!.saveAsPdf,
                                   style: GoogleFonts.aBeeZee(
                                     textStyle: TextStyle(
                                       color: Colors.grey.shade700,
@@ -593,7 +594,7 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                   color: Colors.grey.shade700,
                                 ),
                                 title: Text(
-                                  "Save as Txt",
+                                  AppLocalizations.of(context)!.saveAsTxt,
                                   style: GoogleFonts.aBeeZee(
                                     textStyle: TextStyle(
                                       color: Colors.grey.shade700,
