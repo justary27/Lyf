@@ -1,5 +1,4 @@
 from datetime import datetime
-import json
 from django.http import FileResponse
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
@@ -95,7 +94,7 @@ def createEntry(request, userId):
             _user=LyfUser.objects.get_user_by_id(userId),
             _title=data['_title'],
             _description=data['_description'],
-            _is_private=data['_is_private'],
+            _is_private=True if data['_is_private'] == 'true' else False,
             _created_on=datetime.fromisoformat(data['_createdAt']),
             _audioLink=data['_audioLink'],
             _imageLinks=data['_imageLinks'] if data['_imageLinks'] != "null" else None,

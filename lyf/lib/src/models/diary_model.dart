@@ -19,6 +19,9 @@ class DiaryEntry extends JsonObject {
   @JsonKey(name: "_description")
   final String description;
 
+  @JsonKey(name: "_is_private")
+  final bool isPrivate;
+
   /// Time when the [DiaryEntry] was created
   @JsonKey(name: "_createdAt")
   final DateTime createdAt;
@@ -37,6 +40,7 @@ class DiaryEntry extends JsonObject {
     this.id,
     this.title,
     this.description,
+    this.isPrivate,
     this.createdAt,
     this.audioLink,
     this.imageLinks,

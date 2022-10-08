@@ -214,10 +214,12 @@ class _AddDiaryEntryPageState extends ConsumerState<AddDiaryEntryPage> {
                         null,
                         _titleController.text,
                         _descriptionController.text,
+                        true,
                         DateTime.now(),
                         "",
                         null,
                       );
+                      print(entry.toData());
                       // createEntry(createEntryClient, entry);
                       _createEntry(entry);
                     },
