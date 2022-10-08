@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:lyf/src/utils/enums/error_type.dart';
+import 'package:lyf/src/utils/helpers/agent_helper.dart';
 
 import '../../global/variables.dart';
 import '../enums/request_type.dart';
@@ -23,14 +24,14 @@ class HttpHelper {
       if (requestType == RequestType.get) {
         response = await http.get(
           requestUri,
-          headers: _buildHeaders(
+          headers: await _buildHeaders(
             setAuthorization: addAuthorization,
           ),
         );
       } else if (requestType == RequestType.post) {
         response = await http.post(
           requestUri,
-          headers: _buildHeaders(
+          headers: await _buildHeaders(
             setAuthorization: addAuthorization,
           ),
           body: requestBody,
@@ -38,7 +39,7 @@ class HttpHelper {
       } else if (requestType == RequestType.put) {
         response = await http.put(
           requestUri,
-          headers: _buildHeaders(
+          headers: await _buildHeaders(
             setAuthorization: addAuthorization,
           ),
           body: requestBody,
@@ -46,7 +47,7 @@ class HttpHelper {
       } else {
         response = await http.delete(
           requestUri,
-          headers: _buildHeaders(
+          headers: await _buildHeaders(
             setAuthorization: addAuthorization,
           ),
           body: requestBody,
@@ -76,14 +77,14 @@ class HttpHelper {
       if (requestType == RequestType.get) {
         response = await http.get(
           requestUri,
-          headers: _buildHeaders(
+          headers: await _buildHeaders(
             setAuthorization: true,
           ),
         );
       } else if (requestType == RequestType.post) {
         response = await http.post(
           requestUri,
-          headers: _buildHeaders(
+          headers: await _buildHeaders(
             setAuthorization: true,
           ),
           body: requestBody,
@@ -91,7 +92,7 @@ class HttpHelper {
       } else if (requestType == RequestType.put) {
         response = await http.put(
           requestUri,
-          headers: _buildHeaders(
+          headers: await _buildHeaders(
             setAuthorization: true,
           ),
           body: requestBody,
@@ -99,7 +100,7 @@ class HttpHelper {
       } else {
         response = await http.delete(
           requestUri,
-          headers: _buildHeaders(
+          headers: await _buildHeaders(
             setAuthorization: true,
           ),
           body: requestBody,
@@ -132,14 +133,14 @@ class HttpHelper {
       if (requestType == RequestType.get) {
         response = await http.get(
           requestUri,
-          headers: _buildHeaders(
+          headers: await _buildHeaders(
             setAuthorization: true,
           ),
         );
       } else if (requestType == RequestType.post) {
         response = await http.post(
           requestUri,
-          headers: _buildHeaders(
+          headers: await _buildHeaders(
             setAuthorization: true,
           ),
           body: requestBody,
@@ -147,7 +148,7 @@ class HttpHelper {
       } else if (requestType == RequestType.put) {
         response = await http.put(
           requestUri,
-          headers: _buildHeaders(
+          headers: await _buildHeaders(
             setAuthorization: true,
           ),
           body: requestBody,
@@ -155,7 +156,7 @@ class HttpHelper {
       } else {
         response = await http.delete(
           requestUri,
-          headers: _buildHeaders(
+          headers: await _buildHeaders(
             setAuthorization: true,
           ),
           body: requestBody,
@@ -178,13 +179,16 @@ class HttpHelper {
     }
   }
 
-  static Map<String, String> _buildHeaders({
+  static Future<Map<String, String>> _buildHeaders({
     required bool setAuthorization,
-  }) {
+  }) async {
     Map<String, String> headers = {};
     if (setAuthorization) {
       headers.addAll(currentUser.authHeader());
     }
+
+    headers.addAll(await AgentHelper.buildUserAgentHeader());
+
     return headers;
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/routes/routing.dart';
-import 'package:lyf/src/shared/entry_card.dart';
 import 'package:lyf/src/shared/snackbars/delete_snack.dart';
 import 'package:lyf/src/utils/errors/diary/diary_errors.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
@@ -158,7 +157,7 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                                 color: Colors.grey.shade700,
                               ),
                               title: Text(
-                                "Export as Pdf",
+                                AppLocalizations.of(context)!.exportAsPdf,
                                 style: GoogleFonts.aBeeZee(
                                   textStyle: TextStyle(
                                     color: Colors.grey.shade700,
@@ -180,7 +179,7 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                                 color: Colors.grey.shade700,
                               ),
                               title: Text(
-                                "Export as Txt",
+                                AppLocalizations.of(context)!.exportAsTxt,
                                 style: GoogleFonts.aBeeZee(
                                   textStyle: TextStyle(
                                     color: Colors.grey.shade700,
@@ -319,7 +318,9 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                                                                 snackBar);
                                                       },
                                                       child: Text(
-                                                        "Delete",
+                                                        AppLocalizations.of(
+                                                                context)!
+                                                            .delete,
                                                         style:
                                                             GoogleFonts.ubuntu(
                                                           textStyle: TextStyle(
@@ -334,11 +335,13 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                                                             diary[index]);
                                                       },
                                                       child: Text(
-                                                        "Save as Pdf",
+                                                        AppLocalizations.of(
+                                                                context)!
+                                                            .saveAsPdf,
                                                         style: GoogleFonts
                                                             .ubuntu(),
                                                       ),
-                                                    )
+                                                    ),
                                                   ],
                                                 ),
                                               ],

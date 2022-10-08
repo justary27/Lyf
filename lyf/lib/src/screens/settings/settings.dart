@@ -161,10 +161,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                       //   ),
                       // ),
                       // ListTile(
-                      //   tileColor: Colors.white.withOpacity(0.15),
+                      //   tileColor: Theme.of(context).listTileTheme.tileColor,
                       //   leading: Icon(
                       //     Icons.help_outline_rounded,
-                      //     color: Colors.white,
+                      //     color: Theme.of(context).iconTheme.color,
                       //   ),
                       //   onTap: () {},
                       //   title: Text(
@@ -172,8 +172,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                       //     style: Theme.of(context).textTheme.headline4,
                       //   ),
                       //   subtitle: Text(
-                      //     "Invite a friend",
-                      //     style: Theme.of(context).textTheme.bodyText1,
+                      //     "Your cheatsheet to lyf.",
+                      //     style: Theme.of(context).textTheme.bodyText2,
                       //   ),
                       // ),
                       // ListTile(

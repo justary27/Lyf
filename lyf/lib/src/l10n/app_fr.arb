@@ -15,6 +15,18 @@
 
     "yourDiary": "Vos entrées de journal",
 
+    "delete": "Effacer",
+
+    "saveAsPdf": "Enregistrer au format pdf",
+
+    "saveAsTxt": "Enregistrer en tant que texte",
+
+    "share": "Partager",
+
+    "exportAsPdf": "Exporter en pdf",
+
+    "exportAsTxt": "Exporter sous forme de texte",
+
     "account": "Compte",
 
     "accountDesc": "Informations sur le compte, sécurité et activité.",
@@ -49,5 +61,15 @@
 
     "language": "Langue",
 
-    "languageDesc": "Changez la langue de l'application."
+    "languageDesc": "Changez la langue de l'application.",
+
+    "appLanguage": "Langues de l'application",
+    
+    "appLanguageDesc": "Choisissez la langue de l'application.",
+
+    "hindi": "Hindi",
+
+    "french": "Anglaise",
+
+    "spanish": "Espagnole"
 }
