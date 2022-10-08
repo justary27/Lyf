@@ -526,6 +526,7 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                       widget.entry.id,
                                       _titleController.text,
                                       _descriptionController.text,
+                                      true,
                                       dateController,
                                       widget.entry.audioLink,
                                       widget.entry.imageLinks,
