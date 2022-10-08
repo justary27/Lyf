@@ -5,57 +5,64 @@ from django.utils import timezone
 import uuid
 from User.models import LyfUser
 
+
 # Create your models here.
 class DiaryEntryManger(models.Manager):
 
-    def getEntries(self,userId):
+    def getEntries(self, userId):
         return list(self.filter(_user=LyfUser.objects.get_user_by_id(userId)
-        ).all())
+                                ).all())
 
     def get_entry_by_id(self, id):
-        return self.filter(_id = id).get()
+        return self.filter(_id=id).get()
+
 
 class DiaryEntry(models.Model):
-
     _id = models.UUIDField(
-            default=uuid.uuid4,
-            auto_created=True,
-            primary_key=True, 
-            editable=False,
-            unique=True,
-        )
-    _user = models.ForeignKey(LyfUser, on_delete=models.CASCADE, editable= False)
+        default=uuid.uuid4,
+        auto_created=True,
+        primary_key=True,
+        editable=False,
+        unique=True,
+    )
+    _user = models.ForeignKey(LyfUser, on_delete=models.CASCADE, editable=False)
 
     _title = models.CharField(
-                _("Title"), 
-                max_length=120, 
-                default="Untitled"
-            )
+        _("Title"),
+        max_length=120,
+        default="Untitled"
+    )
     _description = models.TextField(
-                    _("Description"), 
-                )
+        _("Description"),
+    )
 
-    _created_on = models.DateTimeField(default=timezone.now,)
-    
-    _audioLink = models.TextField(_("audioFileLink"),blank=True, editable=True, null=True)
+    _is_private = models.BooleanField(default=True)
+
+    _created_on = models.DateTimeField(default=timezone.now, )
+
+    _audioLink = models.TextField(_("audioFileLink"), blank=True, editable=True, null=True)
 
     _imageLinks = models.JSONField(_("imageFileLinks"), blank=True, null=True)
 
     # _audioAttachment = models.FileField(_("Audio Attachment"),upload_to=)
 
     objects = DiaryEntryManger()
+
     @property
-    def entryId(self) -> str:
+    def id(self) -> str:
         return str(self._id)
 
     @property
-    def entryTitle(self) -> str:
+    def title(self) -> str:
         return self._title
 
     @property
-    def entryDescription(self) -> str:
+    def description(self) -> str:
         return self._description
 
+    @property
+    def is_private(self) ->bool:
+        return self._is_private
     @property
     def CreatedAt(self) -> str:
         return str(self._created_on)
@@ -69,18 +76,20 @@ class DiaryEntry(models.Model):
         return self._imageLinks
 
     @property
-    def asDict(self)->dict:
+    def as_dict(self) -> dict:
         return {
-            "_id":self.entryId,
-            "_title":self.entryTitle,
-            "_description": self.entryDescription,
-            "_createdAt":self.CreatedAt,
-            "_audioLink":self.audioAttachment if self.audioAttachment!="None" else None,
-            "_imageLinks":self.imageAttachment#.replace('\'','').split(',') if self.imageAttachment != "Null" else "Null"
+            "_id": self.id,
+            "_title": self.title,
+            "_description": self.description,
+            "_is_private": self.is_private,
+            "_createdAt": self.CreatedAt,
+            "_audioLink": self.audioAttachment if self.audioAttachment != "None" else None,
+            "_imageLinks": self.imageAttachment
+            # .replace('\'','').split(',') if self.imageAttachment != "Null" else "Null"
         }
 
     # def user_directory_path(userInstance,  filename):
     #     return '{0}/pfp/{1}'.format(userInstance._id, filename)
 
     def __str__(self) -> str:
-        return str(self.entryTitle+self.entryId)
+        return str(self.title + self.id)

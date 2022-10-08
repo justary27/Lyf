@@ -18,7 +18,7 @@ from django.template import loader
 def get(request, userId):
     try:
         user = LyfUser.objects.get_user_by_id(userId)
-        data = user.asDict
+        data = user.as_dict
         return Response(data)
 
     except Exception as e:

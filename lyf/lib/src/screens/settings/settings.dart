@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/routes/routing.dart';
+import 'package:lyf/src/utils/config/cdn_configuration.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -160,22 +161,28 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                       //     style: Theme.of(context).textTheme.bodyText1,
                       //   ),
                       // ),
-                      // ListTile(
-                      //   tileColor: Theme.of(context).listTileTheme.tileColor,
-                      //   leading: Icon(
-                      //     Icons.help_outline_rounded,
-                      //     color: Theme.of(context).iconTheme.color,
-                      //   ),
-                      //   onTap: () {},
-                      //   title: Text(
-                      //     "Help Center",
-                      //     style: Theme.of(context).textTheme.headline4,
-                      //   ),
-                      //   subtitle: Text(
-                      //     "Your cheatsheet to lyf.",
-                      //     style: Theme.of(context).textTheme.bodyText2,
-                      //   ),
-                      // ),
+                      ListTile(
+                        tileColor: Theme.of(context).listTileTheme.tileColor,
+                        leading: Icon(
+                          Icons.help_outline_rounded,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
+                        onTap: () {
+                          goRouter.push(
+                            RouteHandler.helpSettings,
+                            extra:
+                                "${LyfCdnConfig.uriProdScheme}://${LyfCdnConfig.cdnProdHost}",
+                          );
+                        },
+                        title: Text(
+                          "Help Center",
+                          style: Theme.of(context).textTheme.headline4,
+                        ),
+                        subtitle: Text(
+                          "Your cheatsheet to lyf.",
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ),
                       // ListTile(
                       //   tileColor: Colors.white.withOpacity(0.15),
                       //   leading: Stack(

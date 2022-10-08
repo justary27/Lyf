@@ -66,10 +66,12 @@
     "appLanguage": "Langues de l'application",
     
     "appLanguageDesc": "Choisissez la langue de l'application.",
+    
+    "english": "Anglaise",
 
     "hindi": "Hindi",
 
-    "french": "Anglaise",
+    "french": "Français",
 
     "spanish": "Espagnole"
 }

@@ -78,8 +78,10 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
                             Text(
                               "Lyf",
                               style: GoogleFonts.caveat(
-                                textStyle: TextStyle(
-                                    fontSize: 60, color: Colors.white),
+                                textStyle: const TextStyle(
+                                  fontSize: 60,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ],
