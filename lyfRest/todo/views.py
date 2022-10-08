@@ -15,7 +15,7 @@ from rest_framework import status
 def getAllTodos(request, userId):
     try:
         todos = Todo.objects.getTodos(userId)
-        data = [todo.asDict for todo in todos]
+        data = [todo.as_dict for todo in todos]
 
         return Response(data)
     except Exception as e:
@@ -24,9 +24,9 @@ def getAllTodos(request, userId):
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def getTodobyId(request, userId, todoId):
-    todo = Todo.objects.get_todo_by_id(todoId)
-    data = todo.asDict
+def getTodobyId(request, userId, todo_id):
+    todo = Todo.objects.get_todo_by_id(todo_id)
+    data = todo.as_dict
 
     return Response(data)
 

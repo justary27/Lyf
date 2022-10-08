@@ -4,6 +4,7 @@ import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/models/todo_model.dart';
 import 'package:lyf/src/screens/error/error_screen.dart';
 import 'package:lyf/src/screens/settings/language_screen.dart';
+import 'package:lyf/src/shared/viewers/web_viewer.dart';
 import 'package:lyf/src/utils/helpers/screen_helper.dart';
 import '../screens/auth/login.dart';
 import '../screens/auth/signup.dart';
@@ -388,7 +389,7 @@ var goRouter = GoRouter(
                 );
               },
               transitionDuration: const Duration(milliseconds: 750),
-              child: const AccountSettingsPage(),
+              child: WebViewer(initialUrl: pageBuilder.extra as String),
             );
           },
         ),

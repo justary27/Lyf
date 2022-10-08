@@ -18,7 +18,7 @@ import io
 @permission_classes([IsAuthenticated])
 def getAllDiaries(request, userId):
     entries = DiaryEntry.objects.getEntries(userId)
-    data = [entry.asDict for entry in entries]
+    data = [entry.as_dict for entry in entries]
     return Response(data)
 
 
@@ -50,7 +50,7 @@ def getAllTXTs(request, userId):
 @permission_classes([IsAuthenticated])
 def getEntrybyId(request, userId, entryId):
     entry = DiaryEntry.objects.get_entry_by_id(entryId)
-    data = entry.asDict
+    data = entry.as_dict
 
     return Response(data)
 
@@ -59,7 +59,7 @@ def getEntrybyId(request, userId, entryId):
 @permission_classes([IsAuthenticated])
 def getPDFbyEntryId(request, userId, entryId, entryId2):
     entry = DiaryEntry.objects.get_entry_by_id(entryId)
-    data = entry.asDict
+    data = entry.as_dict
 
     file_buffer = io.BytesIO()
     file_buffer = DiaryGenerator.generateEntry(entry=entry, file_buffer=file_buffer)
@@ -75,7 +75,7 @@ def getPDFbyEntryId(request, userId, entryId, entryId2):
 @permission_classes([IsAuthenticated])
 def getTXTbyEntryId(request, userId, entryId, entryId2):
     entry = DiaryEntry.objects.get_entry_by_id(entryId)
-    data = entry.asDict
+    data = entry.as_dict
 
     file_buffer = io.BytesIO()
     file_buffer = TxtGenerator.generateEntryTxt(entry, file_buffer)
@@ -95,6 +95,7 @@ def createEntry(request, userId):
             _user=LyfUser.objects.get_user_by_id(userId),
             _title=data['_title'],
             _description=data['_description'],
+            _is_private=data['_is_private'],
             _created_on=datetime.fromisoformat(data['_createdAt']),
             _audioLink=data['_audioLink'],
             _imageLinks=data['_imageLinks'] if data['_imageLinks'] != "null" else None,
@@ -114,6 +115,7 @@ def updateEntry(request, userId, entryId):
         '_user': userId,
         '_title': data["_title"],
         '_description': data["_description"],
+        '_is_private': data["_is_private"],
         '_created_on': data["_createdAt"],
         '_audioLink': data["_audioLink"],
         '_imageLinks': list(data['_imageLinks'][1:-1].replace(",", "").split(" ")) if data[

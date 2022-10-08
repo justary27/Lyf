@@ -7,7 +7,6 @@ import 'package:lyf/src/state/theme/theme_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import './global/variables.dart';
 import './routes/routing.dart';
-import './themes/themes.dart';
 import './utils/handlers/device_handler.dart';
 import './utils/helpers/screen_helper.dart';
 
@@ -70,9 +69,9 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: const [
-              Locale('en', ''), // English, no country code
+              Locale('en', ''),
               Locale('hi', ''),
-              Locale('es', ''), // Spanish, no country code
+              Locale('es', ''),
               Locale('fr', ''),
             ],
           ),

@@ -70,11 +70,11 @@ class EntryPDFGenerator:
 
         parts = []
 
-        title = self.textFormatter(self.entry.asDict['_title'])
-        dateObj = datetime.fromisoformat(self.entry.asDict["_createdAt"]).date()
+        title = self.textFormatter(self.entry.as_dict['_title'])
+        dateObj = datetime.fromisoformat(self.entry.as_dict["_createdAt"]).date()
         dateText = dateObj.strftime("%B %d, %Y")
         lineBreak = "&nbsp;&nbsp;<br />"
-        description = self.textFormatter(self.entry.asDict['_description'])
+        description = self.textFormatter(self.entry.as_dict['_description'])
 
         titleStyle = ParagraphStyle(
             name="Title",
@@ -107,10 +107,10 @@ class EntryPDFGenerator:
         parts.append(Paragraph(description, style=descriptionStyle))
         summaryName = SimpleDocTemplate(
             self.fileBuffer,
-            title=self.entry.asDict['_title'],
+            title=self.entry.as_dict['_title'],
             creator="Lyf",
             author=entry._user.username,
-            subject=entry._user.username + "'s " + self.entry.asDict['_title']
+            subject=entry._user.username + "'s " + self.entry.as_dict['_title']
         )
         summaryName.build(
             parts,
@@ -156,10 +156,10 @@ class EntryPDFGenerator:
         lineBreak = "&nbsp;&nbsp;<br />"
 
         for entry in self.diary:
-            title = self.textFormatter(entry.asDict['_title'])
-            dateObj = datetime.fromisoformat(entry.asDict["_createdAt"]).date()
+            title = self.textFormatter(entry.as_dict['_title'])
+            dateObj = datetime.fromisoformat(entry.as_dict["_createdAt"]).date()
             dateText = dateObj.strftime("%B %d, %Y")
-            description = self.textFormatter(entry.asDict['_description'])
+            description = self.textFormatter(entry.as_dict['_description'])
 
             parts.append(Paragraph(dateText, style=dateStyle))
             parts.append(Paragraph(title, style=titleStyle))
@@ -174,7 +174,7 @@ class EntryPDFGenerator:
             title=templateEntry._user.username + "'s Diary",
             creator="Lyf",
             author=templateEntry._user.username,
-            subject=templateEntry._user.username + "'s " + templateEntry.asDict['_title']
+            subject=templateEntry._user.username + "'s " + templateEntry.as_dict['_title']
         )
 
         summaryName.build(
@@ -205,7 +205,7 @@ class EntryTxtGenerator:
         self.entry = entry
         self.fileBuffer = file_buffer
 
-        text = f"""{entry._user}'s Diary\n\n{entry.entryTitle}\n{entry.entryDescription}\n{entry.CreatedAt}"""
+        text = f"""{entry._user}'s Diary\n\n{entry.title}\n{entry.description}\n{entry.CreatedAt}"""
 
         bytes_text = bytes(text, "utf-8")
 
@@ -222,7 +222,7 @@ class EntryTxtGenerator:
         text = f"""{first_entry._user}'s Diary\n\n"""
 
         for entry in diary:
-            text += f"{entry.entryTitle}\n{entry.entryDescription}\n{entry.CreatedAt}\n\n"
+            text += f"{entry.title}\n{entry.description}\n{entry.created_at}\n\n"
 
         bytes_text = bytes(text, "utf-8")
 

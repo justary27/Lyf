@@ -8,15 +8,16 @@ from User.models import LyfUser
 # Create your models here.
 class TodoManger(models.Manager):
 
-    def getTodos(self, userId):
-        return list(self.filter(_user=LyfUser.objects.get_user_by_id(userId)
+    def getTodos(self, user_id):
+        return list(self.filter(_user=LyfUser.objects.get_user_by_id(user_id)
                                 ).all())
 
-    def get_todo_by_id(self, id):
-        return self.filter(_id=id).get()
+    def get_todo_by_id(self, todo_id):
+        return self.filter(_id=todo_id).get()
 
 
 class Todo(models.Model):
+
     _id = models.UUIDField(
         default=uuid.uuid4,
         auto_created=True,
@@ -43,19 +44,19 @@ class Todo(models.Model):
     objects = TodoManger()
 
     @property
-    def todoId(self) -> str:
+    def id(self) -> str:
         return str(self._id)
 
     @property
-    def todoTitle(self) -> str:
+    def title(self) -> str:
         return self._title
 
     @property
-    def todoDescription(self) -> str:
+    def description(self) -> str:
         return self._description
 
     @property
-    def CreatedAt(self) -> str:
+    def created_at(self) -> str:
         return str(self._created_on)
 
     @property
@@ -67,15 +68,15 @@ class Todo(models.Model):
         return str(self._reminder_at)
 
     @property
-    def asDict(self) -> dict:
+    def as_dict(self) -> dict:
         return {
-            "_id": self.todoId,
-            "_title": self.todoTitle,
-            "_description": self.todoDescription,
-            "_createdAt": self.CreatedAt,
+            "_id": self.id,
+            "_title": self.title,
+            "_description": self.description,
+            "_createdAt": self.created_at,
             "_isReminderSet": self.isReminderset,
             "_reminderAt": self.ReminderAt if self.ReminderAt != "None" else None,
         }
 
     def __str__(self) -> str:
-        return str(self.todoTitle + self.todoId)
+        return str(self.title + self.id)

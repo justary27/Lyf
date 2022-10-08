@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/utils/errors/firestorage_exceptions.dart';
 import 'package:lyf/src/utils/handlers/permission_handler.dart';
-import 'package:lyf/src/routes/routing.dart';
 import 'package:http/http.dart' as http;
 import 'package:lyf/src/services/firebase/storage.dart';
 import 'package:lyf/src/shared/viewers/audio_viewer.dart';
@@ -46,6 +45,7 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
   late List<Widget> utilWidgets;
   PlatformFile? audioAttachment;
   List<PlatformFile?>? imageAttachments;
+  bool readingMode = false;
 
   // void updateEntry(http.Client updateEntryClient, DiaryEntry entry) async {
   //   late int statusCode;
@@ -253,6 +253,16 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
     }
   }
 
+  String _buildReadModeText(bool value) {
+    return value ? "ON" : "OFF";
+  }
+
+  void _toggleReadingMode() {
+    setState(() {
+      readingMode = !readingMode;
+    });
+  }
+
   @override
   void initState() {
     _titleController = TextEditingController();
@@ -311,11 +321,12 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
             height: size.height,
             width: size.width,
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: theme.gradientColors,
-            )),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: theme.gradientColors,
+              ),
+            ),
             child: const CustomPaint(),
           ),
           SizedBox(
@@ -481,6 +492,7 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                       title: SizedBox(
                         width: 0.5 * size.width,
                         child: TextFormField(
+                          readOnly: readingMode,
                           controller: _titleController,
                           style: GoogleFonts.ubuntu(
                             textStyle: const TextStyle(color: Colors.white),
@@ -606,6 +618,28 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                 _retrieveEntryTxt(widget.entry);
                               },
                             ),
+                            PopupMenuItem(
+                              padding: EdgeInsets.zero,
+                              child: ListTile(
+                                minLeadingWidth: 25,
+                                dense: true,
+                                leading: Icon(
+                                  Icons.chrome_reader_mode,
+                                  color: Colors.grey.shade700,
+                                ),
+                                title: Text(
+                                  "Reading Mode: ${_buildReadModeText(readingMode)}",
+                                  style: GoogleFonts.aBeeZee(
+                                    textStyle: TextStyle(
+                                      color: Colors.grey.shade700,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              onTap: () {
+                                _toggleReadingMode();
+                              },
+                            ),
                           ];
                         },
                         icon: const Icon(Icons.more_vert),
@@ -623,8 +657,11 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                           return SliverFillRemaining(
                             child: SingleChildScrollView(
                               physics: const BouncingScrollPhysics(),
-                              child: Column(
-                                children: data!,
+                              child: IgnorePointer(
+                                ignoring: readingMode,
+                                child: Column(
+                                  children: data!,
+                                ),
                               ),
                             ),
                           );
@@ -647,9 +684,9 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                         },
                       );
                     },
-                    child: Column(
-                      children: utilWidgets,
-                    ),
+                    // child: Column(
+                    //   children: utilWidgets,
+                    // ),
                   )
                 ],
               ),
