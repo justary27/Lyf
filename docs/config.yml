@@ -1,0 +1,30 @@
+baseURL: ""
+languageCode: en-us
+title: Lyf | Help Center
+theme: PaperMod
+defaultTheme: dark
+
+params:
+  profileMode:
+    enabled: true
+    title: "Lyf"
+    # subtitle: "Lyf, Optimized"
+    imageUrl: "images/lyf.svg" 
+    imageTitle: "Lyf" # optional
+    imageWidth: 520 # custom size
+    imageHeight: 520 # custom size
+  
+menu:
+  main: 
+    - identifier:
+      name: TODOs
+      url: /todos/
+      weight: 10
+    - identifier:
+      name: Diaries
+      url: /diary/
+      weight: 20
+    - identifier:
+      name: Settings
+      url: /settings/
+      weight: 20

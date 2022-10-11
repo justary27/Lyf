@@ -136,7 +136,7 @@ class _ThemeSettingsPageState extends ConsumerState<ThemeSettingsPage> {
                             tileColor: Colors.transparent,
                           );
                         }),
-                        itemCount: 3,
+                        itemCount: 4,
                       ),
                     ),
                   ],

@@ -7,7 +7,7 @@ import 'package:lyf/src/routes/routing.dart';
 import 'package:http/http.dart' as http;
 import 'package:lyf/src/services/http.dart';
 import 'package:lyf/src/shared/snackbars/unsaved_snack.dart';
-import 'package:lyf/src/shared/todo_card.dart';
+import 'package:lyf/src/shared/widgets/todo_card.dart';
 import 'package:lyf/src/state/todo/todo_list_state.dart';
 
 import '../../state/theme/theme_state.dart';

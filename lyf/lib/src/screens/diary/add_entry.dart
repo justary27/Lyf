@@ -82,12 +82,10 @@ class _AddDiaryEntryPageState extends ConsumerState<AddDiaryEntryPage> {
                             onPressed: () {},
                             icon: Icon(
                               Icons.location_on_outlined,
-                              color: Colors.white,
+                              color: Theme.of(context).iconTheme.color,
                             ),
                           ),
-                          Text(
-                            "Location",
-                          )
+                          const Text("Location")
                         ],
                       ),
                       Column(
@@ -96,10 +94,10 @@ class _AddDiaryEntryPageState extends ConsumerState<AddDiaryEntryPage> {
                             onPressed: () {},
                             icon: Icon(
                               Icons.image,
-                              color: Colors.white,
+                              color: Theme.of(context).iconTheme.color,
                             ),
                           ),
-                          Text("Images"),
+                          const Text("Images"),
                         ],
                       ),
                       Column(
@@ -108,10 +106,10 @@ class _AddDiaryEntryPageState extends ConsumerState<AddDiaryEntryPage> {
                             onPressed: () {},
                             icon: Icon(
                               Icons.audiotrack_outlined,
-                              color: Colors.white,
+                              color: Theme.of(context).iconTheme.color,
                             ),
                           ),
-                          Text("Audio"),
+                          const Text("Audio"),
                         ],
                       ),
                       Column(
@@ -120,12 +118,10 @@ class _AddDiaryEntryPageState extends ConsumerState<AddDiaryEntryPage> {
                             onPressed: () {},
                             icon: Icon(
                               Icons.color_lens_rounded,
-                              color: Colors.white,
+                              color: Theme.of(context).iconTheme.color,
                             ),
                           ),
-                          Text(
-                            "Doodle",
-                          ),
+                          const Text("Doodle"),
                         ],
                       ),
                     ],
@@ -219,13 +215,12 @@ class _AddDiaryEntryPageState extends ConsumerState<AddDiaryEntryPage> {
                         "",
                         null,
                       );
-                      print(entry.toData());
                       // createEntry(createEntryClient, entry);
                       _createEntry(entry);
                     },
                     icon: Icon(
                       Icons.check_box_rounded,
-                      color: Colors.white,
+                      color: Theme.of(context).iconTheme.color,
                     ),
                   ),
                   // IconButton(

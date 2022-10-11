@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/models/todo_model.dart';
 import 'package:lyf/src/routes/routing.dart';
-import 'package:lyf/src/shared/todo_card.dart';
+import 'package:lyf/src/shared/widgets/todo_card.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../state/theme/theme_state.dart';

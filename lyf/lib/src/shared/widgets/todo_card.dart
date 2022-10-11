@@ -3,10 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
 
-import '../models/todo_model.dart';
-import '../shared/snackbars/delete_snack.dart';
-import '../routes/routing.dart';
-import '../state/todo/todo_list_state.dart';
+import '../../models/todo_model.dart';
+import '../snackbars/delete_snack.dart';
+import '../../routes/routing.dart';
+import '../../state/todo/todo_list_state.dart';
 
 /// The generic card used for displaying all the todo cards.
 class TodoCard extends ConsumerStatefulWidget {

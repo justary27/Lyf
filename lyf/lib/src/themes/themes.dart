@@ -145,7 +145,7 @@ ThemeHelper funkyTheme = ThemeHelper(
         textStyle: TextStyle(
             color: const Color(0xFFCA81F5).withOpacity(0.4), fontSize: 12),
       ),
-      button: GoogleFonts.ubuntu(),
+      button: GoogleFonts.londrinaSolid(),
     ),
   ),
   gradientColors: const [
@@ -156,5 +156,55 @@ ThemeHelper funkyTheme = ThemeHelper(
     // Color(0xFFA5DEF2),
     // Color(0xFF8D4EF2),
     // Color(0xFF1E80C1),
+  ],
+);
+
+ThemeHelper loveTheme = ThemeHelper(
+  themeData: ThemeData(
+    primaryColor: const Color(0xFFFDF5F7),
+    splashColor: const Color(0xFFFDF5F7).withOpacity(0.35),
+    cardColor: const Color(0xFFFDF5F7).withOpacity(0.10),
+    listTileTheme: ListTileThemeData(
+      tileColor: const Color(0xFFFDF5F7).withOpacity(0.15),
+    ),
+    iconTheme: const IconThemeData(
+      color: Color(0xFFFDF5F7),
+    ),
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: const Color(0xFFFDF5F7),
+      circularTrackColor: const Color(0xFFFDF5F7).withOpacity(0.15),
+    ),
+    textTheme: TextTheme(
+      headline1: GoogleFonts.workSans(
+        textStyle: const TextStyle(color: Color(0xFFFDF5F7), fontSize: 47.5),
+      ),
+      headline2: GoogleFonts.workSans(
+        textStyle: const TextStyle(color: Color(0xFFFDF5F7), fontSize: 25),
+      ),
+      headline3: GoogleFonts.workSans(
+        textStyle: const TextStyle(color: Color(0xFFFDF5F7), fontSize: 20),
+      ),
+      headline4: GoogleFonts.workSans(
+        textStyle: const TextStyle(color: Color(0xFFFDF5F7), fontSize: 17.5),
+      ),
+      headline5: GoogleFonts.workSans(
+        textStyle: const TextStyle(color: Color(0xFFFDF5F7), fontSize: 15),
+      ),
+      bodyText1: GoogleFonts.aBeeZee(
+        textStyle: TextStyle(
+          color: const Color(0xFFFDF5F7).withOpacity(0.5),
+        ),
+      ),
+      bodyText2: GoogleFonts.aBeeZee(
+        textStyle: TextStyle(
+            color: const Color(0xFFFDF5F7).withOpacity(0.4), fontSize: 12),
+      ),
+      button: GoogleFonts.workSans(),
+    ),
+  ),
+  gradientColors: const [
+    Color(0xFFE45352),
+    Color.fromARGB(255, 206, 64, 64),
+    Color.fromARGB(255, 156, 40, 40),
   ],
 );

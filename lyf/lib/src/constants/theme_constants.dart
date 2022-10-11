@@ -21,5 +21,12 @@ List themeConstants = [
     'iColor': 0xFFCA81F5,
     'bColor': 0xFF090B0F,
     'theme': funkyTheme,
+  },
+  {
+    'themeName': 'Love',
+    'desc': "A theme for the lovely lyfs'.",
+    'iColor': 0xFFFDF5F7,
+    'bColor': 0xFFE45352,
+    'theme': loveTheme,
   }
 ];

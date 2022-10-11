@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/models/diary_model.dart';
+import 'package:lyf/src/shared/share.dart';
 import 'package:lyf/src/utils/errors/firestorage_exceptions.dart';
 import 'package:lyf/src/utils/handlers/permission_handler.dart';
 import 'package:http/http.dart' as http;
@@ -339,10 +340,7 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomLeft,
-                    colors: [
-                      Colors.grey.shade500,
-                      Colors.grey.shade800,
-                    ],
+                    colors: theme.gradientColors,
                   ),
                 ),
                 child: Drawer(
@@ -361,12 +359,10 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                               },
                               icon: Icon(
                                 Icons.location_on_outlined,
-                                color: Colors.white,
+                                color: Theme.of(context).iconTheme.color,
                               ),
                             ),
-                            Text(
-                              "Location",
-                            )
+                            const Text("Location")
                           ],
                         ),
                         Column(
@@ -382,10 +378,10 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                               },
                               icon: Icon(
                                 Icons.image,
-                                color: Colors.white,
+                                color: Theme.of(context).iconTheme.color,
                               ),
                             ),
-                            Text("Images"),
+                            const Text("Images"),
                           ],
                         ),
                         Column(
@@ -401,10 +397,10 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                               },
                               icon: Icon(
                                 Icons.audiotrack_outlined,
-                                color: Colors.white,
+                                color: Theme.of(context).iconTheme.color,
                               ),
                             ),
-                            Text("Audio"),
+                            const Text("Audio"),
                           ],
                         ),
                         Column(
@@ -413,12 +409,10 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                               onPressed: () {},
                               icon: Icon(
                                 Icons.color_lens_rounded,
-                                color: Colors.white,
+                                color: Theme.of(context).iconTheme.color,
                               ),
                             ),
-                            Text(
-                              "Doodle",
-                            ),
+                            const Text("Doodle"),
                           ],
                         ),
                       ],
@@ -439,8 +433,11 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                     //           height: 0.1 * size.height,
                     //         ));
                   },
-                  backgroundColor: Colors.white.withOpacity(0.35),
-                  child: const Icon(Icons.attachment),
+                  backgroundColor: Theme.of(context).splashColor,
+                  child: Icon(
+                    Icons.attachment,
+                    color: Theme.of(context).iconTheme.color,
+                  ),
                 );
               }),
               backgroundColor: Colors.transparent,
@@ -469,14 +466,18 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                           return;
                         }
                       },
-                      icon: const Icon(Icons.arrow_back_ios),
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
                     ),
                     expandedHeight: 0.3 * size.height,
                     flexibleSpace: FlexibleSpaceBar(
                       background: Container(
                         foregroundDecoration: BoxDecoration(
-                          color:
-                              Theme.of(context).primaryColor.withOpacity(0.15),
+                          color: Theme.of(context).primaryColor.withOpacity(
+                                0.15,
+                              ),
                         ),
                         child: ColorFiltered(
                           colorFilter: ColorFilter.mode(
@@ -535,9 +536,9 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                     _updateEntry(_updatedEntry);
                                   }
                                 },
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.check_box_rounded,
-                                  color: Colors.white,
+                                  color: Theme.of(context).iconTheme.color,
                                 ),
                               ),
                             );
@@ -548,7 +549,7 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                             Radius.circular(15.0),
                           ),
                         ),
-                        color: Colors.white,
+                        color: Theme.of(context).iconTheme.color,
                         itemBuilder: (context) {
                           return [
                             PopupMenuItem(
@@ -558,18 +559,33 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                 dense: true,
                                 leading: Icon(
                                   Icons.share_rounded,
-                                  color: Colors.grey.shade700,
+                                  color: theme.gradientColors[2],
                                 ),
                                 title: Text(
                                   AppLocalizations.of(context)!.share,
                                   style: GoogleFonts.aBeeZee(
                                     textStyle: TextStyle(
-                                      color: Colors.grey.shade700,
+                                      color: theme.gradientColors[2],
                                     ),
                                   ),
                                 ),
                               ),
                               onTap: () {
+                                // WidgetsBinding.instance!.addPostFrameCallback(
+                                //   (_) {
+                                //     showDialog(
+                                //       context: context,
+                                //       builder: (context) {
+                                //         return ShareViewer(
+                                //           size: size,
+                                //           entry: widget.entry,
+                                //           color: theme.gradientColors[2],
+                                //         );
+                                //       },
+                                //     );
+                                //   },
+                                // );
+
                                 Share.share(
                                   "${widget.entry.entryTitle}\n\n${widget.entry.entryDescription}\n\nDated:${widget.entry.entryCreatedAt.day}/${widget.entry.entryCreatedAt.month}/${widget.entry.entryCreatedAt.year}",
                                 );
@@ -582,13 +598,13 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                 dense: true,
                                 leading: Icon(
                                   Icons.picture_as_pdf_rounded,
-                                  color: Colors.grey.shade700,
+                                  color: theme.gradientColors[2],
                                 ),
                                 title: Text(
                                   AppLocalizations.of(context)!.saveAsPdf,
                                   style: GoogleFonts.aBeeZee(
                                     textStyle: TextStyle(
-                                      color: Colors.grey.shade700,
+                                      color: theme.gradientColors[2],
                                     ),
                                   ),
                                 ),
@@ -604,13 +620,13 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                 dense: true,
                                 leading: Icon(
                                   Icons.short_text,
-                                  color: Colors.grey.shade700,
+                                  color: theme.gradientColors[2],
                                 ),
                                 title: Text(
                                   AppLocalizations.of(context)!.saveAsTxt,
                                   style: GoogleFonts.aBeeZee(
                                     textStyle: TextStyle(
-                                      color: Colors.grey.shade700,
+                                      color: theme.gradientColors[2],
                                     ),
                                   ),
                                 ),
@@ -626,13 +642,13 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                                 dense: true,
                                 leading: Icon(
                                   Icons.chrome_reader_mode,
-                                  color: Colors.grey.shade700,
+                                  color: theme.gradientColors[2],
                                 ),
                                 title: Text(
                                   "Reading Mode: ${_buildReadModeText(readingMode)}",
                                   style: GoogleFonts.aBeeZee(
                                     textStyle: TextStyle(
-                                      color: Colors.grey.shade700,
+                                      color: theme.gradientColors[2],
                                     ),
                                   ),
                                 ),
@@ -643,7 +659,10 @@ class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
                             ),
                           ];
                         },
-                        icon: const Icon(Icons.more_vert),
+                        icon: Icon(
+                          Icons.more_vert,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
                       )
                     ],
                   ),

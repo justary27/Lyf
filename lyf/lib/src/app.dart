@@ -12,6 +12,8 @@ import './utils/helpers/screen_helper.dart';
 
 import 'dart:io' show Platform;
 
+/// The Root Widget for the App corresponding
+/// to the respective platforms.
 class Lyf extends ConsumerStatefulWidget {
   const Lyf({Key? key}) : super(key: key);
 
@@ -25,6 +27,8 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+
+    /// Set App Orientation according to the device size.
     DeviceHandler.setAppOrientationOptions(
       DeviceHandler.getDeviceType(
         deviceSize: logicalScreenSize,
@@ -89,6 +93,19 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
             debugShowCheckedModeBanner: false,
             routerDelegate: goRouter.routerDelegate,
             routeInformationParser: goRouter.routeInformationParser,
+            locale: appLanguage,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en', ''),
+              Locale('hi', ''),
+              Locale('es', ''),
+              Locale('fr', ''),
+            ],
           ),
         );
 
@@ -107,6 +124,19 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
             scaffoldMessengerKey: snackKey,
             routerDelegate: goRouter.routerDelegate,
             routeInformationParser: goRouter.routeInformationParser,
+            locale: appLanguage,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en', ''),
+              Locale('hi', ''),
+              Locale('es', ''),
+              Locale('fr', ''),
+            ],
           ),
         );
     }

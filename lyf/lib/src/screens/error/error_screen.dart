@@ -4,6 +4,8 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../state/theme/theme_state.dart';
 
+/// The default error screen for the app, allows custom
+/// error message and cause to be shown.
 class ErrorScreen extends ConsumerStatefulWidget {
   final dynamic error;
   const ErrorScreen({
