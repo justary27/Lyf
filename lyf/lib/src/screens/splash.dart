@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lyf/src/routes/routing.dart';
-import 'package:lyf/src/services/init_service.dart';
-import 'package:lyf/src/state/theme/theme_state.dart';
 
+import '../routes/routing.dart';
+import '../state/theme/theme_state.dart';
+import '../utils/handlers/route_handler.dart';
 import '../global/functions.dart';
 import '../global/variables.dart';
 
+/// The App's first screen. This is shown after first
+/// pixel is painted by flutter. Navigates the user
+/// according to their [loginState].
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -22,17 +25,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     _initRouteProvider();
   }
 
+  /// Provides the initial route for the app.
   Future<void> _initRouteProvider() async {
     try {
       await login(creds);
       if (loginState) {
-        goRouter.push("/");
+        goRouter.push(RouteHandler.home);
       } else {
-        goRouter.push("/login");
+        goRouter.push(RouteHandler.login);
       }
     } catch (e) {
       print(e);
-      goRouter.push("/login");
+      goRouter.push(RouteHandler.login);
     }
   }
 
@@ -84,10 +88,5 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }

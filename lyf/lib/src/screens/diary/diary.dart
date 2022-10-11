@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lyf/src/models/diary_model.dart';
-import 'package:lyf/src/routes/routing.dart';
-import 'package:lyf/src/shared/snackbars/delete_snack.dart';
-import 'package:lyf/src/utils/errors/diary/diary_errors.dart';
-import 'package:lyf/src/utils/handlers/route_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../models/diary_model.dart';
+import '../../routes/routing.dart';
+import '../../shared/snackbars/delete_snack.dart';
+import '../../utils/errors/diary/diary_errors.dart';
+import '../../utils/handlers/route_handler.dart';
 import '../../state/diary/diary_list_state.dart';
 import '../../state/theme/theme_state.dart';
 
@@ -88,9 +88,7 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
               onPressed: () {
                 goRouter.push(RouteHandler.createDiary);
               },
-              backgroundColor: Theme.of(context).primaryColor.withOpacity(
-                    0.35,
-                  ),
+              backgroundColor: Theme.of(context).splashColor,
               child: Icon(
                 Icons.add,
                 color: Theme.of(context).iconTheme.color,
@@ -154,13 +152,13 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                               dense: true,
                               leading: Icon(
                                 Icons.picture_as_pdf_rounded,
-                                color: Colors.grey.shade700,
+                                color: theme.gradientColors[2],
                               ),
                               title: Text(
                                 AppLocalizations.of(context)!.exportAsPdf,
                                 style: GoogleFonts.aBeeZee(
                                   textStyle: TextStyle(
-                                    color: Colors.grey.shade700,
+                                    color: theme.gradientColors[2],
                                   ),
                                 ),
                               ),
@@ -176,13 +174,13 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                               dense: true,
                               leading: Icon(
                                 Icons.short_text,
-                                color: Colors.grey.shade700,
+                                color: theme.gradientColors[2],
                               ),
                               title: Text(
                                 AppLocalizations.of(context)!.exportAsTxt,
                                 style: GoogleFonts.aBeeZee(
                                   textStyle: TextStyle(
-                                    color: Colors.grey.shade700,
+                                    color: theme.gradientColors[2],
                                   ),
                                 ),
                               ),
@@ -190,7 +188,10 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                           ),
                         ];
                       },
-                      icon: const Icon(Icons.more_vert),
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
                     )
                   ],
                 ),

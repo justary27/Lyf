@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../models/todo_model.dart';
 import '../../routes/routing.dart';
-import '../../shared/todo_card.dart';
+import '../../shared/widgets/todo_card.dart';
 import '../../state/theme/theme_state.dart';
 import '../../state/todo/todo_list_state.dart';
 import '../../utils/enums/snack_type.dart';

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lyf/src/routes/routing.dart';
-import 'package:lyf/src/shared/lyf.dart';
-import 'package:lyf/src/utils/handlers/route_handler.dart';
 
+import '../../routes/routing.dart';
+import '../../shared/lyf.dart';
+import '../../utils/handlers/route_handler.dart';
 import '../../state/theme/theme_state.dart';
 
 class WelcomePage extends ConsumerStatefulWidget {
