@@ -26,7 +26,7 @@ List<Map> languageProvider(BuildContext context) {
   ];
 }
 
-List languageConstants = [
+final List languageConstants = [
   {
     'langName': 'English',
     'desc': "",

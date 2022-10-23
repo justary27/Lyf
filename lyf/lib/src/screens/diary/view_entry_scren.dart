@@ -21,10 +21,10 @@ import '../../state/diary/diary_list_state.dart';
 import '../../state/diary/diary_view_state.dart';
 import '../../state/theme/theme_state.dart';
 
-class ViewDiaryEntryPage extends ConsumerStatefulWidget {
+class ViewDiaryEntryScreen extends ConsumerStatefulWidget {
   final DiaryEntry entry;
   final Size size;
-  const ViewDiaryEntryPage({
+  const ViewDiaryEntryScreen({
     Key? key,
     required this.entry,
     required this.size,
@@ -32,10 +32,10 @@ class ViewDiaryEntryPage extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ViewDiaryEntryPageState();
+      _ViewDiaryEntryScreenState();
 }
 
-class _ViewDiaryEntryPageState extends ConsumerState<ViewDiaryEntryPage> {
+class _ViewDiaryEntryScreenState extends ConsumerState<ViewDiaryEntryScreen> {
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
   late http.Client updateEntryClient;

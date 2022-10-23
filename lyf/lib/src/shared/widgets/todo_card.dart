@@ -127,12 +127,12 @@ class _TodoCardState extends ConsumerState<TodoCard> {
     } else {
       return [
         Container(
+          height: 0.075 * size.height,
+          alignment: Alignment.bottomLeft,
           child: Text(
             widget.todo!.title,
             style: Theme.of(context).textTheme.headline3,
           ),
-          height: 0.075 * size.height,
-          alignment: Alignment.bottomLeft,
         ),
         Container(
           padding: EdgeInsets.fromLTRB(

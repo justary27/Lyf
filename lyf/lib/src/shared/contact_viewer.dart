@@ -104,8 +104,8 @@ class _ContactViewerState extends State<ContactViewer> {
                                     MemoryImage(contacts[index].avatar!),
                               )
                             : CircleAvatar(
-                                child: Text(contacts[index].initials()),
                                 backgroundColor: Colors.white.withOpacity(0.15),
+                                child: Text(contacts[index].initials()),
                               ),
                         title: Text(
                           contacts[index].displayName!,
@@ -137,8 +137,8 @@ class _ContactViewerState extends State<ContactViewer> {
                                     MemoryImage(contacts[index].avatar!),
                               )
                             : CircleAvatar(
-                                child: Text(contacts[index].initials()),
                                 backgroundColor: Colors.white.withOpacity(0.15),
+                                child: Text(contacts[index].initials()),
                               ),
                         title: Text(
                           contacts[index].displayName!,
@@ -164,6 +164,7 @@ class _ContactViewerState extends State<ContactViewer> {
                                     MemoryImage(contacts[index].avatar!),
                               )
                             : CircleAvatar(
+                                backgroundColor: Colors.white.withOpacity(0.15),
                                 child: Text(
                                   contacts[index].initials(),
                                   style: GoogleFonts.ubuntu(
@@ -172,7 +173,6 @@ class _ContactViewerState extends State<ContactViewer> {
                                     ),
                                   ),
                                 ),
-                                backgroundColor: Colors.white.withOpacity(0.15),
                               ),
                         title: Text(
                           contacts[index].displayName!,

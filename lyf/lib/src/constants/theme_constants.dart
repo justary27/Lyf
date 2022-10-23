@@ -1,6 +1,6 @@
 import '../themes/themes.dart';
 
-List themeConstants = [
+final List themeConstants = [
   {
     'themeName': 'Lyf',
     'desc': "A theme of for lyf's close to nature.",

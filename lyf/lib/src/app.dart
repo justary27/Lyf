@@ -34,7 +34,7 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
         deviceSize: logicalScreenSize,
       ),
     );
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
@@ -63,8 +63,7 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
             debugShowCheckedModeBanner: false,
             theme: appTheme.themeData,
             scaffoldMessengerKey: snackKey,
-            routerDelegate: goRouter.routerDelegate,
-            routeInformationParser: goRouter.routeInformationParser,
+            routerConfig: goRouter,
             locale: appLanguage,
             localizationsDelegates: const [
               AppLocalizations.delegate,
@@ -91,8 +90,7 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
           child: CupertinoApp.router(
             title: 'Lyf',
             debugShowCheckedModeBanner: false,
-            routerDelegate: goRouter.routerDelegate,
-            routeInformationParser: goRouter.routeInformationParser,
+            routerConfig: goRouter,
             locale: appLanguage,
             localizationsDelegates: const [
               AppLocalizations.delegate,
@@ -122,8 +120,7 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
             debugShowCheckedModeBanner: false,
             theme: appTheme.themeData,
             scaffoldMessengerKey: snackKey,
-            routerDelegate: goRouter.routerDelegate,
-            routeInformationParser: goRouter.routeInformationParser,
+            routerConfig: goRouter,
             locale: appLanguage,
             localizationsDelegates: const [
               AppLocalizations.delegate,
@@ -145,6 +142,6 @@ class _LyfState extends ConsumerState<Lyf> with WidgetsBindingObserver {
   @override
   void dispose() {
     super.dispose();
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
   }
 }

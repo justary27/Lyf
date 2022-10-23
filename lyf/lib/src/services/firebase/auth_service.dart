@@ -8,22 +8,13 @@ class FireAuth {
     required Map<String, String?> creds,
   }) async {
     try {
-      userCredential = await auth.createUserWithEmailAndPassword(
+      userCredential = await auth.signInWithEmailAndPassword(
         email: creds['email']!,
         password: creds['password']!,
       );
       return 0;
     } catch (e) {
-      try {
-        userCredential = await auth.signInWithEmailAndPassword(
-          email: creds['email']!,
-          password: creds['password']!,
-        );
-        return 0;
-      } catch (e) {
-        print(e);
-        return -1;
-      }
+      return -1;
     }
   }
 

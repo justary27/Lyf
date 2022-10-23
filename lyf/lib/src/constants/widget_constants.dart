@@ -7,7 +7,7 @@ import 'package:lyf/src/utils/helpers/screen_helper.dart';
 import '../shared/widgets/home/clock.dart';
 import '../utils/helpers/theme_helper.dart';
 
-Map<ThemeHelper, Widget> widgetConstants = {
+final Map<ThemeHelper, Widget> widgetConstants = {
   lyfTheme: SizedBox(
     width: logicalScreenSize.width,
     height: logicalScreenSize.height,

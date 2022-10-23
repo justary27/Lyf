@@ -7,7 +7,7 @@ class Greetings extends StatefulWidget {
   const Greetings({Key? key, required this.username}) : super(key: key);
 
   @override
-  _GreetingsState createState() => _GreetingsState();
+  State<Greetings> createState() => _GreetingsState();
 }
 
 class _GreetingsState extends State<Greetings> {

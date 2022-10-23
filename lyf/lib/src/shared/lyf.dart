@@ -9,7 +9,7 @@ class Lyf extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _LyfState createState() => _LyfState();
+  State<Lyf> createState() => _LyfState();
 }
 
 class _LyfState extends State<Lyf> {

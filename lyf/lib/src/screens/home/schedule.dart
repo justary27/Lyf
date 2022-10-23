@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lyf/src/routes/routing.dart';
 
 class ScheduleSideDrawer extends StatefulWidget {
   const ScheduleSideDrawer({Key? key}) : super(key: key);
 
   @override
-  _ScheduleSideDrawerState createState() => _ScheduleSideDrawerState();
+  State<ScheduleSideDrawer> createState() => _ScheduleSideDrawerState();
 }
 
 class _ScheduleSideDrawerState extends State<ScheduleSideDrawer> {
@@ -51,9 +50,7 @@ class _ScheduleSideDrawerState extends State<ScheduleSideDrawer> {
                         ),
                         IconButton(
                           splashColor: Colors.white.withOpacity(0.2),
-                          onPressed: () {
-                            // RouteManager.navigateToSettings(context);
-                          },
+                          onPressed: () {},
                           icon: const Icon(
                             Icons.settings,
                             color: Colors.white,
@@ -85,9 +82,7 @@ class _ScheduleSideDrawerState extends State<ScheduleSideDrawer> {
                             Icons.note_add,
                             color: Colors.white,
                           ),
-                          onTap: () {
-                            // RouteManager.navigateToTodo(context);
-                          },
+                          onTap: () {},
                         ),
                         ListTile(
                           focusColor: Colors.white.withOpacity(0.15),
@@ -107,9 +102,6 @@ class _ScheduleSideDrawerState extends State<ScheduleSideDrawer> {
                           },
                         ),
                         ListTile(
-                          // focusColor: Colors.black.withOpacity(0.5),
-                          // hoverColor: Colors.black.withOpacity(0.5),
-                          // tileColor: Colors.white.withOpacity(0.15),
                           leading: const Icon(
                             Icons.note_add,
                             color: Colors.white,

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/utils/helpers/theme_helper.dart';
 
-ThemeHelper lyfTheme = ThemeHelper(
+final ThemeHelper lyfTheme = ThemeHelper(
   themeData: ThemeData(
-    primaryColor: Color.fromARGB(255, 14, 105, 87),
+    primaryColor: const Color.fromARGB(255, 14, 105, 87),
     shadowColor: Colors.black,
-    cardColor: Color(0xFF7DF6AD).withOpacity(0.15),
-    splashColor: Color.fromARGB(255, 14, 105, 87).withOpacity(0.35),
+    cardColor: const Color(0xFF7DF6AD).withOpacity(0.15),
+    splashColor: const Color.fromARGB(255, 14, 105, 87).withOpacity(0.35),
     iconTheme: const IconThemeData(
       color: Colors.white,
     ),
@@ -55,7 +55,7 @@ ThemeHelper lyfTheme = ThemeHelper(
   ],
 );
 
-ThemeHelper monochromeTheme = ThemeHelper(
+final ThemeHelper monochromeTheme = ThemeHelper(
   themeData: ThemeData(
     primaryColor: Colors.white,
     shadowColor: Colors.black,
@@ -105,7 +105,7 @@ ThemeHelper monochromeTheme = ThemeHelper(
     Color(0xFF000000),
   ],
 );
-ThemeHelper funkyTheme = ThemeHelper(
+final ThemeHelper funkyTheme = ThemeHelper(
   themeData: ThemeData(
     primaryColor: const Color(0xFFCA81F5),
     splashColor: const Color(0xFFCA81F5).withOpacity(0.35),
@@ -152,14 +152,10 @@ ThemeHelper funkyTheme = ThemeHelper(
     Color(0xFF161A22),
     Color(0xFF0F1218),
     Color(0xFF090B0F),
-    // Color(0xFFC6C5FF),
-    // Color(0xFFA5DEF2),
-    // Color(0xFF8D4EF2),
-    // Color(0xFF1E80C1),
   ],
 );
 
-ThemeHelper loveTheme = ThemeHelper(
+final ThemeHelper loveTheme = ThemeHelper(
   themeData: ThemeData(
     primaryColor: const Color(0xFFFDF5F7),
     splashColor: const Color(0xFFFDF5F7).withOpacity(0.35),
