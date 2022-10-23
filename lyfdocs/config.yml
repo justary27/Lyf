@@ -4,10 +4,12 @@ title: Lyf | Help Center
 theme: PaperMod
 defaultTheme: dark
 
+disableKinds: ["section"]
+
 params:
   profileMode:
     enabled: true
-    title: "Lyf"
+    title: " "
     # subtitle: "Lyf, Optimized"
     imageUrl: "images/lyf.svg" 
     imageTitle: "Lyf" # optional
@@ -18,7 +20,7 @@ menu:
   main: 
     - identifier:
       name: TODOs
-      url: /todos/
+      url: /todo/
       weight: 10
     - identifier:
       name: Diaries
@@ -27,4 +29,4 @@ menu:
     - identifier:
       name: Settings
       url: /settings/
-      weight: 20
+      weight: 30

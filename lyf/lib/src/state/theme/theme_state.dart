@@ -1,12 +1,18 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lyf/src/constants/theme_constants.dart';
+import 'package:lyf/src/constants/widget_constants.dart';
 import 'package:lyf/src/global/variables.dart';
-import 'package:lyf/src/themes/themes.dart';
 import 'package:lyf/src/utils/helpers/theme_helper.dart';
 
 final themeNotifier = StateNotifierProvider<ThemeNotifier, ThemeHelper>((ref) {
   return ThemeNotifier(ref.read);
 });
+
+final widgetNotifier = Provider<Widget?>(((ref) {
+  ThemeHelper theme = ref.watch(themeNotifier);
+  return widgetConstants[theme];
+}));
 
 class ThemeNotifier extends StateNotifier<ThemeHelper> {
   final Reader read;

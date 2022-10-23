@@ -8,14 +8,14 @@ import '../../shared/lyf.dart';
 import '../../utils/handlers/route_handler.dart';
 import '../../state/theme/theme_state.dart';
 
-class WelcomePage extends ConsumerStatefulWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+class AuthScreen extends ConsumerStatefulWidget {
+  const AuthScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _WelcomePageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _AuthScreenState();
 }
 
-class _WelcomePageState extends ConsumerState<WelcomePage> {
+class _AuthScreenState extends ConsumerState<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;

@@ -12,15 +12,15 @@ import 'package:lyf/src/state/todo/todo_list_state.dart';
 
 import '../../state/theme/theme_state.dart';
 
-class ViewTodoPage extends ConsumerStatefulWidget {
+class ViewTodoScreen extends ConsumerStatefulWidget {
   final Todo todo;
-  const ViewTodoPage({Key? key, required this.todo}) : super(key: key);
+  const ViewTodoScreen({Key? key, required this.todo}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ViewTodoPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ViewTodoScreenState();
 }
 
-class _ViewTodoPageState extends ConsumerState<ViewTodoPage> {
+class _ViewTodoScreenState extends ConsumerState<ViewTodoScreen> {
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
   late DateTime _dateController;
@@ -41,8 +41,8 @@ class _ViewTodoPageState extends ConsumerState<ViewTodoPage> {
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
         // Navigator.of(context).pushNamedAndRemoveUntil(
-        //   RouteManager.todoPage,
-        //   ModalRoute.withName(RouteManager.todoPage),
+        //   RouteManager.TodoScreen,
+        //   ModalRoute.withName(RouteManager.TodoScreen),
         // );
       } else {
         SnackBar snackBar = const SnackBar(

@@ -10,14 +10,14 @@ import '../../state/theme/theme_state.dart';
 import '../../state/todo/todo_list_state.dart';
 import '../../utils/errors/todo/todo_errors.dart';
 
-class TodoPage extends ConsumerStatefulWidget {
-  const TodoPage({Key? key}) : super(key: key);
+class TodoScreen extends ConsumerStatefulWidget {
+  const TodoScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _TodoPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _TodoScreenState();
 }
 
-class _TodoPageState extends ConsumerState<TodoPage> {
+class _TodoScreenState extends ConsumerState<TodoScreen> {
   final GlobalKey<SliverAnimatedListState> _diaryKey =
       GlobalKey<SliverAnimatedListState>();
 
@@ -137,7 +137,7 @@ class _TodoPageState extends ConsumerState<TodoPage> {
                           //           vertical: 0.015 * size.height),
                           //       child: TodoCard(
                           //         parentContext: context,
-                          //         pageCode: "/todoPage",
+                          //         pageCode: "/TodoScreen",
                           //         size: size,
                           //         todo: todoList[index],
                           //       ),
@@ -152,7 +152,7 @@ class _TodoPageState extends ConsumerState<TodoPage> {
                                     vertical: 0.015 * size.height),
                                 child: TodoCard(
                                   parentContext: context,
-                                  pageCode: "/todoPage",
+                                  pageCode: "/TodoScreen",
                                   size: size,
                                   todo: todoList[index],
                                 ),

@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/screens/home/drawer.dart';
-import 'package:lyf/src/shared/widgets/home/clock.dart';
 import 'package:lyf/src/shared/greet.dart';
 import 'package:lyf/src/state/theme/theme_state.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
@@ -12,19 +11,17 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../shared/widgets/home/fidget.dart';
-
 /// Lyf's Home Screen, allows navigation to various sub-apps.
-class HomePage extends ConsumerStatefulWidget {
-  const HomePage({
+class HomeScreen extends ConsumerStatefulWidget {
+  const HomeScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomeScreenState();
 }
 
-class _HomePageState extends ConsumerState<HomePage>
+class _HomeScreenState extends ConsumerState<HomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late StreamController<bool> isSidebarOpenedStreamController;
@@ -107,24 +104,12 @@ class _HomePageState extends ConsumerState<HomePage>
                               .gradientColors,
                         ),
                       ),
-                      child: Clock(
-                        size: size,
+                      child: Stack(
+                        children: [
+                          ref.watch(widgetNotifier)!,
+                        ],
                       ),
                     ),
-                    // Positioned(
-                    //   top: 0.375 * size.height,
-                    //   right: -0.15 * size.height,
-                    //   child: Fidget(
-                    //     size: size,
-                    //   ),
-                    // ),
-                    // Positioned(
-                    //   top: 0.35 * size.height,
-                    //   right: -0.15 * size.height,
-                    //   child: Heart(
-                    //     size: size,
-                    //   ),
-                    // ),
                     Material(
                       color: Colors.transparent,
                       child: Container(
@@ -163,7 +148,8 @@ class _HomePageState extends ConsumerState<HomePage>
                                     SizedBox(
                                       height: 0.45 * size.width,
                                       child: Greetings(
-                                          username: currentUser.username),
+                                        username: currentUser.username,
+                                      ),
                                     ),
                                   ],
                                 ),
