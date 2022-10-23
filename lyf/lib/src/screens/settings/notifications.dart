@@ -6,7 +6,7 @@ class NotifactionSettingsPage extends StatefulWidget {
   const NotifactionSettingsPage({Key? key}) : super(key: key);
 
   @override
-  _NotifactionSettingsPageState createState() =>
+  State<NotifactionSettingsPage> createState() =>
       _NotifactionSettingsPageState();
 }
 

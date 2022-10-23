@@ -11,14 +11,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../state/theme/theme_state.dart';
 
-class SettingsPage extends ConsumerStatefulWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+class SettingsScreen extends ConsumerStatefulWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _SettingsPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SettingsScreenState();
 }
 
-class _SettingsPageState extends ConsumerState<SettingsPage> {
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;

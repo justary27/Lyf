@@ -24,7 +24,7 @@ jobs:
       uses: subosito/flutter-action@v1
       with:
         channel: 'stable' 
-        flutter-version: '2.10.4'
+        flutter-version: '3.3.5'
 
 
     - run: echo "${{ secrets.PRODKEY_PROP }}" | base64 --decode > android/key.properties

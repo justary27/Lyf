@@ -11,7 +11,7 @@ class InviteSettingsPage extends StatefulWidget {
   const InviteSettingsPage({Key? key}) : super(key: key);
 
   @override
-  _InviteSettingsPageState createState() => _InviteSettingsPageState();
+  State<InviteSettingsPage> createState() => _InviteSettingsPageState();
 }
 
 class _InviteSettingsPageState extends State<InviteSettingsPage> {

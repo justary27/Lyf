@@ -7,7 +7,7 @@ class Clock extends StatefulWidget {
   const Clock({Key? key, required this.size}) : super(key: key);
 
   @override
-  _ClockState createState() => _ClockState();
+  State<Clock> createState() => _ClockState();
 }
 
 class _ClockState extends State<Clock> {

@@ -2,28 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lyf/src/models/diary_model.dart';
 import 'package:lyf/src/models/todo_model.dart';
-import 'package:lyf/src/screens/error/error_screen.dart';
-import 'package:lyf/src/screens/settings/language_screen.dart';
 import 'package:lyf/src/shared/viewers/web_viewer.dart';
 import 'package:lyf/src/utils/helpers/screen_helper.dart';
+import '../screens/error/error_screen.dart';
+import '../screens/settings/language_screen.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/auth/signup_screen.dart';
 import '../screens/auth/auth_screen.dart';
-import '../screens/diary/diary.dart';
-import '../screens/diary/view_entry.dart';
-import '../screens/diary/add_entry.dart';
+import '../screens/diary/diary_screen.dart';
+import '../screens/diary/view_entry_scren.dart';
+import '../screens/diary/add_entry_screen.dart';
 import '../screens/home/home.dart';
 import '../screens/home/view_pfp.dart';
 import '../screens/settings/invite.dart';
-import '../screens/settings/settings.dart';
+import '../screens/settings/settings_screen.dart';
 import '../screens/settings/account_screen.dart';
-import '../screens/settings/view_themes.dart';
+import '../screens/settings/themes_screen.dart';
 import '../screens/todo/add_todo_screen.dart';
 import '../screens/todo/todo_screen.dart';
 import '../screens/todo/view_todo_screen.dart';
 import '../screens/settings/notifications.dart';
 import '../screens/splash.dart';
 
+/// The GoRouter instance of routeDelegate & routeInformationParser
+/// for App's root widget.
 var goRouter = GoRouter(
   initialLocation: "/splash",
   routes: [
@@ -218,7 +220,7 @@ var goRouter = GoRouter(
             );
           },
           transitionDuration: const Duration(milliseconds: 750),
-          child: const DiaryPage(),
+          child: const DiaryScreen(),
         );
       },
       routes: [
@@ -242,7 +244,7 @@ var goRouter = GoRouter(
                 );
               },
               transitionDuration: const Duration(milliseconds: 750),
-              child: const AddDiaryEntryPage(),
+              child: const AddDiaryEntryScreen(),
             );
           },
         ),
@@ -266,7 +268,7 @@ var goRouter = GoRouter(
                 );
               },
               transitionDuration: const Duration(milliseconds: 750),
-              child: ViewDiaryEntryPage(
+              child: ViewDiaryEntryScreen(
                 entry: pageBuilder.extra as DiaryEntry,
                 size: logicalScreenSize,
               ),
@@ -317,7 +319,7 @@ var goRouter = GoRouter(
             );
           },
           transitionDuration: const Duration(milliseconds: 750),
-          child: const SettingsPage(),
+          child: const SettingsScreen(),
         );
       },
       routes: [
@@ -437,7 +439,7 @@ var goRouter = GoRouter(
                 );
               },
               transitionDuration: const Duration(milliseconds: 750),
-              child: const ThemeSettingsPage(),
+              child: const ThemeSettingsScreen(),
             );
           },
         ),

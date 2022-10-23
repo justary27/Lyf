@@ -99,13 +99,6 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                             onPressed: () {
                               goRouter.push(RouteHandler.signup);
                             },
-                            child: Text(
-                              "Sign Up",
-                              style: GoogleFonts.ubuntu(
-                                textStyle: TextStyle(
-                                    color: Colors.grey.shade700, fontSize: 20),
-                              ),
-                            ),
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Colors.white),
@@ -114,6 +107,13 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
+                              ),
+                            ),
+                            child: Text(
+                              "Sign Up",
+                              style: GoogleFonts.ubuntu(
+                                textStyle: TextStyle(
+                                    color: Colors.grey.shade700, fontSize: 20),
                               ),
                             ),
                           ),
@@ -128,13 +128,6 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                             onPressed: () {
                               goRouter.push(RouteHandler.login);
                             },
-                            child: Text(
-                              "Log In",
-                              style: GoogleFonts.ubuntu(
-                                textStyle: TextStyle(
-                                    color: Colors.grey.shade700, fontSize: 20),
-                              ),
-                            ),
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Colors.white),
@@ -143,6 +136,13 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
+                              ),
+                            ),
+                            child: Text(
+                              "Log In",
+                              style: GoogleFonts.ubuntu(
+                                textStyle: TextStyle(
+                                    color: Colors.grey.shade700, fontSize: 20),
                               ),
                             ),
                           ),

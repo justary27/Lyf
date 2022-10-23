@@ -8,15 +8,15 @@ import 'package:lyf/src/state/theme/theme_state.dart';
 import 'package:lyf/src/utils/helpers/theme_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ThemeSettingsPage extends ConsumerStatefulWidget {
-  const ThemeSettingsPage({Key? key}) : super(key: key);
+class ThemeSettingsScreen extends ConsumerStatefulWidget {
+  const ThemeSettingsScreen({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ThemeSettingsPageState();
+      _ThemeSettingsScreenState();
 }
 
-class _ThemeSettingsPageState extends ConsumerState<ThemeSettingsPage> {
+class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen> {
   void _changeTheme(ThemeHelper themeName, int themeIndex) {
     ref.read(themeNotifier.notifier).changeTheme(themeName);
     LyfService.themeService.setTheme(themeIndex.toString());

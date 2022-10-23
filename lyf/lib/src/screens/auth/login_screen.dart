@@ -129,7 +129,7 @@ class LoginForm extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _LoginFormState createState() => _LoginFormState();
+  State<LoginForm> createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<LoginForm> {
@@ -302,13 +302,6 @@ class _LoginFormState extends State<LoginForm> {
                     await logIn(emailController.text, passwordController.text);
                   }
                 },
-                child: Text(
-                  "Log In",
-                  style: GoogleFonts.ubuntu(
-                    textStyle:
-                        TextStyle(color: Colors.grey.shade700, fontSize: 20),
-                  ),
-                ),
                 style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.white),
@@ -316,6 +309,13 @@ class _LoginFormState extends State<LoginForm> {
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
+                  ),
+                ),
+                child: Text(
+                  "Log In",
+                  style: GoogleFonts.ubuntu(
+                    textStyle:
+                        TextStyle(color: Colors.grey.shade700, fontSize: 20),
                   ),
                 ),
               ),

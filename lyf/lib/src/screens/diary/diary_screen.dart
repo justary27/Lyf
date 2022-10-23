@@ -12,14 +12,14 @@ import '../../utils/handlers/route_handler.dart';
 import '../../state/diary/diary_list_state.dart';
 import '../../state/theme/theme_state.dart';
 
-class DiaryPage extends ConsumerStatefulWidget {
-  const DiaryPage({Key? key}) : super(key: key);
+class DiaryScreen extends ConsumerStatefulWidget {
+  const DiaryScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _DiaryPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _DiaryScreenState();
 }
 
-class _DiaryPageState extends ConsumerState<DiaryPage> {
+class _DiaryScreenState extends ConsumerState<DiaryScreen> {
   List<DiaryEntry>? diaryEntries = [];
   bool retrieveStatus = true;
 
@@ -242,6 +242,8 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Container(
+                                              height: 0.075 * size.height,
+                                              alignment: Alignment.bottomLeft,
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -267,8 +269,6 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
                                                   )
                                                 ],
                                               ),
-                                              height: 0.075 * size.height,
-                                              alignment: Alignment.bottomLeft,
                                             ),
                                             Container(
                                               padding: EdgeInsets.fromLTRB(

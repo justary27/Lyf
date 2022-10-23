@@ -6,7 +6,7 @@ class ViewProfilePicturePage extends StatefulWidget {
   const ViewProfilePicturePage({Key? key}) : super(key: key);
 
   @override
-  _ViewProfilePicturePageState createState() => _ViewProfilePicturePageState();
+  State<ViewProfilePicturePage> createState() => _ViewProfilePicturePageState();
 }
 
 class _ViewProfilePicturePageState extends State<ViewProfilePicturePage> {

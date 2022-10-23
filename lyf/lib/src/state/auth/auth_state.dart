@@ -21,6 +21,7 @@ class AuthNotifier extends StateNotifier<AuthType> {
     } else {
       try {
         LyfUser? authenticatedUser = await UserApiClient.logIn(userCreds);
+        await FireAuth.logIn(creds: userCreds);
         if (authenticatedUser != null) {
           currentUser = authenticatedUser;
           UserCredentials.setCredentials(
@@ -28,11 +29,12 @@ class AuthNotifier extends StateNotifier<AuthType> {
             currentUser.password,
             currentUser.userName,
           );
-          await FireAuth.logIn(creds: userCreds);
+          state = AuthType.authenticated;
           loginState = true;
         }
       } catch (e) {
         loginState = false;
+        state = AuthType.error;
       }
     }
   }

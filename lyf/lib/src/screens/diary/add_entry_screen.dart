@@ -9,15 +9,15 @@ import '../../state/snackbar/snack_state.dart';
 import '../../state/theme/theme_state.dart';
 import '../../utils/enums/snack_type.dart';
 
-class AddDiaryEntryPage extends ConsumerStatefulWidget {
-  const AddDiaryEntryPage({Key? key}) : super(key: key);
+class AddDiaryEntryScreen extends ConsumerStatefulWidget {
+  const AddDiaryEntryScreen({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _AddDiaryEntryPageState();
+      _AddDiaryEntryScreenState();
 }
 
-class _AddDiaryEntryPageState extends ConsumerState<AddDiaryEntryPage> {
+class _AddDiaryEntryScreenState extends ConsumerState<AddDiaryEntryScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   @override

@@ -309,12 +309,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                       ),
                     ),
                     Visibility(
+                      visible: !snapshot.data!,
                       child: Container(
                         height: size.height,
                         width: size.width,
                         color: Colors.black.withOpacity(0.3),
                       ),
-                      visible: !snapshot.data!,
                     )
                   ],
                 )

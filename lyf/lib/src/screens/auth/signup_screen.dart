@@ -126,7 +126,7 @@ class SignUpForm extends StatefulWidget {
       : super(key: key);
 
   @override
-  _SignUpFormState createState() => _SignUpFormState();
+  State<SignUpForm> createState() => _SignUpFormState();
 }
 
 class _SignUpFormState extends State<SignUpForm> {
@@ -382,13 +382,6 @@ class _SignUpFormState extends State<SignUpForm> {
                     );
                   }
                 },
-                child: Text(
-                  "Sign Up",
-                  style: GoogleFonts.ubuntu(
-                    textStyle:
-                        TextStyle(color: Colors.grey.shade700, fontSize: 20),
-                  ),
-                ),
                 style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.white),
@@ -396,6 +389,13 @@ class _SignUpFormState extends State<SignUpForm> {
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
+                  ),
+                ),
+                child: Text(
+                  "Sign Up",
+                  style: GoogleFonts.ubuntu(
+                    textStyle:
+                        TextStyle(color: Colors.grey.shade700, fontSize: 20),
                   ),
                 ),
               ),

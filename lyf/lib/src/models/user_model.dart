@@ -31,7 +31,7 @@ class LyfUser {
   String get userID => userId;
   Map<String, String> authHeader() {
     return {
-      'Authorization': "Token " + token.toString(),
+      'Authorization': "Token $token",
     };
   }
 
