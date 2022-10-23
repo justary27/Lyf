@@ -10,14 +10,14 @@ import '../../state/todo/todo_list_state.dart';
 import '../../utils/enums/snack_type.dart';
 import '../../state/snackbar/snack_state.dart';
 
-class AddTodoPage extends ConsumerStatefulWidget {
-  const AddTodoPage({Key? key}) : super(key: key);
+class AddTodoScreen extends ConsumerStatefulWidget {
+  const AddTodoScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AddTodoPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _AddTodoScreenState();
 }
 
-class _AddTodoPageState extends ConsumerState<AddTodoPage> {
+class _AddTodoScreenState extends ConsumerState<AddTodoScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 

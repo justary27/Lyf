@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/screens/splash.dart';
 import 'drawer.dart';
-import 'home_page.dart';
+import 'home_screen.dart';
 import 'dart:io' show Platform;
 
 class Home extends StatefulWidget {
@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
         children: const [
           SideDrawer(),
           // SplashScreen(),
-          HomePage(),
+          HomeScreen(),
         ],
       ),
     );

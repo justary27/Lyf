@@ -2,7 +2,6 @@
 title: "Diaries"
 description: "Cherish your favorite memories!"
 author: "justary27"
-# date: {{ .Date }}
 weight: 2
 draft: false
 showtoc: true
@@ -12,7 +11,7 @@ ShowReadingTime: true
 ShowBreadCrumbs: true
 ShowPostNavLinks: true
 cover:
-  image: images/diary.svg
+  image: images/diary.jpg
   alt: "Diary Logo"
   caption: "Cherish your favorite memories!"
 ---
@@ -34,7 +33,7 @@ Psst... **???** coming soon!
 ## Viewing a diary.
 Now that you have written your diary, you must wanna see it right? Way too easy!
 - From the Home screen, select `"Diary"` option.
-- Select the entry you wanna seee from the list.
+- Select the entry you wanna see from the list.
 - See what have you jotted down!
 
 ## Sharing a diary.

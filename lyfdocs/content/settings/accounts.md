@@ -2,7 +2,7 @@
 title: "Accounts"
 description: "Your account related settings!"
 author: "justary27"
-# date: {{ .Date }}
+url: "/settings/accounts/"
 weight: 2
 draft: false
 showtoc: true

@@ -6,9 +6,9 @@ import 'package:lyf/src/screens/error/error_screen.dart';
 import 'package:lyf/src/screens/settings/language_screen.dart';
 import 'package:lyf/src/shared/viewers/web_viewer.dart';
 import 'package:lyf/src/utils/helpers/screen_helper.dart';
-import '../screens/auth/login.dart';
-import '../screens/auth/signup.dart';
-import '../screens/auth/welcome.dart';
+import '../screens/auth/login_screen.dart';
+import '../screens/auth/signup_screen.dart';
+import '../screens/auth/auth_screen.dart';
 import '../screens/diary/diary.dart';
 import '../screens/diary/view_entry.dart';
 import '../screens/diary/add_entry.dart';
@@ -18,9 +18,9 @@ import '../screens/settings/invite.dart';
 import '../screens/settings/settings.dart';
 import '../screens/settings/account_screen.dart';
 import '../screens/settings/view_themes.dart';
-import '../screens/todo/add_todo.dart';
-import '../screens/todo/todo.dart';
-import '../screens/todo/view_todo.dart';
+import '../screens/todo/add_todo_screen.dart';
+import '../screens/todo/todo_screen.dart';
+import '../screens/todo/view_todo_screen.dart';
 import '../screens/settings/notifications.dart';
 import '../screens/splash.dart';
 
@@ -53,7 +53,7 @@ var goRouter = GoRouter(
             );
           },
           transitionDuration: const Duration(milliseconds: 750),
-          child: const WelcomePage(),
+          child: const AuthScreen(),
         );
       },
     ),
@@ -143,7 +143,7 @@ var goRouter = GoRouter(
             );
           },
           transitionDuration: const Duration(milliseconds: 750),
-          child: const TodoPage(),
+          child: const TodoScreen(),
         );
       },
       routes: [
@@ -167,7 +167,7 @@ var goRouter = GoRouter(
                 );
               },
               transitionDuration: const Duration(milliseconds: 750),
-              child: const AddTodoPage(),
+              child: const AddTodoScreen(),
             );
           },
         ),
@@ -191,7 +191,7 @@ var goRouter = GoRouter(
                 );
               },
               transitionDuration: const Duration(milliseconds: 750),
-              child: ViewTodoPage(
+              child: ViewTodoScreen(
                 todo: pageBuilder.extra as Todo,
               ),
             );
