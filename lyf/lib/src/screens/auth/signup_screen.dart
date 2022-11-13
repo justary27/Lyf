@@ -238,7 +238,7 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           Container(
             width: 0.75 * size.width,
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               vertical: 7.5,
             ),
             child: Column(
@@ -279,7 +279,7 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           Container(
             width: 0.75 * size.width,
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               vertical: 7.5,
             ),
             child: Column(
@@ -321,7 +321,7 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           Container(
             width: 0.75 * size.width,
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               vertical: 7.5,
             ),
             child: Column(

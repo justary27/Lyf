@@ -70,7 +70,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       Hero(
                         tag: 'pfp',
                         child: Material(
-                          shape: CircleBorder(),
+                          shape: const CircleBorder(),
                           clipBehavior: Clip.hardEdge,
                           color: Colors.transparent,
                           child: InkWell(

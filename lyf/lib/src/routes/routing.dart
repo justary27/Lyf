@@ -10,7 +10,7 @@ import '../screens/auth/login_screen.dart';
 import '../screens/auth/signup_screen.dart';
 import '../screens/auth/auth_screen.dart';
 import '../screens/diary/diary_screen.dart';
-import '../screens/diary/view_entry_scren.dart';
+import '../screens/diary/view_entry_screen.dart';
 import '../screens/diary/add_entry_screen.dart';
 import '../screens/home/home.dart';
 import '../screens/home/view_pfp.dart';
@@ -343,7 +343,7 @@ var goRouter = GoRouter(
                 );
               },
               transitionDuration: const Duration(milliseconds: 750),
-              child: const AccountSettingsPage(),
+              child: const AccountSettingsScreen(),
             );
           },
         ),
@@ -367,7 +367,7 @@ var goRouter = GoRouter(
                 );
               },
               transitionDuration: const Duration(milliseconds: 750),
-              child: const AccountSettingsPage(),
+              child: const AccountSettingsScreen(),
             );
           },
         ),

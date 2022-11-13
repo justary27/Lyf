@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/screens/home/drawer.dart';
+import 'package:lyf/src/services/firebase/storage/user_services.dart';
 import 'package:lyf/src/shared/greet.dart';
 import 'package:lyf/src/state/theme/theme_state.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
@@ -262,7 +263,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                         ),
                                       ),
                                       child: InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          UserFireStoreServices.getPfpLink();
+                                        },
                                         // child: Column(
                                         //   mainAxisAlignment:
                                         //       MainAxisAlignment.center,

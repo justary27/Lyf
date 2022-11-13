@@ -105,7 +105,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen> {
                         itemBuilder: ((context, index) {
                           return ListTile(
                             leading: Container(
-                              padding: EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(5),
                               width: 50,
                               decoration: BoxDecoration(
                                 color: Color(
