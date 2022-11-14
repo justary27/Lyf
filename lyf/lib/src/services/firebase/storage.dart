@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firestorage;
+import 'package:flutter/foundation.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:lyf/src/utils/errors/firestorage_exceptions.dart';
 import 'package:lyf/src/global/variables.dart';
 
@@ -16,10 +18,14 @@ class FireStorage {
     List<String> linkList = [];
     try {
       for (PlatformFile? file in filesList) {
+        Uint8List? compressedFile = await FlutterImageCompress.compressWithFile(
+          file!.path!,
+          quality: 70,
+        );
+
         firestorage.UploadTask uploadImage = storage
-            .ref(
-                '${currentUser.userID}/diary/$entryId/images/${file!.name}.${file.extension}')
-            .putFile(File(file.path!));
+            .ref('${currentUser.userID}/diary/$entryId/images/${file.name}.jpg')
+            .putData(compressedFile!);
         linkList.add(await (await uploadImage).ref.getDownloadURL());
       }
       notifyImageLinker(linkList);

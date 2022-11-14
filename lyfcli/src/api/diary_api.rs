@@ -1,0 +1,4 @@
+struct DiaryApiClient{}
+
+impl DiaryApiClient {
+}

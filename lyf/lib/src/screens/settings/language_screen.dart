@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lyf/src/routes/routing.dart';
-import 'package:lyf/src/services/lyf_settings.dart';
 import 'package:lyf/src/state/theme/theme_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -21,7 +20,6 @@ class _LanguageSettingsScreenState
     extends ConsumerState<LanguageSettingsScreen> {
   void _changeLanguage(Locale langName) {
     ref.read(languageNotifier.notifier).changeLanguage(langName);
-    // LyfService.themeService.setTheme(themeIndex.toString());
   }
 
   @override
@@ -49,7 +47,6 @@ class _LanguageSettingsScreenState
           width: size.width,
           child: Scaffold(
             appBar: AppBar(
-              // shadowColor: Colors.transparent,
               backgroundColor: Colors.transparent,
               leading: IconButton(
                 onPressed: () {

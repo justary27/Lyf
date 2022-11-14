@@ -41,6 +41,7 @@ class SnackNotifier extends StateNotifier<Stream<SnackType>> {
         snackKey.currentState!.showSnackBar(diaryUpdateSnack);
         break;
       default:
+        snackKey.currentState!.showSnackBar(networkErrorSnack);
         break;
     }
   }

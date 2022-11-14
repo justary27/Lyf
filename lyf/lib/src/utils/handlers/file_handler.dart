@@ -128,8 +128,10 @@ class FileHandler {
   static Future<List<PlatformFile>?> pickImages() async {
     int? requestResponse = await PermissionManager.requestStorageAccess();
     if (requestResponse == 2) {
-      FilePickerResult? result = await FilePicker.platform
-          .pickFiles(type: FileType.image, allowMultiple: true);
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        allowMultiple: true,
+      );
       if (result == null) {
         return null;
       } else {

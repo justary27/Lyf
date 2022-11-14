@@ -13,15 +13,15 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../state/theme/theme_state.dart';
 
-class AccountSettingsPage extends ConsumerStatefulWidget {
-  const AccountSettingsPage({Key? key}) : super(key: key);
+class AccountSettingsScreen extends ConsumerStatefulWidget {
+  const AccountSettingsScreen({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _AccountSettingsPageState();
+      _AccountSettingsScreenState();
 }
 
-class _AccountSettingsPageState extends ConsumerState<AccountSettingsPage> {
+class _AccountSettingsScreenState extends ConsumerState<AccountSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -362,7 +362,7 @@ class _AccountSettingsPageState extends ConsumerState<AccountSettingsPage> {
                             vertical: 0.0125 * size.height,
                           ),
                           tileColor: Theme.of(context).listTileTheme.tileColor,
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(12),
                               // bottomLeft: Radius.circular(12),
@@ -423,7 +423,7 @@ class _AccountSettingsPageState extends ConsumerState<AccountSettingsPage> {
                             vertical: 0.0125 * size.height,
                           ),
                           tileColor: Theme.of(context).listTileTheme.tileColor,
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                               // topLeft: Radius.circular(12),
                               bottomLeft: Radius.circular(12),
