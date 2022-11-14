@@ -205,24 +205,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       //     style: Theme.of(context).textTheme.bodyText1,
                       //   ),
                       // ),
-                      // ListTile(
-                      //   tileColor: Colors.white.withOpacity(0.15),
-                      //   leading: Icon(
-                      //     Icons.access_alarm,
-                      //     color: Colors.white,
-                      //   ),
-                      //   onTap: () {
-                      //     RouteManager.navigateToInviteSettings(context);
-                      //   },
-                      //   title: Text(
-                      //     "Invite",
-                      //     style: Theme.of(context).textTheme.headline4,
-                      //   ),
-                      //   subtitle: Text(
-                      //     "Invite a friend",
-                      //     style: Theme.of(context).textTheme.bodyText1,
-                      //   ),
-                      // ),
                       ListTile(
                         tileColor: Theme.of(context).listTileTheme.tileColor,
                         leading: Icon(
@@ -243,12 +225,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       ),
                       ListTile(
                         tileColor: Theme.of(context).listTileTheme.tileColor,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(12),
-                            bottomRight: Radius.circular(12),
-                          ),
-                        ),
                         leading: Icon(
                           FontAwesomeIcons.language,
                           color: Theme.of(context).iconTheme.color,
@@ -265,11 +241,35 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
+                      ListTile(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(12),
+                            bottomRight: Radius.circular(12),
+                          ),
+                        ),
+                        tileColor: Theme.of(context).listTileTheme.tileColor,
+                        leading: Icon(
+                          Icons.contacts,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
+                        onTap: () {
+                          goRouter.push(RouteHandler.inviteSettings);
+                        },
+                        title: Text(
+                          "Invite",
+                          style: Theme.of(context).textTheme.headline4,
+                        ),
+                        subtitle: Text(
+                          "Invite a friend.",
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ),
                     ],
                   ),
                 ),
                 SizedBox(
-                  height: 0.50 * size.height,
+                  height: 0.20 * size.height,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -287,6 +287,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       ),
                       Container(
                         height: 0.05 * size.height,
+                        margin: const EdgeInsets.only(bottom: 12),
                         alignment: Alignment.bottomCenter,
                         child: SvgPicture.asset(
                           "assets/images/InCognoS_labs.svg",

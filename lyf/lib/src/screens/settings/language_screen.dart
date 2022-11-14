@@ -47,7 +47,6 @@ class _LanguageSettingsScreenState
           width: size.width,
           child: Scaffold(
             appBar: AppBar(
-              // shadowColor: Colors.transparent,
               backgroundColor: Colors.transparent,
               leading: IconButton(
                 onPressed: () {
