@@ -5,6 +5,10 @@ on:
     branches:
     - alpha  
 
+defaults:
+  run:
+    working-directory: ./lyfdocs
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -14,9 +18,6 @@ jobs:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
-      - name : Change working-directory
-        run: cd lyfdocs
-        
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
