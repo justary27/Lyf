@@ -59,6 +59,7 @@ def updateTodo(request, userId, todoId):
         '_title': data["_title"],
         '_description': data["_description"],
         '_created_on': data["_createdAt"],
+        '_isCompleted': data["_isCompleted"],
         '_isReminderSet': data["_isReminderSet"],
         "_reminderAt": data["_reminderAt"]
     }

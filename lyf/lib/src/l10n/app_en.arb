@@ -69,6 +69,11 @@
         "description": "The conventional export as text phrase"
     },
 
+    "settings": "Settings",
+    "@settings": {
+        "description": "The conventional settings phrase"
+    },
+
     "account": "Account",
     "@account": {
         "description": "The conventional account phrase"
@@ -129,6 +134,25 @@
         "description": "The conventional account description phrase"
     },
 
+    "helpCenter": "Help Center",
+    "@helpCenter": {
+        "description": "The conventional help center phrase"
+    },
+
+    "helpCenterDesc": "Your cheatsheet to lyf.",
+    "@helpCenterDesc": {
+        "description": "The conventional help center description phrase"
+    },
+
+    "notifications": "Notifications",
+    "@notifications": {
+        "description": "The conventional notifications phrase"
+    },
+
+    "notificationsDesc": "Change how lyf notifies you.",
+    "@notificationsDesc": {
+        "description": "The conventional notifications description phrase"
+    },
 
     "themes": "Themes",
     "@themes": {
@@ -188,5 +212,30 @@
     "spanish": "Spanish",
     "@spanish": {
         "description": "The conventional spanish phrase"
+    },
+
+    "invite": "Invite",
+    "@invite": {
+        "description": "The conventional invite phrase"
+    },
+
+    "inviteDesc": "Invite a friend.",
+    "@inviteDesc": {
+        "description": "The conventional invite description phrase"
+    },
+
+    "shareLink": "Share Link!",
+    "@shareLink": {
+        "description": "The conventional share phrase"
+    },
+
+    "shareLinkDesc": "Click to share invite link!",
+    "@shareLinkDesc": {
+        "description": "The conventional share description phrase"
+    },
+
+    "searchPeople": "Search People...",
+    "@searchPeople": {
+        "description": "The conventional search people phrase"
     }
 }

@@ -27,13 +27,17 @@ class Todo extends JsonObject {
   @JsonKey(name: "_createdAt")
   final DateTime createdAt;
 
+  /// I the Todo completed?
+  @JsonKey(name: '_isCompleted')
+  bool isCompleted;
+
   /// Is a reminder set for the [Todo] in Google Calendar?
   @JsonKey(name: "_isReminderSet")
-  final bool isReminderSet;
+  bool isReminderSet;
 
   /// Time when reminder is set in Google Calander, null if !_isReminderSet
   @JsonKey(name: "_reminderAt")
-  final DateTime? reminderAt;
+  DateTime? reminderAt;
 
   // Constructor
 
@@ -42,6 +46,7 @@ class Todo extends JsonObject {
     this.title,
     this.description,
     this.createdAt,
+    this.isCompleted,
     this.isReminderSet,
     this.reminderAt,
   );

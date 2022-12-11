@@ -1,0 +1,4 @@
+enum ChannelType {
+  diary,
+  todo,
+}

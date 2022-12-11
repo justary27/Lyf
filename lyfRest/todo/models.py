@@ -40,7 +40,7 @@ class Todo(models.Model):
     _created_on = models.DateTimeField(default=timezone.now)
     _is_reminder_set = models.BooleanField(_("isReminderSet"), default=False, editable=False)
     _reminder_at = models.DateTimeField(null=True, blank=True)
-
+    _is_completed = models.BooleanField(null=True, default=False)
     objects = TodoManger()
 
     @property
@@ -74,7 +74,9 @@ class Todo(models.Model):
             "_title": self.title,
             "_description": self.description,
             "_createdAt": self.created_at,
+            "_isCompleted": self._is_completed,
             "_isReminderSet": self.isReminderset,
+
             "_reminderAt": self.ReminderAt if self.ReminderAt != "None" else None,
         }
 

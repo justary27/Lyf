@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyf/src/models/user_model.dart';
+import 'package:lyf/src/services/settings/notification_settings.dart';
 
 Map<String, String?>? creds;
 
@@ -14,5 +15,11 @@ LyfUser currentUser = guestUser;
 ///
 late int themeCode;
 
+late bool diaryNotifPref;
+
+late DateTime diaryNotifTime;
+
 final GlobalKey<ScaffoldMessengerState> snackKey =
     GlobalKey<ScaffoldMessengerState>();
+
+late NotificationService localNotificationService;

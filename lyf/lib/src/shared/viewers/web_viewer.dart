@@ -16,9 +16,11 @@ class WebViewer extends ConsumerStatefulWidget {
 class _WebViewerState extends ConsumerState<WebViewer> {
   @override
   Widget build(BuildContext context) {
-    return WebView(
-      initialUrl: widget.initialUrl,
-      javascriptMode: JavascriptMode.unrestricted,
+    return SafeArea(
+      child: WebView(
+        initialUrl: widget.initialUrl,
+        javascriptMode: JavascriptMode.unrestricted,
+      ),
     );
   }
 }

@@ -27,6 +27,8 @@
 
     "exportAsTxt": "टेक्स्ट के रूप में निर्यात करें",
 
+    "settings": "समायोजन",
+
     "account": "खाता",
 
     "accountDesc": "खाता जानकारी, सुरक्षा और गतिविधि।",
@@ -51,6 +53,14 @@
 
     "deactivateMyAccount": "मेरे खाते को निष्क्रिय करें",
 
+    "helpCenter": "सहायता केंद्र",
+
+    "helpCenterDesc": "Lyf के लिए आपकी चीटशीट।",
+
+    "notifications": "सूचनाएं",
+
+    "notificationsDesc": "बदलें कि कैसे Lyf आपको सूचित करता है।",
+
     "themes": "थीम",
 
     "themesDesc": "ऐप की थीम बदलें।",
@@ -73,5 +83,15 @@
 
     "french": "फ्रेंच",
 
-    "spanish": "स्पैनिश"
+    "spanish": "स्पैनिश",
+
+    "invite": "आमंत्रण",
+
+    "inviteDesc": "किसी मित्र को आमंत्रित करें।",
+
+    "shareLink": "लिंक शेयर करें!",
+
+    "shareLinkDesc": "आमंत्रण लिंक साझा करने के लिए क्लिक करें!",
+
+    "searchPeople": "लोग खोजें..."
 }

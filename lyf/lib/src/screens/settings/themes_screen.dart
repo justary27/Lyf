@@ -136,7 +136,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen> {
                             tileColor: Colors.transparent,
                           );
                         }),
-                        itemCount: 4,
+                        itemCount: themeConstants.length,
                       ),
                     ),
                   ],

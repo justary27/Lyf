@@ -22,7 +22,7 @@ class EntryCard extends ConsumerStatefulWidget {
   final void Function(bool flag)? notifyflagChange;
   final void Function(String newDescription)? notifyDescriptionChange;
   final void Function(DateTime newDate)? notifyDateChange;
-  final int pageCode;
+  final String pageCode;
   const EntryCard({
     Key? key,
     required this.size,
@@ -53,9 +53,9 @@ class _EntryCardState extends ConsumerState<EntryCard> {
     required pageCode,
     required DiaryEntry entry,
   }) {
-    if (pageCode == 0) {
+    if (pageCode == "/diary/view") {
       return const SizedBox(width: 0, height: 0);
-    } else if (pageCode == 1) {
+    } else if (pageCode == "/diary") {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -90,7 +90,7 @@ class _EntryCardState extends ConsumerState<EntryCard> {
     void Function(String newDescription)? notifyDescriptionChange,
     void Function(DateTime newDate)? notifyDateChange,
   }) {
-    if (pageCode == 0) {
+    if (pageCode == "/diary/view") {
       return TextFormField(
         controller: _descriptionController,
         style: GoogleFonts.aBeeZee(
@@ -116,7 +116,7 @@ class _EntryCardState extends ConsumerState<EntryCard> {
               }
             : null,
       );
-    } else if (pageCode == 1) {
+    } else if (pageCode == "/diary") {
       return Text(
         entry.entryDescription,
         style: Theme.of(context).textTheme.bodyText1,
@@ -150,7 +150,7 @@ class _EntryCardState extends ConsumerState<EntryCard> {
         color: Colors.white.withOpacity(0.15),
         child: InkWell(
           onTap: () {
-            if (pageCode == 1) {
+            if (pageCode == "/diary") {
               goRouter.push(
                 RouteHandler.viewDiary(
                   entry.entryId!,
@@ -265,7 +265,7 @@ class _EntryCardState extends ConsumerState<EntryCard> {
                           ),
                         ),
                       ),
-                      (pageCode == 0 || pageCode == 1)
+                      (pageCode == "/diary/view" || pageCode == "/diary")
                           ? ButtonBar(
                               alignment: MainAxisAlignment.end,
                               children: [
@@ -317,7 +317,7 @@ class _EntryCardState extends ConsumerState<EntryCard> {
     _titleController.text = widget.entry.entryTitle;
     _descriptionController.text = widget.entry.description;
     _dateController = ValueNotifier<DateTime>(widget.entry.createdAt);
-    (widget.pageCode == 1 || widget.pageCode == 0)
+    (widget.pageCode == "/diary" || widget.pageCode == "/diary/view")
         ? deleteEntryClient = http.Client()
         : deleteEntryClient = null;
     super.initState();

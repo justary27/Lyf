@@ -61,6 +61,28 @@ final ThemeHelper monochromeTheme = ThemeHelper(
     shadowColor: Colors.black,
     cardColor: Colors.white.withOpacity(0.15),
     splashColor: Colors.white.withOpacity(0.35),
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.all(Colors.white),
+      trackColor: MaterialStateProperty.resolveWith<Color>(
+        (Set<MaterialState> states) {
+          if (states.contains(MaterialState.selected)) {
+            return Colors.white.withOpacity(.65);
+          }
+          return Colors.white.withOpacity(.15);
+        },
+      ),
+      overlayColor: MaterialStateProperty.resolveWith<Color?>(
+        (Set<MaterialState> states) {
+          if (states.contains(MaterialState.selected)) {
+            return Colors.white.withOpacity(0.35);
+          }
+          if (states.contains(MaterialState.disabled)) {
+            return Colors.grey.shade400;
+          }
+          return null;
+        },
+      ),
+    ),
     listTileTheme: ListTileThemeData(
       tileColor: Colors.white.withOpacity(0.15),
     ),
@@ -113,6 +135,28 @@ final ThemeHelper funkyTheme = ThemeHelper(
     listTileTheme: ListTileThemeData(
       tileColor: const Color(0xFFCA81F5).withOpacity(0.15),
     ),
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.all(const Color(0xFFCA81F5)),
+      trackColor: MaterialStateProperty.resolveWith<Color>(
+        (Set<MaterialState> states) {
+          if (states.contains(MaterialState.selected)) {
+            return const Color(0xFFCA81F5).withOpacity(.65);
+          }
+          return const Color(0xFFCA81F5).withOpacity(.15);
+        },
+      ),
+      overlayColor: MaterialStateProperty.resolveWith<Color?>(
+        (Set<MaterialState> states) {
+          if (states.contains(MaterialState.selected)) {
+            return const Color(0xFFCA81F5).withOpacity(0.35);
+          }
+          if (states.contains(MaterialState.disabled)) {
+            return Colors.grey.shade400;
+          }
+          return null;
+        },
+      ),
+    ),
     iconTheme: const IconThemeData(
       color: Color(0xFFCA81F5),
     ),
@@ -162,6 +206,28 @@ final ThemeHelper loveTheme = ThemeHelper(
     cardColor: const Color(0xFFFDF5F7).withOpacity(0.10),
     listTileTheme: ListTileThemeData(
       tileColor: const Color(0xFFFDF5F7).withOpacity(0.15),
+    ),
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.all(Colors.white),
+      trackColor: MaterialStateProperty.resolveWith<Color>(
+        (Set<MaterialState> states) {
+          if (states.contains(MaterialState.selected)) {
+            return Colors.white.withOpacity(.65);
+          }
+          return Colors.white.withOpacity(.15);
+        },
+      ),
+      overlayColor: MaterialStateProperty.resolveWith<Color?>(
+        (Set<MaterialState> states) {
+          if (states.contains(MaterialState.selected)) {
+            return Colors.white.withOpacity(0.35);
+          }
+          if (states.contains(MaterialState.disabled)) {
+            return Colors.grey.shade400;
+          }
+          return null;
+        },
+      ),
     ),
     iconTheme: const IconThemeData(
       color: Color(0xFFFDF5F7),

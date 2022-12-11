@@ -39,3 +39,8 @@ Future<Map<String, String?>?> getCredentials() async {
 Future<void> initServiceProvider() async {
   await InitService.initializeServices();
 }
+
+bool boolParser(String value) {
+  if (value == "true") return true;
+  return false;
+}

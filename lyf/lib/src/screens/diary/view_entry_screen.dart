@@ -38,7 +38,6 @@ class ViewDiaryEntryScreen extends ConsumerStatefulWidget {
 class _ViewDiaryEntryScreenState extends ConsumerState<ViewDiaryEntryScreen> {
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
-  late http.Client updateEntryClient;
   late DateTime dateController;
   List<String>? imageAttachmentLinks;
   String? audioAttachmentLink;
@@ -47,52 +46,6 @@ class _ViewDiaryEntryScreenState extends ConsumerState<ViewDiaryEntryScreen> {
   PlatformFile? audioAttachment;
   List<PlatformFile?>? imageAttachments;
   bool readingMode = false;
-
-  // void updateEntry(http.Client updateEntryClient, DiaryEntry entry) async {
-  //   late int statusCode;
-  //   try {
-  //     try {
-  //       if (imageAttachments != null || audioAttachment != null) {
-  //         ScaffoldMessenger.of(context).showSnackBar(fileSnackBar);
-  //         await FireStorage.diaryUploads(
-  //           entryId: entry.entryId!,
-  //           imageFiles: imageAttachments,
-  //           audioFile: audioAttachment,
-  //           notifyImageLinker: assignImageLinks,
-  //         );
-  //       }
-  //       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-  //     } catch (e) {
-  //       log(e.runtimeType.toString());
-  //       if (e == ImageUploadException) {
-  //         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-  //       } else if (e == AudioUploadException) {
-  //         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-  //       }
-  //     }
-  //     entry.imageLinks = imageAttachmentLinks;
-  //     statusCode = await DiaryEntry.updateEntry(
-  //         updateEntryClient: updateEntryClient, entry: entry);
-  //     if (statusCode == 200) {
-  //       SnackBar snackBar = const SnackBar(
-  //         content: Text("Entry updated successfully!"),
-  //       );
-  //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  //       FocusManager.instance.primaryFocus?.unfocus();
-  //       Navigator.of(context).pushNamedAndRemoveUntil(
-  //         RouteManager.diaryPage,
-  //         ModalRoute.withName(RouteManager.diaryPage),
-  //       );
-  //     } else {
-  //       SnackBar snackBar = const SnackBar(
-  //         content: Text("Something went wrong"),
-  //       );
-  //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
 
   void _updateEntry(DiaryEntry updatedEntry) {
     ref.read(diaryNotifier.notifier).editEntry(updatedEntry);
@@ -269,7 +222,6 @@ class _ViewDiaryEntryScreenState extends ConsumerState<ViewDiaryEntryScreen> {
     _titleController = TextEditingController();
     _descriptionController = TextEditingController();
     isChanged = ValueNotifier(false);
-    updateEntryClient = http.Client();
     _titleController.text = widget.entry.entryTitle;
     _descriptionController.text = widget.entry.description;
     dateController = widget.entry.entryCreatedAt;
@@ -284,7 +236,7 @@ class _ViewDiaryEntryScreenState extends ConsumerState<ViewDiaryEntryScreen> {
         notifyflagChange: changeFlag,
         notifyDescriptionChange: changeDescription,
         notifyDateChange: changeDate,
-        pageCode: 0,
+        pageCode: "/diary/view",
       )
     ];
 
@@ -721,7 +673,6 @@ class _ViewDiaryEntryScreenState extends ConsumerState<ViewDiaryEntryScreen> {
   void dispose() {
     _titleController.dispose();
     _descriptionController.dispose();
-    updateEntryClient.close();
     super.dispose();
   }
 }

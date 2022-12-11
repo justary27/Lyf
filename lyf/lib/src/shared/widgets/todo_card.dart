@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
 
 import '../../models/todo_model.dart';
+import '../../services/lyf_settings.dart';
+import '../../utils/enums/channel_type.dart';
 import '../snackbars/delete_snack.dart';
 import '../../routes/routing.dart';
 import '../../state/todo/todo_list_state.dart';
@@ -64,32 +66,80 @@ class _TodoCardState extends ConsumerState<TodoCard> {
     if (widget.pageCode == "/todo/view") {
       ref.read(todoListNotifier.notifier).removeTodo(todo);
       Navigator.of(context).pop();
-      // RouteManager.navigateToTodo(widget.parentContext);
-
-      // late int statusCode;
-      // try {
-      //   statusCode = await Todo.deleteTodo(
-      //     deleteTodoClient: deleteTodoClient,
-      //     todo: todo,
-      //   );
-      //   if (statusCode == 200) {
-      //   } else {
-      //     SnackBar snackBar = const SnackBar(
-      //       content: Text("Something went wrong"),
-      //     );
-      //     ScaffoldMessenger.of(widget.parentContext).showSnackBar(snackBar);
-      //   }
-      // } catch (e) {
-      //   print(e);
-      // }
     } else {
       ref.read(todoListNotifier.notifier).removeTodo(todo);
-
-      // widget.deleteTodo!(deleteTodoClient, todo);
     }
   }
 
+  Future<void> _reminderHandler() async {
+    late final DateTime finalDateTime;
+    try {
+      DateTime? selectedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime.now().add(
+          const Duration(days: 30),
+        ),
+      );
+      if (selectedDate != null) {
+        TimeOfDay? selectedTime = await showTimePicker(
+          context: context,
+          initialTime: TimeOfDay.now(),
+        );
+        if (selectedTime != null) {
+          finalDateTime = DateTime(
+            selectedDate.year,
+            selectedDate.month,
+            selectedDate.day,
+            selectedTime.hour,
+            selectedTime.minute,
+          );
+          await LyfService.notificationService.scheduleNotification(
+            id: widget.todo!.id.hashCode,
+            title: widget.todo!.title,
+            body: widget.todo!.description,
+            time: finalDateTime,
+            channelType: ChannelType.todo,
+            payload: "T ${widget.todo!.id}",
+          );
+          widget.todo!.isReminderSet = true;
+          widget.todo!.reminderAt = finalDateTime;
+          ref.read(todoListNotifier.notifier).editTodo(widget.todo!);
+          goRouter.pop();
+        }
+      }
+    } catch (e) {}
+  }
+
   // Card component generating functions.
+  Text buildReminderText() {
+    if (widget.todo!.isReminderSet) {
+      return Text(
+        "Reminder @ ${widget.todo!.reminderAt!.day}/${widget.todo!.reminderAt!.month}/${widget.todo!.reminderAt!.year}",
+        style: GoogleFonts.ubuntu(
+          textStyle: const TextStyle(color: Colors.white),
+        ),
+      );
+    } else {
+      return Text(
+        "No Reminder Set",
+        style: GoogleFonts.ubuntu(
+          textStyle: const TextStyle(color: Colors.white),
+        ),
+      );
+    }
+  }
+
+  Text buildButtonReminderText() {
+    if (widget.todo!.isReminderSet) {
+      return Text(
+        "Reminder @ ${widget.todo!.reminderAt!.day}/${widget.todo!.reminderAt!.month}/${widget.todo!.reminderAt!.year}",
+      );
+    } else {
+      return const Text("Set Reminder");
+    }
+  }
 
   /// Generates the card's body corresponding to the todo route.
   List<Widget> buildCardBody({
@@ -100,16 +150,16 @@ class _TodoCardState extends ConsumerState<TodoCard> {
         Container(
           padding: EdgeInsets.fromLTRB(
               0, 0.025 * size.height, 0.0085 * size.width, 0.025 * size.height),
+          child: Text(
+            "${_dateController.value.day}/${_dateController.value.month}/${_dateController.value.year}",
+            style: Theme.of(context).textTheme.headline5,
+          ),
         ),
         TextFormField(
           controller: _descriptionController,
-          style: GoogleFonts.aBeeZee(
-            textStyle: TextStyle(
-              color: Colors.white.withOpacity(0.5),
-            ),
-          ),
+          style: Theme.of(context).textTheme.bodyText1,
           cursorColor: Colors.white.withOpacity(0.5),
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             filled: false,
             border: InputBorder.none,
           ),
@@ -156,145 +206,88 @@ class _TodoCardState extends ConsumerState<TodoCard> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           TextButton(
+            onPressed: () async {
+              await _reminderHandler();
+            },
+            child: buildButtonReminderText(),
+          ),
+          TextButton(
             onPressed: () {
-              showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2000),
-                lastDate: DateTime.now().add(
-                  const Duration(days: 7),
-                ),
-                builder: (BuildContext context, Widget? child) {
-                  return Theme(
-                    data: Theme.of(context),
-                    child: child!,
-                  );
-                },
-              ).then((value) {
-                setState(() {
-                  if (value != null) {
-                    widget.notifyflagChange!(true);
-                    _dateController.value = value;
-                    widget.notifyDateChange!(value);
-                  } else {
-                    widget.notifyflagChange!(false);
-                    _dateController.value = widget.todo!.todoCreatedAt;
-                  }
-                });
-              });
-              //                                   showDatePicker(
-              //   context: context,
-              //   initialDate: DateTime.now(),
-              //   firstDate: DateTime(1970),
-              //   builder: (BuildContext context, Widget child) {
-              //     return Theme(
-              //       data: ThemeData.dark().copyWith(
-              //         colorScheme: ColorScheme.dark(
-              //             primary: Colors.deepPurple,
-              //             onPrimary: Colors.white,
-              //             surface: Colors.pink,
-              //             onSurface: Colors.yellow,
-              //             ),
-              //         dialogBackgroundColor:Colors.blue[900],
-              //       ),
-              //       child: child,
-              //     );
-              //   },
-              // );
+              SnackBar snackBar = deleteSnack(
+                parentContext: widget.parentContext,
+                size: size,
+                item: widget.todo!,
+                performDeleteTask: _deleteTodo,
+              );
+              ScaffoldMessenger.of(widget.parentContext).showSnackBar(snackBar);
             },
             child: Text(
-              "${_dateController.value.day}/${_dateController.value.month}/${_dateController.value.year}",
+              "Delete",
               style: GoogleFonts.ubuntu(
-                textStyle: const TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-          ButtonBar(
-            alignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                onPressed: () {
-                  SnackBar snackBar = deleteSnack(
-                    parentContext: widget.parentContext,
-                    size: size,
-                    item: widget.todo!,
-                    performDeleteTask: _deleteTodo,
-                  );
-                  ScaffoldMessenger.of(widget.parentContext)
-                      .showSnackBar(snackBar);
-                },
-                child: Text(
-                  "Delete",
-                  style: GoogleFonts.ubuntu(
-                    textStyle: TextStyle(
-                      color: Colors.red,
-                    ),
-                  ),
+                textStyle: TextStyle(
+                  color: Colors.red,
                 ),
               ),
-              // TextButton(
-              //   onPressed: () {},
-              //   child: Text(
-              //     "Set Reminder",
-              //     style: GoogleFonts.ubuntu(),
-              //   ),
-              // )
-            ],
+            ),
           ),
         ],
       );
     } else {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            "${widget.todo!.createdAt.day}/${widget.todo!.createdAt.month}/${widget.todo!.createdAt.year}",
-            style: GoogleFonts.ubuntu(
-              textStyle: const TextStyle(color: Colors.white),
-            ),
-          ),
-          ButtonBar(
-            alignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                onPressed: () {
-                  SnackBar snackBar = deleteSnack(
-                    parentContext: widget.parentContext,
-                    size: size,
-                    item: widget.todo!,
-                    performDeleteTask: _deleteTodo,
-                  );
-                  ScaffoldMessenger.of(widget.parentContext)
-                      .showSnackBar(snackBar);
-                },
-                child: Text(
-                  "Delete",
-                  style: GoogleFonts.ubuntu(
-                    textStyle: TextStyle(
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 12.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "${widget.todo!.createdAt.day}/${widget.todo!.createdAt.month}/${widget.todo!.createdAt.year}",
+              style: GoogleFonts.ubuntu(
+                textStyle: const TextStyle(color: Colors.white),
               ),
-              TextButton(
-                onPressed: () {
-                  late TimeOfDay selectedTime;
-                  late DateTime selectedDate;
-                  // dateTimePicker(
-                  //     parentContext: context);
-                  // // showTimePicker(
-                  // //   context: context,
-                  // //   initialTime: TimeOfDay.now(),
-                  // // );
-                },
-                child: Text(
-                  "Set Reminder",
-                  style: GoogleFonts.ubuntu(),
-                ),
-              )
-            ],
-          ),
-        ],
+            ),
+            buildReminderText(),
+            // ButtonBar(
+            //   alignment: MainAxisAlignment.end,
+            //   children: [
+            //     TextButton(
+            //       onPressed: () {
+            //         SnackBar snackBar = deleteSnack(
+            //           parentContext: widget.parentContext,
+            //           size: size,
+            //           item: widget.todo!,
+            //           performDeleteTask: _deleteTodo,
+            //         );
+            //         ScaffoldMessenger.of(widget.parentContext)
+            //             .showSnackBar(snackBar);
+            //       },
+            //       child: Text(
+            //         "Delete",
+            //         style: GoogleFonts.ubuntu(
+            //           textStyle: TextStyle(
+            //             color: Colors.red,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //     TextButton(
+            //       onPressed: () {
+            //         late TimeOfDay selectedTime;
+            //         late DateTime selectedDate;
+            //         // dateTimePicker(
+            //         //     parentContext: context);
+            //         // // showTimePicker(
+            //         // //   context: context,
+            //         // //   initialTime: TimeOfDay.now(),
+            //         // // );
+            //       },
+            //       child: Text(
+            //         "Set Reminder",
+            //         style: GoogleFonts.ubuntu(),
+            //       ),
+            //     )
+            //   ],
+            // ),
+          ],
+        ),
       );
     }
   }
@@ -336,7 +329,7 @@ class _TodoCardState extends ConsumerState<TodoCard> {
             ),
           ),
           cursorColor: Colors.white.withOpacity(0.5),
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: InputBorder.none,
           ),
           maxLines: null,

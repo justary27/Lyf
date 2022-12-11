@@ -130,6 +130,7 @@ class _AddTodoScreenState extends ConsumerState<AddTodoScreen> {
                             _descriptionController.text,
                             DateTime.now(),
                             false,
+                            false,
                             null);
                         _createTodo(todo);
                       },

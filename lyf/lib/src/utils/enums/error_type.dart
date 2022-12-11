@@ -1,4 +1,5 @@
 enum ErrorType {
-  networkError,
   authError,
+  networkError,
+  permissionError,
 }

@@ -1,5 +1,6 @@
 enum SnackType {
   networkError,
+  permissionError,
   loggingIn,
   signingUp,
   todoCreated,

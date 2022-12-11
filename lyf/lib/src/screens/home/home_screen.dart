@@ -122,12 +122,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                             Container(
                               height: 0.50 * size.height,
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 0.1 * size.width,
-                                  vertical: 0.075 * size.height),
+                                horizontal: 0.1 * size.width,
+                                vertical: 0.075 * size.height,
+                              ),
                               width: size.width,
-                              child: Container(
+                              child: SizedBox(
                                 width: 0.725 * size.width,
-                                // color: Colors.white,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -188,7 +188,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                               CrossAxisAlignment.center,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsets.all(20.0),
+                                              padding:
+                                                  const EdgeInsets.all(20.0),
                                               child: SvgPicture.asset(
                                                 "assets/images/todo.svg",
                                                 color: Theme.of(context)
@@ -229,7 +230,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                               CrossAxisAlignment.center,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsets.all(20.0),
+                                              padding:
+                                                  const EdgeInsets.all(20.0),
                                               child: SvgPicture.asset(
                                                 "assets/images/diary.svg",
                                                 color: Theme.of(context)

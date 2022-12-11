@@ -21,7 +21,7 @@ import '../screens/settings/themes_screen.dart';
 import '../screens/todo/add_todo_screen.dart';
 import '../screens/todo/todo_screen.dart';
 import '../screens/todo/view_todo_screen.dart';
-import '../screens/settings/notifications.dart';
+import '../screens/settings/notification_screen.dart';
 import '../screens/splash.dart';
 
 /// The GoRouter instance of routeDelegate & routeInformationParser
@@ -396,7 +396,7 @@ var goRouter = GoRouter(
           },
         ),
         GoRoute(
-          path: "notification",
+          path: "notifications",
           pageBuilder: (context, pageBuilder) {
             return CustomTransitionPage(
               transitionsBuilder:
@@ -415,7 +415,7 @@ var goRouter = GoRouter(
                 );
               },
               transitionDuration: const Duration(milliseconds: 750),
-              child: const NotifactionSettingsPage(),
+              child: const NotificationSettingsScreen(),
             );
           },
         ),

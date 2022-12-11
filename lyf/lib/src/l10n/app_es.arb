@@ -27,6 +27,8 @@
 
     "exportAsTxt": "Exportar como texto",
 
+    "settings": "Ajustes",
+
     "account": "Cuenta",
 
     "accountDesc": "Información de la cuenta, seguridad y actividad.",
@@ -51,6 +53,14 @@
 
     "deactivateMyAccount": "Desactivar mi cuenta",
 
+    "helpCenter": "Centro de ayuda",
+
+    "helpCenterDesc": "Tu hoja de trucos para lyf.",
+
+    "notifications": "Notificaciones",
+
+    "notificationsDesc": "Cambia la forma en que lyf te notifica.",
+
     "themes": "Temas",
 
     "themesDesc": "Cambia el tema de la aplicación.",
@@ -71,5 +81,15 @@
 
     "french": "Francesa",
 
-    "spanish": "Española"
+    "spanish": "Española",
+
+    "invite": "Invitar",
+
+    "inviteDesc": "Invitar a una amiga.",
+
+    "shareLink": "¡Compartir enlace!",
+
+    "shareLinkDesc": "¡Haz clic para compartir el enlace de invitación!",
+
+    "searchPeople": "Busca gente..."
 }

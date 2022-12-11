@@ -148,6 +148,7 @@ class DiaryNotifier extends StateNotifier<AsyncValue<List<DiaryEntry>?>> {
     } else {
       _resetState();
     }
+
     read(errorNotifier.notifier).addError(e);
   }
 }
