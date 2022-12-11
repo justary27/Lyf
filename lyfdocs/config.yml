@@ -1,4 +1,4 @@
-baseURL: "" # "https://just-ary27.github.io/Lyf/" for Deploying
+baseURL: "https://just-ary27.github.io/Lyf/" # for Deploying
 languageCode: en-us
 title: Lyf | Help Center
 theme: PaperMod
