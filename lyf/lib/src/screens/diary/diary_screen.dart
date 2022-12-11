@@ -302,34 +302,34 @@ class _DiaryScreenState extends ConsumerState<DiaryScreen> {
                                                   alignment:
                                                       MainAxisAlignment.end,
                                                   children: [
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        SnackBar snackBar =
-                                                            deleteSnack(
-                                                          parentContext:
-                                                              context,
-                                                          size: size,
-                                                          item: diary[index],
-                                                          performDeleteTask:
-                                                              _deleteEntry,
-                                                        );
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                                snackBar);
-                                                      },
-                                                      child: Text(
-                                                        AppLocalizations.of(
-                                                                context)!
-                                                            .delete,
-                                                        style:
-                                                            GoogleFonts.ubuntu(
-                                                          textStyle: TextStyle(
-                                                            color: Colors.red,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
+                                                    // TextButton(
+                                                    //   onPressed: () {
+                                                    //     SnackBar snackBar =
+                                                    //         deleteSnack(
+                                                    //       parentContext:
+                                                    //           context,
+                                                    //       size: size,
+                                                    //       item: diary[index],
+                                                    //       performDeleteTask:
+                                                    //           _deleteEntry,
+                                                    //     );
+                                                    //     ScaffoldMessenger.of(
+                                                    //             context)
+                                                    //         .showSnackBar(
+                                                    //             snackBar);
+                                                    //   },
+                                                    //   child: Text(
+                                                    //     AppLocalizations.of(
+                                                    //             context)!
+                                                    //         .delete,
+                                                    //     style:
+                                                    //         GoogleFonts.ubuntu(
+                                                    //       textStyle: TextStyle(
+                                                    //         color: Colors.red,
+                                                    //       ),
+                                                    //     ),
+                                                    //   ),
+                                                    // ),
                                                     TextButton(
                                                       onPressed: () async {
                                                         _retrieveEntryPdf(

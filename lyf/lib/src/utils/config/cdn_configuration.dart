@@ -6,8 +6,8 @@ class LyfCdnConfig {
   static const String uriTestScheme = "http";
 
   static const String cdnProdHost = "cdn-lyf.herokuapp.com";
-  static const String cdnTestHost = "10.38.1.92";
-  // static const String cdnTestHost = "192.168.29.43";
+  // static const String cdnTestHost = "10.38.1.92";
+  static const String cdnTestHost = "192.168.1.13";
 
   static const int cdnTestPort = 8000;
 
@@ -22,18 +22,18 @@ class LyfCdnConfig {
   static getScheme({
     required QueryType queryType,
   }) {
-    return (queryType == globalQueryType) ? uriProdScheme : uriTestScheme;
+    return (queryType != globalQueryType) ? uriProdScheme : uriTestScheme;
   }
 
   static getHost({
     required QueryType queryType,
   }) {
-    return (queryType == globalQueryType) ? cdnProdHost : cdnTestHost;
+    return (queryType != globalQueryType) ? cdnProdHost : cdnTestHost;
   }
 
   static getPort({
     required QueryType queryType,
   }) {
-    return (queryType == globalQueryType) ? null : cdnTestPort;
+    return (queryType != globalQueryType) ? null : cdnTestPort;
   }
 }

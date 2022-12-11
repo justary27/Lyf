@@ -123,7 +123,7 @@ class _LanguageSettingsScreenState
                             tileColor: Colors.transparent,
                           );
                         }),
-                        itemCount: 4,
+                        itemCount: languageConstants.length,
                       ),
                     ),
                   ],

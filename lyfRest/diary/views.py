@@ -96,7 +96,7 @@ def createEntry(request, userId):
             _description=data['_description'],
             _is_private=True if data['_is_private'] == 'true' else False,
             _created_on=datetime.fromisoformat(data['_createdAt']),
-            _audioLink=data['_audioLink'],
+            _audioLink=data['_audioLink'] if data['_audioLink'] != "null" else None,
             _imageLinks=data['_imageLinks'] if data['_imageLinks'] != "null" else None,
         )
 

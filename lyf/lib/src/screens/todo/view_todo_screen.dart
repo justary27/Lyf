@@ -4,8 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/models/todo_model.dart';
 import 'package:lyf/src/routes/routing.dart';
-import 'package:http/http.dart' as http;
-import 'package:lyf/src/services/http.dart';
 import 'package:lyf/src/shared/snackbars/unsaved_snack.dart';
 import 'package:lyf/src/shared/widgets/todo_card.dart';
 import 'package:lyf/src/state/todo/todo_list_state.dart';
@@ -24,36 +22,7 @@ class _ViewTodoScreenState extends ConsumerState<ViewTodoScreen> {
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
   late DateTime _dateController;
-
-  late http.Client updateTodoClient;
   late ValueNotifier<bool> isChanged;
-  void updateTodo(http.Client updateTodoClient, Todo todo) async {
-    http.Response response;
-    late int statusCode;
-    try {
-      statusCode = await Todo.updateTodo(
-        updateTodoClient: updateTodoClient,
-        todo: todo,
-      );
-      if (statusCode == 200) {
-        SnackBar snackBar = const SnackBar(
-          content: Text("Todo updated successfully!"),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        // Navigator.of(context).pushNamedAndRemoveUntil(
-        //   RouteManager.TodoScreen,
-        //   ModalRoute.withName(RouteManager.TodoScreen),
-        // );
-      } else {
-        SnackBar snackBar = const SnackBar(
-          content: Text("Something went wrong"),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
 
   void _updateTodo(Todo todo) {
     ref.read(todoListNotifier.notifier).editTodo(todo);
@@ -87,7 +56,6 @@ class _ViewTodoScreenState extends ConsumerState<ViewTodoScreen> {
     _titleController = TextEditingController();
     _descriptionController = TextEditingController();
     isChanged = ValueNotifier(false);
-    updateTodoClient = http.Client();
     _titleController.text = widget.todo.todoTitle;
     _descriptionController.text = widget.todo.todoDescription;
     _dateController = widget.todo.todoCreatedAt;
@@ -228,6 +196,7 @@ class _ViewTodoScreenState extends ConsumerState<ViewTodoScreen> {
                                       _descriptionController.text,
                                       _dateController,
                                       false,
+                                      false,
                                       null);
                                   _updateTodo(updatedTodo);
                                   // updateTodo(updateTodoClient, updatedTodo);
@@ -285,7 +254,6 @@ class _ViewTodoScreenState extends ConsumerState<ViewTodoScreen> {
   void dispose() {
     _titleController.dispose();
     _descriptionController.dispose();
-    updateTodoClient.close();
 
     super.dispose();
   }

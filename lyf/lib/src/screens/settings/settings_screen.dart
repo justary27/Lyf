@@ -5,7 +5,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/routes/routing.dart';
-import 'package:lyf/src/utils/config/cdn_configuration.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -53,6 +52,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   Icons.arrow_back_ios,
                   color: Theme.of(context).iconTheme.color,
                 ),
+              ),
+              title: Text(
+                AppLocalizations.of(context)!.settings,
+                style: Theme.of(context).textTheme.headline3,
               ),
             ),
             backgroundColor: Colors.transparent,
@@ -110,7 +113,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                             topRight: Radius.circular(12),
                           ),
                         ),
-                        tileColor: Theme.of(context).listTileTheme.tileColor,
                         leading: Icon(
                           Icons.manage_accounts_outlined,
                           color: Theme.of(context).iconTheme.color,
@@ -118,6 +120,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         onTap: () {
                           goRouter.push(RouteHandler.accountSettings);
                         },
+                        dense: true,
                         title: Text(
                           AppLocalizations.of(context)!.account,
                           style: Theme.of(context).textTheme.headline4,
@@ -143,26 +146,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       //     style: Theme.of(context).textTheme.bodyText1,
                       //   ),
                       // ),
-                      // ListTile(
-                      //   tileColor: Colors.white.withOpacity(0.15),
-                      //   leading: Icon(
-                      //     Icons.access_alarm,
-                      //     color: Colors.white,
-                      //   ),
-                      //   onTap: () {
-                      //     RouteManager.navigateToNotificationSettings(context);
-                      //   },
-                      //   title: Text(
-                      //     "Notifications",
-                      //     style: Theme.of(context).textTheme.headline4,
-                      //   ),
-                      //   subtitle: Text(
-                      //     "Invite a friend",
-                      //     style: Theme.of(context).textTheme.bodyText1,
-                      //   ),
-                      // ),
                       ListTile(
-                        tileColor: Theme.of(context).listTileTheme.tileColor,
                         leading: Icon(
                           Icons.help_outline_rounded,
                           color: Theme.of(context).iconTheme.color,
@@ -170,19 +154,38 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         onTap: () {
                           goRouter.push(
                             RouteHandler.helpSettings,
-                            extra:
-                                "${LyfCdnConfig.uriProdScheme}://${LyfCdnConfig.cdnProdHost}",
+                            extra: "https://just-ary27.github.io/Lyf/",
                           );
                         },
+                        dense: true,
                         title: Text(
-                          "Help Center",
+                          AppLocalizations.of(context)!.helpCenter,
                           style: Theme.of(context).textTheme.headline4,
                         ),
                         subtitle: Text(
-                          "Your cheatsheet to lyf.",
+                          AppLocalizations.of(context)!.helpCenterDesc,
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
+                      ListTile(
+                        leading: Icon(
+                          Icons.access_alarm,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
+                        onTap: () {
+                          goRouter.push(RouteHandler.notificationSettings);
+                        },
+                        dense: true,
+                        title: Text(
+                          AppLocalizations.of(context)!.notifications,
+                          style: Theme.of(context).textTheme.headline4,
+                        ),
+                        subtitle: Text(
+                          AppLocalizations.of(context)!.notificationsDesc,
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ),
+
                       // ListTile(
                       //   tileColor: Colors.white.withOpacity(0.15),
                       //   leading: Stack(
@@ -206,7 +209,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       //   ),
                       // ),
                       ListTile(
-                        tileColor: Theme.of(context).listTileTheme.tileColor,
                         leading: Icon(
                           Icons.dark_mode_outlined,
                           color: Theme.of(context).iconTheme.color,
@@ -214,6 +216,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         onTap: () {
                           goRouter.push(RouteHandler.themeSettings);
                         },
+                        dense: true,
                         title: Text(
                           AppLocalizations.of(context)!.themes,
                           style: Theme.of(context).textTheme.headline4,
@@ -224,7 +227,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         ),
                       ),
                       ListTile(
-                        tileColor: Theme.of(context).listTileTheme.tileColor,
                         leading: Icon(
                           FontAwesomeIcons.language,
                           color: Theme.of(context).iconTheme.color,
@@ -232,6 +234,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         onTap: () {
                           goRouter.push(RouteHandler.languageSettings);
                         },
+                        dense: true,
                         title: Text(
                           AppLocalizations.of(context)!.language,
                           style: Theme.of(context).textTheme.headline4,
@@ -248,7 +251,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                             bottomRight: Radius.circular(12),
                           ),
                         ),
-                        tileColor: Theme.of(context).listTileTheme.tileColor,
                         leading: Icon(
                           Icons.contacts,
                           color: Theme.of(context).iconTheme.color,
@@ -256,12 +258,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         onTap: () {
                           goRouter.push(RouteHandler.inviteSettings);
                         },
+                        dense: true,
                         title: Text(
-                          "Invite",
+                          AppLocalizations.of(context)!.invite,
                           style: Theme.of(context).textTheme.headline4,
                         ),
                         subtitle: Text(
-                          "Invite a friend.",
+                          AppLocalizations.of(context)!.inviteDesc,
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),

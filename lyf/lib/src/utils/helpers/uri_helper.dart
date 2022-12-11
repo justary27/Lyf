@@ -5,7 +5,7 @@ class UriHelper {
   UriHelper._();
 
   static constructUri({
-    QueryType? queryType,
+    QueryType? queryType = QueryType.test,
     List<String>? pathSegs,
     Map<String, String>? queryParams,
     String? frag,

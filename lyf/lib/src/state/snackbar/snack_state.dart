@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../global/variables.dart';
 import '../../shared/snackbars/create_snack.dart';
 import '../../shared/snackbars/networkerror_snack.dart';
+import '../../shared/snackbars/permissonerror_snack.dart';
 import '../../shared/snackbars/update_snack.dart';
 import '../../utils/enums/snack_type.dart';
 
@@ -27,6 +28,9 @@ class SnackNotifier extends StateNotifier<Stream<SnackType>> {
     switch (signal) {
       case SnackType.networkError:
         snackKey.currentState!.showSnackBar(networkErrorSnack);
+        break;
+      case SnackType.permissionError:
+        snackKey.currentState!.showSnackBar(permissionErrorSnack);
         break;
       case SnackType.todoCreated:
         snackKey.currentState!.showSnackBar(todoSuccessSnack);
