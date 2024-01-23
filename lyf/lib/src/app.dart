@@ -15,7 +15,7 @@ import 'dart:io' show Platform;
 /// The Root Widget for the App corresponding
 /// to the respective platforms.
 class Lyf extends ConsumerStatefulWidget {
-  const Lyf({Key? key}) : super(key: key);
+  const Lyf({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LyfState();

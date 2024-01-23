@@ -8,16 +8,16 @@ import 'package:lyf/src/utils/launchers/widget_launchers.dart';
 final diaryViewNotifier = StateNotifierProvider.family<ViewDiaryNotifier,
     AsyncValue<List<Widget>?>, List<Widget>?>((ref, widgetList) {
   return ViewDiaryNotifier(
-    ref.read,
+    ref,
     AsyncValue.data(widgetList),
   );
 });
 
 class ViewDiaryNotifier extends StateNotifier<AsyncValue<List<Widget>?>> {
-  final Reader read;
+  final Ref ref;
   AsyncValue<List<Widget>?>? previousState;
 
-  ViewDiaryNotifier(this.read, [AsyncValue<List<Widget>?>? widgetList])
+  ViewDiaryNotifier(this.ref, [AsyncValue<List<Widget>?>? widgetList])
       : super(widgetList ?? const AsyncValue.loading());
 
   Future<void> addAudioAttachment({

@@ -4,9 +4,9 @@ import 'package:svg_path_parser/svg_path_parser.dart';
 class Lyf extends StatefulWidget {
   final BuildContext parentContext;
   const Lyf({
-    Key? key,
+    super.key,
     required this.parentContext,
-  }) : super(key: key);
+  });
 
   @override
   State<Lyf> createState() => _LyfState();

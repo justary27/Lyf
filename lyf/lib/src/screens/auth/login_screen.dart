@@ -14,7 +14,7 @@ import '../../state/theme/theme_state.dart';
 import '../../utils/api/user_api.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
@@ -39,8 +39,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: ref
-                  .read(themeNotifier.notifier)
-                  .getCurrentState()
+                  .watch(themeNotifier)
                   .gradientColors,
             ),
           ),
@@ -83,7 +82,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               SvgPicture.asset(
                                 "assets/images/lyf.svg",
                                 width: 40,
-                                color: Colors.white,
+                                colorFilter: const ColorFilter.mode(
+                                  Colors.white,
+                                  BlendMode.srcIn,
+                                ),
                               ),
                               Text(
                                 "Lyf",
@@ -123,10 +125,10 @@ class LoginForm extends StatefulWidget {
   final Size size;
   final BuildContext parentContext;
   const LoginForm({
-    Key? key,
+    super.key,
     required this.size,
     required this.parentContext,
-  }) : super(key: key);
+  });
 
   @override
   State<LoginForm> createState() => _LoginFormState();

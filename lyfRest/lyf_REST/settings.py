@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from django.conf.global_settings import AUTH_USER_MODEL
-import django_on_heroku
 
 load_dotenv()
 
@@ -33,12 +31,14 @@ DEBUG = False
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
 ALLOWED_HOSTS = [
+    '10.81.8.118',
     '10.0.2.2',
     '127.0.0.1',
     '10.61.105.201',
     '192.168.1.1',
     '10.38.1.92',
     '10.38.1.38',
+    '10.38.1.110',
     'cdn-lyf.herokuapp.com',
 ]
 
@@ -167,5 +167,3 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
 EMAIL_PORT = 587
-
-django_on_heroku.settings(locals())

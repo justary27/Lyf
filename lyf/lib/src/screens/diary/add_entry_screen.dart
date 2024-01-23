@@ -10,7 +10,7 @@ import '../../state/theme/theme_state.dart';
 import '../../utils/enums/snack_type.dart';
 
 class AddDiaryEntryScreen extends ConsumerStatefulWidget {
-  const AddDiaryEntryScreen({Key? key}) : super(key: key);
+  const AddDiaryEntryScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -36,7 +36,7 @@ class _AddDiaryEntryScreenState extends ConsumerState<AddDiaryEntryScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+    var theme = ref.watch(themeNotifier);
 
     return Stack(
       children: [

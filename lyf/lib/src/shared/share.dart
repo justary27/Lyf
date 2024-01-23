@@ -11,11 +11,11 @@ class ShareViewer extends ConsumerStatefulWidget {
   final DiaryEntry entry;
   final Color color;
   const ShareViewer({
-    Key? key,
+    super.key,
     required this.size,
     required this.entry,
     required this.color,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ShareViewerState();

@@ -24,7 +24,7 @@ class EntryCard extends ConsumerStatefulWidget {
   final void Function(DateTime newDate)? notifyDateChange;
   final String pageCode;
   const EntryCard({
-    Key? key,
+    super.key,
     required this.size,
     required this.parentContext,
     required this.entry,
@@ -32,7 +32,7 @@ class EntryCard extends ConsumerStatefulWidget {
     this.notifyflagChange,
     this.notifyDescriptionChange,
     this.notifyDateChange,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _EntryCardState();

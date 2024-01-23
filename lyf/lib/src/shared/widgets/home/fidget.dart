@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Fidget extends StatefulWidget {
   final Size size;
   const Fidget({
-    Key? key,
+    super.key,
     required this.size,
-  }) : super(key: key);
+  });
 
   @override
   State<Fidget> createState() => _FidgetState();
@@ -36,7 +37,10 @@ class _FidgetState extends State<Fidget> {
       child: SvgPicture.asset(
         "assets/images/fidget_spinner.svg",
         height: 0.325 * size.height,
-        color: Theme.of(context).primaryColor.withOpacity(0.75),
+        colorFilter: ColorFilter.mode(
+          Theme.of(context).primaryColor.withOpacity(0.75),
+          BlendMode.srcIn,
+        ),
       ),
     );
   }

@@ -4,15 +4,15 @@ import '../../models/todo_model.dart';
 
 final todoCreateNotifier =
     StateNotifierProvider<TodoCreateNotifier, AsyncValue<Todo?>>((ref) {
-  return TodoCreateNotifier(ref.read);
+  return TodoCreateNotifier(ref);
 });
 
 class TodoCreateNotifier extends StateNotifier<AsyncValue<Todo?>> {
-  final Reader read;
+  final Ref ref;
   AsyncValue<Todo?>? todo;
 
   TodoCreateNotifier(
-    this.read, [
+    this.ref, [
     AsyncValue<Todo?>? todo,
   ]) : super(todo ?? const AsyncValue.loading()) {
     // _retrieveTodo();

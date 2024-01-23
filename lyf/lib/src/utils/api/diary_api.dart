@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:typed_data';
+
 import 'package:http/http.dart' as http;
 
 import '../../global/variables.dart';
 import '../../models/diary_model.dart';
 import '../endpoints/diary_endpoints.dart';
-import '../enums/query_type.dart';
 import '../enums/request_type.dart';
 import '../errors/diary/diary_errors.dart';
 import '../helpers/http_helper.dart';
@@ -109,6 +109,8 @@ class DiaryApiClient {
           ),
         ),
       );
+      print(response!.statusCode);
+
       if (response != null) {
         return response.bodyBytes;
       } else {

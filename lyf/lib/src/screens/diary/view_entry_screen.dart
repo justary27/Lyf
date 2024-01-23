@@ -25,10 +25,10 @@ class ViewDiaryEntryScreen extends ConsumerStatefulWidget {
   final DiaryEntry entry;
   final Size size;
   const ViewDiaryEntryScreen({
-    Key? key,
+    super.key,
     required this.entry,
     required this.size,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -248,7 +248,7 @@ class _ViewDiaryEntryScreenState extends ConsumerState<ViewDiaryEntryScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+    var theme = ref.watch(themeNotifier);
 
     return WillPopScope(
       onWillPop: () async {

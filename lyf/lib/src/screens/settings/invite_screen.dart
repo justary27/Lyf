@@ -1,19 +1,17 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lyf/src/constants/invite_constants.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/shared/contact_viewer.dart';
 import 'package:lyf/src/state/settings/contacts_state.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../state/theme/theme_state.dart';
 import '../../utils/errors/services/service_errors.dart';
 
 class InviteSettingsScreen extends ConsumerStatefulWidget {
-  const InviteSettingsScreen({Key? key}) : super(key: key);
+  const InviteSettingsScreen({super.key});
 
   @override
   ConsumerState<InviteSettingsScreen> createState() =>
@@ -52,7 +50,7 @@ class _InviteSettingsScreenState extends ConsumerState<InviteSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+    var theme = ref.read(themeNotifier);
 
     return WillPopScope(
       onWillPop: () async {

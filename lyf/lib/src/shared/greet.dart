@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Greetings extends StatefulWidget {
   final String username;
-  const Greetings({Key? key, required this.username}) : super(key: key);
+  const Greetings({super.key, required this.username});
 
   @override
   State<Greetings> createState() => _GreetingsState();

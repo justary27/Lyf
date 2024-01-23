@@ -4,6 +4,7 @@ import 'package:lyf/src/utils/helpers/theme_helper.dart';
 
 final ThemeHelper lyfTheme = ThemeHelper(
   themeData: ThemeData(
+    // useMaterial3: false,
     primaryColor: const Color.fromARGB(255, 14, 105, 87),
     shadowColor: Colors.black,
     cardColor: const Color(0xFF7DF6AD).withOpacity(0.15),
@@ -20,32 +21,32 @@ final ThemeHelper lyfTheme = ThemeHelper(
           const Color.fromARGB(255, 14, 105, 87).withOpacity(0.15),
     ),
     textTheme: TextTheme(
-      headline1: GoogleFonts.merienda(
+      displayLarge: GoogleFonts.merienda(
         textStyle: const TextStyle(
             color: Color.fromARGB(255, 14, 105, 87), fontSize: 40),
       ),
-      headline2: GoogleFonts.merienda(
+      displayMedium: GoogleFonts.merienda(
         textStyle: const TextStyle(color: Colors.white, fontSize: 25),
       ),
-      headline3: GoogleFonts.merienda(
+      displaySmall: GoogleFonts.merienda(
         textStyle: const TextStyle(color: Colors.white, fontSize: 20),
       ),
-      headline4: GoogleFonts.merienda(
+      headlineMedium: GoogleFonts.merienda(
         textStyle: const TextStyle(color: Colors.white, fontSize: 17.5),
       ),
-      headline5: GoogleFonts.merienda(
+      headlineSmall: GoogleFonts.merienda(
         textStyle: const TextStyle(color: Colors.white, fontSize: 15),
       ),
-      bodyText1: GoogleFonts.aBeeZee(
+      bodyLarge: GoogleFonts.aBeeZee(
         textStyle: TextStyle(
           color: Colors.white.withOpacity(0.4),
         ),
       ),
-      bodyText2: GoogleFonts.aBeeZee(
+      bodyMedium: GoogleFonts.aBeeZee(
         textStyle:
             TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 12),
       ),
-      button: GoogleFonts.ubuntu(),
+      labelLarge: GoogleFonts.ubuntu(),
     ),
   ),
   gradientColors: const [
@@ -57,6 +58,7 @@ final ThemeHelper lyfTheme = ThemeHelper(
 
 final ThemeHelper monochromeTheme = ThemeHelper(
   themeData: ThemeData(
+    // useMaterial3: false,
     primaryColor: Colors.white,
     shadowColor: Colors.black,
     cardColor: Colors.white.withOpacity(0.15),
@@ -94,31 +96,31 @@ final ThemeHelper monochromeTheme = ThemeHelper(
       circularTrackColor: Colors.white.withOpacity(0.15),
     ),
     textTheme: TextTheme(
-      headline1: GoogleFonts.ubuntu(
+      displayLarge: GoogleFonts.ubuntu(
         textStyle: const TextStyle(color: Colors.white, fontSize: 50),
       ),
-      headline2: GoogleFonts.ubuntu(
+      displayMedium: GoogleFonts.ubuntu(
         textStyle: const TextStyle(color: Colors.white, fontSize: 25),
       ),
-      headline3: GoogleFonts.ubuntu(
+      displaySmall: GoogleFonts.ubuntu(
         textStyle: const TextStyle(color: Colors.white, fontSize: 20),
       ),
-      headline4: GoogleFonts.ubuntu(
+      headlineMedium: GoogleFonts.ubuntu(
         textStyle: const TextStyle(color: Colors.white, fontSize: 17.5),
       ),
-      headline5: GoogleFonts.ubuntu(
+      headlineSmall: GoogleFonts.ubuntu(
         textStyle: const TextStyle(color: Colors.white, fontSize: 15),
       ),
-      bodyText1: GoogleFonts.aBeeZee(
+      bodyLarge: GoogleFonts.aBeeZee(
         textStyle: TextStyle(
           color: Colors.white.withOpacity(0.4),
         ),
       ),
-      bodyText2: GoogleFonts.aBeeZee(
+      bodyMedium: GoogleFonts.aBeeZee(
         textStyle:
             TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 12),
       ),
-      button: GoogleFonts.ubuntu(),
+      labelLarge: GoogleFonts.ubuntu(),
     ),
   ),
   gradientColors: const [
@@ -129,6 +131,7 @@ final ThemeHelper monochromeTheme = ThemeHelper(
 );
 final ThemeHelper funkyTheme = ThemeHelper(
   themeData: ThemeData(
+    // useMaterial3: false,
     primaryColor: const Color(0xFFCA81F5),
     splashColor: const Color(0xFFCA81F5).withOpacity(0.35),
     cardColor: const Color(0xFFCA81F5).withOpacity(0.10),
@@ -165,31 +168,31 @@ final ThemeHelper funkyTheme = ThemeHelper(
       circularTrackColor: const Color(0xFFCA81F5).withOpacity(0.15),
     ),
     textTheme: TextTheme(
-      headline1: GoogleFonts.londrinaSolid(
+      displayLarge: GoogleFonts.londrinaSolid(
         textStyle: const TextStyle(color: Color(0xFFCA81F5), fontSize: 50),
       ),
-      headline2: GoogleFonts.londrinaSolid(
+      displayMedium: GoogleFonts.londrinaSolid(
         textStyle: const TextStyle(color: Color(0xFFCA81F5), fontSize: 25),
       ),
-      headline3: GoogleFonts.londrinaSolid(
+      displaySmall: GoogleFonts.londrinaSolid(
         textStyle: const TextStyle(color: Color(0xFFCA81F5), fontSize: 20),
       ),
-      headline4: GoogleFonts.londrinaSolid(
+      headlineMedium: GoogleFonts.londrinaSolid(
         textStyle: const TextStyle(color: Color(0xFFCA81F5), fontSize: 17.5),
       ),
-      headline5: GoogleFonts.londrinaSolid(
+      headlineSmall: GoogleFonts.londrinaSolid(
         textStyle: const TextStyle(color: Color(0xFFCA81F5), fontSize: 15),
       ),
-      bodyText1: GoogleFonts.aBeeZee(
+      bodyLarge: GoogleFonts.aBeeZee(
         textStyle: TextStyle(
           color: const Color(0xFFCA81F5).withOpacity(0.5),
         ),
       ),
-      bodyText2: GoogleFonts.aBeeZee(
+      bodyMedium: GoogleFonts.aBeeZee(
         textStyle: TextStyle(
             color: const Color(0xFFCA81F5).withOpacity(0.4), fontSize: 12),
       ),
-      button: GoogleFonts.londrinaSolid(),
+      labelLarge: GoogleFonts.londrinaSolid(),
     ),
   ),
   gradientColors: const [
@@ -201,6 +204,7 @@ final ThemeHelper funkyTheme = ThemeHelper(
 
 final ThemeHelper loveTheme = ThemeHelper(
   themeData: ThemeData(
+    // useMaterial3: false,
     primaryColor: const Color(0xFFFDF5F7),
     splashColor: const Color(0xFFFDF5F7).withOpacity(0.35),
     cardColor: const Color(0xFFFDF5F7).withOpacity(0.10),
@@ -237,31 +241,31 @@ final ThemeHelper loveTheme = ThemeHelper(
       circularTrackColor: const Color(0xFFFDF5F7).withOpacity(0.15),
     ),
     textTheme: TextTheme(
-      headline1: GoogleFonts.workSans(
+      displayLarge: GoogleFonts.workSans(
         textStyle: const TextStyle(color: Color(0xFFFDF5F7), fontSize: 47.5),
       ),
-      headline2: GoogleFonts.workSans(
+      displayMedium: GoogleFonts.workSans(
         textStyle: const TextStyle(color: Color(0xFFFDF5F7), fontSize: 25),
       ),
-      headline3: GoogleFonts.workSans(
+      displaySmall: GoogleFonts.workSans(
         textStyle: const TextStyle(color: Color(0xFFFDF5F7), fontSize: 20),
       ),
-      headline4: GoogleFonts.workSans(
+      headlineMedium: GoogleFonts.workSans(
         textStyle: const TextStyle(color: Color(0xFFFDF5F7), fontSize: 17.5),
       ),
-      headline5: GoogleFonts.workSans(
+      headlineSmall: GoogleFonts.workSans(
         textStyle: const TextStyle(color: Color(0xFFFDF5F7), fontSize: 15),
       ),
-      bodyText1: GoogleFonts.aBeeZee(
+      bodyLarge: GoogleFonts.aBeeZee(
         textStyle: TextStyle(
           color: const Color(0xFFFDF5F7).withOpacity(0.5),
         ),
       ),
-      bodyText2: GoogleFonts.aBeeZee(
+      bodyMedium: GoogleFonts.aBeeZee(
         textStyle: TextStyle(
             color: const Color(0xFFFDF5F7).withOpacity(0.4), fontSize: 12),
       ),
-      button: GoogleFonts.workSans(),
+      labelLarge: GoogleFonts.workSans(),
     ),
   ),
   gradientColors: const [

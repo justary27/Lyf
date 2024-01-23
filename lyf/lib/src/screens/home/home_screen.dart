@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lyf/src/global/variables.dart';
@@ -8,15 +11,13 @@ import 'package:lyf/src/services/firebase/storage/user_services.dart';
 import 'package:lyf/src/shared/greet.dart';
 import 'package:lyf/src/state/theme/theme_state.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
-import 'dart:async';
 import 'package:rxdart/rxdart.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Lyf's Home Screen, allows navigation to various sub-apps.
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _HomeScreenState();
@@ -99,10 +100,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
-                          colors: ref
-                              .read(themeNotifier.notifier)
-                              .getCurrentState()
-                              .gradientColors,
+                          colors: ref.watch(themeNotifier).gradientColors,
                         ),
                       ),
                       child: Stack(
@@ -192,9 +190,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                                   const EdgeInsets.all(20.0),
                                               child: SvgPicture.asset(
                                                 "assets/images/todo.svg",
-                                                color: Theme.of(context)
-                                                    .iconTheme
-                                                    .color,
+                                                colorFilter: ColorFilter.mode(
+                                                  Theme.of(context)
+                                                      .iconTheme
+                                                      .color!,
+                                                  BlendMode.srcIn,
+                                                ),
                                               ),
                                             ),
                                             Text(
@@ -234,9 +235,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                                   const EdgeInsets.all(20.0),
                                               child: SvgPicture.asset(
                                                 "assets/images/diary.svg",
-                                                color: Theme.of(context)
-                                                    .iconTheme
-                                                    .color,
+                                                colorFilter: ColorFilter.mode(
+                                                  Theme.of(context)
+                                                      .iconTheme
+                                                      .color!,
+                                                  BlendMode.srcIn,
+                                                ),
                                               ),
                                             ),
                                             Text(

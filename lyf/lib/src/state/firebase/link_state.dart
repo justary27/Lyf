@@ -4,16 +4,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final deepLinkNotifier =
     StateNotifierProvider<DeepLinkNotifier, Stream<dynamic>>((ref) {
-  return DeepLinkNotifier(ref.read);
+  return DeepLinkNotifier(ref);
 });
 
 class DeepLinkNotifier extends StateNotifier<Stream<dynamic>> {
-  final Reader read;
+  final Ref ref;
   final StreamController stateStreamController = StreamController();
 
   Stream<dynamic>? previousState;
 
-  DeepLinkNotifier(this.read, [Stream<dynamic>? pathStream])
+  DeepLinkNotifier(this.ref, [Stream<dynamic>? pathStream])
       : super(pathStream ?? const Stream.empty()) {
     state = stateStreamController.stream;
   }

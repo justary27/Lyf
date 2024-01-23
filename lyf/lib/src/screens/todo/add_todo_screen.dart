@@ -11,7 +11,7 @@ import '../../utils/enums/snack_type.dart';
 import '../../state/snackbar/snack_state.dart';
 
 class AddTodoScreen extends ConsumerStatefulWidget {
-  const AddTodoScreen({Key? key}) : super(key: key);
+  const AddTodoScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _AddTodoScreenState();
@@ -43,7 +43,7 @@ class _AddTodoScreenState extends ConsumerState<AddTodoScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+    var theme = ref.watch(themeNotifier);
 
     return Stack(
       children: [

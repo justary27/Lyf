@@ -6,8 +6,8 @@ class LyfCdnConfig {
   static const String uriTestScheme = "http";
 
   static const String cdnProdHost = "cdn-lyf.herokuapp.com";
-  // static const String cdnTestHost = "10.38.1.92";
-  static const String cdnTestHost = "192.168.1.13";
+  static const String cdnTestHost = "10.81.8.118";
+  // static const String cdnTestHost = "192.168.1.13";
 
   static const int cdnTestPort = 8000;
 

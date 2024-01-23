@@ -14,7 +14,7 @@ import '../../state/theme/theme_state.dart';
 import '../../utils/api/user_api.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _SignUpScreenState();
@@ -38,10 +38,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: ref
-                  .read(themeNotifier.notifier)
-                  .getCurrentState()
-                  .gradientColors,
+              colors: ref.watch(themeNotifier).gradientColors,
             ),
           ),
           child: Column(
@@ -83,7 +80,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                               SvgPicture.asset(
                                 "assets/images/lyf.svg",
                                 width: 40,
-                                color: Colors.white,
+                                colorFilter: const ColorFilter.mode(
+                                  Colors.white,
+                                  BlendMode.srcIn,
+                                ),
                               ),
                               Text(
                                 "Lyf",
@@ -122,8 +122,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 class SignUpForm extends StatefulWidget {
   final Size size;
   final BuildContext parentContext;
-  const SignUpForm({Key? key, required this.size, required this.parentContext})
-      : super(key: key);
+  const SignUpForm(
+      {super.key, required this.size, required this.parentContext});
 
   @override
   State<SignUpForm> createState() => _SignUpFormState();

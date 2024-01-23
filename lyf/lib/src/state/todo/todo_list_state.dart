@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lyf/src/state/snackbar/snack_state.dart';
+
 import '../../models/todo_model.dart';
 import '../../utils/api/todo_api.dart';
 import '../../utils/enums/snack_type.dart';
@@ -9,14 +10,14 @@ import '../errors/error_state.dart';
 
 final todoListNotifier =
     StateNotifierProvider<TodoListNotifier, AsyncValue<List<Todo>?>>((ref) {
-  return TodoListNotifier(ref.read);
+  return TodoListNotifier(ref);
 });
 
 class TodoListNotifier extends StateNotifier<AsyncValue<List<Todo>?>> {
-  final Reader read;
+  final Ref ref;
   AsyncValue<List<Todo>?>? previousState;
 
-  TodoListNotifier(this.read, [AsyncValue<List<Todo>?>? todoList])
+  TodoListNotifier(this.ref, [AsyncValue<List<Todo>?>? todoList])
       : super(todoList ?? const AsyncValue.loading()) {
     retrieveTodoList();
   }
@@ -64,7 +65,7 @@ class TodoListNotifier extends StateNotifier<AsyncValue<List<Todo>?>> {
 
     try {
       await TodoApiClient.updateTodo(todo: updatedTodo);
-      read(snackNotifier.notifier).sendSignal(SnackType.todoUpdated);
+      ref.read(snackNotifier.notifier).sendSignal(SnackType.todoUpdated);
     } on TodoException catch (e) {
       handleException(e);
     }
@@ -96,10 +97,10 @@ class TodoListNotifier extends StateNotifier<AsyncValue<List<Todo>?>> {
   void handleException(Object e) {
     if (state == const AsyncValue<List<Todo>?>.loading() &&
         e.runtimeType == TodoException) {
-      state = AsyncValue.error(e);
+      state = AsyncValue.error(e, StackTrace.current);
     } else {
       _resetState();
     }
-    read(errorNotifier.notifier).addError(e);
+    ref.read(errorNotifier.notifier).addError(e);
   }
 }

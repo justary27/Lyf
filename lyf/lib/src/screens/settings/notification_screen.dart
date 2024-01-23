@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyf/src/constants/notification_constants.dart';
 import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/services/lyf_settings.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lyf/src/state/todo/todo_reminder_state.dart';
 
 import '../../state/theme/theme_state.dart';
 
 class NotificationSettingsScreen extends ConsumerStatefulWidget {
-  const NotificationSettingsScreen({Key? key}) : super(key: key);
+  const NotificationSettingsScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -211,7 +211,7 @@ class _NotificationSettingsScreenState
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+    var theme = ref.watch(themeNotifier);
 
     return Stack(
       children: [
@@ -264,7 +264,10 @@ class _NotificationSettingsScreenState
                           ),
                           leading: SvgPicture.asset(
                             "assets/images/todo.svg",
-                            color: Theme.of(context).iconTheme.color,
+                            colorFilter: ColorFilter.mode(
+                              Theme.of(context).iconTheme.color!,
+                              BlendMode.srcIn,
+                            ),
                           ),
                           title: Text(
                             "Todo Reminders",
@@ -340,7 +343,10 @@ class _NotificationSettingsScreenState
                           ),
                           leading: SvgPicture.asset(
                             "assets/images/diary.svg",
-                            color: Theme.of(context).iconTheme.color,
+                            colorFilter: ColorFilter.mode(
+                              Theme.of(context).iconTheme.color!,
+                              BlendMode.srcIn,
+                            ),
                           ),
                           title: Text(
                             "Diary Reminders",

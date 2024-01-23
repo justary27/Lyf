@@ -5,25 +5,24 @@ import 'package:lyf/src/constants/widget_constants.dart';
 import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/utils/helpers/theme_helper.dart';
 
-final themeNotifier = StateNotifierProvider<ThemeNotifier, ThemeHelper>((ref) {
-  return ThemeNotifier(ref.read);
-});
+final themeNotifier =
+    NotifierProvider<ThemeNotifier, ThemeHelper>(ThemeNotifier.new);
 
 final widgetNotifier = Provider<Widget?>(((ref) {
   ThemeHelper theme = ref.watch(themeNotifier);
   return widgetConstants[theme];
 }));
 
-class ThemeNotifier extends StateNotifier<ThemeHelper> {
-  final Reader read;
+class ThemeNotifier extends Notifier<ThemeHelper> {
+  // final Ref ref;
   ThemeHelper? previousState;
 
-  ThemeNotifier(this.read, [ThemeHelper? initColor])
-      : super(initColor ?? themeConstants[themeCode]["theme"]);
+  // ThemeNotifier(this.ref, [ThemeHelper? initColor])
+  //     : super(initColor ?? themeConstants[themeCode]["theme"]);
 
-  ThemeHelper getCurrentState() {
-    return state;
-  }
+  @override
+  ThemeHelper build([ThemeHelper? initTheme]) =>
+      initTheme ?? themeConstants[themeCode]["theme"];
 
   void changeTheme(ThemeHelper newTheme) {
     _cacheState();

@@ -8,15 +8,15 @@ import '../errors/error_state.dart';
 
 final contactNotifier =
     StateNotifierProvider<ContactNotifier, AsyncValue<List<Contact>>>((ref) {
-  return ContactNotifier(ref.read);
+  return ContactNotifier(ref);
 });
 
 class ContactNotifier extends StateNotifier<AsyncValue<List<Contact>>> {
-  final Reader read;
+  final Ref ref;
   AsyncValue<List<Contact>>? initState;
   AsyncValue<List<Contact>>? previousState;
 
-  ContactNotifier(this.read, [AsyncValue<List<Contact>>? initContacts])
+  ContactNotifier(this.ref, [AsyncValue<List<Contact>>? initContacts])
       : super(initContacts ?? const AsyncValue.loading()) {
     getContacts();
   }
@@ -87,10 +87,10 @@ class ContactNotifier extends StateNotifier<AsyncValue<List<Contact>>> {
   void handleException(Object e) {
     if (state == const AsyncValue<List<Contact>>.loading() &&
         e.runtimeType == ServiceException) {
-      state = AsyncValue.error(e);
+      state = AsyncValue.error(e, StackTrace.current);
     } else {
       _resetState();
     }
-    read(errorNotifier.notifier).addError(e);
+    ref.read(errorNotifier.notifier).addError(e);
   }
 }

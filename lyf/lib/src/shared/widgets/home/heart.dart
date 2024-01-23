@@ -7,9 +7,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class Heart extends StatefulWidget {
   final Size size;
   const Heart({
-    Key? key,
+    super.key,
     required this.size,
-  }) : super(key: key);
+  });
 
   @override
   State<Heart> createState() => _HeartState();

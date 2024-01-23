@@ -5,20 +5,21 @@ import 'package:lyf/src/state/errors/error_state.dart';
 import 'package:lyf/src/state/snackbar/snack_state.dart';
 import 'package:lyf/src/utils/enums/snack_type.dart';
 import 'package:lyf/src/utils/handlers/file_handler.dart';
-import '../../utils/errors/diary/diary_errors.dart';
-import '../../utils/api/diary_api.dart';
+
 import '../../models/diary_model.dart';
+import '../../utils/api/diary_api.dart';
+import '../../utils/errors/diary/diary_errors.dart';
 
 final diaryNotifier =
     StateNotifierProvider<DiaryNotifier, AsyncValue<List<DiaryEntry>?>>((ref) {
-  return DiaryNotifier(ref.read);
+  return DiaryNotifier(ref);
 });
 
 class DiaryNotifier extends StateNotifier<AsyncValue<List<DiaryEntry>?>> {
-  final Reader read;
+  final Ref ref;
   AsyncValue<List<DiaryEntry>?>? previousState;
 
-  DiaryNotifier(this.read, [AsyncValue<List<DiaryEntry>?>? entryList])
+  DiaryNotifier(this.ref, [AsyncValue<List<DiaryEntry>?>? entryList])
       : super(entryList ?? const AsyncValue.loading()) {
     _retrieveDiary();
   }
@@ -110,7 +111,7 @@ class DiaryNotifier extends StateNotifier<AsyncValue<List<DiaryEntry>?>> {
       await DiaryApiClient.updateEntry(
         entry: updatedEntry,
       );
-      read(snackNotifier.notifier).sendSignal(SnackType.entryUpdated);
+      ref.read(snackNotifier.notifier).sendSignal(SnackType.entryUpdated);
     } on DiaryException catch (e) {
       handleException(e);
     }
@@ -144,11 +145,11 @@ class DiaryNotifier extends StateNotifier<AsyncValue<List<DiaryEntry>?>> {
   void handleException(Object e) {
     if (state == const AsyncValue<List<DiaryEntry>?>.loading() &&
         e.runtimeType == DiaryException) {
-      state = AsyncValue.error(e);
+      state = AsyncValue.error(e, StackTrace.current);
     } else {
       _resetState();
     }
 
-    read(errorNotifier.notifier).addError(e);
+    ref.read(errorNotifier.notifier).addError(e);
   }
 }

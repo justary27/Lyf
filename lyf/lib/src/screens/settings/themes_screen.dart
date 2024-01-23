@@ -9,7 +9,7 @@ import 'package:lyf/src/utils/helpers/theme_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ThemeSettingsScreen extends ConsumerStatefulWidget {
-  const ThemeSettingsScreen({Key? key}) : super(key: key);
+  const ThemeSettingsScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -25,7 +25,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+    var theme = ref.watch(themeNotifier);
 
     return Stack(
       children: [

@@ -41,7 +41,7 @@ class TodoCard extends ConsumerStatefulWidget {
   // Constructor
 
   const TodoCard({
-    Key? key,
+    super.key,
     required this.parentContext,
     required this.pageCode,
     required this.size,
@@ -49,7 +49,7 @@ class TodoCard extends ConsumerStatefulWidget {
     this.notifyflagChange,
     this.notifyDescriptionChange,
     this.notifyDateChange,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _TodoCardState();

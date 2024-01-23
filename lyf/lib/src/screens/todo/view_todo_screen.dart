@@ -12,7 +12,7 @@ import '../../state/theme/theme_state.dart';
 
 class ViewTodoScreen extends ConsumerStatefulWidget {
   final Todo todo;
-  const ViewTodoScreen({Key? key, required this.todo}) : super(key: key);
+  const ViewTodoScreen({super.key, required this.todo});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ViewTodoScreenState();
@@ -66,7 +66,7 @@ class _ViewTodoScreenState extends ConsumerState<ViewTodoScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+    var theme = ref.watch(themeNotifier);
 
     return WillPopScope(
       onWillPop: () async {

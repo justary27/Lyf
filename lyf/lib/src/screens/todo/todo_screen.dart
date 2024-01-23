@@ -1,19 +1,17 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lyf/src/models/todo_model.dart';
 import 'package:lyf/src/routes/routing.dart';
 import 'package:lyf/src/shared/widgets/todo_card.dart';
 import 'package:lyf/src/utils/handlers/route_handler.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../state/theme/theme_state.dart';
 import '../../state/todo/todo_list_state.dart';
 import '../../utils/errors/todo/todo_errors.dart';
 
 class TodoScreen extends ConsumerStatefulWidget {
-  const TodoScreen({Key? key}) : super(key: key);
+  const TodoScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _TodoScreenState();
@@ -25,7 +23,7 @@ class _TodoScreenState extends ConsumerState<TodoScreen> {
 
   void _refresh({bool? forceRefresh}) {
     try {
-      ref.read(todoListNotifier).value;
+      ref.read(todoListNotifier);
       if (forceRefresh != null && forceRefresh) {
         ref.read(todoListNotifier.notifier).refresh();
       }
@@ -44,7 +42,7 @@ class _TodoScreenState extends ConsumerState<TodoScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+    var theme = ref.watch(themeNotifier);
 
     return Stack(
       children: [

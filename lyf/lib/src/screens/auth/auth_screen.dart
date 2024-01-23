@@ -5,11 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../routes/routing.dart';
 import '../../shared/lyf.dart';
-import '../../utils/handlers/route_handler.dart';
 import '../../state/theme/theme_state.dart';
+import '../../utils/handlers/route_handler.dart';
 
 class AuthScreen extends ConsumerStatefulWidget {
-  const AuthScreen({Key? key}) : super(key: key);
+  const AuthScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _AuthScreenState();
@@ -29,10 +29,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: ref
-                  .read(themeNotifier.notifier)
-                  .getCurrentState()
-                  .gradientColors,
+              colors: ref.watch(themeNotifier).gradientColors,
             ),
           ),
           child: Column(
@@ -73,7 +70,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                             SvgPicture.asset(
                               "assets/images/lyf.svg",
                               width: 40,
-                              color: Colors.white,
+                              colorFilter: const ColorFilter.mode(
+                                Colors.white,
+                                BlendMode.srcIn,
+                              ),
                             ),
                             Text(
                               "Lyf",

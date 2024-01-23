@@ -7,7 +7,7 @@ import 'package:lyf/src/utils/handlers/route_handler.dart';
 import '../../state/theme/theme_state.dart';
 
 class SideDrawer extends ConsumerStatefulWidget {
-  const SideDrawer({Key? key}) : super(key: key);
+  const SideDrawer({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _SideDrawerState();
@@ -17,7 +17,7 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+    var theme = ref.watch(themeNotifier);
 
     return GestureDetector(
       onHorizontalDragEnd: (dragDetails) {
@@ -112,7 +112,10 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
                           ),
                           leading: SvgPicture.asset(
                             "assets/images/todo.svg",
-                            color: Theme.of(context).iconTheme.color,
+                            colorFilter: ColorFilter.mode(
+                              Theme.of(context).iconTheme.color!,
+                              BlendMode.srcIn,
+                            ),
                             height: 25,
                           ),
                           onTap: () {
@@ -124,7 +127,10 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
                           hoverColor: Colors.white.withOpacity(0.15),
                           leading: SvgPicture.asset(
                             "assets/images/diary.svg",
-                            color: Theme.of(context).iconTheme.color,
+                            colorFilter: ColorFilter.mode(
+                              Theme.of(context).iconTheme.color!,
+                              BlendMode.srcIn,
+                            ),
                             height: 25,
                           ),
                           title: Text(

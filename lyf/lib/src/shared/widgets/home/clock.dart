@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class Clock extends StatefulWidget {
   final Size size;
-  const Clock({Key? key, required this.size}) : super(key: key);
+  const Clock({super.key, required this.size});
 
   @override
   State<Clock> createState() => _ClockState();

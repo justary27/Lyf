@@ -9,7 +9,7 @@ import '../../constants/language_constants.dart';
 import '../../state/language/language_state.dart';
 
 class LanguageSettingsScreen extends ConsumerStatefulWidget {
-  const LanguageSettingsScreen({Key? key}) : super(key: key);
+  const LanguageSettingsScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -25,7 +25,7 @@ class _LanguageSettingsScreenState
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+    var theme = ref.watch(themeNotifier);
     final languageConstants = languageProvider(context);
 
     return Stack(

@@ -1,6 +1,7 @@
-import 'dart:io';
 import 'dart:developer';
+import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -74,7 +75,8 @@ class FileHandler {
           await pdf.create(recursive: true);
           pdf.writeAsBytesSync(int8List!);
         }
-        await OpenFile.open(pdfPath);
+
+        await OpenFile.open(pdf.path);
       }
     } catch (e) {
       log("pdf error");

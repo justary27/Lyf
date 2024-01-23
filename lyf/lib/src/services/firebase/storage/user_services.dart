@@ -26,11 +26,11 @@ class UserFireStoreServices {
 
   static Future uploadPfp(PlatformFile img) async {
     try {
-      File? compressedFile = await FlutterImageCompress.compressAndGetFile(
+      File? compressedFile = (await FlutterImageCompress.compressAndGetFile(
         img.path!,
         img.path!,
         quality: 70,
-      );
+      )) as File?;
       firestorage.UploadTask uploadPfp =
           userStore.ref("${currentUser.userId}/pfp.jpg").putFile(
                 compressedFile!,

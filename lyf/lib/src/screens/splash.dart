@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../global/functions.dart';
+import '../global/variables.dart';
 import '../routes/routing.dart';
 import '../state/theme/theme_state.dart';
 import '../utils/handlers/route_handler.dart';
-import '../global/functions.dart';
-import '../global/variables.dart';
 
 /// The App's first screen. This is shown after first
 /// pixel is painted by flutter. Navigates the user
 /// according to their [loginState].
 class SplashScreen extends ConsumerStatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _SplashScreenState();
@@ -51,12 +51,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             end: Alignment.bottomRight,
-            colors: ref
-                .read(themeNotifier.notifier)
-                .getCurrentState()
-                .gradientColors
-                .reversed
-                .toList(),
+            colors: ref.read(themeNotifier).gradientColors.reversed.toList(),
           ),
         ),
         child: Center(
@@ -70,7 +65,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 child: SvgPicture.asset(
                   "assets/images/lyf.svg",
                   width: 0.5 * size.width,
-                  color: Theme.of(context).primaryColor,
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).primaryColor,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
               Text(

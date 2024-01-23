@@ -13,7 +13,7 @@ import '../../state/diary/diary_list_state.dart';
 import '../../state/theme/theme_state.dart';
 
 class DiaryScreen extends ConsumerStatefulWidget {
-  const DiaryScreen({Key? key}) : super(key: key);
+  const DiaryScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _DiaryScreenState();
@@ -35,7 +35,7 @@ class _DiaryScreenState extends ConsumerState<DiaryScreen> {
 
   void _refresh({bool? forceRefresh}) {
     try {
-      ref.read(diaryNotifier).value;
+      ref.read(diaryNotifier.notifier);
       if (forceRefresh != null && forceRefresh) {
         ref.read(diaryNotifier.notifier).refresh();
       }
@@ -65,7 +65,7 @@ class _DiaryScreenState extends ConsumerState<DiaryScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+    var theme = ref.watch(themeNotifier);
     return Stack(
       children: [
         Container(

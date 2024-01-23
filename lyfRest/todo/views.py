@@ -16,7 +16,7 @@ def getAllTodos(request, userId):
     try:
         todos = Todo.objects.getTodos(userId)
         data = [todo.as_dict for todo in todos]
-
+        print(data)
         return Response(data)
     except Exception as e:
         return Response(str(e), status=status.HTTP_401_UNAUTHORIZED)
@@ -52,7 +52,6 @@ def createTodo(request, userId):
 @permission_classes([IsAuthenticated])
 def updateTodo(request, userId, todoId):
     data = request.data
-    print(request.data)
 
     corrected_data = {
         '_user': userId,
@@ -61,10 +60,10 @@ def updateTodo(request, userId, todoId):
         '_created_on': data["_createdAt"],
         '_isCompleted': data["_isCompleted"],
         '_isReminderSet': data["_isReminderSet"],
-        "_reminderAt": data["_reminderAt"]
+        '_reminderAt': data["_reminderAt"]
     }
 
-    print(corrected_data)
+
     todo = Todo.objects.get_todo_by_id(todoId)
     serializer = TodoSerializer(todo, data=corrected_data)
     if serializer.is_valid():

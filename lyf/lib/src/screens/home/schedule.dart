@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ScheduleSideDrawer extends StatefulWidget {
-  const ScheduleSideDrawer({Key? key}) : super(key: key);
+  const ScheduleSideDrawer({super.key});
 
   @override
   State<ScheduleSideDrawer> createState() => _ScheduleSideDrawerState();

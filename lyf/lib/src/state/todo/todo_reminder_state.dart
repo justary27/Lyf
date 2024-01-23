@@ -1,20 +1,20 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../services/lyf_settings.dart';
 
 final todoReminderNotifier = StateNotifierProvider<TodoReminderNotifier,
     AsyncValue<List<PendingNotificationRequest>?>>((ref) {
-  return TodoReminderNotifier(ref.read);
+  return TodoReminderNotifier(ref);
 });
 
 class TodoReminderNotifier
     extends StateNotifier<AsyncValue<List<PendingNotificationRequest>?>> {
-  final Reader read;
+  final Ref ref;
   AsyncValue<List<PendingNotificationRequest>?>? previousState;
 
   TodoReminderNotifier(
-    this.read, [
+    this.ref, [
     AsyncValue<List<PendingNotificationRequest>?>? previousState,
   ]) : super(previousState ?? const AsyncValue.loading()) {
     _retrieveReminders();

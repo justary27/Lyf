@@ -3,20 +3,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final languageNotifier = StateNotifierProvider<LanguageNotifier, Locale>((ref) {
-  return LanguageNotifier(ref.read);
-});
+final languageNotifier = NotifierProvider<LanguageNotifier, Locale>(
+  LanguageNotifier.new,
+);
 
-class LanguageNotifier extends StateNotifier<Locale> {
-  final Reader read;
+class LanguageNotifier extends Notifier<Locale> {
   Locale? previousState;
 
-  LanguageNotifier(this.read, [Locale? initLanguage])
-      : super(initLanguage ?? Locale(Platform.localeName.substring(0, 2)));
-
-  Locale getCurrentState() {
-    return state;
-  }
+  @override
+  Locale build([Locale? initLanguage]) =>
+      initLanguage ?? Locale(Platform.localeName.substring(0, 2));
 
   void changeLanguage(Locale newLanguage) {
     _cacheState();

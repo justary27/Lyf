@@ -3,7 +3,7 @@ import 'package:lyf/src/global/variables.dart';
 import 'package:lyf/src/routes/routing.dart';
 
 class ViewProfilePicturePage extends StatefulWidget {
-  const ViewProfilePicturePage({Key? key}) : super(key: key);
+  const ViewProfilePicturePage({super.key});
 
   @override
   State<ViewProfilePicturePage> createState() => _ViewProfilePicturePageState();

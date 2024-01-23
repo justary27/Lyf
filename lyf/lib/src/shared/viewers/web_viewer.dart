@@ -5,9 +5,9 @@ import 'package:webview_flutter/webview_flutter.dart';
 class WebViewer extends ConsumerStatefulWidget {
   final String initialUrl;
   const WebViewer({
-    Key? key,
+    super.key,
     required this.initialUrl,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _WebViewerState();
@@ -16,10 +16,26 @@ class WebViewer extends ConsumerStatefulWidget {
 class _WebViewerState extends ConsumerState<WebViewer> {
   @override
   Widget build(BuildContext context) {
+
+    WebViewController controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse(widget.initialUrl));
     return SafeArea(
-      child: WebView(
-        initialUrl: widget.initialUrl,
-        javascriptMode: JavascriptMode.unrestricted,
+      child: WebViewWidget(
+        controller: controller,
       ),
     );
   }

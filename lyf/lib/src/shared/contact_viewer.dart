@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:lyf/src/constants/invite_constants.dart';
@@ -9,11 +10,11 @@ class ContactViewer extends StatefulWidget {
   final List<Color> themeColors;
   final List<Contact> contacts;
   const ContactViewer({
-    Key? key,
+    super.key,
     required this.size,
     required this.themeColors,
     required this.contacts,
-  }) : super(key: key);
+  });
 
   @override
   State<ContactViewer> createState() => _ContactViewerState();
@@ -74,8 +75,8 @@ class _ContactViewerState extends State<ContactViewer> {
                       );
                     } else if (index == contacts.length - 1) {
                       br = const BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        topRight: Radius.circular(12),
+                        bottomLeft: Radius.circular(12),
+                        bottomRight: Radius.circular(12),
                       );
                     } else {
                       br = BorderRadius.zero;

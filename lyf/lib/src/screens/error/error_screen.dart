@@ -9,9 +9,9 @@ import '../../state/theme/theme_state.dart';
 class ErrorScreen extends ConsumerStatefulWidget {
   final dynamic error;
   const ErrorScreen({
-    Key? key,
+    super.key,
     this.error,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ErrorScreenState();
@@ -37,7 +37,7 @@ class _ErrorScreenState extends ConsumerState<ErrorScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    var theme = ref.read(themeNotifier.notifier).getCurrentState();
+    var theme = ref.watch(themeNotifier);
 
     return Container(
       height: size.height,
@@ -57,7 +57,10 @@ class _ErrorScreenState extends ConsumerState<ErrorScreen> {
             SvgPicture.asset(
               "assets/images/lyf_broken.svg",
               height: 0.25 * size.height,
-              color: Theme.of(context).primaryColor,
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).primaryColor,
+                BlendMode.srcIn,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),

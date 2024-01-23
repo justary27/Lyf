@@ -79,6 +79,7 @@ class TodoApiClient {
         json.decode(response.body).forEach(
           (element) {
             Todo entry = Todo.fromJson(element);
+            print(entry.toData());
             todoList!.add(entry);
           },
         );

@@ -25,7 +25,7 @@ Tired of experiencing the 2013s cluttered UI of the present TODO/Diary Apps? Wel
 </br>
 
 ## TODOs
-Make TODOs so that you never loose track of an upcoming task! Just hit the tick button and you are set! Optionally set a reminder ad you'll be reminded whenever you want.
+Make TODOs so that you never loose track of an upcoming task! Just hit the tick button and you are set! Optionally set a reminder and you'll be reminded whenever you want.
 
 </br>
 
