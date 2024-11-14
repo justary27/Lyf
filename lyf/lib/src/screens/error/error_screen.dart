@@ -67,13 +67,13 @@ class _ErrorScreenState extends ConsumerState<ErrorScreen> {
               child: Text(
                 buildErrorCode(),
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline3,
+                style: Theme.of(context).textTheme.displaySmall,
               ),
             ),
             Text(
               buildErrorMsg(),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],
         ),

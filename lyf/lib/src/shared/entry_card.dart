@@ -61,7 +61,7 @@ class _EntryCardState extends ConsumerState<EntryCard> {
         children: [
           Text(
             entry.title,
-            style: Theme.of(context).textTheme.headline3,
+            style: Theme.of(context).textTheme.displaySmall,
           ),
           IconButton(
             onPressed: () {
@@ -119,12 +119,12 @@ class _EntryCardState extends ConsumerState<EntryCard> {
     } else if (pageCode == "/diary") {
       return Text(
         entry.entryDescription,
-        style: Theme.of(context).textTheme.bodyText1,
+        style: Theme.of(context).textTheme.bodyLarge,
       );
     } else {
       return Text(
         "entry.entryDescription",
-        style: Theme.of(context).textTheme.bodyText1,
+        style: Theme.of(context).textTheme.bodyLarge,
       );
     }
   }

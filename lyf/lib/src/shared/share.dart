@@ -66,7 +66,7 @@ class _ShareViewerState extends ConsumerState<ShareViewer> {
             Text(
               'Share "${widget.entry.title}"',
               style: TextStyle(
-                fontSize: Theme.of(context).textTheme.headline6!.fontSize,
+                fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize,
                 color: widget.color,
               ),
             ),
@@ -76,7 +76,7 @@ class _ShareViewerState extends ConsumerState<ShareViewer> {
             Text(
               "Online Sharing",
               style: TextStyle(
-                fontSize: Theme.of(context).textTheme.headline5!.fontSize,
+                fontSize: Theme.of(context).textTheme.headlineMedium!.fontSize,
                 color: widget.color.withOpacity(0.75),
               ),
             ),
@@ -88,7 +88,7 @@ class _ShareViewerState extends ConsumerState<ShareViewer> {
                 Text(
                   "Visibility:",
                   style: TextStyle(
-                    fontSize: Theme.of(context).textTheme.bodyText1!.fontSize,
+                    fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
                     color: widget.color.withOpacity(0.75),
                   ),
                 ),
@@ -124,7 +124,7 @@ class _ShareViewerState extends ConsumerState<ShareViewer> {
             Text(
               "Offline Sharing",
               style: TextStyle(
-                fontSize: Theme.of(context).textTheme.headline5!.fontSize,
+                fontSize: Theme.of(context).textTheme.headlineMedium!.fontSize,
                 color: widget.color.withOpacity(0.75),
               ),
             ),

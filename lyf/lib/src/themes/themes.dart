@@ -31,11 +31,14 @@ final ThemeHelper lyfTheme = ThemeHelper(
       displaySmall: GoogleFonts.merienda(
         textStyle: const TextStyle(color: Colors.white, fontSize: 20),
       ),
-      headlineMedium: GoogleFonts.merienda(
+      headlineLarge: GoogleFonts.merienda(
         textStyle: const TextStyle(color: Colors.white, fontSize: 17.5),
       ),
-      headlineSmall: GoogleFonts.merienda(
+      headlineMedium: GoogleFonts.merienda(
         textStyle: const TextStyle(color: Colors.white, fontSize: 15),
+      ),
+      headlineSmall: GoogleFonts.merienda(
+        textStyle: const TextStyle(color: Colors.white, fontSize: 12.5),
       ),
       bodyLarge: GoogleFonts.aBeeZee(
         textStyle: TextStyle(
@@ -105,11 +108,14 @@ final ThemeHelper monochromeTheme = ThemeHelper(
       displaySmall: GoogleFonts.ubuntu(
         textStyle: const TextStyle(color: Colors.white, fontSize: 20),
       ),
-      headlineMedium: GoogleFonts.ubuntu(
+      headlineLarge: GoogleFonts.ubuntu(
         textStyle: const TextStyle(color: Colors.white, fontSize: 17.5),
       ),
-      headlineSmall: GoogleFonts.ubuntu(
+      headlineMedium: GoogleFonts.ubuntu(
         textStyle: const TextStyle(color: Colors.white, fontSize: 15),
+      ),
+      headlineSmall: GoogleFonts.ubuntu(
+        textStyle: const TextStyle(color: Colors.white, fontSize: 12.5),
       ),
       bodyLarge: GoogleFonts.aBeeZee(
         textStyle: TextStyle(
@@ -129,6 +135,7 @@ final ThemeHelper monochromeTheme = ThemeHelper(
     Color(0xFF000000),
   ],
 );
+
 final ThemeHelper funkyTheme = ThemeHelper(
   themeData: ThemeData(
     // useMaterial3: false,
@@ -177,11 +184,14 @@ final ThemeHelper funkyTheme = ThemeHelper(
       displaySmall: GoogleFonts.londrinaSolid(
         textStyle: const TextStyle(color: Color(0xFFCA81F5), fontSize: 20),
       ),
-      headlineMedium: GoogleFonts.londrinaSolid(
+      headlineLarge: GoogleFonts.londrinaSolid(
         textStyle: const TextStyle(color: Color(0xFFCA81F5), fontSize: 17.5),
       ),
-      headlineSmall: GoogleFonts.londrinaSolid(
+      headlineMedium: GoogleFonts.londrinaSolid(
         textStyle: const TextStyle(color: Color(0xFFCA81F5), fontSize: 15),
+      ),
+      headlineSmall: GoogleFonts.londrinaSolid(
+        textStyle: const TextStyle(color: Color(0xFFCA81F5), fontSize: 12.5),
       ),
       bodyLarge: GoogleFonts.aBeeZee(
         textStyle: TextStyle(
@@ -250,11 +260,14 @@ final ThemeHelper loveTheme = ThemeHelper(
       displaySmall: GoogleFonts.workSans(
         textStyle: const TextStyle(color: Color(0xFFFDF5F7), fontSize: 20),
       ),
-      headlineMedium: GoogleFonts.workSans(
+      headlineLarge: GoogleFonts.workSans(
         textStyle: const TextStyle(color: Color(0xFFFDF5F7), fontSize: 17.5),
       ),
-      headlineSmall: GoogleFonts.workSans(
+      headlineMedium: GoogleFonts.workSans(
         textStyle: const TextStyle(color: Color(0xFFFDF5F7), fontSize: 15),
+      ),
+      headlineSmall: GoogleFonts.workSans(
+        textStyle: const TextStyle(color: Color(0xFFFDF5F7), fontSize: 12.5),
       ),
       bodyLarge: GoogleFonts.aBeeZee(
         textStyle: TextStyle(

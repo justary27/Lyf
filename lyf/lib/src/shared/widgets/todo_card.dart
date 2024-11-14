@@ -152,12 +152,12 @@ class _TodoCardState extends ConsumerState<TodoCard> {
               0, 0.025 * size.height, 0.0085 * size.width, 0.025 * size.height),
           child: Text(
             "${_dateController.value.day}/${_dateController.value.month}/${_dateController.value.year}",
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
         TextFormField(
           controller: _descriptionController,
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
           cursorColor: Colors.white.withOpacity(0.5),
           decoration: const InputDecoration(
             filled: false,
@@ -181,7 +181,7 @@ class _TodoCardState extends ConsumerState<TodoCard> {
           alignment: Alignment.bottomLeft,
           child: Text(
             widget.todo!.title,
-            style: Theme.of(context).textTheme.headline3,
+            style: Theme.of(context).textTheme.displaySmall,
           ),
         ),
         Container(
@@ -190,7 +190,7 @@ class _TodoCardState extends ConsumerState<TodoCard> {
           height: 0.225 * size.height,
           child: Text(
             widget.todo!.todoDescription,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         ),
       ];

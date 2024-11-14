@@ -59,7 +59,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen> {
               ),
               title: Text(
                 AppLocalizations.of(context)!.themes,
-                style: Theme.of(context).textTheme.headline3,
+                style: Theme.of(context).textTheme.displaySmall,
               ),
             ),
             backgroundColor: Colors.transparent,
@@ -88,11 +88,11 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen> {
                         ),
                         title: Text(
                           AppLocalizations.of(context)!.appThemes,
-                          style: Theme.of(context).textTheme.headline2,
+                          style: Theme.of(context).textTheme.displayMedium,
                         ),
                         subtitle: Text(
                           AppLocalizations.of(context)!.appThemesDesc,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         tileColor: Colors.transparent,
                       ),
@@ -123,11 +123,11 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen> {
                             ),
                             title: Text(
                               themeConstants[index]['themeName'],
-                              style: Theme.of(context).textTheme.headline3,
+                              style: Theme.of(context).textTheme.displaySmall,
                             ),
                             subtitle: Text(
                               themeConstants[index]['desc'],
-                              style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             onTap: () => _changeTheme(
                               themeConstants[index]['theme'],

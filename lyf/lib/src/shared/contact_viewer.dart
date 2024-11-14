@@ -92,16 +92,16 @@ class _ContactViewerState extends State<ContactViewer> {
                               .displayName
                               .substring(0, 2)
                               .toUpperCase(),
-                          style: Theme.of(context).textTheme.headline4,
+                          style: Theme.of(context).textTheme.headlineLarge,
                         ),
                       ),
                       title: Text(
                         contacts[index].displayName,
-                        style: Theme.of(context).textTheme.headline4,
+                        style: Theme.of(context).textTheme.headlineLarge,
                       ),
                       subtitle: Text(
                         contacts[index].phones.first.number.toString(),
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       onTap: () {
                         sendSms(
@@ -126,7 +126,7 @@ class _ContactViewerState extends State<ContactViewer> {
                   ),
                   Text(
                     "Oops! Looks like you don't have any contacts.",
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
               ),

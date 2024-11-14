@@ -129,7 +129,7 @@ class _DiaryScreenState extends ConsumerState<DiaryScreen> {
                     ),
                     title: Text(
                       AppLocalizations.of(context)!.yourDiary,
-                      style: Theme.of(context).textTheme.headline3,
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                   ),
                   actions: [
@@ -253,7 +253,7 @@ class _DiaryScreenState extends ConsumerState<DiaryScreen> {
                                                     diary[index].title,
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .headline3,
+                                                        .displaySmall,
                                                   ),
                                                   IconButton(
                                                     onPressed: () {
@@ -282,7 +282,7 @@ class _DiaryScreenState extends ConsumerState<DiaryScreen> {
                                                 diary[index].description,
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText1,
+                                                    .bodyLarge,
                                               ),
                                             ),
                                             Row(
@@ -295,7 +295,7 @@ class _DiaryScreenState extends ConsumerState<DiaryScreen> {
                                                   style: GoogleFonts.ubuntu(
                                                     textStyle: Theme.of(context)
                                                         .textTheme
-                                                        .bodyText1,
+                                                        .bodyLarge,
                                                   ),
                                                 ),
                                                 ButtonBar(

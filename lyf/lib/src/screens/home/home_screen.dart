@@ -203,7 +203,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                                   .todo,
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .headline5,
+                                                  .headlineMedium,
                                             ),
                                           ],
                                         ),
@@ -248,7 +248,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                                   .diary,
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .headline5,
+                                                  .headlineMedium,
                                             ),
                                           ],
                                         ),

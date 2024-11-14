@@ -52,7 +52,7 @@ class _NotificationSettingsScreenState
                 SizedBox(height: 0.025 * size.height),
                 Text(
                   "Upcoming TODO reminders",
-                  style: Theme.of(context).textTheme.headline3,
+                  style: Theme.of(context).textTheme.displaySmall,
                 ),
                 const SizedBox(height: 16),
                 Consumer(
@@ -68,11 +68,12 @@ class _NotificationSettingsScreenState
                               return ListTile(
                                 title: Text(
                                   contacts[index].title!,
-                                  style: Theme.of(context).textTheme.headline4,
+                                  style:
+                                      Theme.of(context).textTheme.headlineLarge,
                                 ),
                                 subtitle: Text(
                                   contacts[index].body!,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyLarge,
                                 ),
                                 trailing: TextButton(
                                   onPressed: () async {
@@ -241,7 +242,7 @@ class _NotificationSettingsScreenState
               ),
               title: Text(
                 AppLocalizations.of(context)!.notifications,
-                style: Theme.of(context).textTheme.headline3,
+                style: Theme.of(context).textTheme.displaySmall,
               ),
             ),
             backgroundColor: Colors.transparent,
@@ -271,11 +272,11 @@ class _NotificationSettingsScreenState
                           ),
                           title: Text(
                             "Todo Reminders",
-                            style: Theme.of(context).textTheme.headline2,
+                            style: Theme.of(context).textTheme.displayMedium,
                           ),
                           subtitle: Text(
                             "Change the way that Lyf reminds you of your TODOs!",
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           isThreeLine: true,
                         ),
@@ -292,11 +293,11 @@ class _NotificationSettingsScreenState
                           ),
                           title: Text(
                             "Cancel all reminders",
-                            style: Theme.of(context).textTheme.headline4,
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                           subtitle: Text(
                             "This will cancel all the pending TODO reminders!",
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
                         ListTile(
@@ -312,11 +313,11 @@ class _NotificationSettingsScreenState
                           ),
                           title: Text(
                             "Upcoming Reminders",
-                            style: Theme.of(context).textTheme.headline4,
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                           subtitle: Text(
                             "See the upcoming reminders.",
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           onTap: () async {
                             await _displayUpcomingTodoReminders(size, theme);
@@ -350,11 +351,11 @@ class _NotificationSettingsScreenState
                           ),
                           title: Text(
                             "Diary Reminders",
-                            style: Theme.of(context).textTheme.headline2,
+                            style: Theme.of(context).textTheme.displayMedium,
                           ),
                           subtitle: Text(
                             "Change the way that Lyf reminds you to write your diary!",
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           isThreeLine: true,
                         ),
@@ -372,11 +373,11 @@ class _NotificationSettingsScreenState
                           dense: true,
                           title: Text(
                             "Daily Reminders",
-                            style: Theme.of(context).textTheme.headline4,
+                            style: Theme.of(context).textTheme.headlineMedium,
                           ),
                           subtitle: Text(
                             diaryNotifPref ? "ON" : "OFF",
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           onChanged: (bool value) {
                             _togglePreference(value);
@@ -401,11 +402,13 @@ class _NotificationSettingsScreenState
                                 ),
                                 title: Text(
                                   "Remind At",
-                                  style: Theme.of(context).textTheme.headline4,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium,
                                 ),
                                 subtitle: Text(
                                   "Remind you at?",
-                                  style: Theme.of(context).textTheme.bodyText2,
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                                 trailing: TextButton(
                                   onPressed: diaryNotifPref

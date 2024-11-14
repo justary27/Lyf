@@ -67,7 +67,7 @@ class _AccountSettingsScreenState extends ConsumerState<AccountSettingsScreen> {
                 ),
                 title: Text(
                   AppLocalizations.of(context)!.account,
-                  style: Theme.of(context).textTheme.headline3,
+                  style: Theme.of(context).textTheme.displaySmall,
                 ),
               ),
               backgroundColor: Colors.transparent,
@@ -94,11 +94,11 @@ class _AccountSettingsScreenState extends ConsumerState<AccountSettingsScreen> {
                           ),
                           title: Text(
                             AppLocalizations.of(context)!.accountInfo,
-                            style: Theme.of(context).textTheme.headline2,
+                            style: Theme.of(context).textTheme.displayMedium,
                           ),
                           subtitle: Text(
                             AppLocalizations.of(context)!.accountInfoDesc,
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
                         ListTile(
@@ -151,11 +151,11 @@ class _AccountSettingsScreenState extends ConsumerState<AccountSettingsScreen> {
                           },
                           title: Text(
                             AppLocalizations.of(context)!.username,
-                            style: Theme.of(context).textTheme.headline4,
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                           subtitle: Text(
                             currentUser.userName,
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
                         // ListTile(
@@ -327,11 +327,11 @@ class _AccountSettingsScreenState extends ConsumerState<AccountSettingsScreen> {
                           ),
                           title: Text(
                             AppLocalizations.of(context)!.activity,
-                            style: Theme.of(context).textTheme.headline2,
+                            style: Theme.of(context).textTheme.displayMedium,
                           ),
                           subtitle: Text(
                             AppLocalizations.of(context)!.activityDesc,
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
                         // ListTile(
@@ -372,7 +372,7 @@ class _AccountSettingsScreenState extends ConsumerState<AccountSettingsScreen> {
                           ),
                           title: Text(
                             AppLocalizations.of(context)!.logout,
-                            style: Theme.of(context).textTheme.headline4,
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                           isThreeLine: true,
                           subtitle: Column(
@@ -380,7 +380,7 @@ class _AccountSettingsScreenState extends ConsumerState<AccountSettingsScreen> {
                             children: [
                               Text(
                                 AppLocalizations.of(context)!.logoutDesc,
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                               ButtonBar(
                                 alignment: MainAxisAlignment.start,
@@ -434,14 +434,14 @@ class _AccountSettingsScreenState extends ConsumerState<AccountSettingsScreen> {
                           isThreeLine: true,
                           title: Text(
                             AppLocalizations.of(context)!.deactivateAccount,
-                            style: Theme.of(context).textTheme.headline4,
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                           subtitle: Column(
                             children: [
                               Text(
                                 AppLocalizations.of(context)!
                                     .deactivateAccountDesc,
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                               ButtonBar(
                                 alignment: MainAxisAlignment.start,

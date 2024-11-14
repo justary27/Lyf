@@ -108,7 +108,7 @@ class _TodoScreenState extends ConsumerState<TodoScreen> {
                     ),
                     title: Text(
                       AppLocalizations.of(context)!.yourTodos,
-                      style: Theme.of(context).textTheme.headline3,
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                   ),
                 ),

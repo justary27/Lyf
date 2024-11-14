@@ -108,7 +108,7 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
                           hoverColor: Colors.white.withOpacity(0.15),
                           title: Text(
                             "TODOs",
-                            style: Theme.of(context).textTheme.headline4,
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                           leading: SvgPicture.asset(
                             "assets/images/todo.svg",
@@ -135,7 +135,7 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
                           ),
                           title: Text(
                             "Diary Entries",
-                            style: Theme.of(context).textTheme.headline4,
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                           onTap: () {
                             goRouter.push(RouteHandler.diary);

@@ -43,7 +43,7 @@ class _GreetingsState extends State<Greetings> {
     final String username = widget.username;
     return Text(
       "$greeting, $username",
-      style: Theme.of(context).textTheme.headline1,
+      style: Theme.of(context).textTheme.displayLarge,
     );
   }
 

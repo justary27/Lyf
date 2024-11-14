@@ -59,7 +59,7 @@ class _LanguageSettingsScreenState
               ),
               title: Text(
                 AppLocalizations.of(context)!.language,
-                style: Theme.of(context).textTheme.headline3,
+                style: Theme.of(context).textTheme.displaySmall,
               ),
             ),
             backgroundColor: Colors.transparent,
@@ -88,11 +88,11 @@ class _LanguageSettingsScreenState
                         ),
                         title: Text(
                           AppLocalizations.of(context)!.appLanguage,
-                          style: Theme.of(context).textTheme.headline2,
+                          style: Theme.of(context).textTheme.displayMedium,
                         ),
                         subtitle: Text(
                           AppLocalizations.of(context)!.appLanguageDesc,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         tileColor: Colors.transparent,
                       ),
@@ -115,7 +115,7 @@ class _LanguageSettingsScreenState
                             ),
                             title: Text(
                               languageConstants[index]['langName'],
-                              style: Theme.of(context).textTheme.headline3,
+                              style: Theme.of(context).textTheme.displaySmall,
                             ),
                             onTap: () => _changeLanguage(
                               languageConstants[index]['locale'],

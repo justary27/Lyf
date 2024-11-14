@@ -73,7 +73,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               ),
               Text(
                 "Lyf",
-                style: Theme.of(context).textTheme.headline2,
+                style: Theme.of(context).textTheme.displayMedium,
               ),
               Container(
                 margin: EdgeInsets.symmetric(

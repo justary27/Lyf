@@ -55,7 +55,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
               title: Text(
                 AppLocalizations.of(context)!.settings,
-                style: Theme.of(context).textTheme.headline3,
+                style: Theme.of(context).textTheme.displaySmall,
               ),
             ),
             backgroundColor: Colors.transparent,
@@ -94,7 +94,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                             EdgeInsets.symmetric(vertical: 0.025 * size.height),
                         child: Text(
                           currentUser.userName,
-                          style: Theme.of(context).textTheme.headline5,
+                          style: Theme.of(context).textTheme.headlineMedium,
                         ),
                       )
                     ],
@@ -123,11 +123,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         dense: true,
                         title: Text(
                           AppLocalizations.of(context)!.account,
-                          style: Theme.of(context).textTheme.headline4,
+                          style: Theme.of(context).textTheme.headlineLarge,
                         ),
                         subtitle: Text(
                           AppLocalizations.of(context)!.accountDesc,
-                          style: Theme.of(context).textTheme.bodyText2,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
                       // ListTile(
@@ -160,11 +160,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         dense: true,
                         title: Text(
                           AppLocalizations.of(context)!.helpCenter,
-                          style: Theme.of(context).textTheme.headline4,
+                          style: Theme.of(context).textTheme.headlineLarge,
                         ),
                         subtitle: Text(
                           AppLocalizations.of(context)!.helpCenterDesc,
-                          style: Theme.of(context).textTheme.bodyText2,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
                       ListTile(
@@ -178,11 +178,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         dense: true,
                         title: Text(
                           AppLocalizations.of(context)!.notifications,
-                          style: Theme.of(context).textTheme.headline4,
+                          style: Theme.of(context).textTheme.headlineLarge,
                         ),
                         subtitle: Text(
                           AppLocalizations.of(context)!.notificationsDesc,
-                          style: Theme.of(context).textTheme.bodyText2,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
 
@@ -219,11 +219,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         dense: true,
                         title: Text(
                           AppLocalizations.of(context)!.themes,
-                          style: Theme.of(context).textTheme.headline4,
+                          style: Theme.of(context).textTheme.headlineLarge,
                         ),
                         subtitle: Text(
                           AppLocalizations.of(context)!.themesDesc,
-                          style: Theme.of(context).textTheme.bodyText2,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
                       ListTile(
@@ -237,11 +237,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         dense: true,
                         title: Text(
                           AppLocalizations.of(context)!.language,
-                          style: Theme.of(context).textTheme.headline4,
+                          style: Theme.of(context).textTheme.headlineLarge,
                         ),
                         subtitle: Text(
                           AppLocalizations.of(context)!.languageDesc,
-                          style: Theme.of(context).textTheme.bodyText2,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
                       ListTile(
@@ -261,11 +261,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         dense: true,
                         title: Text(
                           AppLocalizations.of(context)!.invite,
-                          style: Theme.of(context).textTheme.headline4,
+                          style: Theme.of(context).textTheme.headlineLarge,
                         ),
                         subtitle: Text(
                           AppLocalizations.of(context)!.inviteDesc,
-                          style: Theme.of(context).textTheme.bodyText2,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
                     ],

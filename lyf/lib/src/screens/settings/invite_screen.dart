@@ -90,7 +90,7 @@ class _InviteSettingsScreenState extends ConsumerState<InviteSettingsScreen> {
                 ),
                 title: Text(
                   AppLocalizations.of(context)!.invite,
-                  style: Theme.of(context).textTheme.headline3,
+                  style: Theme.of(context).textTheme.displaySmall,
                 ),
               ),
               backgroundColor: Colors.transparent,
@@ -109,11 +109,11 @@ class _InviteSettingsScreenState extends ConsumerState<InviteSettingsScreen> {
                     ),
                     title: Text(
                       AppLocalizations.of(context)!.shareLink,
-                      style: Theme.of(context).textTheme.headline2,
+                      style: Theme.of(context).textTheme.displayMedium,
                     ),
                     subtitle: Text(
                       AppLocalizations.of(context)!.shareLinkDesc,
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     tileColor: Colors.transparent,
                     onTap: () {
@@ -130,14 +130,14 @@ class _InviteSettingsScreenState extends ConsumerState<InviteSettingsScreen> {
                       child: TextField(
                         controller: _contactFinder,
                         maxLines: 1,
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.bodyLarge,
                         decoration: InputDecoration(
                           prefixIcon: Icon(
                             Icons.search_rounded,
                             color: Theme.of(context).iconTheme.color,
                           ),
                           hintText: AppLocalizations.of(context)!.searchPeople,
-                          hintStyle: Theme.of(context).textTheme.bodyText1,
+                          hintStyle: Theme.of(context).textTheme.bodyLarge,
                           filled: true,
                           fillColor: Colors.transparent,
                           enabledBorder: OutlineInputBorder(
